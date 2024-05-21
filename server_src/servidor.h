@@ -3,10 +3,13 @@
 
 #include <string>
 #include <iostream>
+#include <atomic>
 
 class Servidor{
 private:
     const std::string puerto;
+    std::atomic<bool> servidor_cerrado;
+    
 public:
     explicit Servidor(const std::string &puerto);
 
@@ -14,6 +17,9 @@ public:
 
     Servidor(const Servidor&) = delete;
     Servidor& operator = (const Servidor&) = delete;
+
+    Servidor(Servidor&&) = default;
+    Servidor& operator=(Servidor&&) = default;
 
 };
 
