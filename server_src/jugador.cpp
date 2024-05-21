@@ -2,11 +2,11 @@
 
 
 Jugador::Jugador(Socket skt, int id) : 
-socket(std::move(skt)),
 id_jugador(id),
 sigue_jugando(true),
-sender(/*protocolo, */ sigue_jugando),
-receiver(/*protocolo, */ sigue_jugando)
+protocolo(std::move(skt)),
+sender(protocolo, sigue_jugando),
+receiver(protocolo, sigue_jugando)
 {}
 
 

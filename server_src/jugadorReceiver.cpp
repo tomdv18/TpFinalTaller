@@ -2,8 +2,8 @@
 #define TAM_MAX_COLA 250
 
 
-JugadorReceiver::JugadorReceiver(/*Protocolo & proto,*/ std::atomic<bool> & sigue_jugando) : 
-//protocolo(proto),
+JugadorReceiver::JugadorReceiver(Protocolo & proto, std::atomic<bool> & sigue_jugando) : 
+protocolo(proto),
 sigue_jugando(sigue_jugando),
 queue_accion(TAM_MAX_COLA)
 {}

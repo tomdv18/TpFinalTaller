@@ -5,6 +5,7 @@
 #include "thread.h"
 #include "queue.h"
 #include "../common_src/socket.h"
+#include "protocolo.h"
 
 struct Evento{ 
 //CREADO COMO EJEMPLO DEBERIA ESTAR DEFINIDO EN OTRO LADO
@@ -12,12 +13,12 @@ struct Evento{
 
 class JugadorSender: public Thread{
 private:
-    //Protocolo & protocolo;
+    Protocolo & protocolo;
     Queue<Evento> queue_evento;
     std::atomic<bool> & sigue_jugando;
     
 public:
-    explicit JugadorSender(/*Protocolo & protocolo,*/  std::atomic<bool> & sigue_jugando);
+    explicit JugadorSender(Protocolo & protocolo, std::atomic<bool> & sigue_jugando);
     void run() override;
     void stop();
 

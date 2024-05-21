@@ -11,11 +11,10 @@
 
 class Jugador: public Thread{
 private:
-    Socket socket;
     std::atomic<bool> sigue_jugando;
     //Personaje personaje;
     int id_jugador;
-    //Protocolo protocolo;
+    Protocolo protocolo;
     JugadorReceiver receiver;
     JugadorSender sender;
 

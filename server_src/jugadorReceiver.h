@@ -6,6 +6,7 @@
 #include "thread.h"
 #include "queue.h"
 #include "../common_src/socket.h"
+#include "protocolo.h"
 
 struct Accion{ 
 //CREADO COMO EJEMPLO DEBERIA ESTAR DEFINIDO EN OTRO LADO
@@ -13,12 +14,12 @@ struct Accion{
 
 class JugadorReceiver: public Thread{
 private:
-    //Protocolo & protocolo;
+    Protocolo & protocolo;
     Queue<Accion> queue_accion;
     std::atomic<bool> & sigue_jugando;
     
 public:
-    explicit JugadorReceiver(/*Protocolo & protocolo,*/  std::atomic<bool> & sigue_jugando);
+    explicit JugadorReceiver(Protocolo & protocolo,  std::atomic<bool> & sigue_jugando);
     void run() override;
     void stop();
 
