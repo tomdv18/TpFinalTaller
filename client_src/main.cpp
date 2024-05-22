@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "lobby.h"
 
 
 int main(int argc, char* argv[]) {
@@ -7,6 +8,8 @@ int main(int argc, char* argv[]) {
         if (argc == 3) {
             const std::string hostname = std::string(argv[1]);
             const std::string servname = std::string(argv[2]);
+            Lobby lobby(hostname,servname);
+            lobby.main();
             //Client client(hostname, servname);
             //client.execute();
             //client.shutdown();

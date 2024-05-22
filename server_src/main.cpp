@@ -4,8 +4,7 @@
 int main(int argc, char* argv[]) {
     try {
         if (argc == 2) {
-            std::string puerto = std::string(argv[1]);
-            Servidor servidor(puerto);
+            Servidor servidor(argv[1]);
             servidor.run();
             return 0;
         } else {
