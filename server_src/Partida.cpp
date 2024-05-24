@@ -33,14 +33,22 @@ Queue<Accion>* Partida::unir_jugador(uint32_t id_jugador, Queue<Accion> *queue_j
 }
 
 bool Partida::borrar_jugador(uint32_t id_jugador){
-    if(map_jugadores.find(id_jugador) != map_jugadores.end()){
+    if (map_jugadores.find(id_jugador) != map_jugadores.end()) {
         map_jugadores.erase(id_jugador);
     }
 
-    if(map_jugadores.size() == 0){
+    if (map_jugadores.empty()) {
         return true;
     }
     return false;
+}
+
+uint8_t Partida::jugadores(){
+    return map_jugadores.size();
+}
+
+uint8_t Partida::max(){
+    return max_jugadores;
 }
 
 void Partida::run(){
@@ -59,6 +67,7 @@ void Partida::run(){
             }
         }
     }
+    queue_acciones.close();
 }
 
 

@@ -35,6 +35,24 @@ void ProtocoloServidor::enviar_accion(bool &was_closed,Accion accion){
     skt_jugador.sendall(&accion, sizeof(accion), &was_closed);
 }
 
+
+void ProtocoloServidor::enviar_lista_partidas(MonitorPartidas monitor_partidas, bool &was_closed){
+    InfoPartida info_partida;
+    std::map<uint32_t, Partida*> partidas = monitor_partidas.obtener_partidas();
+    for (auto it = partidas.begin(); it != partidas.end(); ++it) {
+            std::cout << "ENVIANDO LISTA" << std::endl;
+
+        info_partida.id_partida = htonl(it->first);
+        info_partida.jugadores=  it->second->jugadores();
+        info_partida.max_jugadores = it->second->max();
+        //skt_jugador.sendall(&info_partida,sizeof(info_partida), &was_closed);
+        std::cout << "CODIGO " << info_partida.codigo << std::endl;
+        std::cout << "ID PARTIDA " << info_partida.id_partida << std::endl;
+        std::cout << "JUGADORES " << (int)info_partida.jugadores << "/"<< (int)info_partida.max_jugadores  << std::endl;
+    }
+}
+
+
 ProtocoloServidor::~ProtocoloServidor(){
     skt_jugador.shutdown(SHUT_RDWR);
     skt_jugador.close();

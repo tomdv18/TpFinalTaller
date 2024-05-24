@@ -26,7 +26,7 @@ void EnviadorJugador::run(){
             break;
         }
     }
- 
+
 }
 
 

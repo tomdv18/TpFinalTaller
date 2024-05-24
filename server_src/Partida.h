@@ -33,6 +33,10 @@ public:
 
     bool borrar_jugador(uint32_t id_jugador);
 
+    uint8_t jugadores();
+
+    uint8_t max();
+
     void run() override;
 
     ~Partida() override;

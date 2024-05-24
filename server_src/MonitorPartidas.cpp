@@ -23,6 +23,8 @@ void MonitorPartidas::listar_partidas(){
     }
 }
 
+
+
 Queue<Accion>* MonitorPartidas::unir_jugador(uint32_t id_jugador, uint32_t id_partida, Queue<Accion> *queue_jugador){
     auto it = partidas.find(id_partida);
 
@@ -39,16 +41,23 @@ Queue<Accion>* MonitorPartidas::unir_jugador(uint32_t id_jugador, uint32_t id_pa
 
 
 void MonitorPartidas::borrar_jugador(uint32_t id_jugador){
-    for (auto it = partidas.begin(); it != partidas.end(); ++it) {
-        uint32_t key = it->first;
+    auto it = partidas.begin();
+    while (it != partidas.end()) {
         Partida* partida = it->second;
-        if(partida->borrar_jugador(id_jugador)){
-            partidas.erase(key);
+
+        if (partida->borrar_jugador(id_jugador)) {
             partida->stop();
             partida->join();
             delete partida;
+            it = partidas.erase(it); 
+        } else {
+            ++it;
         }
     }
+}
+
+std::map<uint32_t, Partida*> MonitorPartidas::obtener_partidas(){
+    return partidas;
 }
 
 

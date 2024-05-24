@@ -22,11 +22,15 @@ void RecibidorJugador::run(){
     while(_keep_running){
 
         //monitor_partidas->listar_partidas();
-
+        // ENVIAR LISTA DE PARTIDAS, CODE P DE PARTIDAS
+        // ENVIO ID(UINT32_T), UIN8_T JUGADORES, UINT8_T MAX_JUGADORES
+        // REPETIR PARA TODAS LAS PARTIDAS
+        // AGREGAR UN CASE REFRESH PARTIDAS
+        //protocolo_servidor->enviar_lista_partidas(*monitor_partidas, was_closed);
+        
         try{
             //Seguir en el lobby mientras no encuentre partida ni se cierre conexion
             while(!partida_encontrada){
-                std::cout << "EN LOBBY" << std::endl;
                 leer_lobby(partida_encontrada, was_closed);
             }
         } catch(std::runtime_error &err){
@@ -38,8 +42,7 @@ void RecibidorJugador::run(){
         // NO se cerro la conexion, se encontro partida
         // Inicio el sender
         try{
-            // Empiezo a recibir acciones de partida
-            
+            // Empiezo a recibir acciones de partida 
             if(!enviador_jugador.is_alive()){
                 enviador_jugador.start();
             }
@@ -51,7 +54,6 @@ void RecibidorJugador::run(){
                     accion.codigo = protocolo_servidor->obtener_accion(was_closed);
                     queue_acciones->push(accion);
                     if(accion.codigo == LOBBY){
-                        std::cout << "SALIR" << std::endl;
                         break;
                     }
                 } catch(const ClosedQueue &err){
@@ -66,8 +68,7 @@ void RecibidorJugador::run(){
         }
         //Jugador salio de la partida, lo borro
         monitor_partidas->borrar_jugador(id);
-        std::cout << "SALIENDO" << std::endl;
-        
+
         partida_encontrada = false;
     }
 
@@ -80,6 +81,10 @@ void RecibidorJugador::run(){
 
 void RecibidorJugador::leer_lobby(bool &partida_encontrada, bool &was_closed){
     uint8_t codigo = protocolo_servidor->obtener_accion(was_closed);
+    
+    if(was_closed){
+        throw std::runtime_error("Se perdió la conexion con el cliente");
+    }
     
     switch (codigo){
         case CREAR:{
@@ -98,6 +103,10 @@ void RecibidorJugador::leer_lobby(bool &partida_encontrada, bool &was_closed){
                     throw std::runtime_error("Se perdió la conexion con el cliente");
                 }
                 this->queue_acciones = monitor_partidas->unir_jugador(id, id_partida, queue_jugador);
+            break;
+        }
+        case LIST_P:{
+                protocolo_servidor->enviar_lista_partidas(*monitor_partidas, was_closed);
             break;
         }
         case SALIR:{
