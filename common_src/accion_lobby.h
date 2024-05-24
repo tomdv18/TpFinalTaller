@@ -1,0 +1,1 @@
+// Esto representara crear/unirse en QT, es decir, las acciones de lobby
