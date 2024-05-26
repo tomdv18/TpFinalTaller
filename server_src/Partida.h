@@ -3,7 +3,9 @@
 
 #include "../common_src/queue.h"
 #include "../common_src/Accion.h"
+#include "../common_src/Evento.h"
 #include "../common_src/thread.h"
+#include "LogicaPartida.h"
 #include <iostream>
 #include <map>
 #include <list>
@@ -18,18 +20,20 @@ private:
 
     Queue<Accion> queue_acciones;
 
-    std::map<uint32_t, Queue<Accion>*> map_jugadores;
+    std::map<uint32_t, Queue<Evento>*> map_jugadores;
 
     std::mutex m;
 
+    LogicaPartida logica_partida;
+
 public:
-    Partida(uint32_t id_creador, uint8_t max_jugadores, uint32_t id, Queue<Accion> *queue_jugador);
+    Partida(uint32_t id_creador, uint8_t max_jugadores, uint32_t id, Queue<Evento> *queue_jugador);
 
     Queue<Accion>* obtener_queue();
 
     void listar_jugadores();
 
-    Queue<Accion>* unir_jugador(uint32_t id_jugador, Queue<Accion> *queue_jugador);
+    Queue<Accion>* unir_jugador(uint32_t id_jugador, Queue<Evento> *queue_jugador);
 
     bool borrar_jugador(uint32_t id_jugador);
 

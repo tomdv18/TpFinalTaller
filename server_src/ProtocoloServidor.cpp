@@ -28,11 +28,31 @@ uint8_t ProtocoloServidor::obtener_accion(bool &was_closed){
     if(was_closed){
         throw std::runtime_error("Se perdió la conexion con el cliente");
     }
+
     return codigo;
 }
 
-void ProtocoloServidor::enviar_accion(bool &was_closed,Accion accion){
-    skt_jugador.sendall(&accion, sizeof(accion), &was_closed);
+void ProtocoloServidor::enviar_evento(bool &was_closed,Evento evento){
+    uint8_t cant_personajes = (uint8_t)evento.eventos_personaje.size();
+    skt_jugador.sendall(&cant_personajes, sizeof(cant_personajes), &was_closed);
+
+    for(EventoPersonaje p : evento.eventos_personaje){  
+        skt_jugador.sendall(&p, sizeof(p), &was_closed);
+        if(was_closed){
+            throw std::runtime_error("Error, se cerro la conexion con el servidor");
+        }
+    }
+    /*
+
+    for(EventoEnemigo e : evento.eventos_enemigo){  
+        skt_jugador.sendall(&e, sizeof(e), &was_closed);
+        if(was_closed){
+            throw std::runtime_error("Error, se cerro la conexion con el servidor");
+        }
+    }
+    
+    
+    */
 }
 
 

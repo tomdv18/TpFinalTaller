@@ -14,11 +14,10 @@ private:
 
     ProtocoloServidor protocolo_servidor;
 
-    Queue<Accion> queue_jugador;
+    Queue<Evento> queue_jugador;
 
     RecibidorJugador recibidor_jugador;
 
-    //EnviadorJugador enviador_jugador;
 
     std::atomic<bool> esta_jugando;
 

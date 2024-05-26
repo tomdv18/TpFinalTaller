@@ -15,7 +15,7 @@ public:
 
     uint8_t obtener_accion(bool &was_closed);
 
-    void enviar_accion(bool &was_closed,Accion accion);
+    void enviar_evento(bool &was_closed, Evento evento);
 
     uint8_t leer_jugadores(bool &was_closed);
 

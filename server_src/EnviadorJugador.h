@@ -10,12 +10,12 @@ class EnviadorJugador : public Thread{
 private:
     ProtocoloServidor *protocolo_servidor;
 
-    Queue<Accion> *queue_jugador;
+    Queue<Evento> *queue_jugador;
 
     uint32_t id;
     
 public:
-    EnviadorJugador(ProtocoloServidor *protocolo_servidor, Queue<Accion> *queue_jugador,uint32_t id);
+    EnviadorJugador(ProtocoloServidor *protocolo_servidor, Queue<Evento> *queue_jugador,uint32_t id);
 
     void run() override;
 

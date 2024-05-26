@@ -4,7 +4,7 @@
 MonitorPartidas::MonitorPartidas(){}
 
 
-Queue<Accion>* MonitorPartidas::crear_partida(uint32_t id_creador,uint8_t cant_jugadores, Queue<Accion> *queue_jugador){
+Queue<Accion>* MonitorPartidas::crear_partida(uint32_t id_creador,uint8_t cant_jugadores, Queue<Evento> *queue_jugador){
     Partida *nueva_partida = new Partida(id_creador, cant_jugadores, (uint32_t)partidas.size(), queue_jugador);
     partidas.emplace(partidas.size(),nueva_partida);
     std::cout << "\nPARTIDA CREADA POR EL JUGADOR  " << id_creador << std::endl;
@@ -25,7 +25,7 @@ void MonitorPartidas::listar_partidas(){
 
 
 
-Queue<Accion>* MonitorPartidas::unir_jugador(uint32_t id_jugador, uint32_t id_partida, Queue<Accion> *queue_jugador){
+Queue<Accion>* MonitorPartidas::unir_jugador(uint32_t id_jugador, uint32_t id_partida, Queue<Evento> *queue_jugador){
     auto it = partidas.find(id_partida);
 
     // Buscar la partida en el map
@@ -45,6 +45,7 @@ void MonitorPartidas::borrar_jugador(uint32_t id_jugador){
     while (it != partidas.end()) {
         Partida* partida = it->second;
 
+        // Si al eliminar el jugador la partida queda vacia, la borro
         if (partida->borrar_jugador(id_jugador)) {
             partida->stop();
             partida->join();

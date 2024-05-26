@@ -2,7 +2,7 @@
 #define CLIENT_LOBBY_PROTOCOLO_H_
 
 #include "../common_src/socket.h"   
-#include "../common_src/Accion.h"
+#include "../common_src/Evento.h"
 #include <arpa/inet.h>
 
 class LobbyProtocolo{
@@ -17,7 +17,7 @@ public:
 
     void enviar_id_partida(uint32_t id_partida, bool &was_closed);
 
-    Accion recibir_accion(bool &was_closed);
+    Evento recibir_evento(bool &was_closed);
 
     void close();
 

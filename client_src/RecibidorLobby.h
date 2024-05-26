@@ -4,6 +4,7 @@
 #include "LobbyProtocolo.h"
 #include "../common_src/thread.h"
 #include "../common_src/Accion.h"
+#include "../common_src/Evento.h"
 
 class RecibidorLobby : public Thread{
 private:

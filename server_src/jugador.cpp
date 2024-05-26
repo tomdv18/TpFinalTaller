@@ -6,7 +6,6 @@ Jugador::Jugador(uint32_t id, Socket skt, MonitorPartidas &monitor_partidas) :
                     protocolo_servidor(std::move(skt)),
                     queue_jugador(1000),
                     recibidor_jugador(&protocolo_servidor, &monitor_partidas, &queue_jugador, id),
-                    //enviador_jugador(&protocolo_servidor, &queue_jugador,id),
                     esta_jugando(true){
 
     

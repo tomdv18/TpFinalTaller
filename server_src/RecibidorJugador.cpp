@@ -1,7 +1,7 @@
 #include "RecibidorJugador.h"
 
 
-RecibidorJugador::RecibidorJugador(ProtocoloServidor *protocolo_servidor, MonitorPartidas *monitor_partidas, Queue<Accion> *queue_jugador, int id)
+RecibidorJugador::RecibidorJugador(ProtocoloServidor *protocolo_servidor, MonitorPartidas *monitor_partidas, Queue<Evento> *queue_jugador, int id)
     : protocolo_servidor(protocolo_servidor),
       monitor_partidas(monitor_partidas),
       queue_acciones(nullptr),
