@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/common_src/socket.cpp
 #include "socket.h"
 
 #include <stdexcept>
@@ -16,6 +17,30 @@
 #include "resolver.h"
 
 Socket::Socket(const char* hostname, const char* servname) {
+=======
+#include <stdio.h>
+#include <assert.h>
+#include <string.h>
+#include <errno.h>
+
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <unistd.h>
+
+#include "socket.h"
+#include "resolver.h"
+#include "liberror.h"
+#include "iostream"
+#include <cstddef>
+
+#include <stdexcept>
+
+Socket::Socket(
+        const char *hostname,
+        const char *servname) {
+>>>>>>> main:common_src/socket.cpp
     Resolver resolver(hostname, servname, false);
 
     int s = -1;
@@ -32,7 +57,11 @@ Socket::Socket(const char* hostname, const char* servname) {
      * una que funcione.
      * */
     while (resolver.has_next()) {
+<<<<<<< HEAD:src/common_src/socket.cpp
         struct addrinfo* addr = resolver.next();
+=======
+        struct addrinfo *addr = resolver.next();
+>>>>>>> main:common_src/socket.cpp
 
         /* Cerramos el socket si nos quedo abierto de la iteración
          * anterior
@@ -85,18 +114,33 @@ Socket::Socket(const char* hostname, const char* servname) {
     if (skt != -1)
         ::close(skt);
 
+<<<<<<< HEAD:src/common_src/socket.cpp
     throw LibError(saved_errno, "socket construction failed (connect to %s:%s)",
                    (hostname ? hostname : ""), (servname ? servname : ""));
 }
 
 Socket::Socket(const char* servname) {
+=======
+    throw LibError(
+            saved_errno,
+            "socket construction failed (connect to %s:%s)",
+            (hostname ? hostname : ""),
+            (servname ? servname : ""));
+}
+
+Socket::Socket(const char *servname) {
+>>>>>>> main:common_src/socket.cpp
     Resolver resolver(nullptr, servname, true);
 
     int s = -1;
     int skt = -1;
     this->closed = true;
     while (resolver.has_next()) {
+<<<<<<< HEAD:src/common_src/socket.cpp
         struct addrinfo* addr = resolver.next();
+=======
+        struct addrinfo *addr = resolver.next();
+>>>>>>> main:common_src/socket.cpp
 
         if (skt != -1)
             ::close(skt);
@@ -182,8 +226,15 @@ Socket::Socket(const char* servname) {
     if (skt != -1)
         ::close(skt);
 
+<<<<<<< HEAD:src/common_src/socket.cpp
     throw LibError(saved_errno, "socket construction failed (listen on %s)",
                    (servname ? servname : ""));
+=======
+    throw LibError(
+            saved_errno,
+            "socket construction failed (listen on %s)",
+            (servname ? servname : ""));
+>>>>>>> main:common_src/socket.cpp
 }
 
 Socket::Socket(Socket&& other) {
@@ -233,10 +284,21 @@ Socket& Socket::operator=(Socket&& other) {
     return *this;
 }
 
+<<<<<<< HEAD:src/common_src/socket.cpp
 int Socket::recvsome(void* data, unsigned int sz, bool* was_closed) {
     chk_skt_or_fail();
     *was_closed = false;
     int s = recv(this->skt, (char*)data, sz, 0);
+=======
+int Socket::recvsome(
+        void *data,
+        unsigned int sz,
+        bool *was_closed) {
+    chk_skt_or_fail();
+    *was_closed = false;
+    int s = recv(this->skt, (char*)data, sz, 0);
+     
+>>>>>>> main:common_src/socket.cpp
     if (s == 0) {
         /*
          * Puede ser o no un error, dependerá del protocolo.
@@ -256,7 +318,14 @@ int Socket::recvsome(void* data, unsigned int sz, bool* was_closed) {
     }
 }
 
+<<<<<<< HEAD:src/common_src/socket.cpp
 int Socket::sendsome(const void* data, unsigned int sz, bool* was_closed) {
+=======
+int Socket::sendsome(
+        const void *data,
+        unsigned int sz,
+        bool *was_closed) {
+>>>>>>> main:common_src/socket.cpp
     chk_skt_or_fail();
     *was_closed = false;
     /*
@@ -308,12 +377,26 @@ int Socket::sendsome(const void* data, unsigned int sz, bool* was_closed) {
     }
 }
 
+<<<<<<< HEAD:src/common_src/socket.cpp
 int Socket::recvall(void* data, unsigned int sz, bool* was_closed) {
+=======
+int Socket::recvall(
+        void *data,
+        unsigned int sz,
+        bool *was_closed) {
+>>>>>>> main:common_src/socket.cpp
     unsigned int received = 0;
     *was_closed = false;
 
     while (received < sz) {
+<<<<<<< HEAD:src/common_src/socket.cpp
         int s = recvsome((char*)data + received, sz - received, was_closed);
+=======
+        int s = recvsome(
+                (char*)data + received,
+                sz - received,
+                was_closed);
+>>>>>>> main:common_src/socket.cpp
 
         if (s <= 0) {
             /*
@@ -328,7 +411,15 @@ int Socket::recvall(void* data, unsigned int sz, bool* was_closed) {
              * */
             assert(s == 0);
             if (received)
+<<<<<<< HEAD:src/common_src/socket.cpp
                 throw LibError(EPIPE, "socket received only %d of %d bytes", received, sz);
+=======
+                throw LibError(
+                        EPIPE,
+                        "socket received only %d of %d bytes",
+                        received,
+                        sz);
+>>>>>>> main:common_src/socket.cpp
             else
                 return 0;
         } else {
@@ -339,30 +430,58 @@ int Socket::recvall(void* data, unsigned int sz, bool* was_closed) {
             received += s;
         }
     }
+<<<<<<< HEAD:src/common_src/socket.cpp
 
+=======
+>>>>>>> main:common_src/socket.cpp
     return sz;
 }
 
 
+<<<<<<< HEAD:src/common_src/socket.cpp
 int Socket::sendall(const void* data, unsigned int sz, bool* was_closed) {
+=======
+int Socket::sendall(
+        const void *data,
+        unsigned int sz,
+        bool *was_closed) {
+>>>>>>> main:common_src/socket.cpp
     unsigned int sent = 0;
     *was_closed = false;
 
     while (sent < sz) {
+<<<<<<< HEAD:src/common_src/socket.cpp
         int s = sendsome((char*)data + sent, sz - sent, was_closed);
+=======
+        int s = sendsome(
+                (char*)data + sent,
+                sz - sent,
+                was_closed);
+>>>>>>> main:common_src/socket.cpp
 
         /* Véase los comentarios de `Socket::recvall` */
         if (s <= 0) {
             assert(s == 0);
             if (sent)
+<<<<<<< HEAD:src/common_src/socket.cpp
                 throw LibError(EPIPE, "socket sent only %d of %d bytes", sent, sz);
+=======
+                throw LibError(
+                        EPIPE,
+                        "socket sent only %d of %d bytes",
+                        sent,
+                        sz);
+>>>>>>> main:common_src/socket.cpp
             else
                 return 0;
         } else {
             sent += s;
         }
     }
+<<<<<<< HEAD:src/common_src/socket.cpp
 
+=======
+>>>>>>> main:common_src/socket.cpp
     return sz;
 }
 
@@ -421,8 +540,15 @@ Socket::~Socket() {
 
 void Socket::chk_skt_or_fail() const {
     if (skt == -1) {
+<<<<<<< HEAD:src/common_src/socket.cpp
         throw std::runtime_error("socket with invalid file descriptor (-1), "
                                  "perhaps you are using a *previously moved* "
                                  "socket (and therefore invalid).");
+=======
+        throw std::runtime_error(
+        "socket with invalid file descriptor (-1), "
+        "perhaps you are using a *previously moved* "
+        "socket (and therefore invalid).");
+>>>>>>> main:common_src/socket.cpp
     }
 }

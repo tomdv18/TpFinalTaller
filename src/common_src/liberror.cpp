@@ -17,6 +17,7 @@
 #undef _GNU_SOURCE
 #undef GNU_SOURCE
 
+<<<<<<< HEAD:src/common_src/liberror.cpp
 #include "liberror.h"
 
 #include <cstdarg>
@@ -24,6 +25,14 @@
 #include <cstring>
 
 #include <errno.h>
+=======
+#include <errno.h>
+#include <cstdio>
+#include <cstdarg>
+#include <cstring>
+
+#include "liberror.h"
+>>>>>>> main:common_src/liberror.cpp
 
 LibError::LibError(int error_code, const char* fmt, ...) noexcept {
     /* Aquí empieza la magia arcana proveniente de C.
@@ -105,16 +114,29 @@ LibError::LibError(int error_code, const char* fmt, ...) noexcept {
      * y es exactamente lo que queremos: queremos escribir a continuación
      * de lo escrito por `vsnprintf` pisándole el `\0`.
      * */
+<<<<<<< HEAD:src/common_src/liberror.cpp
     strerror_r(error_code, msg_error + s, sizeof(msg_error) - s);
+=======
+    strerror_r(error_code, msg_error+s, sizeof(msg_error)-s);
+>>>>>>> main:common_src/liberror.cpp
 
     /*
      * `strerror_r` garantiza que el string termina siempre en un `\0`
      * sin embargo permitime ser un poco paranoico y asegurarme que
      * realmente hay un `\0` al final.
      * */
+<<<<<<< HEAD:src/common_src/liberror.cpp
     msg_error[sizeof(msg_error) - 1] = 0;
 }
 
 const char* LibError::what() const noexcept { return msg_error; }
+=======
+    msg_error[sizeof(msg_error)-1] = 0;
+}
+
+const char* LibError::what() const noexcept {
+    return msg_error;
+}
+>>>>>>> main:common_src/liberror.cpp
 
 LibError::~LibError() {}
