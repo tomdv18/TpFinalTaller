@@ -19,6 +19,7 @@ class Cliente {
 private:
     Socket skt;        
     ProtocoloCliente protocolo_cliente;
+    
 public:
     /**
      * Constructor de la clase Cliente.
