@@ -3,8 +3,6 @@
 
 #include <iostream>
 #include <vector>
-#include "accion_juego.h"
-
 struct __attribute__((packed)) EventoPersonaje{
 
     uint32_t id_jugador;
@@ -16,19 +14,6 @@ struct __attribute__((packed)) EventoPersonaje{
 
 struct Evento{
     std::vector<EventoPersonaje> eventos_personaje;
-    AccionJuego accion_juego;
-
 };
-
-
-
-
-
-
-
-
-
-
-
 
 #endif
