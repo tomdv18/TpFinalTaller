@@ -1,27 +1,28 @@
 #include <iostream>
 #include <string>
+#include "cliente.h"
+#include <SDL2/SDL.h>
 
+#define ERROR 1
+#define SUCCESS 0
 
 int main(int argc, char* argv[]) {
     try {
-        if (argc == 3) {
-            const std::string hostname = std::string(argv[1]);
-            const std::string servname = std::string(argv[2]);
-            //Client client(hostname, servname);
-            //client.execute();
-            //client.shutdown();
-            return 0;
-        } else {
-            std::cerr << "Bad program call. Expected " << argv[0] << " <hostname> <servername>"
-                      << std::endl;
-            return 1;
+        if (!Cliente::verificar_argumentos(argc, argv)) {
+            return ERROR;
         }
-    } catch (const std::exception& err) {
-        std::cerr << "Something went wrong and an exception was caught: " << err.what()
-                  << std::endl;
+        const char* hostname = argv[1];
+        const char* servname = argv[2];
+        if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
         return 1;
-    } catch (...) {
-        std::cerr << "Something went wrong and an unknown exception was caught." << std::endl;
-        return 1;
+        }
+
+        Cliente cliente(hostname, servname);
+        cliente.comunicarse_con_el_servidor();
+    }catch (...) {
+        // Loggear el error.
+        return ERROR;
     }
+    return SUCCESS;
 }

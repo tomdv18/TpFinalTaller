@@ -74,6 +74,11 @@ ifdef threads
 LDFLAGS += -pthread
 endif
 
+# Linkea con SDL2 y SDL2_image de ser necesario.
+ifdef sdl
+LDFLAGS += -lSDL2 -lSDL2_image
+endif
+
 ifdef static
 LDFLAGS += -static
 endif
