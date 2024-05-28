@@ -9,7 +9,7 @@ void Servidor::run(){
     while(std::cin.get() != 'q'){
         /*Esperando mensaje de salida*/
     }
-    
+    std::cout << "saliendo" << std::endl;
     skt_servidor.shutdown(SHUT_RDWR);
     skt_servidor.close();
     aceptador.join();

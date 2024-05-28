@@ -30,12 +30,14 @@ Queue<Accion>* Partida::unir_jugador(uint32_t id_jugador, Queue<Evento> *queue_j
         map_jugadores[id_jugador] = queue_jugador;
         return obtener_queue();
     }
+    std::cout << "PARTIDA LLENA" << std::endl;
     return nullptr;
 }
 
 bool Partida::borrar_jugador(uint32_t id_jugador){
     if (map_jugadores.find(id_jugador) != map_jugadores.end()) {
         map_jugadores.erase(id_jugador);
+        logica_partida.abandonar_partida(id_jugador);
     }
 
     if (map_jugadores.empty()) {
@@ -65,8 +67,8 @@ void Partida::run(){
             logica_partida.ejecutar(accion);
             std::cout << "ACCION " << accion.codigo << std::endl;
         }
-    
 
+        
         logica_partida.actualizar_partida();
 
         Evento snapshot =  logica_partida.obtener_snapshot();
@@ -82,6 +84,7 @@ void Partida::run(){
             }
         }
         
+        
             
             
         
@@ -94,4 +97,6 @@ void Partida::run(){
 }
 
 
-Partida::~Partida(){}
+Partida::~Partida(){
+    std::cout << "PARTIDA JOINEADA" << std::endl;
+}

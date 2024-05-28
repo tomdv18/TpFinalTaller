@@ -23,6 +23,8 @@ public:
 
     void enviar_lista_partidas(MonitorPartidas monitor_partidas, bool &was_closed);
 
+    void close();
+
     ~ProtocoloServidor();
 
 private:
