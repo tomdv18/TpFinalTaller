@@ -1,18 +1,22 @@
 #include "enviadorJugador.h"
 
 
-EnviadorJugador::EnviadorJugador(ProtocoloServidor *protocolo_servidor, Queue<Evento> *queue_jugador,uint32_t id) :
+EnviadorJugador::EnviadorJugador(ProtocoloServidor *protocolo_servidor, Queue<Evento> *queue_jugador,
+uint32_t id, std::atomic<bool> &en_partida, std::atomic<bool> &conectado) :
             protocolo_servidor(protocolo_servidor),
             queue_jugador(queue_jugador),
-            id(id){
+            id(id),
+            en_partida(en_partida),
+            conectado(conectado)
+            {
 
 }
 
 
 void EnviadorJugador::run(){
-   
     bool was_closed = false;
-    while(_keep_running){
+    // Deberia correr mientas el jugador este conectado al servidor
+    while(conectado){ 
         try{
             try{
                 Evento evento = queue_jugador->pop();
@@ -27,9 +31,13 @@ void EnviadorJugador::run(){
         }
     }
 
+    // Cierro todo por las dudas
+    en_partida = false;
+    conectado = false;
+
 }
 
 
 EnviadorJugador::~EnviadorJugador(){
-    
+    std::cout << "SENDER JOINEADO " << std::endl;
 }

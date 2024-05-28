@@ -18,8 +18,10 @@ private:
 
     RecibidorJugador recibidor_jugador;
 
+    std::atomic<bool> en_partida;
 
-    std::atomic<bool> esta_jugando;
+    std::atomic<bool> conectado;
+
 
 public:
     Jugador(uint32_t id, Socket skt, MonitorPartidas &monitor_partidas);

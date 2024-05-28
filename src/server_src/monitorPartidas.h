@@ -13,6 +13,8 @@ private:
     
     std::map<uint32_t, Partida*> partidas;
 
+    uint32_t contador_partidas;
+
 public:
     MonitorPartidas();
 
@@ -24,11 +26,11 @@ public:
 
     void borrar_jugador(uint32_t id_jugador);
 
-
     std::map<uint32_t, Partida*> obtener_partidas();
 
+    void borrar_partidas();
+
     // borrar_partida
-    // borrar_jugador
     // borrar_partidas
 
     ~MonitorPartidas();

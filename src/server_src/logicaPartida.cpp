@@ -36,17 +36,27 @@ void LogicaPartida::mover_izquierda(uint32_t id_jugador){
     }
 }
 
+void LogicaPartida::abandonar_partida(uint32_t id_jugador){
+    auto it = map_personajes.find(id_jugador);
+
+    if(it != map_personajes.end()){
+        delete it->second;
+
+        map_personajes.erase(it);
+    }
+}
 
 
 
 void LogicaPartida::agregar_personaje(Accion accion){
-    Personaje *personaje;
+    //Personaje *personaje;
     switch(accion.codigo){
         case JAZZ:{
             std::cout << "CREAR PERSONAJE JAZZ" << std::endl;
-            personaje = new Personaje(accion.id_jugador);    ///new Jazz();
-            map_personajes[accion.id_jugador] = personaje;
-
+            //personaje = new Personaje(accion.id_jugador);    ///new Jazz();
+            if(map_personajes[accion.id_jugador] == nullptr){
+                map_personajes[accion.id_jugador] = new Personaje(accion.id_jugador);
+            }
             break;
         }
         default:
@@ -79,5 +89,7 @@ Evento LogicaPartida::obtener_snapshot(){
 
 
 LogicaPartida::~LogicaPartida(){
-    
+    for(auto &par : map_personajes){
+        delete par.second;
+    }
 }

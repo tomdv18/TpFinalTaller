@@ -5,10 +5,9 @@ Jugador::Jugador(uint32_t id, Socket skt, MonitorPartidas &monitor_partidas) :
                     id(id),
                     protocolo_servidor(std::move(skt)),
                     queue_jugador(1000),
-                    recibidor_jugador(&protocolo_servidor, &monitor_partidas, &queue_jugador, id),
-                    esta_jugando(true){
-
-    
+                    recibidor_jugador(&protocolo_servidor, &monitor_partidas, &queue_jugador, id, std::ref(en_partida), std::ref(conectado)),
+                    en_partida(false),
+                    conectado(true){
 
 
     /*
@@ -22,18 +21,22 @@ Jugador::Jugador(uint32_t id, Socket skt, MonitorPartidas &monitor_partidas) :
 }
 
 bool Jugador::esta_vivo(){
-    return recibidor_jugador.is_alive();
+    return conectado;
 }
 
 
 void Jugador::join(){
     recibidor_jugador.join();
-    //enviador_jugador.join();
+    recibidor_jugador.join_enviador();
 }
 
 void Jugador::stop(){
-    recibidor_jugador.stop();
-    //enviador_jugador.stop();
+    en_partida = false;  // Controla si el jugador esta en una partida
+    conectado = false; // Controla si el jugador esta en el lobby + partida
+
+    //protocolo_servidor.close();
+
+    //queue_jugador.close();
 }
 
 

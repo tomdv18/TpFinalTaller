@@ -1,12 +1,13 @@
 #include "monitorPartidas.h"
 
 
-MonitorPartidas::MonitorPartidas(){}
+MonitorPartidas::MonitorPartidas() : contador_partidas(0){}
 
 
 Queue<Accion>* MonitorPartidas::crear_partida(uint32_t id_creador,uint8_t cant_jugadores, Queue<Evento> *queue_jugador){
     Partida *nueva_partida = new Partida(id_creador, cant_jugadores, (uint32_t)partidas.size(), queue_jugador);
-    partidas.emplace(partidas.size(),nueva_partida);
+    partidas.emplace(contador_partidas,nueva_partida);
+    contador_partidas++;
     std::cout << "\nPARTIDA CREADA POR EL JUGADOR  " << id_creador << std::endl;
     std::cout << "CANTIDAD DE JUGADORES " << (int)cant_jugadores << std::endl;
     // Empiezo hilo partida
@@ -55,6 +56,15 @@ void MonitorPartidas::borrar_jugador(uint32_t id_jugador){
             ++it;
         }
     }
+}
+
+void MonitorPartidas::borrar_partidas(){
+    for(auto& par : partidas){
+        par.second->stop();
+        par.second->join();
+        delete par.second;
+    }
+    partidas.clear();
 }
 
 std::map<uint32_t, Partida*> MonitorPartidas::obtener_partidas(){

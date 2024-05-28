@@ -28,13 +28,20 @@ private:
 
     uint32_t id;
 
+    std::atomic<bool> &en_partida;
+
+    std::atomic<bool> &conectado;
+
+
 public:
 
-    RecibidorJugador(ProtocoloServidor *protocolo_servidor, MonitorPartidas *monitor_partidas, Queue<Evento> *queue_jugador,int id);
+    RecibidorJugador(ProtocoloServidor *protocolo_servidor,
+     MonitorPartidas *monitor_partidas, Queue<Evento> *queue_jugador,
+     int id, std::atomic<bool> &en_partida, std::atomic<bool> &conectado);
 
     void run() override;
 
-    void leer_lobby(bool &partida_encontrada, bool &was_closed);
+    void leer_lobby(std::atomic<bool>  &partida_encontrada, bool &was_closed);
 
     void join_enviador();
 

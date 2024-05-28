@@ -72,8 +72,11 @@ void ProtocoloServidor::enviar_lista_partidas(MonitorPartidas monitor_partidas, 
     }
 }
 
-
-ProtocoloServidor::~ProtocoloServidor(){
+void ProtocoloServidor::close(){
     skt_jugador.shutdown(SHUT_RDWR);
     skt_jugador.close();
+}
+
+ProtocoloServidor::~ProtocoloServidor(){
+
 }
