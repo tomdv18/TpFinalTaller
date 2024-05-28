@@ -8,7 +8,6 @@ void Aceptador::run(){
     while(_keep_running){
         try{
             Socket skt_jugador = skt_servidor->accept();
-            
             agregar_jugador(std::move(skt_jugador), monitor_partidas);
             verificar_jugadores();
         }catch(...){
@@ -16,7 +15,6 @@ void Aceptador::run(){
         }
         
     }
-
     monitor_partidas.borrar_partidas();
     borrar_jugadores();
 }

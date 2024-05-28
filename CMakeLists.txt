@@ -1,4 +1,3 @@
-# Ni idea que version sea mejor aca
 cmake_minimum_required(VERSION 3.16)
 
 project(JazzJackRabbit2

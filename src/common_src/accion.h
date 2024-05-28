@@ -6,26 +6,28 @@
 
 // Acciones posibles del jugador
 enum CodigoAccion : uint8_t{
-    CREAR = 'C',    // Crear una partida
-    UNIRSE = 'U',   // Unirse a una partida
-    SALIR = 'Q',    // Salir del lobby, cerrar juego
-    DISPARAR = 'K',   // Jugador dispara
-    SALTAR = 'W',     // Jugador salta
-    DERECHA = 'D',    // Jugador se mueve a derecha
-    IZQUIERDA = 'A',  // Jugador se mueve a izquierda
-    RECARGAR = 'R',   // Jugador Recarga el arma
-    CORRER = 'J',     // JUgador corre
-    CORRER_RAPIDO = 'L',  // Jugador corre rapido
-    ESPECIAL = 'I',    // Jugador usa habilidad especial
-    LOBBY = 'T',    // Volver al lobby
+    CREAR,    // Crear una partida
+    UNIRSE,   // Unirse a una partida
+    SALIR,    // Salir del lobby, cerrar juego
+    DISPARAR,   // Jugador dispara
+    SALTAR,     // Jugador salta
+    DERECHA,    // Jugador se mueve a derecha
+    IZQUIERDA,  // Jugador se mueve a izquierda
+    RECARGAR,   // Jugador Recarga el arma
+    CORRER,     // JUgador corre
+    CORRER_RAPIDO,  // Jugador corre rapido
+    ESPECIAL,    // Jugador usa habilidad especial
+    LOBBY,    // Volver al lobby
+
+    ARRIBA,
+    ABAJO,
+
+    JAZZ, 
+    SPAZ,
+    LORI,
 
 
-    JAZZ = '1', 
-    SPAZ = '2',
-    LORI = '3',
-
-
-    LIST_P = 'P'   // Posible lista de partidas
+    LIST_P   // Posible lista de partidas
 };
 
 
@@ -44,6 +46,10 @@ struct __attribute__((packed)) InfoPartida{
     uint8_t jugadores;
     uint8_t max_jugadores;
 };
+
+
+#define EXITO 0
+#define FALLO 1
 
 
 #endif

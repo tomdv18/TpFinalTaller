@@ -128,6 +128,10 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>  &partida_encontrada, bool &
         accion.codigo = codigo;
         partida_encontrada = true;
         this->queue_acciones->push(accion);
+
+        protocolo_servidor->enviar_confirmacion(EXITO, was_closed);
+    }else{
+        protocolo_servidor->enviar_confirmacion(FALLO, was_closed);
     }
 }
 

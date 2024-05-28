@@ -32,6 +32,12 @@ uint8_t ProtocoloServidor::obtener_accion(bool &was_closed){
     return codigo;
 }
 
+
+void ProtocoloServidor::enviar_confirmacion(uint8_t codigo, bool &was_closed){
+    skt_jugador.sendall(&codigo,sizeof(codigo), &was_closed);
+}
+
+
 void ProtocoloServidor::enviar_evento(bool &was_closed,Evento evento){
     uint8_t cant_personajes = (uint8_t)evento.eventos_personaje.size();
     skt_jugador.sendall(&cant_personajes, sizeof(cant_personajes), &was_closed);

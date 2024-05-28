@@ -21,6 +21,8 @@ public:
 
     uint32_t leer_id_partida(bool &was_closed);
 
+    void enviar_confirmacion(uint8_t codigo, bool &was_closed);
+
     void enviar_lista_partidas(MonitorPartidas monitor_partidas, bool &was_closed);
 
     void close();

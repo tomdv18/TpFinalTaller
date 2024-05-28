@@ -11,6 +11,7 @@
 
 class Lobby{
 private:
+    Socket skt;
 
     LobbyProtocolo lobby_protocolo;
 
@@ -19,9 +20,20 @@ private:
 public:
     Lobby(const std::string &hostname, const std::string &servname);
 
-    void procesar_lobby(bool &was_closed, bool &jugando);
+    bool crear_partida(uint8_t max_jugadores);
 
-    void main();
+    bool unirse_partida(uint32_t codigo_partida);
+
+    void elegir_personaje(uint8_t personaje);
+
+    void close();
+
+    Socket& obtener_socket();
+
+
+    //void procesar_lobby(bool &was_closed, bool &jugando);
+
+    //void main();
 
 
 };

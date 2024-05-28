@@ -6,7 +6,7 @@
 #include "renderizado.h"
 #include "recibidor_cliente.h"
 #include "../common_src/queue.h"
-#include "../common_src/accion_juego.h"
+#include "../common_src/accion.h"
 #include "../common_src/evento.h"
 
 /**
@@ -17,7 +17,7 @@
 
 class Cliente {
 private:
-    Socket skt;        
+    Socket &skt;        
     ProtocoloCliente protocolo_cliente;
     
 public:
@@ -27,7 +27,7 @@ public:
      * @param hostname El nombre del host al que se conectará el cliente.
      * @param servname El nombre del servicio o puerto al que se conectará el cliente.
      */
-    explicit Cliente(const char* hostname, const char* servname);
+    explicit Cliente(Socket &skt);
 
     /**
      * Verifica si se proporcionan los argumentos esperados.

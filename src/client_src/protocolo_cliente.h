@@ -3,7 +3,7 @@
 
 #include <string>
 #include "../common_src/socket.h"
-#include "../common_src/accion_juego.h"
+#include "../common_src/accion.h"
 #include "../common_src/evento.h"
 
 /**
@@ -24,7 +24,7 @@ public:
      */
     explicit ProtocoloCliente(Socket& skt);
 
-    Evento deserializar(uint8_t byte);
+    //Evento deserializar(uint8_t byte);
 
 
     /**
@@ -33,7 +33,7 @@ public:
      * @param accion Referencia de la accion a enviar.
      * @return false en caso de no poder enviar, true caso contrario.
      */
-    bool enviar_accion_juego(AccionJuego &accion_juego);
+    bool enviar_accion_juego(uint8_t accion_juego);
 
     /**
      * Deserializa y recibe el evento del servidor.
@@ -41,7 +41,7 @@ public:
      * @param evento Referencia del evento a msg.
      * @return false en caso de no poder recibir, true caso contrario.
      */
-    bool recibir_evento(Evento &evento);
+    //bool recibir_evento(Evento &evento);
 
     /**
      * Desabilito las copias

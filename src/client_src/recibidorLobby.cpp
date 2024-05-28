@@ -6,6 +6,7 @@ RecibidorLobby::RecibidorLobby(LobbyProtocolo *lobby_protocolo) : lobby_protocol
 
 
 void RecibidorLobby::run(){
+    /*
     bool was_closed = false;
     while(_keep_running){
         Evento evento;
@@ -23,6 +24,7 @@ void RecibidorLobby::run(){
         }
         
     }
+    */
 }
 
 

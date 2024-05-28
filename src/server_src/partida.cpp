@@ -65,7 +65,7 @@ void Partida::run(){
 
         while(queue_acciones.try_pop(accion)){
             logica_partida.ejecutar(accion);
-            std::cout << "ACCION " << accion.codigo << std::endl;
+            std::cout << "ACCION " << (int) accion.codigo << std::endl;
         }
 
         

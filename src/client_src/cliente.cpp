@@ -5,8 +5,8 @@
 
 #define MAX_EVENTOS 256 // Numero a definir
 
-Cliente::Cliente(const char* hostname, const char* servname):
-skt(hostname, servname), protocolo_cliente(skt)
+Cliente::Cliente(Socket &skt):
+skt(skt), protocolo_cliente(skt)
 {}
 
 bool Cliente::verificar_argumentos(int argc, char* args[]) {
@@ -20,9 +20,9 @@ bool Cliente::verificar_argumentos(int argc, char* args[]) {
 /**
  * Lee entrada standar (estando en el juego).
 */
-static AccionJuego leer_entrada_estandar(SDL_Event &event){
-    AccionJuego accion_juego = NINGUNA; // En teoria, nunca debe valer esto, capaz conviene un map
-    
+static CodigoAccion leer_entrada_estandar(SDL_Event &event){
+    //AccionJuego accion_juego = NINGUNA; // En teoria, nunca debe valer esto, capaz conviene un map
+    CodigoAccion accion_juego;
     // Ver como leer teclas con SDL (Santiago)
     /**
      * if(event.key.keysym.sym == LEFT) {
@@ -31,16 +31,16 @@ static AccionJuego leer_entrada_estandar(SDL_Event &event){
     */
 
     if(event.key.keysym.sym == SDLK_RIGHT) {
-        accion_juego = AccionJuego::DERECHA;
+        accion_juego = CodigoAccion::DERECHA;
         return accion_juego;
     } else if (event.key.keysym.sym == SDLK_LEFT) {
-        accion_juego = AccionJuego::IZQUIERDA;
+        accion_juego = CodigoAccion::IZQUIERDA;
         return accion_juego;
     } else if (event.key.keysym.sym == SDLK_UP) {
-        accion_juego = AccionJuego::ARRIBA;
+        accion_juego = CodigoAccion::ARRIBA;
         return accion_juego;
     } else if (event.key.keysym.sym == SDLK_DOWN) {
-        accion_juego = AccionJuego::ABAJO;
+        accion_juego = CodigoAccion::ABAJO;
         return accion_juego;
     }
     // Asi con las demas acciones...
@@ -49,35 +49,44 @@ static AccionJuego leer_entrada_estandar(SDL_Event &event){
 
 void Cliente::comunicarse_con_el_servidor() {
     Queue<Evento> queue_eventos(MAX_EVENTOS);
-    RecibidorCliente recibidor_cliente(skt, queue_eventos);
+    //RecibidorCliente recibidor_cliente(skt, queue_eventos);
     Renderizado renderizado(queue_eventos); 
     
     SDL_Event event;
-    recibidor_cliente.start();
+    //recibidor_cliente.start();
     renderizado.start();
     bool running = true;
     while(running) {
+        //std::cout << "LEYENDO EVENTOS" << std::endl;
         while(SDL_PollEvent(&event)) {
 
             if (event.type == SDL_QUIT) {
+                protocolo_cliente.enviar_accion_juego(LOBBY);
                 running = false;
                 break;
             }
 
-            if(event.type == SDL_KEYDOWN) {
-
-                AccionJuego accion_juego = leer_entrada_estandar(event);
-                if (accion_juego == AccionJuego::SALIR) {
-                    break;
+            switch(event.type){
+                case SDL_KEYDOWN: {
+                    SDL_KeyboardEvent &key = event.key;
+                    switch (key.keysym.sym)
+                    {
+                    case SDLK_RIGHT:
+                        protocolo_cliente.enviar_accion_juego(DERECHA);
+                        break;
+                    case SDLK_LEFT:
+                        protocolo_cliente.enviar_accion_juego(IZQUIERDA);
+                        break;
+                    default:
+                        break;
+                    }
                 }
-                if(!protocolo_cliente.enviar_accion_juego(accion_juego)) {
+                default:
                     break;
-                }
             }
         }
     }
     queue_eventos.close();
-    terminar_comunicacion();
 }
 
 void Cliente::terminar_comunicacion() {

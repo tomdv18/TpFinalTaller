@@ -56,6 +56,9 @@ if(CLIENT)
 	add_subdirectory(${CMAKE_SOURCE_DIR}/lib/libSDL2pp ${CMAKE_SOURCE_DIR}/build/lib/libSDL2pp)
 
 	
+	find_package(SDL2 REQUIRED)
+	include_directories(${SDL2_INCLUDE_DIRS})
+	
 	# Find the QtWidgets library
 	
 	find_package(Qt5Widgets CONFIG REQUIRED)
@@ -79,6 +82,15 @@ if(CLIENT)
 		./client_src/lobbyProtocolo.h
 		./client_src/recibidorLobby.cpp
 		./client_src/recibidorLobby.h
+		./client_src/cliente.h
+		./client_src/cliente.cpp
+		
+		./client_src/recibidor_cliente.cpp
+		./client_src/recibidor_cliente.h
+		./client_src/renderizado.cpp
+		./client_src/renderizado.h
+		./client_src/protocolo_cliente.cpp
+		./client_src/protocolo_cliente.h
 		
 		./common_src/thread.h
 		./common_src/socket.h
@@ -105,10 +117,10 @@ if(CLIENT)
 		#${UIS_HEADERS}
 	)
 	
+	target_link_libraries(jazzcliente PUBLIC Qt5::Widgets Qt5::Core SDL2::SDL2 SDL2::SDL2main)
 	target_include_directories(jazzcliente PRIVATE ${PROJECT_SOURCE_DIR}/src)
 	target_include_directories(jazzcliente PUBLIC ${PROJECT_SOURCE_DIR}/src/client_src)
-	
-	target_link_libraries(jazzcliente PUBLIC Qt5::Widgets Qt5::Core)
+	include_directories(${Qt5Widgets_INCLUDE_DIRS})
 
 	set(CLIENT_OUTPUT_DIR ${CMAKE_BINARY_DIR})
 	set_target_properties(jazzcliente

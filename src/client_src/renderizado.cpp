@@ -32,7 +32,7 @@ SDL_Rect Renderizado::crear_personaje() {
 }
 // Aca habia que mostrar la imagen (Santiago)
 void mostrar_evento(Evento evento) {
-
+    /*
     switch (evento.accion_juego) {
         case AccionJuego::DERECHA:
             std::cout << "El jugador se movio a la derecha" << std::endl;
@@ -50,6 +50,7 @@ void mostrar_evento(Evento evento) {
         default:
             break;
     }
+    */
 }
 
 void Renderizado::run(){
