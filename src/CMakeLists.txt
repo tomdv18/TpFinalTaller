@@ -117,7 +117,7 @@ if(CLIENT)
 		#${UIS_HEADERS}
 	)
 	
-	target_link_libraries(jazzcliente PUBLIC Qt5::Widgets Qt5::Core SDL2::SDL2 SDL2::SDL2main)
+	target_link_libraries(jazzcliente PUBLIC Qt5::Widgets Qt5::Core SDL2pp::SDL2pp SDL2::SDL2main)
 	target_include_directories(jazzcliente PRIVATE ${PROJECT_SOURCE_DIR}/src)
 	target_include_directories(jazzcliente PUBLIC ${PROJECT_SOURCE_DIR}/src/client_src)
 	include_directories(${Qt5Widgets_INCLUDE_DIRS})
