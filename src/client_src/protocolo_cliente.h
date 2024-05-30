@@ -41,7 +41,7 @@ public:
      * @param evento Referencia del evento a msg.
      * @return false en caso de no poder recibir, true caso contrario.
      */
-    //bool recibir_evento(Evento &evento);
+    bool recibir_evento(Evento &evento);
 
     /**
      * Desabilito las copias

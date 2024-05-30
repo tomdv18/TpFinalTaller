@@ -21,22 +21,41 @@ bool ProtocoloCliente::enviar_accion_juego(uint8_t accion_juego) {
     return !was_closed;
 }
 
-/*
-Evento ProtocoloCliente::deserializar(uint8_t byte) {
-    Evento evento;
-    evento.accion_juego = static_cast<AccionJuego>(byte);
-    return evento;
-}
-*/
 // Ver como recibir el evento final
-/*
+
 bool ProtocoloCliente::recibir_evento(Evento &evento) {
     bool was_closed = false;
-    uint8_t byte;
-    skt.recvall(&byte, sizeof(byte), &was_closed);
+    EventoPersonaje event_personaje;
 
-    evento = deserializar(byte);
+    //skt.recvall(&evento,sizeof(evento), &was_closed);
+    uint8_t cant_personajes;
+    skt.recvall(&cant_personajes,sizeof(cant_personajes),&was_closed);
+
+    if(was_closed){
+        return !was_closed;
+    }
+
+    std::vector<EventoPersonaje> eventos_personajes;
+    for(int i = 0; i < cant_personajes; i++){
+        skt.recvall(&event_personaje, sizeof(event_personaje), &was_closed);
+        if(was_closed){
+            return !was_closed;
+        }
+        eventos_personajes.emplace_back(event_personaje);
+    }
+    
+    evento.eventos_personaje = eventos_personajes;
+
+    /*
+        La idea es recibir la cantidad de personajes q hay
+        Y hago recvall de eventos de personaje por esa cantidad
+
+        Repetir lo mismo para los demas eventos e ir llenando el struct evento
+
+        Separar todo eso en diferentes funciones
+    
+    */
 
     return !was_closed;
 }
-*/
+

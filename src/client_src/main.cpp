@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
             }
             Cliente cliente(lobby.obtener_socket());
             cliente.comunicarse_con_el_servidor();
-            lobby.close();
+            //lobby.close();
             //cliente.comunicarse_con_el_servidor();
             //lobby.main();
 

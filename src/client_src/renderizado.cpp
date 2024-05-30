@@ -32,29 +32,18 @@ SDL_Rect Renderizado::crear_personaje() {
 }
 // Aca habia que mostrar la imagen (Santiago)
 void mostrar_evento(Evento evento) {
-    /*
-    switch (evento.accion_juego) {
-        case AccionJuego::DERECHA:
-            std::cout << "El jugador se movio a la derecha" << std::endl;
-            break;
-        case AccionJuego::IZQUIERDA:
-            std::cout << "El jugador se movio a la izquierda" << std::endl;
-            break;
-        case AccionJuego::ABAJO:
-        std::cout << "El jugador se movio a abajo" << std::endl;
-            break;
-        case AccionJuego::ARRIBA:
-        std::cout << "El jugador se movio a la arriba" << std::endl;
-            break;
-        // Y asi con las demas acciones de juego
-        default:
-            break;
+
+    for(EventoPersonaje p: evento.eventos_personaje){
+        // Por cada personajes que recorres, lo graficas (Santiago)
+        std::cout << "PERSONAJE DE " << p.id_jugador << std::endl;
+        std::cout << "VIDA " << p.vida << std::endl;
+        std::cout << "EN LA POSICION " << "(" << p.posicion_x << "," << p.posicion_y << ")" << std::endl;
     }
-    */
 }
 
 void Renderizado::run(){
     Evento evento;
+    /*
     std::cout << this->ventana << std::endl;
     crear_ventana();
     crear_renderizador();
@@ -64,6 +53,7 @@ void Renderizado::run(){
     SDL_SetRenderDrawColor(this->renderizador, 255, 0, 0, 255);
     SDL_RenderFillRect(renderizador, &personaje); // Dibujar el rectángulo
     SDL_RenderPresent(renderizador);
+    */
     
     bool running = true;
     while(running) {

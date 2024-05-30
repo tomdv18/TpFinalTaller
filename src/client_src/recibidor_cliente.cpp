@@ -4,7 +4,7 @@ RecibidorCliente::RecibidorCliente(Socket& skt, Queue<Evento>& queue):
         protocolo_cliente(skt), queue_eventos(queue){}
 
 void RecibidorCliente::run() {
-    /*
+    
     Evento evento;
     while (true) {
         if (protocolo_cliente.recibir_evento(evento)) {
@@ -18,7 +18,7 @@ void RecibidorCliente::run() {
             break;
         }
     }
-    */
+    
 }
 
 RecibidorCliente::~RecibidorCliente() { 

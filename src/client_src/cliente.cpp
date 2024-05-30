@@ -49,15 +49,16 @@ static CodigoAccion leer_entrada_estandar(SDL_Event &event){
 
 void Cliente::comunicarse_con_el_servidor() {
     Queue<Evento> queue_eventos(MAX_EVENTOS);
-    //RecibidorCliente recibidor_cliente(skt, queue_eventos);
+    RecibidorCliente recibidor_cliente(skt, queue_eventos);
     Renderizado renderizado(queue_eventos); 
     
     SDL_Event event;
-    //recibidor_cliente.start();
+    recibidor_cliente.start();
     renderizado.start();
     bool running = true;
     while(running) {
         //std::cout << "LEYENDO EVENTOS" << std::endl;
+        /*
         while(SDL_PollEvent(&event)) {
 
             if (event.type == SDL_QUIT) {
@@ -85,8 +86,20 @@ void Cliente::comunicarse_con_el_servidor() {
                     break;
             }
         }
+        */
+        // Provisional, hasta que ande SDL
+        char tecla = getc(stdin);
+        if (tecla == 'd') {
+            protocolo_cliente.enviar_accion_juego(DERECHA);
+        } else if (tecla == 'a') {
+            protocolo_cliente.enviar_accion_juego(IZQUIERDA);
+        } else if (tecla == 'q') {
+            protocolo_cliente.enviar_accion_juego(SALIR);
+            break;
+        }
     }
     queue_eventos.close();
+    terminar_comunicacion();
 }
 
 void Cliente::terminar_comunicacion() {
