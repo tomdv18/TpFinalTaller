@@ -10,6 +10,8 @@
 #include "../common_src/accion.h"
 #include "../common_src/evento.h"
 
+
+
 /**
  * TDA Cliente.
  * Su función principal es comunicarse con el servidor enviando
@@ -20,6 +22,7 @@ class Cliente {
 private:
     Socket &skt;        
     std::atomic<bool> estado;
+    Renderizado renderizado;
     
 public:
     /**
