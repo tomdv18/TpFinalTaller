@@ -17,6 +17,10 @@ public:
 
     void mover_izquierda();
 
+    void mover_arriba();
+
+    void mover_abajo();
+
     uint32_t obtener_posicionX();
 
     uint32_t obtener_posicionY();
