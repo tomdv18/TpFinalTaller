@@ -30,16 +30,7 @@ SDL_Rect Renderizado::crear_personaje() {
     personaje.w = 52;
     return personaje;
 }
-// Aca habia que mostrar la imagen (Santiago)
-void mostrar_evento(Evento evento) {
 
-    for(EventoPersonaje p: evento.eventos_personaje){
-        // Por cada personajes que recorres, lo graficas (Santiago)
-        std::cout << "PERSONAJE DE " << p.id_jugador << std::endl;
-        std::cout << "VIDA " << p.vida << std::endl;
-        std::cout << "EN LA POSICION " << "(" << p.posicion_x << "," << p.posicion_y << ")" << std::endl;
-    }
-}
 
 void Renderizado::run(){
     Evento evento;
@@ -54,7 +45,7 @@ void Renderizado::run(){
     SDL_RenderFillRect(renderizador, &personaje); // Dibujar el rectángulo
     SDL_RenderPresent(renderizador);
     */
-    
+    /*
     bool running = true;
     while(running) {
  
@@ -68,6 +59,7 @@ void Renderizado::run(){
         }
         
     }
+    */
 }
 
 Renderizado::~Renderizado() { 

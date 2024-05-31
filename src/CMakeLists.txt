@@ -91,6 +91,8 @@ if(CLIENT)
 		./client_src/renderizado.h
 		./client_src/protocolo_cliente.cpp
 		./client_src/protocolo_cliente.h
+		./client_src/enviadorCliente.cpp
+		./client_src/enviadorCliente.h
 		
 		./common_src/thread.h
 		./common_src/socket.h
