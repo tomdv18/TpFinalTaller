@@ -18,12 +18,12 @@ class Renderizado {
     std::unique_ptr<SDL2pp::SDL> sdl;
     std::unique_ptr<SDL2pp::Window> window;
     std::unique_ptr<SDL2pp::Renderer> render;
-    PersonajeView personajeView;
+    int cantidad_jugadores;
+    PersonajeView *personajeView;
 
-    
     public:
 
-    Renderizado() = default;
+    Renderizado();
     virtual ~Renderizado();
 
     public: 
@@ -32,7 +32,11 @@ class Renderizado {
 
     void crear_ventana_y_render(const std::string& title, int width, int height);
 
+    void crear_personaje();
+
     void renderizar(Evento evento);
+
+    void asociar_render(SDL2pp::Renderer* render);
 
 };
 
