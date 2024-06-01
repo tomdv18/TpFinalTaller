@@ -59,7 +59,9 @@ void Renderizado::crear_ventana_y_render(const std::string& title, int width, in
 }
 
 void Renderizado::crear_personaje() {
-    SDL2pp::Texture imagen_Jazz(*render, SDL2pp::Surface("../src/client_src/Images/jazz_caminando.png").SetColorKey(true, 0x000000));
+    SDL2pp::Surface surface_Jazz("../src/client_src/Images/jazz_caminando.png");
+    surface_Jazz.SetColorKey(true, SDL_MapRGB(surface_Jazz.Get()->format, 44, 102, 150));
+    SDL2pp::Texture imagen_Jazz(*render, surface_Jazz);
     this->personajeView = new PersonajeView(std::move(imagen_Jazz));
     std::cout << "Se creo el personaje"<< std::endl;
 

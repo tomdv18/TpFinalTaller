@@ -31,7 +31,7 @@ void Animacion::acualizar(float dt) {
 void Animacion::animar(SDL2pp::Renderer &render, SDL2pp::Rect dest, SDL_RendererFlip &flipType) {
     
     render.Copy(this->textura,
-    SDL2pp::Rect(1 + (1 + this->size) * this->frame_actual, 0, this->size, this->size),
+    SDL2pp::Rect(57 * this->frame_actual, 0, 57, textura.GetHeight()),
     dest, 0.0, SDL2pp::NullOpt, flipType);
 
 }

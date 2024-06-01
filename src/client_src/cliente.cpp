@@ -102,7 +102,7 @@ void Cliente::comunicarse_con_el_servidor() {
             auto fin = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double, std::milli> tiempo = fin - inicio;
             double tiempo_transcurrido = tiempo.count();
-            double frames = 15; 
+            double frames = 1000/40.0; // casi el doble del server, asi lo procesa mas rapido y se ve mas fluido
             double tiempo_descanso = frames - tiempo_transcurrido;
 
             if (tiempo_descanso > 0) {
