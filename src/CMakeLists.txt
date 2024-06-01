@@ -89,8 +89,12 @@ if(CLIENT)
 		./client_src/recibidor_cliente.h
 		./client_src/renderizado.cpp
 		./client_src/renderizado.h
+		./client_src/personajeView.h
+		./client_src/personajeView.cpp
 		./client_src/protocolo_cliente.cpp
 		./client_src/protocolo_cliente.h
+		./client_src/enviadorCliente.cpp
+		./client_src/enviadorCliente.h
 		
 		./common_src/thread.h
 		./common_src/socket.h

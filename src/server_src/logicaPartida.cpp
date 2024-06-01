@@ -13,6 +13,13 @@ void LogicaPartida::ejecutar(Accion accion){
             break;
         case IZQUIERDA:
             mover_izquierda(accion.id_jugador);
+            break;
+        case ARRIBA:
+            mover_arriba(accion.id_jugador);
+            break;
+        case ABAJO:
+            mover_abajo(accion.id_jugador);  
+            break;  
         case LOBBY:
             //abandonar_partida(accion.id_jugador);
         case JAZZ:
@@ -33,6 +40,20 @@ void LogicaPartida::mover_izquierda(uint32_t id_jugador){
     Personaje *personaje = map_personajes[id_jugador];
     if(personaje != nullptr){
         personaje->mover_izquierda();
+    }
+}
+
+void LogicaPartida::mover_arriba(uint32_t id_jugador) {
+    Personaje *personaje = map_personajes[id_jugador];
+    if(personaje != nullptr){
+        personaje->mover_arriba();
+    }
+}
+
+void LogicaPartida::mover_abajo(uint32_t id_jugador) {
+    Personaje *personaje = map_personajes[id_jugador];
+    if(personaje != nullptr){
+        personaje->mover_abajo();
     }
 }
 

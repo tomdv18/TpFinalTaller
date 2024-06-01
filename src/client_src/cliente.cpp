@@ -1,12 +1,15 @@
 #include "cliente.h"
-#include <SDL2/SDL.h>
-
+#include <SDL2pp/SDL2pp.hh>
+#include <unistd.h>
 #include <syslog.h>
 
 #define MAX_EVENTOS 256 // Numero a definir
+#define MAX_ACCIONES 256 // Numero a definir
+#define WIDTH 640
+#define HEIGHT 480
 
 Cliente::Cliente(Socket &skt):
-skt(skt), protocolo_cliente(skt)
+skt(skt), estado(true), renderizado()
 {}
 
 bool Cliente::verificar_argumentos(int argc, char* args[]) {
@@ -17,87 +20,68 @@ bool Cliente::verificar_argumentos(int argc, char* args[]) {
     return true;
 }
 
-/**
- * Lee entrada standar (estando en el juego).
-*/
-static CodigoAccion leer_entrada_estandar(SDL_Event &event){
-    //AccionJuego accion_juego = NINGUNA; // En teoria, nunca debe valer esto, capaz conviene un map
-    CodigoAccion accion_juego;
-    // Ver como leer teclas con SDL (Santiago)
-    /**
-     * if(event.key.keysym.sym == LEFT) {
-     * accion_juego = DERECHA
-     * }
-    */
-
-    if(event.key.keysym.sym == SDLK_RIGHT) {
-        accion_juego = CodigoAccion::DERECHA;
-        return accion_juego;
-    } else if (event.key.keysym.sym == SDLK_LEFT) {
-        accion_juego = CodigoAccion::IZQUIERDA;
-        return accion_juego;
-    } else if (event.key.keysym.sym == SDLK_UP) {
-        accion_juego = CodigoAccion::ARRIBA;
-        return accion_juego;
-    } else if (event.key.keysym.sym == SDLK_DOWN) {
-        accion_juego = CodigoAccion::ABAJO;
-        return accion_juego;
+bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
+    SDL_Event evento;
+    while (SDL_PollEvent(&evento)) {
+        switch (evento.type) {
+            case SDL_KEYDOWN: { // Presiono la tecla
+                SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)evento;
+                switch (keyEvent.keysym.sym) {
+                    case SDLK_q:
+                        return false;
+                    case SDLK_d:
+                        queue_accion.try_push(DERECHA);
+                        break;
+                    case SDLK_a:
+                        queue_accion.try_push(IZQUIERDA);
+                        break;
+                    case SDLK_w:
+                        queue_accion.try_push(ARRIBA);
+                        break;
+                    case SDLK_s:
+                        queue_accion.try_push(ABAJO);
+                        break;
+                }
+                break; // Salir del bloque SDL_KEYDOWN
+            } // Ver que pasa si deja de presionar una tecla (otra accion?)
+            case SDL_QUIT:
+                return false;
+        }
     }
-    // Asi con las demas acciones...
-    return accion_juego;
+    return true;
 }
 
 void Cliente::comunicarse_con_el_servidor() {
     Queue<Evento> queue_eventos(MAX_EVENTOS);
-    RecibidorCliente recibidor_cliente(skt, queue_eventos);
-    Renderizado renderizado(queue_eventos); 
-    
-    SDL_Event event;
+    Queue<CodigoAccion> queue_accion(MAX_ACCIONES);
+    RecibidorCliente recibidor_cliente(skt, queue_eventos, estado);
     recibidor_cliente.start();
-    renderizado.start();
-    bool running = true;
-    while(running) {
-        //std::cout << "LEYENDO EVENTOS" << std::endl;
-        /*
-        while(SDL_PollEvent(&event)) {
 
-            if (event.type == SDL_QUIT) {
-                protocolo_cliente.enviar_accion_juego(LOBBY);
-                running = false;
-                break;
-            }
+    this->renderizado.inicializar_SDL2pp();   
+    this->renderizado.crear_ventana_y_render("Juego", WIDTH, HEIGHT);
 
-            switch(event.type){
-                case SDL_KEYDOWN: {
-                    SDL_KeyboardEvent &key = event.key;
-                    switch (key.keysym.sym)
-                    {
-                    case SDLK_RIGHT:
-                        protocolo_cliente.enviar_accion_juego(DERECHA);
-                        break;
-                    case SDLK_LEFT:
-                        protocolo_cliente.enviar_accion_juego(IZQUIERDA);
-                        break;
-                    default:
-                        break;
-                    }
-                }
-                default:
-                    break;
-            }
+
+    EnviadorCliente enviador_cliente(skt, queue_accion);
+    enviador_cliente.start();
+    try {
+
+        while (estado){
+            estado = atrapar_eventos_entrada(queue_accion);
+            
+            Evento evento;
+            queue_eventos.try_pop(evento);
+            
+            renderizado.renderizar(evento);
+
+            // la cantidad de segundos que debo dormir se debe ajustar en función
+            // de la cantidad de tiempo que demoró el atrapar_eventos_entrada, efectuar_evento y renderizar?
+            usleep(500000);
         }
-        */
-        // Provisional, hasta que ande SDL
-        char tecla = getc(stdin);
-        if (tecla == 'd') {
-            protocolo_cliente.enviar_accion_juego(DERECHA);
-        } else if (tecla == 'a') {
-            protocolo_cliente.enviar_accion_juego(IZQUIERDA);
-        } else if (tecla == 'q') {
-            protocolo_cliente.enviar_accion_juego(SALIR);
-            break;
-        }
-    }
+    } catch (std::exception& e) {
+        std::cout << e.what() << std::endl;
+        return;
+    }    
+    queue_accion.close();
     queue_eventos.close();
     terminar_comunicacion();
 }

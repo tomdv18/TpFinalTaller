@@ -1,5 +1,5 @@
-#ifndef RECIBIDOR_CLIENTE_H
-#define RECIBIDOR_CLIENTE_H
+#ifndef ENVIADOR_CLIENTE_H
+#define ENVIADOR_CLIENTE_H
 
 #include "../common_src/thread.h"
 #include "../common_src/queue.h"
@@ -7,14 +7,13 @@
 
 #include "protocolo_cliente.h"
 
-class RecibidorCliente: public Thread {
+class EnviadorCliente: public Thread {
     private:
     ProtocoloCliente protocolo_cliente;
-    Queue<Evento> &queue_eventos;
-    std::atomic<bool> &estado_cliente; // Representa el estado del cliente
+    Queue<CodigoAccion>& queue_acciones;
     
     public:
-    explicit RecibidorCliente(Socket& skt, Queue<Evento>& queue, std::atomic<bool>& estado);
+    explicit EnviadorCliente(Socket& skt, Queue<CodigoAccion>& queue);
 
     /**
      * Ejecuta el hilo encargado de recibir todo
@@ -25,7 +24,7 @@ class RecibidorCliente: public Thread {
     /**
      * Destructor de la clase.
      */
-    virtual ~RecibidorCliente();
+    virtual ~EnviadorCliente();
 };
 
 #endif

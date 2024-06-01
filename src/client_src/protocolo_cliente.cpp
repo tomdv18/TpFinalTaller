@@ -30,7 +30,6 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
     //skt.recvall(&evento,sizeof(evento), &was_closed);
     uint8_t cant_personajes;
     skt.recvall(&cant_personajes,sizeof(cant_personajes),&was_closed);
-
     if(was_closed){
         return !was_closed;
     }
