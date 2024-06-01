@@ -23,6 +23,7 @@ private:
     Socket &skt;        
     std::atomic<bool> estado;
     Renderizado renderizado;
+
     
 public:
     /**
