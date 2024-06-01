@@ -2,9 +2,6 @@
 #include <chrono>
 #include <arpa/inet.h>
 
-#define DURACION_PARTIDA 5.0f // Tiempo de partida default. Puede cambiarse
-
-
 Partida::Partida(uint32_t id_creador, uint8_t max_jugadores, uint32_t id,Queue<Evento> *queue_creador) : 
             id(id),id_creador(id_creador), max_jugadores(max_jugadores),queue_acciones(1000),
             logica_partida()
@@ -89,7 +86,7 @@ void Partida::run(){
         }
         
 
-        if (snapshot.tiempo_restante >= DURACION_PARTIDA)
+        if (snapshot.tiempo_restante <= 0)
         {
             _tiempo_corriendo = false;
             std::cout << "Tiempo terminado" << std::endl;

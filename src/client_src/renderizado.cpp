@@ -1,8 +1,5 @@
 #include "renderizado.h"
 
-#define DURACION_PARTIDA 5.0f // Tiempo de partida default. Puede cambiarse
-
-
 
 void Renderizado::inicializar_SDL2pp() {
 
@@ -11,10 +8,11 @@ void Renderizado::inicializar_SDL2pp() {
 
 
 void Renderizado::renderizar(Evento evento) {
-    if (evento.tiempo_restante <= DURACION_PARTIDA){
-            std::cout << "Tiempo Transcurrido: " << evento.tiempo_restante << std::endl; 
+    if (evento.tiempo_restante > 0){
+            std::cout << "Tiempo Restante: " << evento.tiempo_restante << std::endl; 
         //parche provisorio
     }
+    
     
     for(EventoPersonaje p: evento.eventos_personaje){
     

@@ -1,6 +1,6 @@
 #include "logicaPartida.h"
 
-
+#define DURACION_PARTIDA 120.0f
 
 LogicaPartida::LogicaPartida(){
 
@@ -96,8 +96,8 @@ Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high
     evento.eventos_personaje.clear();
     std::chrono::time_point<std::chrono::high_resolution_clock> actual = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> tiempo = actual - start;
-    std::cout << "Tiempo transcurrido: " << (uint16_t)tiempo.count() << " segundos" << std::endl;
-    evento.tiempo_restante = (uint16_t)tiempo.count();
+    std::cout << "Tiempo transcurrido: " << DURACION_PARTIDA - (uint16_t)tiempo.count() << " segundos" << std::endl;
+    evento.tiempo_restante = DURACION_PARTIDA - (uint16_t)tiempo.count();
     for(const auto &par : map_personajes){
         EventoPersonaje evento_personaje;
         
