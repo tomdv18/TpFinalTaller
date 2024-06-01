@@ -10,6 +10,8 @@
 #include <map>
 #include <list>
 
+#define FPS 15
+
 class Partida : public Thread{
 private:
     uint32_t id;

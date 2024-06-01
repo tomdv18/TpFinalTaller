@@ -6,13 +6,14 @@
 #define VELOCIDAD 5
 
 
-Personaje::Personaje(uint32_t id_jugador) : id_jugador(id_jugador), posicion_x(0),posicion_y(0), vida(100){
+Personaje::Personaje(uint32_t id_jugador) : id_jugador(id_jugador), posicion_x(0),posicion_y(0), vida(100), esta_quieto(0){
 
 }
 
 void Personaje::mover_derecha(){
     if(posicion_x  + PERSONAJE_WIDTH < WIDTH) {
         posicion_x += VELOCIDAD;
+        esta_quieto = 1;
     }
     std::cout << "POSICION DEL PERSONAJE (" << posicion_x << ", " << posicion_y << ")" << std::endl;
 }
@@ -20,6 +21,7 @@ void Personaje::mover_derecha(){
 void Personaje::mover_izquierda(){
     if(posicion_x > 0) {
         posicion_x -= VELOCIDAD;
+        esta_quieto = 1;
     }
     std::cout << "POSICION DEL PERSONAJE (" << posicion_x << ", " << posicion_y << ")" << std::endl;
 }
@@ -35,8 +37,13 @@ void Personaje::mover_arriba() {
 void Personaje::mover_abajo() {
     if(posicion_y  + PERSONAJE_HEIGHT < HEIGHT) {
         posicion_y += VELOCIDAD;
+        esta_quieto = 1;
     }
     std::cout << "POSICION DEL PERSONAJE (" << posicion_x << ", " << posicion_y << ")" << std::endl;
+}
+
+void Personaje::quedarse_quieto(){
+    esta_quieto = 0;
 }
 
 uint32_t Personaje::obtener_posicionX(){
@@ -49,6 +56,10 @@ uint32_t Personaje::obtener_posicionY(){
 
 uint8_t Personaje::obtener_vida(){
     return vida;
+}
+
+uint8_t Personaje::obtener_movimiento(){
+    return esta_quieto;
 }
 
 

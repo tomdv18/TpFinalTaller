@@ -9,6 +9,7 @@ struct __attribute__((packed)) EventoPersonaje{
     uint32_t posicion_x;
     uint32_t posicion_y;
     uint8_t vida;
+    uint8_t esta_quieto;
 
 };
 

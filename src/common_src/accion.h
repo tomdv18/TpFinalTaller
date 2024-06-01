@@ -13,6 +13,7 @@ enum CodigoAccion : uint8_t{
     SALTAR,     // Jugador salta
     DERECHA,    // Jugador se mueve a derecha
     IZQUIERDA,  // Jugador se mueve a izquierda
+    QUIETO,     // Jugador se queda quieto
     RECARGAR,   // Jugador Recarga el arma
     CORRER,     // JUgador corre
     CORRER_RAPIDO,  // Jugador corre rapido

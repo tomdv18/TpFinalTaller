@@ -65,26 +65,39 @@ void Partida::run(){
         
         Accion accion;
 
+        auto inicio = std::chrono::high_resolution_clock::now();
         while(queue_acciones.try_pop(accion)){
             logica_partida.ejecutar(accion);
             std::cout << "ACCION " << (int) accion.codigo << std::endl;
         }
 
-        
         logica_partida.actualizar_partida();
 
         Evento snapshot =  logica_partida.obtener_snapshot(start);
         
-
+        
         for(auto it=map_jugadores.begin(); it != map_jugadores.end(); ++it){
             Queue<Evento> *queue = it->second;
             try{
                 queue->push(snapshot);
             }catch(const ClosedQueue &err){
-                map_jugadores.erase(it->first);
+                map_jugadores.erase(it);
             }
         }
-        
+        auto fin = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> tiempo = fin - inicio;
+        double tiempo_transcurrido = tiempo.count();
+        double tiempo_por_frame = 1000.0 / FPS;  
+        double tiempo_descanso = tiempo_por_frame - tiempo_transcurrido;
+
+        if (tiempo_descanso > 0) {
+            std::cout << "TIEMPO " << tiempo_transcurrido << std::endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(tiempo_descanso)));
+        } else {
+            std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(tiempo_por_frame)));
+        }
+
+
 
         if (snapshot.tiempo_restante <= 0)
         {

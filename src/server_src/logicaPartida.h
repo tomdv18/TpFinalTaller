@@ -28,6 +28,8 @@ public:
 
     void mover_abajo(uint32_t id_jugador);
 
+    void mover_quieto(uint32_t id_jugador);
+
     void abandonar_partida(uint32_t id_jugador);
 
     void agregar_personaje(Accion accion);

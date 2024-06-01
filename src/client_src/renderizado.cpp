@@ -18,8 +18,10 @@ void Renderizado::renderizar(Evento evento) {
     
     // Por cada personajes que recorres, lo graficas (Santiago)
     std::cout << "PERSONAJE DE " << p.id_jugador << std::endl;
-    std::cout << "VIDA " << p.vida << std::endl;
+    std::cout << "VIDA " << (int)p.vida << std::endl;
     std::cout << "EN LA POSICION " << "(" << p.posicion_x << "," << p.posicion_y << ")" << std::endl;
+    std::cout << "ESTA QUIETO " << (int) p.esta_quieto << std::endl;
+
 
     this->personajeView.actualizar_vista_personaje(render, p.posicion_x, p.posicion_y);
 

@@ -43,7 +43,26 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
                         break;
                 }
                 break; // Salir del bloque SDL_KEYDOWN
-            } // Ver que pasa si deja de presionar una tecla (otra accion?)
+            }
+            case SDL_KEYUP: {
+                SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)evento;
+                 switch (keyEvent.keysym.sym) {
+                    case SDLK_d:
+                        queue_accion.try_push(QUIETO);
+                        break;
+                    case SDLK_a:
+                        queue_accion.try_push(QUIETO);
+                        break;
+                    case SDLK_w:
+                        queue_accion.try_push(QUIETO);
+                        break;
+                    case SDLK_s:
+                        queue_accion.try_push(QUIETO);
+                        break;
+                }
+                break;
+            } 
+            
             case SDL_QUIT:
                 return false;
         }
@@ -69,13 +88,30 @@ void Cliente::comunicarse_con_el_servidor() {
             estado = atrapar_eventos_entrada(queue_accion);
             
             Evento evento;
+
+            auto inicio = std::chrono::high_resolution_clock::now();
+
             queue_eventos.try_pop(evento);
             
             renderizado.renderizar(evento);
 
+            
+            auto fin = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double, std::milli> tiempo = fin - inicio;
+            double tiempo_transcurrido = tiempo.count();
+            double frames = 15; 
+            double tiempo_descanso = frames - tiempo_transcurrido;
+
+            if (tiempo_descanso > 0) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(tiempo_descanso)));
+            } else {
+                std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(frames)));
+            }
+            
+
             // la cantidad de segundos que debo dormir se debe ajustar en función
             // de la cantidad de tiempo que demoró el atrapar_eventos_entrada, efectuar_evento y renderizar?
-            usleep(500000);
+            //usleep(500000);
         }
     } catch (std::exception& e) {
         std::cout << e.what() << std::endl;
