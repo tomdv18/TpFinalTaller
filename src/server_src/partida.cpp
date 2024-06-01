@@ -1,5 +1,8 @@
 #include "partida.h"
+#include <chrono>
+#include <arpa/inet.h>
 
+#define DURACION_PARTIDA 5.0f // Tiempo de partida default. Puede cambiarse
 
 
 Partida::Partida(uint32_t id_creador, uint8_t max_jugadores, uint32_t id,Queue<Evento> *queue_creador) : 
@@ -57,8 +60,10 @@ uint8_t Partida::max(){
 void Partida::run(){
     
 
-   
-   while(_keep_running){
+    auto start = std::chrono::high_resolution_clock::now(); // Guarda el tiempo de inicio
+    std::atomic<bool> _tiempo_corriendo = true;
+    
+    while(_keep_running && _tiempo_corriendo){ //Mientras no hayan terminado la partida y el timer siga
     
         
         Accion accion;
@@ -71,10 +76,9 @@ void Partida::run(){
         
         logica_partida.actualizar_partida();
 
-        Evento snapshot =  logica_partida.obtener_snapshot();
+        Evento snapshot =  logica_partida.obtener_snapshot(start);
         
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        
+
         for(auto it=map_jugadores.begin(); it != map_jugadores.end(); ++it){
             Queue<Evento> *queue = it->second;
             try{
@@ -84,11 +88,18 @@ void Partida::run(){
             }
         }
         
-        
-            
-            
-        
 
+        if (snapshot.tiempo_restante >= DURACION_PARTIDA)
+        {
+            _tiempo_corriendo = false;
+            std::cout << "Tiempo terminado" << std::endl;
+
+        }
+        
+            
+            
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
     }
 

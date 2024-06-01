@@ -41,6 +41,10 @@ void ProtocoloServidor::enviar_confirmacion(uint8_t codigo, bool &was_closed){
 void ProtocoloServidor::enviar_evento(bool &was_closed,Evento evento){
     uint8_t cant_personajes = (uint8_t)evento.eventos_personaje.size();
     skt_jugador.sendall(&cant_personajes, sizeof(cant_personajes), &was_closed);
+    
+    uint16_t tiempo = (uint16_t)evento.tiempo_restante;
+    uint16_t tiempo_convertido = htons(tiempo); 
+    skt_jugador.sendall(&tiempo_convertido, sizeof(uint16_t), &was_closed);
 
     for(EventoPersonaje p : evento.eventos_personaje){  
         skt_jugador.sendall(&p, sizeof(p), &was_closed);

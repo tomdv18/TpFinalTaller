@@ -7,6 +7,7 @@
 #include "personaje.h"
 #include <iostream>
 #include <map>
+#include <chrono>
 
 class LogicaPartida{
 private:
@@ -33,7 +34,7 @@ public:
 
     void actualizar_partida();
 
-    Evento obtener_snapshot();
+    Evento obtener_snapshot(std::chrono::time_point<std::chrono::high_resolution_clock> start);
 
     ~LogicaPartida();
 };

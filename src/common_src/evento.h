@@ -13,6 +13,7 @@ struct __attribute__((packed)) EventoPersonaje{
 };
 
 struct Evento{
+    uint16_t tiempo_restante;
     std::vector<EventoPersonaje> eventos_personaje;
 };
 

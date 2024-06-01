@@ -3,7 +3,7 @@
 #include <vector>
 
 #include <netinet/in.h>
-
+#include <arpa/inet.h>
 ProtocoloCliente::ProtocoloCliente(Socket &skt):
 skt(skt)
 {}
@@ -33,6 +33,14 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
     if(was_closed){
         return !was_closed;
     }
+
+    uint16_t tiempo_restante;
+    skt.recvall(&tiempo_restante,sizeof(uint16_t),&was_closed);
+    if(was_closed){
+        return !was_closed;
+    }
+    uint16_t tiempo_nativo = ntohs(tiempo_restante);
+    evento.tiempo_restante = tiempo_nativo;
 
     std::vector<EventoPersonaje> eventos_personajes;
     for(int i = 0; i < cant_personajes; i++){
