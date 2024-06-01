@@ -14,7 +14,6 @@ private:
 
     std::map<uint32_t, Personaje*> map_personajes;
 
-
 public:
     LogicaPartida();
 

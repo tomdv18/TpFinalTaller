@@ -101,6 +101,9 @@ void LogicaPartida::agregar_personaje(Accion accion){
 
 void LogicaPartida::actualizar_partida(){
 
+    for(const auto &par : map_personajes){
+        par.second->actualizar_posicion(0.067);
+    }
 }
 
 Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high_resolution_clock> start){
@@ -108,8 +111,9 @@ Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high
     evento.eventos_personaje.clear();
     std::chrono::time_point<std::chrono::high_resolution_clock> actual = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> tiempo = actual - start;
-    std::cout << "Tiempo transcurrido: " << DURACION_PARTIDA - (uint16_t)tiempo.count() << " segundos" << std::endl;
+    //std::cout << "Tiempo transcurrido: " << DURACION_PARTIDA - (uint16_t)tiempo.count() << " segundos" << std::endl;
     evento.tiempo_restante = DURACION_PARTIDA - (uint16_t)tiempo.count();
+
     for(const auto &par : map_personajes){
         EventoPersonaje evento_personaje;
         

@@ -90,11 +90,11 @@ void Cliente::comunicarse_con_el_servidor() {
     try {
 
         while (estado) {
+            auto inicio = std::chrono::high_resolution_clock::now();
             estado = atrapar_eventos_entrada(queue_accion);
 
             Evento evento;
 
-            auto inicio = std::chrono::high_resolution_clock::now();
             queue_eventos.try_pop(evento);
 
             renderizado.renderizar(evento);
@@ -102,13 +102,13 @@ void Cliente::comunicarse_con_el_servidor() {
             auto fin = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double, std::milli> tiempo = fin - inicio;
             double tiempo_transcurrido = tiempo.count();
-            double frames = 15; 
-            double tiempo_descanso = frames - tiempo_transcurrido;
+            double tiempo_por_frame = 1000.0 / 15;  
+            double tiempo_descanso = tiempo_por_frame - tiempo_transcurrido;
 
             if (tiempo_descanso > 0) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(tiempo_descanso)));
             } else {
-                std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(frames)));
+                std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(tiempo_por_frame)));
             }
 
             // la cantidad de segundos que debo dormir se debe ajustar en función

@@ -2,6 +2,8 @@
 #define SERVER_PERSONAJE_H_
 
 #include <iostream>
+#include <cmath>
+
 
 class Personaje{
 private:
@@ -10,6 +12,9 @@ private:
     uint32_t posicion_y;
     uint8_t vida;
     uint8_t esta_quieto;
+
+    int velocidad_x;
+    int velocidad_y;
 
 public:
     Personaje(uint32_t id_jugador);
@@ -31,6 +36,8 @@ public:
     uint8_t obtener_vida();
 
     uint8_t obtener_movimiento();
+
+    void actualizar_posicion(double tiempo);
 
     ~Personaje();
 };

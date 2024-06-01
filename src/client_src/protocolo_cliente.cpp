@@ -48,6 +48,9 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
         if(was_closed){
             return !was_closed;
         }
+        event_personaje.id_jugador = ntohl(event_personaje.id_jugador);
+        event_personaje.posicion_x = ntohl(event_personaje.posicion_x);
+        event_personaje.posicion_y = ntohl(event_personaje.posicion_y);
         eventos_personajes.emplace_back(event_personaje);
     }
     
