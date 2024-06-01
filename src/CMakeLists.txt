@@ -91,6 +91,8 @@ if(CLIENT)
 		./client_src/renderizado.h
 		./client_src/personajeView.h
 		./client_src/personajeView.cpp
+		./client_src/animacion.h
+		./client_src/animacion.cpp
 		./client_src/protocolo_cliente.cpp
 		./client_src/protocolo_cliente.h
 		./client_src/enviadorCliente.cpp
