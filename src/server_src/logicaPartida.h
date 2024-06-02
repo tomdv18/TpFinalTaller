@@ -13,17 +13,18 @@ class LogicaPartida{
 private:
 
     std::map<uint32_t, Personaje*> map_personajes;
+    
 
 public:
     LogicaPartida();
 
-    void ejecutar(Accion accion);
+    void ejecutar(Accion accion, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     void mover_derecha(uint32_t id_jugador);
 
     void mover_izquierda(uint32_t id_jugador);
 
-    void mover_arriba(uint32_t id_jugador);
+    void mover_arriba(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     void mover_abajo(uint32_t id_jugador);
 
@@ -37,7 +38,7 @@ public:
 
     void agregar_personaje(Accion accion);
 
-    void actualizar_partida();
+    void actualizar_partida(std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     Evento obtener_snapshot(std::chrono::time_point<std::chrono::high_resolution_clock> start);
 

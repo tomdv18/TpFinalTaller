@@ -7,7 +7,7 @@ LogicaPartida::LogicaPartida(){
 }
 
 
-void LogicaPartida::ejecutar(Accion accion){
+void LogicaPartida::ejecutar(Accion accion, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo){
     switch (accion.codigo){
         case DERECHA:
             mover_derecha(accion.id_jugador);
@@ -16,7 +16,7 @@ void LogicaPartida::ejecutar(Accion accion){
             mover_izquierda(accion.id_jugador);
             break;
         case ARRIBA:
-            mover_arriba(accion.id_jugador);
+            mover_arriba(accion.id_jugador, tiempo);
             break;
         case ABAJO:
             mover_abajo(accion.id_jugador);  
@@ -53,10 +53,13 @@ void LogicaPartida::mover_izquierda(uint32_t id_jugador){
     }
 }
 
-void LogicaPartida::mover_arriba(uint32_t id_jugador) {
+void LogicaPartida::mover_arriba(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo ) {
+    std::chrono::time_point<std::chrono::high_resolution_clock> actual = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
+
     Personaje *personaje = map_personajes[id_jugador];
     if(personaje != nullptr){
-        personaje->mover_arriba();
+        personaje->mover_arriba(tiempo_transcurrido);
     }
 }
 
@@ -117,10 +120,11 @@ void LogicaPartida::agregar_personaje(Accion accion){
 
 }
 
-void LogicaPartida::actualizar_partida(){
-
+void LogicaPartida::actualizar_partida(std::chrono::time_point<std::chrono::high_resolution_clock> tiempo){
+    std::chrono::time_point<std::chrono::high_resolution_clock> actual = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
     for(const auto &par : map_personajes){
-        par.second->actualizar_posicion(0.067);
+        par.second->actualizar_posicion(tiempo_transcurrido);
     }
 }
 

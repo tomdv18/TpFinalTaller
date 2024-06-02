@@ -61,10 +61,10 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
                         queue_accion.try_push(QUIETO);
                         break;
                     case SDLK_w:
-                        queue_accion.try_push(QUIETO);
+                        //queue_accion.try_push(QUIETO);
                         break;
                     case SDLK_s:
-                        queue_accion.try_push(QUIETO);
+                        //queue_accion.try_push(QUIETO);
                         break;
                     case SDLK_LSHIFT:
                         queue_accion.try_push(CORRER);

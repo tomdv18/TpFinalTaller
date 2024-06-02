@@ -67,12 +67,13 @@ void Partida::run(){
         int cantidad_eventos = 0;
         auto inicio = std::chrono::high_resolution_clock::now();
         while(queue_acciones.try_pop(accion) && cantidad_eventos < 100){
-            logica_partida.ejecutar(accion);
+            logica_partida.ejecutar(accion, start);
             std::cout << "ACCION " << (int) accion.codigo << std::endl;
             cantidad_eventos++;
         }
 
-        logica_partida.actualizar_partida();
+        logica_partida.actualizar_partida(start);
+        
         
         Evento snapshot =  logica_partida.obtener_snapshot(start);
                 

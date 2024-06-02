@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <chrono>
 
 
 class Personaje{
@@ -11,12 +12,15 @@ private:
     uint32_t posicion_x;
     uint32_t posicion_y;
     uint8_t vida;
-    uint8_t esta_quieto;
+    bool esta_quieto;
 
-    int velocidad_x;
-    int velocidad_y;
+    double velocidad_x;
+    double velocidad_y;
 
     bool corriendo;
+
+    bool saltando;
+    double tiempo_salto;
 
 public:
     Personaje(uint32_t id_jugador);
@@ -27,7 +31,7 @@ public:
 
     void mover_izquierda();
 
-    void mover_arriba();
+    void mover_arriba(std::chrono::duration<double> tiempo_transcurrido);
 
     void mover_abajo();
 
@@ -52,7 +56,7 @@ public:
 
     // Getters Snapshot
 
-    void actualizar_posicion(double tiempo);
+    void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido);
 
     ~Personaje();
 };
