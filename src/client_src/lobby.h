@@ -30,11 +30,7 @@ public:
 
     Socket& obtener_socket();
 
-
-    //void procesar_lobby(bool &was_closed, bool &jugando);
-
-    //void main();
-
+    std::vector<InfoPartida> obtener_partidas();
 
 };
 

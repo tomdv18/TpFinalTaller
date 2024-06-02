@@ -49,8 +49,8 @@ void Personaje::mover_abajo() {
 }
 
 void Personaje::quedarse_quieto(){
-    velocidad_x = 0;
     if(!saltando) {
+        velocidad_x = 0;
         esta_quieto = true;
     }
 }
@@ -108,15 +108,13 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
      if (saltando) {
         double delta_tiempo = tiempo_segundos - tiempo_salto;
 
-        // Actualizar posición vertical basada en la velocidad y la gravedad
         posicion_y += static_cast<int32_t>(velocidad_y * delta_tiempo + 0.5 * GRAVEDAD * delta_tiempo * delta_tiempo);
         velocidad_y += GRAVEDAD * delta_tiempo;
 
-        // Chequear si aterrizó
         if (posicion_y > HEIGHT - PERSONAJE_HEIGHT) {
             posicion_y = HEIGHT - PERSONAJE_HEIGHT;
             saltando = false;
-            //velocidad_y = 0;
+            velocidad_y = 0;
             std::cout << "ATERRIZO" << std::endl;
         }
     }

@@ -34,6 +34,10 @@ void LogicaPartida::ejecutar(Accion accion, std::chrono::time_point<std::chrono:
         case JAZZ:
             agregar_personaje(accion);
             break;
+        case SPAZ:
+            agregar_personaje(accion);
+        case LORI:
+            agregar_personaje(accion);
         default:
             break;
     }
@@ -114,6 +118,23 @@ void LogicaPartida::agregar_personaje(Accion accion){
             }
             break;
         }
+        case SPAZ:{
+            std::cout << "CREAR PERSONAJE SPAZ" << std::endl;
+            //personaje = new Personaje(accion.id_jugador);    ///new Jazz();
+            if(map_personajes[accion.id_jugador] == nullptr){
+                map_personajes[accion.id_jugador] = new Personaje(accion.id_jugador);
+            }
+            break;
+        }
+        case LORI:{
+            std::cout << "CREAR PERSONAJE LORI" << std::endl;
+            //personaje = new Personaje(accion.id_jugador);    ///new Jazz();
+            if(map_personajes[accion.id_jugador] == nullptr){
+                map_personajes[accion.id_jugador] = new Personaje(accion.id_jugador);
+            }
+            break;
+        }
+
         default:
             break;
     }

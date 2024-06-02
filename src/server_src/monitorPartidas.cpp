@@ -67,8 +67,8 @@ void MonitorPartidas::borrar_partidas(){
     partidas.clear();
 }
 
-std::map<uint32_t, Partida*> MonitorPartidas::obtener_partidas(){
-    return partidas;
+const std::map<uint32_t, Partida*>* MonitorPartidas::obtener_partidas() const{
+    return &partidas;
 }
 
 

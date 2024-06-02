@@ -35,69 +35,33 @@ void LobbyProtocolo::serializar_personaje(uint8_t personaje){
     skt->sendall(&personaje,sizeof(personaje),&was_closed);
 }
 
+std::vector<InfoPartida> LobbyProtocolo::obtener_partidas(){
+    bool was_closed = false;
+    uint8_t accion = LIST_P;
+    std::vector<InfoPartida> info_partidas;
+    InfoPartida info_partida;
 
-/*
-void LobbyProtocolo::enviar_accion(uint8_t accion, bool& was_closed){
-    skt.sendall(&accion,sizeof(accion),&was_closed);
-    std::cout << "ENVIANDO " << (int) accion << std::endl;
-    if(was_closed){
-        throw std::runtime_error("Error, se cerro la conexion con el servidor");
-    }
+    skt->sendall(&accion,sizeof(accion),&was_closed);
+    uint32_t cantidad_partidas;
+    skt->recvall(&cantidad_partidas, sizeof(uint32_t), &was_closed); // Recibir tamaño de partidas
+    cantidad_partidas = ntohl(cantidad_partidas); // Convertir a host byte order
+    
+    
+    for(int i = 0; i < cantidad_partidas; i++){
 
-}
-
-void LobbyProtocolo::enviar_jugadores(uint8_t jugadores, bool &was_closed){
-    skt.sendall(&jugadores,sizeof(jugadores),&was_closed);
-}
-
-void LobbyProtocolo::enviar_id_partida(uint32_t id_partida, bool &was_closed){
-    uint32_t id = htonl(id_partida);
-    skt.sendall(&id,sizeof(id),&was_closed);
-}
-
-
-Evento LobbyProtocolo::recibir_evento(bool &was_closed){
-    Evento evento;
-    EventoPersonaje ev;
-
-    //skt.recvall(&evento,sizeof(evento), &was_closed);
-    uint8_t cant_personajes;
-    skt.recvall(&cant_personajes,sizeof(cant_personajes),&was_closed);
-
-    if(was_closed){
-        throw std::runtime_error("Error, se cerro la conexion con el servidor");
-    }
-
-    std::vector<EventoPersonaje> eventos_personajes;
-    for(int i = 0; i < cant_personajes; i++){
-        skt.recvall(&ev,sizeof(ev), &was_closed);
-        if(was_closed){
-            throw std::runtime_error("Error, se cerro la conexion con el servidor");
-        }
-        eventos_personajes.emplace_back(ev);
+        skt->recvall(&info_partida, sizeof(info_partida), &was_closed);
+        info_partida.id_partida = ntohl(info_partida.id_partida);
+        info_partida.id_creador = ntohl(info_partida.id_creador);
+        std::cout << "ID PARTIDA " << info_partida.id_partida << std::endl;
+        std::cout << "ID CREADOR " << info_partida.id_creador << std::endl;
+        std::cout << "JUGADORES " << (int) info_partida.jugadores << std::endl;
+        std::cout << "MAX JUGADORES " << (int) info_partida.max_jugadores << std::endl;
+        info_partidas.emplace_back(info_partida);
     }
     
-    evento.eventos_personaje = eventos_personajes;
 
-    
-        La idea es recibir la cantidad de personajes q hay
-        Y hago recvall de eventos de personaje por esa cantidad
-
-        Repetir lo mismo para los demas eventos e ir llenando el struct evento
-
-        Separar todo eso en diferentes funciones
-    
-    
-    
-    return evento;
+    return info_partidas;
 }
-
-void LobbyProtocolo::close(){
-    skt.shutdown(SHUT_RDWR);
-    skt.close();
-}
-
-*/
 
 LobbyProtocolo::~LobbyProtocolo(){
     

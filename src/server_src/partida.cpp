@@ -54,6 +54,10 @@ uint8_t Partida::max(){
     return max_jugadores;
 }
 
+uint32_t Partida::creador(){
+    return id_creador;
+}
+
 void Partida::run(){
     
 

@@ -18,15 +18,7 @@ public:
 
     void serializar_personaje(uint8_t personaje);
 
-    //void enviar_accion(uint8_t accion, bool &was_closed);
-
-    //void enviar_jugadores(uint8_t jugadores, bool &was_closed);
-
-    //void enviar_id_partida(uint32_t id_partida, bool &was_closed);
-
-    //Evento recibir_evento(bool &was_closed);
-
-    //void close();
+    std::vector<InfoPartida> obtener_partidas();
 
     ~LobbyProtocolo();
 };

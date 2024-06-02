@@ -23,7 +23,7 @@ public:
 
     void enviar_confirmacion(uint8_t codigo, bool &was_closed);
 
-    void enviar_lista_partidas(MonitorPartidas monitor_partidas, bool &was_closed);
+    void enviar_lista_partidas(MonitorPartidas &monitor_partidas, bool &was_closed);
 
     void close();
 

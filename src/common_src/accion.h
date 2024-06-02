@@ -26,6 +26,7 @@ enum CodigoAccion : uint8_t{
     JAZZ, 
     SPAZ,
     LORI,
+    NINGUNO,
 
 
     LIST_P   // Posible lista de partidas
@@ -42,8 +43,8 @@ struct __attribute__((packed)) Accion{
 
 // Struct para obtener info de la partida
 struct __attribute__((packed)) InfoPartida{
-    char codigo = LIST_P;
     uint32_t id_partida;
+    uint32_t id_creador;
     uint8_t jugadores;
     uint8_t max_jugadores;
 };

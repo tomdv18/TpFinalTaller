@@ -69,20 +69,24 @@ void ProtocoloServidor::enviar_evento(bool &was_closed,Evento evento){
 }
 
 
-void ProtocoloServidor::enviar_lista_partidas(MonitorPartidas monitor_partidas, bool &was_closed){
+void ProtocoloServidor::enviar_lista_partidas(MonitorPartidas &monitor_partidas, bool &was_closed){
+    
     InfoPartida info_partida;
-    std::map<uint32_t, Partida*> partidas = monitor_partidas.obtener_partidas();
-    for (auto it = partidas.begin(); it != partidas.end(); ++it) {
-            std::cout << "ENVIANDO LISTA" << std::endl;
+    const std::map<uint32_t, Partida*> *partidas = monitor_partidas.obtener_partidas();
+    uint32_t cantidad_partidas = htonl(static_cast<uint32_t>(partidas->size())); // Convertir a network byte order
+    skt_jugador.sendall(&cantidad_partidas, sizeof(uint32_t), &was_closed); // Enviar tamaño de partidas
+    
+    
+    for (auto it = partidas->begin(); it != partidas->end(); ++it) {
 
         info_partida.id_partida = htonl(it->first);
+        info_partida.id_creador = htonl(it->second->creador());
         info_partida.jugadores=  it->second->jugadores();
         info_partida.max_jugadores = it->second->max();
-        //skt_jugador.sendall(&info_partida,sizeof(info_partida), &was_closed);
-        std::cout << "CODIGO " << info_partida.codigo << std::endl;
-        std::cout << "ID PARTIDA " << info_partida.id_partida << std::endl;
-        std::cout << "JUGADORES " << (int)info_partida.jugadores << "/"<< (int)info_partida.max_jugadores  << std::endl;
+        skt_jugador.sendall(&info_partida,sizeof(info_partida), &was_closed);
+
     }
+    
 }
 
 void ProtocoloServidor::close(){

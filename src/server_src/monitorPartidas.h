@@ -26,12 +26,9 @@ public:
 
     void borrar_jugador(uint32_t id_jugador);
 
-    std::map<uint32_t, Partida*> obtener_partidas();
+    const std::map<uint32_t, Partida*>* obtener_partidas() const;
 
     void borrar_partidas();
-
-    // borrar_partida
-    // borrar_partidas
 
     ~MonitorPartidas();
 };

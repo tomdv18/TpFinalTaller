@@ -42,6 +42,8 @@ public:
     uint8_t jugadores();
 
     uint8_t max();
+    
+    uint32_t creador();
 
     void run() override;
 

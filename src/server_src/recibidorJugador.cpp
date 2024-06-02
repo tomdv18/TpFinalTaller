@@ -22,12 +22,7 @@ void RecibidorJugador::run(){
     bool was_closed = false;
     while(conectado){
 
-        monitor_partidas->listar_partidas();
-        // ENVIAR LISTA DE PARTIDAS, CODE P DE PARTIDAS
-        // ENVIO ID(UINT32_T), UIN8_T JUGADORES, UINT8_T MAX_JUGADORES
-        // REPETIR PARA TODAS LAS PARTIDAS
-        // AGREGAR UN CASE REFRESH PARTIDAS
-        //protocolo_servidor->enviar_lista_partidas(*monitor_partidas, was_closed);
+        //monitor_partidas->listar_partidas();
         
         try{
             //Seguir en el lobby mientras no encuentre partida ni se cierre conexion
@@ -83,6 +78,7 @@ void RecibidorJugador::run(){
 
 void RecibidorJugador::leer_lobby(std::atomic<bool>  &partida_encontrada, bool &was_closed){
     uint8_t codigo = protocolo_servidor->obtener_accion(was_closed);
+    std::cout << "ACCION " << (int) codigo << std::endl;
     
     if(was_closed){
         throw std::runtime_error("Se perdió la conexion con el cliente");
@@ -108,8 +104,8 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>  &partida_encontrada, bool &
             break;
         }
         case LIST_P:{
-                protocolo_servidor->enviar_lista_partidas(*monitor_partidas, was_closed);
-            break;
+            protocolo_servidor->enviar_lista_partidas(*monitor_partidas, was_closed);
+            return;
         }
         case SALIR:{
             conectado = false;
@@ -121,8 +117,10 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>  &partida_encontrada, bool &
             break;
         }
     }
+    
 
     if(this->queue_acciones != nullptr){
+        std::cout << "PARTIDA EMPEZADA " << std::endl;
         Accion accion;
         accion.id_jugador = id;
         accion.codigo = codigo;

@@ -112,15 +112,7 @@ if(CLIENT)
 		${UIS_HEADERS}
 		
 		./ventana_lobby/mainwindow.cpp
-		
-		
-		
-		#./graphics_lobby/joinpopup.cpp
-		#./graphics_lobby/mainwindow.cpp
-		#./graphics_lobby/createpopup.cpp
-		#./graphics_lobby/playerpick.cpp
-		#./graphics_lobby/assets/resources.qrc
-		#${UIS_HEADERS}
+		./ventana_lobby/resources.qrc
 	)
 	
 	target_link_libraries(jazzcliente PUBLIC Qt5::Widgets Qt5::Core SDL2pp::SDL2pp SDL2::SDL2main)
