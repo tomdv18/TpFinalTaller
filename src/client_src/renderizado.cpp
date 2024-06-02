@@ -23,6 +23,8 @@ void Renderizado::renderizar(Evento evento) {
         std::cout << "VIDA " << evento.eventos_personaje[0].vida << std::endl;
         std::cout << "EN LA POSICION " << "(" <<(int) evento.eventos_personaje[0].posicion_x << "," << evento.eventos_personaje[0].posicion_y << ")" << std::endl;
         std::cout << "ESTA QUIETO " << (int) evento.eventos_personaje[0].esta_quieto << std::endl;
+        std::cout << "ESTA CORRIENDO " << (int) evento.eventos_personaje[0].esta_corriendo << std::endl;
+
         this->personajeView->actualizar_vista_personaje(evento.eventos_personaje[0].posicion_x, evento.eventos_personaje[0].posicion_y, 50000);
         render->SetDrawColor(0x80, 0x80, 0x80);
         render->Clear();

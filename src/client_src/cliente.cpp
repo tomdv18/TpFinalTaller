@@ -44,6 +44,9 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
                     case SDLK_s:
                         queue_accion.try_push(ABAJO);
                         break;
+                    case SDLK_LSHIFT:
+                        queue_accion.try_push(CORRER_RAPIDO);
+                        break;
                 }
                 break;  // Salir del bloque SDL_KEYDOWN
     
@@ -62,6 +65,9 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
                         break;
                     case SDLK_s:
                         queue_accion.try_push(QUIETO);
+                        break;
+                    case SDLK_LSHIFT:
+                        queue_accion.try_push(CORRER);
                         break;
                 }
                 break;

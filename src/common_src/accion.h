@@ -15,7 +15,7 @@ enum CodigoAccion : uint8_t{
     IZQUIERDA,  // Jugador se mueve a izquierda
     QUIETO,     // Jugador se queda quieto
     RECARGAR,   // Jugador Recarga el arma
-    CORRER,     // JUgador corre
+    CORRER,     // Jugador corre normal
     CORRER_RAPIDO,  // Jugador corre rapido
     ESPECIAL,    // Jugador usa habilidad especial
     LOBBY,    // Volver al lobby

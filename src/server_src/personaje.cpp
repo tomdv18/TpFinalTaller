@@ -8,13 +8,13 @@
 
 
 Personaje::Personaje(uint32_t id_jugador) : id_jugador(id_jugador), posicion_x(0),posicion_y(0), vida(100), esta_quieto(0){
-
+    corriendo = false;
 }
 
 void Personaje::mover_derecha(){
     if(posicion_x + PERSONAJE_WIDTH < WIDTH) {
         //posicion_x += VELOCIDAD;
-        velocidad_x = VELOCIDAD;
+        velocidad_x = corriendo ? VELOCIDAD * 2 : VELOCIDAD;
         esta_quieto = 1;
     }
     std::cout << "POSICION DEL PERSONAJE (" << posicion_x << ", " << posicion_y << ")" << std::endl;
@@ -23,7 +23,7 @@ void Personaje::mover_derecha(){
 void Personaje::mover_izquierda(){
     if(posicion_x > 0) {
         //posicion_x -= VELOCIDAD;
-        velocidad_x = -VELOCIDAD;
+        velocidad_x = corriendo ? -VELOCIDAD * 2 : -VELOCIDAD;
         esta_quieto = 1;
     }
     std::cout << "POSICION DEL PERSONAJE (" << posicion_x << ", " << posicion_y << ")" << std::endl;
@@ -51,6 +51,14 @@ void Personaje::quedarse_quieto(){
     esta_quieto = 0;
 }
 
+void Personaje::correr_rapido(){
+    corriendo = true;
+}
+
+void Personaje::correr(){
+    corriendo = false;
+}
+
 uint32_t Personaje::obtener_posicionX(){
     return posicion_x;
 }
@@ -67,21 +75,26 @@ uint8_t Personaje::obtener_movimiento(){
     return esta_quieto;
 }
 
+uint8_t Personaje::obtener_corriendo(){
+    return corriendo;
+}
+
 void Personaje::actualizar_posicion(double tiempo){
-    if (posicion_x < WIDTH - PERSONAJE_WIDTH && velocidad_x > 0) {
-        posicion_x += velocidad_x;
+    int32_t nueva_posicion_x = posicion_x + static_cast<int32_t>(velocidad_x);
+
+    if (velocidad_x > 0) {
+        if (nueva_posicion_x >= WIDTH - PERSONAJE_WIDTH) {
+            posicion_x = WIDTH - PERSONAJE_WIDTH;  
+        } else {
+            posicion_x = nueva_posicion_x;
+        }
     }
-    // Mover hacia la izquierda si no se alcanza el límite izquierdo
-    else if (posicion_x > 0 && velocidad_x < 0) {
-        posicion_x += velocidad_x;
-    }
-    // Si se alcanza el límite derecho, quedarse trabado en el fondo derecho
-    else if (posicion_x >= WIDTH - PERSONAJE_WIDTH && velocidad_x > 0) {
-        posicion_x = WIDTH - PERSONAJE_WIDTH;
-    }
-    // Si se alcanza el límite izquierdo, quedarse trabado en el fondo izquierdo
-    else if (posicion_x <= 0 && velocidad_x < 0) {
-        posicion_x = 0;
+    else if (velocidad_x < 0) {
+        if (nueva_posicion_x <= 0) {
+            posicion_x = 0;  
+        } else {
+            posicion_x = nueva_posicion_x;
+        }
     }
     
 }

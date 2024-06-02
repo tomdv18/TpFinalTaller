@@ -16,8 +16,12 @@ private:
     int velocidad_x;
     int velocidad_y;
 
+    bool corriendo;
+
 public:
     Personaje(uint32_t id_jugador);
+
+    //Acciones
 
     void mover_derecha();
 
@@ -29,6 +33,13 @@ public:
 
     void quedarse_quieto();
 
+    void correr_rapido();
+
+    void correr();
+
+    //Acciones
+
+    // Getters Snapshot
     uint32_t obtener_posicionX();
 
     uint32_t obtener_posicionY();
@@ -36,6 +47,10 @@ public:
     uint8_t obtener_vida();
 
     uint8_t obtener_movimiento();
+
+    uint8_t obtener_corriendo();
+
+    // Getters Snapshot
 
     void actualizar_posicion(double tiempo);
 

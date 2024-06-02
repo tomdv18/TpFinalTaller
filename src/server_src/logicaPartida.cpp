@@ -21,6 +21,11 @@ void LogicaPartida::ejecutar(Accion accion){
         case ABAJO:
             mover_abajo(accion.id_jugador);  
             break; 
+        case CORRER_RAPIDO:
+            mover_correr_rapido(accion.id_jugador);
+            break;
+        case CORRER:
+            mover_correr(accion.id_jugador);
         case QUIETO:
             mover_quieto(accion.id_jugador);
             break; 
@@ -69,6 +74,19 @@ void LogicaPartida::mover_quieto(uint32_t id_jugador){
     }
 }
 
+void LogicaPartida::mover_correr_rapido(uint32_t id_jugador){
+    Personaje *personaje = map_personajes[id_jugador];
+    if(personaje != nullptr){
+        personaje->correr_rapido();
+    }
+}
+
+void LogicaPartida::mover_correr(uint32_t id_jugador){
+    Personaje *personaje = map_personajes[id_jugador];
+    if(personaje != nullptr){
+        personaje->correr();
+    }
+}
 
 void LogicaPartida::abandonar_partida(uint32_t id_jugador){
     auto it = map_personajes.find(id_jugador);
@@ -122,6 +140,7 @@ Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high
         evento_personaje.posicion_y = par.second->obtener_posicionY();
         evento_personaje.vida = par.second->obtener_vida();
         evento_personaje.esta_quieto = par.second->obtener_movimiento();
+        evento_personaje.esta_corriendo = par.second->obtener_corriendo();
 
         evento.eventos_personaje.emplace_back(evento_personaje);
     }
