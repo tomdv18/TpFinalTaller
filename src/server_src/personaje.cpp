@@ -12,7 +12,7 @@ Personaje::Personaje(uint32_t id_jugador) : id_jugador(id_jugador), posicion_x(0
 }
 
 void Personaje::mover_derecha(){
-    if(posicion_x  + PERSONAJE_WIDTH < WIDTH) {
+    if(posicion_x + PERSONAJE_WIDTH < WIDTH) {
         //posicion_x += VELOCIDAD;
         velocidad_x = VELOCIDAD;
         esta_quieto = 1;
@@ -68,7 +68,22 @@ uint8_t Personaje::obtener_movimiento(){
 }
 
 void Personaje::actualizar_posicion(double tiempo){
-    posicion_x += velocidad_x;
+    if (posicion_x < WIDTH - PERSONAJE_WIDTH && velocidad_x > 0) {
+        posicion_x += velocidad_x;
+    }
+    // Mover hacia la izquierda si no se alcanza el límite izquierdo
+    else if (posicion_x > 0 && velocidad_x < 0) {
+        posicion_x += velocidad_x;
+    }
+    // Si se alcanza el límite derecho, quedarse trabado en el fondo derecho
+    else if (posicion_x >= WIDTH - PERSONAJE_WIDTH && velocidad_x > 0) {
+        posicion_x = WIDTH - PERSONAJE_WIDTH;
+    }
+    // Si se alcanza el límite izquierdo, quedarse trabado en el fondo izquierdo
+    else if (posicion_x <= 0 && velocidad_x < 0) {
+        posicion_x = 0;
+    }
+    
 }
 
 
