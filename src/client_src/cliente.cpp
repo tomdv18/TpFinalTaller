@@ -5,12 +5,11 @@
 #include <unistd.h>
 
 
-#define MAX_EVENTOS 256   // Numero a definir
-#define MAX_ACCIONES 256  // Numero a definir
+#define MAX_EVENTOS 256
+#define MAX_ACCIONES 256
 #define WIDTH 640
 #define HEIGHT 480
 #define FRAME_RATE 50000
-std::string const PATH_JAZZ = "../client_src/Images/soldier2.png";
 
 Cliente::Cliente(Socket& skt): skt(skt), estado(true), renderizado() {}
 
@@ -86,11 +85,9 @@ void Cliente::comunicarse_con_el_servidor() {
     recibidor_cliente.start();
 
     this->renderizado.inicializar_SDL2pp();
-    this->renderizado.crear_ventana_y_render("Juego", WIDTH, HEIGHT);
-    this->renderizado.crear_personaje();
+    this->renderizado.crear_ventana_y_render("JazzJack Rabbit 2", WIDTH, HEIGHT);
+    this->renderizado.crear_personajes();
     
-    
-
     EnviadorCliente enviador_cliente(skt, queue_accion);
     enviador_cliente.start();
     try {

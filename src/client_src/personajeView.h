@@ -6,6 +6,8 @@
 #include <SDL2pp/SDL2pp.hh>
 #include "animacion.h"
 #include <memory>
+#include "../common_src/evento.h"
+#include <map>
 
 class PersonajeView {
 
@@ -15,14 +17,19 @@ class PersonajeView {
     int posicion_y;
     int width;
     int height;
-    Animacion animacion;
+    std::map<std::string, SDL2pp::Texture> *texturas;
+    Animacion animacion_caminando;
+    Animacion animacion_quieto;
+    Animacion animacion_corriendo;
     bool facingLeft;
+    bool isMoving;
+    bool isRunning;
 
     public:
 
-    PersonajeView(SDL2pp::Texture &&textura);
+    PersonajeView(std::map<std::string, SDL2pp::Texture> *texturas);
 
-    void actualizar_vista_personaje(int const &posicion_x, int const &posicion_y, float dt);
+    void actualizar_vista_personaje(EventoPersonaje const &evento,float dt);
 
     void renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render);
 

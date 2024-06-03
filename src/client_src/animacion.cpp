@@ -6,11 +6,11 @@
 #include <string>
 #define FRAME_RATE 50000
 
-Animacion::Animacion(SDL2pp::Texture &&textura) : textura(std::move(textura)), frame_actual(0),
-cantidad_frames(this->textura.GetWidth() / this->textura.GetHeight()), 
-size(this->textura.GetHeight()), elapsed(0.0F) {
+Animacion::Animacion(SDL2pp::Texture &&textura, int size_frame) : textura(std::move(textura)), frame_actual(0),
+cantidad_frames(this->textura.GetWidth() / size_frame), 
+size_frame(size_frame), elapsed(0.0F) {
     assert(this->cantidad_frames > 0);
-    assert(this->size > 0);
+    assert(this->size_frame > 0);
 }
 
 Animacion::~Animacion() {}
@@ -31,7 +31,7 @@ void Animacion::acualizar(float dt) {
 void Animacion::animar(SDL2pp::Renderer &render, SDL2pp::Rect dest, SDL_RendererFlip &flipType) {
     
     render.Copy(this->textura,
-    SDL2pp::Rect(57 * this->frame_actual, 0, 57, textura.GetHeight()),
+    SDL2pp::Rect(this->size_frame * this->frame_actual, 0, this->size_frame, textura.GetHeight()),
     dest, 0.0, SDL2pp::NullOpt, flipType);
 
 }

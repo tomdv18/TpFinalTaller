@@ -3,8 +3,10 @@
 #include <iostream>
 #include <exception>
 #include <unistd.h>
+#include <map>
+#include "paths.h"
 
-Renderizado::Renderizado() : cantidad_jugadores(1), personajeView() {}
+Renderizado::Renderizado() : cantidad_jugadores(1), personajeViewJazz() {}
 
 void Renderizado::inicializar_SDL2pp() {
 
@@ -25,10 +27,10 @@ void Renderizado::renderizar(Evento evento) {
         std::cout << "ESTA QUIETO " << (int) evento.eventos_personaje[0].esta_quieto << std::endl;
         std::cout << "ESTA CORRIENDO " << (int) evento.eventos_personaje[0].esta_corriendo << std::endl;
 
-        this->personajeView->actualizar_vista_personaje(evento.eventos_personaje[0].posicion_x, evento.eventos_personaje[0].posicion_y, 50000);
+        this->personajeViewJazz->actualizar_vista_personaje(evento.eventos_personaje[0], 50000);
         render->SetDrawColor(0x80, 0x80, 0x80);
         render->Clear();
-        this->personajeView->renderizar_personaje(render);
+        this->personajeViewJazz->renderizar_personaje(render);
         render->Present();
 
     }
@@ -60,18 +62,35 @@ void Renderizado::crear_ventana_y_render(const std::string& title, int width, in
     this->render = std::make_unique<SDL2pp::Renderer>(*window, -1, SDL_RENDERER_ACCELERATED);
 }
 
-void Renderizado::crear_personaje() {
-    SDL2pp::Surface surface_Jazz("../src/client_src/Images/jazz_caminando.png");
-    surface_Jazz.SetColorKey(true, SDL_MapRGB(surface_Jazz.Get()->format, 44, 102, 150));
-    SDL2pp::Texture imagen_Jazz(*render, surface_Jazz);
-    this->personajeView = new PersonajeView(std::move(imagen_Jazz));
+void Renderizado::crear_personajes() {
+    
+    SDL2pp::Texture texturas_Jazz_caminando = crear_surface_y_texturas(PATH_JAZZ_CAMINANDO);
+    SDL2pp::Texture texturas_Jazz_quieto = crear_surface_y_texturas(PATH_JAZZ_QUIETO);
+    SDL2pp::Texture texturas_Jazz_corriendo = crear_surface_y_texturas(PATH_JAZZ_CORRIENDO);
+    this->texturas = new std::map<std::string, SDL2pp::Texture>;
+    texturas->insert(std::make_pair("Caminando", std::move(texturas_Jazz_caminando)));
+    texturas->insert(std::make_pair("Quieto", std::move(texturas_Jazz_quieto)));
+    texturas->insert(std::make_pair("Corriendo", std::move(texturas_Jazz_corriendo)));
+    
+    this->personajeViewJazz = new PersonajeView(texturas);
     std::cout << "Se creo el personaje"<< std::endl;
 
 }
 
+SDL2pp::Texture Renderizado::crear_surface_y_texturas(std::string const &path_sprites) {
+    SDL2pp::Surface surface(path_sprites);
+    surface.SetColorKey(true, SDL_MapRGB(surface.Get()->format, 44, 102, 150));
+    SDL2pp::Texture textures(*render, std::move(surface));
+
+    return std::move(textures);
+}
+
+
+
 
 Renderizado::~Renderizado() { 
     std::cout << "Renderizador joineado\n";
-    delete this->personajeView;
+    delete this->personajeViewJazz;
+    delete this->texturas;
 
 }
