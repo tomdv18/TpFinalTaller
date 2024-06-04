@@ -10,13 +10,18 @@ char const PATH_JAZZ_SALTANDO[] = "../src/client_src/Images/Jazz_saltando.png";
 
 char const PATH_LORI_CAMINANDO[] = "../src/client_src/Images/Lori_caminando.png";
 char const PATH_LORI_QUIETO[] = "../src/client_src/Images/Lori_quieto.png";
-char const PATH_LORI_CORRIENDO[] = "../src/client_src/Images/Lori_corriendo";
+char const PATH_LORI_CORRIENDO[] = "../src/client_src/Images/Lori_corriendo.png";
 char const PATH_LORI_SALTANDO[] = "../src/client_src/Images/Lori_saltando.png";
 
 char const PATH_SPAZ_CAMINANDO[] = "../src/client_src/Images/Spaz_caminando.png";
 char const PATH_SPAZ_QUIETO[] = "../src/client_src/Images/Spaz_quieto.png";
-char const PATH_SPAZ_CORRIENDO[] = "../src/client_src/Images/Spaz_corriendo";
+char const PATH_SPAZ_CORRIENDO[] = "../src/client_src/Images/Spaz_corriendo.png";
 char const PATH_SPAZ_SALTANDO[] = "../src/client_src/Images/Spaz_saltando.png";
+
+char const CAMINANDO[] = "Caminando";
+char const CORRIENDO[] = "Corriendo";
+char const QUIETO_CLIENTE[] = "Quieto";
+char const SALTANDO[] = "Saltando";
 
 
 class Paths {

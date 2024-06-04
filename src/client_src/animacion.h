@@ -7,15 +7,19 @@ class Animacion {
 
    private:
     
-    SDL2pp::Texture &&textura;
+    SDL2pp::Texture *texturas;
     int frame_actual;
     int cantidad_frames;
-    int size_frame;
+    float size_frame;
     float elapsed;
 
    public:
 
-    explicit Animacion(SDL2pp::Texture &&texturam, int size_frame);
+    explicit Animacion();
+
+    void set_size_frame(float size_frame);
+
+    void set_texturas(SDL2pp::Texture* texturas);
 
     ~Animacion();
 

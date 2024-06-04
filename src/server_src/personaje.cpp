@@ -88,6 +88,10 @@ uint8_t Personaje::obtener_habilidad(){
     return usando_especial;
 }
 
+uint8_t Personaje::obtener_saltando() {
+    return saltando;
+}
+
 void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido){
     int32_t nueva_posicion_x = posicion_x + static_cast<int32_t>(velocidad_x);
     double tiempo_segundos = tiempo_transcurrido.count();

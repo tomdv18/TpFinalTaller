@@ -6,7 +6,7 @@
 #include <map>
 #include "paths.h"
 
-Renderizado::Renderizado() : cantidad_jugadores(1), personajeViewJazz() {}
+Renderizado::Renderizado() : cantidad_jugadores(1), personajeJazzView(nullptr) {}
 
 void Renderizado::inicializar_SDL2pp() {
 
@@ -15,7 +15,7 @@ void Renderizado::inicializar_SDL2pp() {
 }
 
 void Renderizado::renderizar(Evento evento) {
-    
+
 
     std::cout << "cantidad de jugadores:" << evento.eventos_personaje.size() << std::endl;
     
@@ -26,11 +26,13 @@ void Renderizado::renderizar(Evento evento) {
         std::cout << "EN LA POSICION " << "(" <<(int) evento.eventos_personaje[0].posicion_x << "," << evento.eventos_personaje[0].posicion_y << ")" << std::endl;
         std::cout << "ESTA QUIETO " << (int) evento.eventos_personaje[0].esta_quieto << std::endl;
         std::cout << "ESTA CORRIENDO " << (int) evento.eventos_personaje[0].esta_corriendo << std::endl;
-
-        this->personajeViewJazz->actualizar_vista_personaje(evento.eventos_personaje[0], 50000);
+        std::cout << "ESTA Saltando " << (int) evento.eventos_personaje[0].esta_saltando << std::endl;
         render->SetDrawColor(0x80, 0x80, 0x80);
+    
         render->Clear();
-        this->personajeViewJazz->renderizar_personaje(render);
+        this->personajeJazzView->actualizar_vista_personaje(evento.eventos_personaje[0], 50000);
+
+        this->personajeJazzView->renderizar_personaje(render);
         render->Present();
 
     }
@@ -41,14 +43,21 @@ void Renderizado::renderizar(Evento evento) {
         std::cout << "VIDA " << evento.eventos_personaje[1].vida << std::endl;
         std::cout << "EN LA POSICION " << "(" << evento.eventos_personaje[1].posicion_x << "," << evento.eventos_personaje[1].posicion_y << ")" << std::endl;
     
+        this->personajeLoriView->actualizar_vista_personaje(evento.eventos_personaje[1], 50000);
 
+        this->personajeLoriView->renderizar_personaje(render);
+        render->Present();
     }
 
     if(evento.eventos_personaje.size() >= 3) {
         std::cout << "PERSONAJE DE " << evento.eventos_personaje[2].id_jugador << std::endl;
         std::cout << "VIDA " << evento.eventos_personaje[2].vida << std::endl;
         std::cout << "EN LA POSICION " << "(" << evento.eventos_personaje[2].posicion_x << "," << evento.eventos_personaje[2].posicion_y << ")" << std::endl;
-    
+        
+        this->personajeSpazView->actualizar_vista_personaje(evento.eventos_personaje[2], 50000);
+
+        this->personajeSpazView->renderizar_personaje(render);
+        render->Present();
     }
     
 
@@ -64,33 +73,26 @@ void Renderizado::crear_ventana_y_render(const std::string& title, int width, in
 
 void Renderizado::crear_personajes() {
     
-    SDL2pp::Texture texturas_Jazz_caminando = crear_surface_y_texturas(PATH_JAZZ_CAMINANDO);
-    SDL2pp::Texture texturas_Jazz_quieto = crear_surface_y_texturas(PATH_JAZZ_QUIETO);
-    SDL2pp::Texture texturas_Jazz_corriendo = crear_surface_y_texturas(PATH_JAZZ_CORRIENDO);
-    this->texturas = new std::map<std::string, SDL2pp::Texture>;
-    texturas->insert(std::make_pair("Caminando", std::move(texturas_Jazz_caminando)));
-    texturas->insert(std::make_pair("Quieto", std::move(texturas_Jazz_quieto)));
-    texturas->insert(std::make_pair("Corriendo", std::move(texturas_Jazz_corriendo)));
-    
-    this->personajeViewJazz = new PersonajeView(texturas);
+    this->personajeJazzView = new PersonajeJazzView();
+    this->personajeJazzView->crear_texturas(render.get());
+    this->personajeJazzView->crear_animaciones();
+
+    this->personajeLoriView = new PersonajeLoriView();
+    this->personajeLoriView->crear_texturas(render.get());
+    this->personajeLoriView->crear_animaciones();
+
+    this->personajeSpazView = new PersonajeSpazView();
+    this->personajeSpazView->crear_texturas(render.get());
+    this->personajeSpazView->crear_animaciones();
     std::cout << "Se creo el personaje"<< std::endl;
 
 }
 
-SDL2pp::Texture Renderizado::crear_surface_y_texturas(std::string const &path_sprites) {
-    SDL2pp::Surface surface(path_sprites);
-    surface.SetColorKey(true, SDL_MapRGB(surface.Get()->format, 44, 102, 150));
-    SDL2pp::Texture textures(*render, std::move(surface));
-
-    return std::move(textures);
-}
-
-
-
-
 Renderizado::~Renderizado() { 
+    
+    delete this->personajeJazzView;
+    delete this->personajeLoriView;
+    delete this->personajeSpazView;
     std::cout << "Renderizador joineado\n";
-    delete this->personajeViewJazz;
-    delete this->texturas;
 
 }

@@ -97,6 +97,14 @@ if(CLIENT)
 		./client_src/renderizado.h
 		./client_src/personajeView.h
 		./client_src/personajeView.cpp
+		./client_src/direcciones.h
+		./client_src/direcciones.cpp
+		./client_src/personajeJazzView.h
+		./client_src/personajeJazzView.cpp
+		./client_src/personajeLoriView.h
+		./client_src/personajeLoriView.cpp
+		./client_src/personajeSpazView.h
+		./client_src/personajeSpazView.cpp
 		./client_src/animacion.h
 		./client_src/animacion.cpp
 		./client_src/protocolo_cliente.cpp

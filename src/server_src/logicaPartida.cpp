@@ -178,6 +178,7 @@ Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high
         evento_personaje.esta_quieto = par.second->obtener_movimiento();
         evento_personaje.esta_corriendo = par.second->obtener_corriendo();
         evento_personaje.usando_habilidad = par.second->obtener_habilidad();
+        evento_personaje.esta_saltando = par.second->obtener_saltando();
 
         evento.eventos_personaje.emplace_back(evento_personaje);
     }

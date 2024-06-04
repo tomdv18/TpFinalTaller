@@ -13,6 +13,7 @@ struct __attribute__((packed)) EventoPersonaje{
     uint8_t esta_quieto;
     uint8_t esta_corriendo;
     uint8_t usando_habilidad;
+    uint8_t esta_saltando;
 
 };
 

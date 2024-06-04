@@ -73,6 +73,8 @@ public:
 
     virtual uint8_t obtener_habilidad();
 
+    virtual uint8_t obtener_saltando();
+
     // Getters Snapshot
 
     virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido);
