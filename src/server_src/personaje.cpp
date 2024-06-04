@@ -119,17 +119,28 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
      if (saltando) {
         double delta_tiempo = tiempo_segundos - tiempo_salto;
 
-        posicion_y += static_cast<int32_t>(velocidad_y * delta_tiempo + 0.5 * GRAVEDAD * delta_tiempo * delta_tiempo);
+        double nuevaY = static_cast<int32_t>(velocidad_y * delta_tiempo + 0.5 * GRAVEDAD * delta_tiempo * delta_tiempo);
+        std::cout << "NUEVAY " << nuevaY << std::endl;
+        if (nuevaY < 0) {
+            posicion_y = 0;
+        }
+        else {
+            posicion_y += nuevaY;
+        }
         velocidad_y += GRAVEDAD * delta_tiempo;
 
-        if (posicion_y > HEIGHT - PERSONAJE_HEIGHT) { // Si hay colision abajo
+        // Controlar colisiones con el suelo
+        if (posicion_y > HEIGHT - PERSONAJE_HEIGHT) {
             posicion_y = HEIGHT - PERSONAJE_HEIGHT;
             saltando = false;
             velocidad_y = 0;
             velocidad_x = 0;
             std::cout << "ATERRIZO" << std::endl;
         }
+
+    
     }
+    
     
 }
 

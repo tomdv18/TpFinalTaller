@@ -7,6 +7,7 @@
 #include "personaje_jazz.h"
 #include "personaje_lori.h"
 #include "personaje_spaz.h"
+#include "enemigo_lizzard.h"
 #include <iostream>
 #include <map>
 #include <chrono>
@@ -15,6 +16,7 @@ class LogicaPartida{
 private:
 
     std::map<uint32_t, Personaje*> map_personajes;
+    std::map<uint32_t, Enemigo*> map_enemigos;
     
 
 public:

@@ -14,7 +14,7 @@
 
 class Enemigo{
 protected:
-    uint32_t id_enemigo;
+    uint32_t id_enemigo; // EL ATRIBUTO ID PROBABLEMENTE HAYA QUE REMOVERLO
     uint32_t posicion_x;
     uint32_t posicion_y;
     uint8_t vida;
@@ -27,6 +27,7 @@ protected:
     int iteraciones_para_revivir;
     
     int pasos_patrullando;
+    int danio;
 
     virtual void mover_derecha();
 
@@ -40,7 +41,8 @@ public:
     //Acciones
     virtual void quedarse_quieto();
 
-    virtual void moverse();
+    virtual int obtener_danio();
+
 
     //Acciones
 
@@ -52,6 +54,7 @@ public:
     virtual uint8_t obtener_vida();
 
     virtual uint8_t obtener_movimiento();
+ 
 
 
     // Getters Snapshot

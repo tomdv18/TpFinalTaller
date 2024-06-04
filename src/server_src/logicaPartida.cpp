@@ -3,7 +3,7 @@
 #define DURACION_PARTIDA 120.0f
 
 LogicaPartida::LogicaPartida(){
-
+    //map_enemigos[0] = new Lizzard(0); // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
 }
 
 
@@ -155,6 +155,9 @@ void LogicaPartida::actualizar_partida(std::chrono::time_point<std::chrono::high
     std::chrono::time_point<std::chrono::high_resolution_clock> actual = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
     for(const auto &par : map_personajes){
+        par.second->actualizar_posicion(tiempo_transcurrido);
+    }
+    for(const auto &par : map_enemigos){
         par.second->actualizar_posicion(tiempo_transcurrido);
     }
 }

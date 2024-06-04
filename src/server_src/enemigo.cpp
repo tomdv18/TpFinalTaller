@@ -1,16 +1,20 @@
 #include "enemigo.h"
 
-#define PASOS_POR_DIRECCION 10
+#define PASOS_POR_DIRECCION 15
+#define VIDA_DEFAULT 100
+#define DANIO_DEFAULT 25
 
 Enemigo::Enemigo(uint32_t id_enemigo) : id_enemigo(id_enemigo), 
     posicion_x(10),
     posicion_y(0), 
-    vida(100), 
+    vida(VIDA_DEFAULT), 
     esta_quieto(true), 
     esta_vivo(true), 
     iteraciones_para_revivir(-1),
-    pasos_patrullando(0){
+    pasos_patrullando(0),
+    danio(DANIO_DEFAULT){
     direccion_mirando = DERECHA;
+
 }
 
 void Enemigo::mover_derecha(){
@@ -19,7 +23,7 @@ void Enemigo::mover_derecha(){
         esta_quieto = false;
     }
     direccion_mirando = DERECHA;
-    std::cout << "POSICION DEL ENEMIGO (" << posicion_x << ", " << posicion_y << ")" << std::endl;
+    
 }
 
 void Enemigo::mover_izquierda(){
@@ -28,8 +32,12 @@ void Enemigo::mover_izquierda(){
         esta_quieto = false;
     }
     direccion_mirando = IZQUIERDA;
-    std::cout << "POSICION DEL ENEMIGO (" << posicion_x << ", " << posicion_y << ")" << std::endl;
 }
+
+int Enemigo::obtener_danio(){
+    return danio;
+}
+     
 
 void Enemigo::quedarse_quieto(){
         velocidad_x = 0;
@@ -58,8 +66,10 @@ void Enemigo::patrullar(){
     {
     case DERECHA:
         if(pasos_patrullando >= PASOS_POR_DIRECCION){
-            direccion_mirando = IZQUIERDA;
             pasos_patrullando = 0;
+            direccion_mirando = IZQUIERDA;
+            std::cout << "POSICION DEL ENEMIGO (" << posicion_x << ", " << posicion_y << ")" << std::endl;
+            std::cout << "CAMBIO DE DIRECCION PATRULLAJE DE DERECHA A IZQUIERDA" << std::endl;
         } else {
             mover_derecha();
             pasos_patrullando++;
@@ -67,8 +77,10 @@ void Enemigo::patrullar(){
         break;
     case IZQUIERDA:
         if(pasos_patrullando >= PASOS_POR_DIRECCION){
-            direccion_mirando = DERECHA;
             pasos_patrullando = 0;
+            direccion_mirando = DERECHA;
+            std::cout << "POSICION DEL ENEMIGO (" << posicion_x << ", " << posicion_y << ")" << std::endl;
+            std::cout << "CAMBIO DE DIRECCION PATRULLAJE DE IZQUIERDA A DERECHA" << std::endl;
         } else {
             mover_izquierda();
             pasos_patrullando++;
