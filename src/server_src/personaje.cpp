@@ -120,13 +120,13 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
         double delta_tiempo = tiempo_segundos - tiempo_salto;
 
         double nuevaY = static_cast<int32_t>(velocidad_y * delta_tiempo + 0.5 * GRAVEDAD * delta_tiempo * delta_tiempo);
-        std::cout << "NUEVAY " << nuevaY << std::endl;
-        if (nuevaY < 0) {
-            posicion_y = 0;
-        }
-        else {
+        //std::cout << "NUEVAY " << nuevaY << std::endl;
+        //if (nuevaY < 0) {
+        //    posicion_y = 0;
+        //}
+        //else {
             posicion_y += nuevaY;
-        }
+        //}
         velocidad_y += GRAVEDAD * delta_tiempo;
 
         // Controlar colisiones con el suelo
