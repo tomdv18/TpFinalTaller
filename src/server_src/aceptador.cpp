@@ -1,7 +1,7 @@
 #include "aceptador.h"
 
 
-Aceptador::Aceptador(Socket *skt) : skt_servidor(skt){}
+Aceptador::Aceptador(Socket *skt) : skt_servidor(skt), cantidad_jugadores(0){}
 
 void Aceptador::run(){
     MonitorPartidas monitor_partidas;
@@ -20,7 +20,8 @@ void Aceptador::run(){
 }
 
 void Aceptador::agregar_jugador(Socket skt_jugador, MonitorPartidas &monitor_partidas){
-    Jugador *nuevo_jugador = new Jugador((uint32_t)jugadores.size(),std::move(skt_jugador), monitor_partidas);
+    Jugador *nuevo_jugador = new Jugador(cantidad_jugadores,std::move(skt_jugador), monitor_partidas);
+    cantidad_jugadores++;
     jugadores.emplace_back(nuevo_jugador);
 }
 

@@ -37,6 +37,11 @@ void ProtocoloServidor::enviar_confirmacion(uint8_t codigo, bool &was_closed){
     skt_jugador.sendall(&codigo,sizeof(codigo), &was_closed);
 }
 
+void ProtocoloServidor::enviar_id_jugador(uint32_t id, bool &was_closed){
+    id = htonl(id);
+    skt_jugador.sendall(&id,sizeof(id), &was_closed);
+}
+
 
 void ProtocoloServidor::enviar_evento(bool &was_closed,Evento evento){
     uint8_t cant_personajes = (uint8_t)evento.eventos_personaje.size();

@@ -14,6 +14,8 @@ private:
 
     std::list<Jugador*> jugadores;
 
+    uint32_t cantidad_jugadores;
+
 public:
     explicit Aceptador(Socket *skt);
 

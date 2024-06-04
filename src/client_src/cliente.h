@@ -9,6 +9,7 @@
 #include "../common_src/queue.h"
 #include "../common_src/accion.h"
 #include "../common_src/evento.h"
+#include <arpa/inet.h>
 
 
 
@@ -24,7 +25,7 @@ private:
     Socket &skt;        
     std::atomic<bool> estado;
     Renderizado renderizado;
-
+    uint32_t id_jugador;
     
 public:
     /**

@@ -5,7 +5,7 @@ MonitorPartidas::MonitorPartidas() : contador_partidas(0){}
 
 
 Queue<Accion>* MonitorPartidas::crear_partida(uint32_t id_creador,uint8_t cant_jugadores, Queue<Evento> *queue_jugador){
-    Partida *nueva_partida = new Partida(id_creador, cant_jugadores, (uint32_t)partidas.size(), queue_jugador);
+    Partida *nueva_partida = new Partida(id_creador, cant_jugadores, contador_partidas, queue_jugador);
     partidas.emplace(contador_partidas,nueva_partida);
     contador_partidas++;
     std::cout << "\nPARTIDA CREADA POR EL JUGADOR  " << id_creador << std::endl;

@@ -23,6 +23,7 @@ uint8_t LobbyProtocolo::serializar_unirse_partida(uint32_t codigo_partida){
     bool was_closed = false;
     uint8_t accion = UNIRSE;
     uint8_t confirmacion;
+    codigo_partida = htonl(codigo_partida);
     skt->sendall(&accion,sizeof(accion),&was_closed);
     skt->sendall(&codigo_partida,sizeof(codigo_partida),&was_closed);
     skt->recvall(&confirmacion,sizeof(confirmacion), &was_closed);
