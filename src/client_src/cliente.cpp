@@ -3,7 +3,8 @@
 #include <SDL2pp/SDL2pp.hh>
 #include <syslog.h>
 #include <unistd.h>
-
+#include <unordered_set>
+#include <optional>
 
 #define MAX_EVENTOS 256
 #define MAX_ACCIONES 256
@@ -23,50 +24,96 @@ bool Cliente::verificar_argumentos(int argc, char* args[]) {
 }
 
 bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
+    static std::unordered_set<SDL_Keycode> teclas_presionadas;
+    static std::optional<CodigoAccion> ultima_direccion;
+
     SDL_Event evento;
     while (SDL_PollEvent(&evento)) {
         switch (evento.type) {
             case SDL_KEYDOWN: {  // Presiono la tecla
                 SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)evento;
+                teclas_presionadas.insert(keyEvent.keysym.sym);
                 switch (keyEvent.keysym.sym) {
                     case SDLK_q:
                         return false;
                     case SDLK_d:
                         queue_accion.try_push(DERECHA);
+                        ultima_direccion = DERECHA;
                         break;
                     case SDLK_a:
                         queue_accion.try_push(IZQUIERDA);
+                        ultima_direccion = IZQUIERDA;
                         break;
                     case SDLK_w:
                         queue_accion.try_push(ARRIBA);
+                        ultima_direccion = ARRIBA;
                         break;
                     case SDLK_s:
                         queue_accion.try_push(ABAJO);
+                        ultima_direccion = ABAJO;
                         break;
                     case SDLK_LSHIFT:
                         queue_accion.try_push(CORRER_RAPIDO);
                         break;
+                    case SDLK_k:
+                        queue_accion.try_push(ESPECIAL);
+                        break;
                 }
                 break;  // Salir del bloque SDL_KEYDOWN
-    
             }
             case SDL_KEYUP: {
                 SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)evento;
-                 switch (keyEvent.keysym.sym) {
+                teclas_presionadas.erase(keyEvent.keysym.sym);
+                switch (keyEvent.keysym.sym) {
                     case SDLK_d:
-                        queue_accion.try_push(QUIETO);
-                        break;
                     case SDLK_a:
-                        queue_accion.try_push(QUIETO);
-                        break;
                     case SDLK_w:
-                        //queue_accion.try_push(QUIETO);
-                        break;
                     case SDLK_s:
-                        //queue_accion.try_push(QUIETO);
+                        if (teclas_presionadas.empty()) {
+                            queue_accion.try_push(QUIETO);
+                            ultima_direccion.reset();
+                        } else {
+                            bool alguna_tecla_direccion_presionada = false;
+                            for (const auto& tecla : teclas_presionadas) {
+                                switch (tecla) {
+                                    case SDLK_d:
+                                        queue_accion.try_push(DERECHA);
+                                        ultima_direccion = DERECHA;
+                                        alguna_tecla_direccion_presionada = true;
+                                        break;
+                                    case SDLK_a:
+                                        queue_accion.try_push(IZQUIERDA);
+                                        ultima_direccion = IZQUIERDA;
+                                        alguna_tecla_direccion_presionada = true;
+                                        break;
+                                    case SDLK_w:
+                                        queue_accion.try_push(ARRIBA);
+                                        ultima_direccion = ARRIBA;
+                                        alguna_tecla_direccion_presionada = true;
+                                        break;
+                                    case SDLK_s:
+                                        queue_accion.try_push(ABAJO);
+                                        ultima_direccion = ABAJO;
+                                        alguna_tecla_direccion_presionada = true;
+                                        break;
+                                }
+                            }
+                            if (!alguna_tecla_direccion_presionada) {
+                                queue_accion.try_push(QUIETO);
+                                ultima_direccion.reset();
+                            }
+                        }
                         break;
                     case SDLK_LSHIFT:
-                        queue_accion.try_push(CORRER);
+                        if (teclas_presionadas.empty()) {
+                            queue_accion.try_push(QUIETO);
+                            ultima_direccion.reset();
+                        } else {
+                            queue_accion.try_push(CORRER);
+                            if (ultima_direccion) {
+                                queue_accion.try_push(*ultima_direccion);
+                            }
+                        }
                         break;
                 }
                 break;
@@ -77,6 +124,8 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
     }
     return true;
 }
+
+
 
 void Cliente::comunicarse_con_el_servidor() {
     Queue<Evento> queue_eventos(MAX_EVENTOS);

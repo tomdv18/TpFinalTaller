@@ -29,8 +29,8 @@ void LogicaPartida::ejecutar(Accion accion, std::chrono::time_point<std::chrono:
         case QUIETO:
             mover_quieto(accion.id_jugador);
             break; 
-        case LOBBY:
-            //abandonar_partida(accion.id_jugador);
+        case ESPECIAL:
+            usar_habilidad(accion.id_jugador, tiempo);
         case JAZZ:
             agregar_personaje(accion);
             break;
@@ -57,7 +57,7 @@ void LogicaPartida::mover_izquierda(uint32_t id_jugador){
     }
 }
 
-void LogicaPartida::mover_arriba(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo ) {
+void LogicaPartida::mover_arriba(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo) {
     std::chrono::time_point<std::chrono::high_resolution_clock> actual = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
 
@@ -95,6 +95,16 @@ void LogicaPartida::mover_correr(uint32_t id_jugador){
     }
 }
 
+void LogicaPartida::usar_habilidad(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo){
+    std::chrono::time_point<std::chrono::high_resolution_clock> actual = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
+    Personaje *personaje = map_personajes[id_jugador];
+    if(personaje != nullptr){
+        personaje->usar_habilidad(tiempo_transcurrido);
+    }
+}
+
+
 void LogicaPartida::abandonar_partida(uint32_t id_jugador){
     auto it = map_personajes.find(id_jugador);
 
@@ -114,7 +124,7 @@ void LogicaPartida::agregar_personaje(Accion accion){
             std::cout << "CREAR PERSONAJE JAZZ" << std::endl;
             //personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if(map_personajes[accion.id_jugador] == nullptr){
-                map_personajes[accion.id_jugador] = new Personaje(accion.id_jugador);
+                map_personajes[accion.id_jugador] = new Jazz(accion.id_jugador);
             }
             break;
         }
@@ -122,7 +132,7 @@ void LogicaPartida::agregar_personaje(Accion accion){
             std::cout << "CREAR PERSONAJE SPAZ" << std::endl;
             //personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if(map_personajes[accion.id_jugador] == nullptr){
-                map_personajes[accion.id_jugador] = new Personaje(accion.id_jugador);
+                map_personajes[accion.id_jugador] = new Spaz(accion.id_jugador);
             }
             break;
         }
@@ -130,7 +140,7 @@ void LogicaPartida::agregar_personaje(Accion accion){
             std::cout << "CREAR PERSONAJE LORI" << std::endl;
             //personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if(map_personajes[accion.id_jugador] == nullptr){
-                map_personajes[accion.id_jugador] = new Personaje(accion.id_jugador);
+                map_personajes[accion.id_jugador] = new Lori(accion.id_jugador);
             }
             break;
         }
@@ -164,8 +174,10 @@ Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high
         evento_personaje.posicion_x = par.second->obtener_posicionX();
         evento_personaje.posicion_y = par.second->obtener_posicionY();
         evento_personaje.vida = par.second->obtener_vida();
+        evento_personaje.id_personaje = par.second->obtener_personaje();
         evento_personaje.esta_quieto = par.second->obtener_movimiento();
         evento_personaje.esta_corriendo = par.second->obtener_corriendo();
+        evento_personaje.usando_habilidad = par.second->obtener_habilidad();
 
         evento.eventos_personaje.emplace_back(evento_personaje);
     }

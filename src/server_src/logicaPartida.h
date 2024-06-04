@@ -4,7 +4,9 @@
 
 #include "../common_src/accion.h"
 #include "../common_src/evento.h"
-#include "personaje.h"
+#include "personaje_jazz.h"
+#include "personaje_lori.h"
+#include "personaje_spaz.h"
 #include <iostream>
 #include <map>
 #include <chrono>
@@ -33,6 +35,8 @@ public:
     void mover_correr_rapido(uint32_t id_jugador);
 
     void mover_correr(uint32_t id_jugador);
+
+    void usar_habilidad(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     void abandonar_partida(uint32_t id_jugador);
 

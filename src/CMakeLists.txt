@@ -18,6 +18,12 @@ if(SERVER)
 		./server_src/partida.h
 		./server_src/personaje.cpp
 		./server_src/personaje.h
+		./server_src/personaje_jazz.cpp
+		./server_src/personaje_jazz.h
+		./server_src/personaje_lori.cpp
+		./server_src/personaje_lori.h
+		./server_src/personaje_spaz.cpp
+		./server_src/personaje_spaz.h
 		./server_src/protocoloServidor.cpp
 		./server_src/protocoloServidor.h
 		./server_src/recibidorJugador.cpp

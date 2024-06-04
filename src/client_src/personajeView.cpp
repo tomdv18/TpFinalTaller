@@ -14,7 +14,7 @@ facingLeft(false), isMoving(false), isRunning(false) {}
 
 void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, float dt) {
     
-    this->isMoving = bool (evento.esta_quieto);
+    this->isMoving = bool (!evento.esta_quieto);
     this->isRunning = bool (evento.esta_corriendo);
     
     facingLeft = false;

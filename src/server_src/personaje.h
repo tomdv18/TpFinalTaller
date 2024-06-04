@@ -4,10 +4,22 @@
 #include <iostream>
 #include <cmath>
 #include <chrono>
+#include "../common_src/accion.h"
 
+
+#define WIDTH 640
+#define HEIGHT 480
+#define PERSONAJE_HEIGHT 50
+#define PERSONAJE_WIDTH 50
+#define VELOCIDAD 5
+#define VELOCIDAD_SALTO 25
+#define GRAVEDAD 3
+#define ENFRIAMIENTO_JAZZ 5
+#define ENFRIAMIENTO_LORI 5
+#define ENFRIAMIENTO_SPAZ 5
 
 class Personaje{
-private:
+protected:
     uint32_t id_jugador;
     uint32_t posicion_x;
     uint32_t posicion_y;
@@ -22,43 +34,56 @@ private:
     bool saltando;
     double tiempo_salto;
 
+    bool usando_especial;
+    double tiempo_especial;
+
+    uint8_t direccion_mirando;
+
 public:
     Personaje(uint32_t id_jugador);
 
     //Acciones
 
-    void mover_derecha();
+    virtual void mover_derecha();
 
-    void mover_izquierda();
+    virtual void mover_izquierda();
 
-    void mover_arriba(std::chrono::duration<double> tiempo_transcurrido);
+    virtual void mover_arriba(std::chrono::duration<double> tiempo_transcurrido);
 
-    void mover_abajo();
+    virtual void mover_abajo();
 
-    void quedarse_quieto();
+    virtual void quedarse_quieto();
 
-    void correr_rapido();
+    virtual void correr_rapido();
 
-    void correr();
+    virtual void correr();
 
     //Acciones
 
     // Getters Snapshot
-    uint32_t obtener_posicionX();
+    virtual uint32_t obtener_posicionX();
 
-    uint32_t obtener_posicionY();
+    virtual uint32_t obtener_posicionY();
 
-    uint8_t obtener_vida();
+    virtual uint8_t obtener_vida();
 
-    uint8_t obtener_movimiento();
+    virtual uint8_t obtener_movimiento();
 
-    uint8_t obtener_corriendo();
+    virtual uint8_t obtener_corriendo();
+
+    virtual uint8_t obtener_habilidad();
 
     // Getters Snapshot
 
-    void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido);
+    virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido);
 
-    ~Personaje();
+    virtual ~Personaje();
+
+    // Metodos virtuales para los diferentes personajes
+
+    virtual uint8_t obtener_personaje() = 0;
+
+    virtual void usar_habilidad(std::chrono::duration<double> tiempo_transcurrido) = 0;
 };
 
 #endif
