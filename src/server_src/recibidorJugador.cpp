@@ -162,9 +162,8 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>  &partida_encontrada, bool &
         protocolo_servidor->enviar_id_jugador(this->id,was_closed);
 
         // Rompe aca, porque...
-        //MapaEntidades MapaEntidades = importFromYAML("mapa.yaml");
-
-        //protocolo_servidor->enviar_mapa(MapaEntidades);
+        MapaEntidades mapa = importFromYAML("../src/mapas/mapa.yaml");
+        protocolo_servidor->enviar_mapa(mapa);
     }else{
         protocolo_servidor->enviar_confirmacion(FALLO, was_closed);
     }

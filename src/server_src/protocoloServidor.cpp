@@ -79,9 +79,10 @@ void ProtocoloServidor::enviar_tipo_entidad(const std::string& entity_type, bool
         entity_code = PISO;
     } else if (entity_type == "pared") {
         entity_code = PARED;
+    } else {
+        return; // Si el tipo de entidad no es reconocido, no hacer nada
     }
     skt_jugador.sendall(&entity_code, sizeof(entity_code), &was_closed);
-
 }
 
 void ProtocoloServidor::enviar_posiciones_entidad(const std::vector<Position>& positions, bool& was_closed) {
@@ -100,9 +101,11 @@ void ProtocoloServidor::enviar_mapa(const MapaEntidades& map) {
     cantidad_entidades = htonl(cantidad_entidades);
     skt_jugador.sendall(&cantidad_entidades, sizeof(cantidad_entidades), &was_closed);
 
-    for (const auto& pair : map) {
-        enviar_tipo_entidad( pair.first, was_closed);
-        enviar_posiciones_entidad( pair.second, was_closed);
+    for (auto pair : map) {
+        if (pair.first == "posicion_personaje") continue; // Excluye posiciones_jugadores
+
+        enviar_tipo_entidad(pair.first, was_closed);
+        enviar_posiciones_entidad(pair.second, was_closed);
     }
 }
 

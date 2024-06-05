@@ -142,9 +142,10 @@ static void print_map(const MapaEntidades& map) {
 }
 
 void Cliente::comunicarse_con_el_servidor() {
-    //ProtocoloCliente protocolo_temporal(skt);
-    //MapaEntidades mapa = protocolo_temporal.recibir_mapa();
-    //print_map(mapa);
+    ProtocoloCliente protocolo_temporal(skt);
+    MapaEntidades mapa = protocolo_temporal.recibir_mapa();
+    print_map(mapa);
+    
     Queue<Evento> queue_eventos(MAX_EVENTOS);
     Queue<CodigoAccion> queue_accion(MAX_ACCIONES);
     RecibidorCliente recibidor_cliente(skt, queue_eventos, estado);
@@ -191,6 +192,7 @@ void Cliente::comunicarse_con_el_servidor() {
     }
     queue_accion.close();
     queue_eventos.close();
+    
     terminar_comunicacion();
 }
 
