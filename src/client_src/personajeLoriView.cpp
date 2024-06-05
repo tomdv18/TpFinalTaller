@@ -1,6 +1,6 @@
 #include "personajeLoriView.h"
 
-PersonajeLoriView::PersonajeLoriView() : PersonajeView() {}
+PersonajeLoriView::PersonajeLoriView(uint32_t id_jugador) : PersonajeView(id_jugador) {}
 
 void PersonajeLoriView::crear_texturas(SDL2pp::Renderer *render) {
 

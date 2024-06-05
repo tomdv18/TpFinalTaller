@@ -15,13 +15,13 @@ class ProtocoloCliente {
 private:
     Socket& skt;     // Socket por el cual se comunicaran el cliente/servidor
 
+public:
+
     void recibir_entidad(uint32_t cantidad_piezas, MapaEntidades& map);
 
     void recibir_posiciones(uint32_t cantidad_tipo, std::vector<Position>& posiciones, bool& was_closed);
 
     std::string determinar_tipo(uint8_t tipo);
-
-public:
     /**
      * Construyo el protocolo en funcion del socket al cual quieren
      * comunicarse.

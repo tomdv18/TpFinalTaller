@@ -12,7 +12,7 @@
 #define HEIGHT 480
 #define FRAME_RATE 50000
 
-Cliente::Cliente(Socket& skt): skt(skt), estado(true), renderizado() {
+Cliente::Cliente(Socket& skt): skt(skt), estado(true), personajes(), renderizado(personajes) {
     bool was_closed = false;
     skt.recvall(&id_jugador,sizeof(id_jugador), &was_closed);
     id_jugador = ntohl(id_jugador);

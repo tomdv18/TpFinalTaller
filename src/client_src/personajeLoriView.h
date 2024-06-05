@@ -7,7 +7,7 @@ class PersonajeLoriView : public PersonajeView {
 
     public:
     
-    PersonajeLoriView();
+    PersonajeLoriView(uint32_t id_jugador);
 
     void crear_texturas(SDL2pp::Renderer *render) override;
 

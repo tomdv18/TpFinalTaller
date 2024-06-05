@@ -23,26 +23,29 @@ class Renderizado {
     std::unique_ptr<SDL2pp::Window> window;
     std::unique_ptr<SDL2pp::Renderer> render;
     int cantidad_jugadores;
+    std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews;
+    uint32_t id_jugador;
     PersonajeJazzView *personajeJazzView;
     PersonajeLoriView *personajeLoriView;
     PersonajeSpazView *personajeSpazView;
 
     public:
 
-    Renderizado();
+    explicit Renderizado(std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews);
+    
     virtual ~Renderizado();
 
     public: 
 
     void inicializar_SDL2pp();
 
+    void recibir_id(uint32_t id_jugador);
+
     void crear_ventana_y_render(const std::string& title, int width, int height);
 
     void crear_personajes();
 
     void renderizar(Evento evento);
-
-    void asociar_render(SDL2pp::Renderer* render);
 
 };
 

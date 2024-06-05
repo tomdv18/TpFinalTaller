@@ -6,7 +6,7 @@
 #include <map>
 #include "paths.h"
 
-Renderizado::Renderizado() : cantidad_jugadores(1), personajeJazzView(nullptr) {}
+Renderizado::Renderizado(std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews) : cantidad_jugadores(1), personajesViews(personajesViews) {}
 
 void Renderizado::inicializar_SDL2pp() {
 
@@ -14,56 +14,57 @@ void Renderizado::inicializar_SDL2pp() {
     ///
 }
 
+void Renderizado::recibir_id(uint32_t id_jugador){
+    this->id_jugador = id_jugador;
+}
+
 void Renderizado::renderizar(Evento evento) {
 
-
-    std::cout << "cantidad de jugadores:" << evento.eventos_personaje.size() << std::endl;
+    render->SetDrawColor(0x80, 0x80, 0x80);
     
-    //Despues modularizo.
-    if(evento.eventos_personaje.size() >= 1) {
-        std::cout << "PERSONAJE DE " << evento.eventos_personaje[0].id_jugador << std::endl;
-        std::cout << "VIDA " << evento.eventos_personaje[0].vida << std::endl;
-        std::cout << "EN LA POSICION " << "(" <<(int) evento.eventos_personaje[0].posicion_x << "," << evento.eventos_personaje[0].posicion_y << ")" << std::endl;
-        std::cout << "ESTA QUIETO " << (int) evento.eventos_personaje[0].esta_quieto << std::endl;
-        std::cout << "ESTA CORRIENDO " << (int) evento.eventos_personaje[0].esta_corriendo << std::endl;
-        std::cout << "ESTA Saltando " << (int) evento.eventos_personaje[0].esta_saltando << std::endl;
-        render->SetDrawColor(0x80, 0x80, 0x80);
+    render->Clear();
     
-        render->Clear();
-        this->personajeJazzView->actualizar_vista_personaje(evento.eventos_personaje[0], 50000);
-
-        this->personajeJazzView->renderizar_personaje(render);
-        render->Present();
-
-    }
-    
-    
-    if(evento.eventos_personaje.size() >= 2) {
-        std::cout << "PERSONAJE DE " << evento.eventos_personaje[1].id_jugador << std::endl;
-        std::cout << "VIDA " << evento.eventos_personaje[1].vida << std::endl;
-        std::cout << "EN LA POSICION " << "(" << evento.eventos_personaje[1].posicion_x << "," << evento.eventos_personaje[1].posicion_y << ")" << std::endl;
-    
-        this->personajeLoriView->actualizar_vista_personaje(evento.eventos_personaje[1], 50000);
-
-        this->personajeLoriView->renderizar_personaje(render);
-        render->Present();
-    }
-
-    if(evento.eventos_personaje.size() >= 3) {
-        std::cout << "PERSONAJE DE " << evento.eventos_personaje[2].id_jugador << std::endl;
-        std::cout << "VIDA " << evento.eventos_personaje[2].vida << std::endl;
-        std::cout << "EN LA POSICION " << "(" << evento.eventos_personaje[2].posicion_x << "," << evento.eventos_personaje[2].posicion_y << ")" << std::endl;
-        
-        this->personajeSpazView->actualizar_vista_personaje(evento.eventos_personaje[2], 50000);
-
-        this->personajeSpazView->renderizar_personaje(render);
-        render->Present();
+    for(EventoPersonaje evento : evento.eventos_personaje){
+        if(personajesViews.find(evento.id_jugador) == personajesViews.end()){
+            std::unique_ptr<PersonajeView> personaje;
+            switch(evento.id_personaje){
+                case JAZZ:
+                    personaje = std::unique_ptr<PersonajeView>(new PersonajeJazzView(evento.id_jugador));
+                    personaje->crear_texturas(render.get());
+                    personaje->crear_animaciones();
+                    
+                    break;
+                case SPAZ:
+                    personaje = std::unique_ptr<PersonajeView>(new PersonajeSpazView(evento.id_jugador));
+                    personaje->crear_texturas(render.get());
+                    personaje->crear_animaciones();
+                    break;
+                case LORI:
+                    personaje = std::unique_ptr<PersonajeView>(new PersonajeLoriView(evento.id_jugador));
+                    personaje->crear_texturas(render.get());
+                    personaje->crear_animaciones();
+            }
+            //std::unique_ptr<PersonajeView> p = std::unique_ptr<PersonajeView>(new PersonajeView(e.id_jugador,texturas));
+            personajesViews[evento.id_jugador] = std::move(personaje);
+            std::cout << "CREANDO JUGADOR" << std::endl;
+                
+        }else{
+            PersonajeView &personaje = *(personajesViews.at(evento.id_jugador));
+            personaje.actualizar_vista_personaje(evento,50000);
+            personaje.renderizar_personaje(render);
+        }
     }
     
 
-    // Presento el renderizado
-    //render->Present();
+    render->Clear();
+    for (auto &personaje : this->personajesViews) {
 
+        PersonajeView &p = *(personaje.second);
+        p.renderizar_personaje(render);
+		
+	}
+
+    render->Present();
 }
 
 void Renderizado::crear_ventana_y_render(const std::string& title, int width, int height) {
@@ -72,10 +73,9 @@ void Renderizado::crear_ventana_y_render(const std::string& title, int width, in
 }
 
 void Renderizado::crear_personajes() {
-    
+    /*
     this->personajeJazzView = new PersonajeJazzView();
-    this->personajeJazzView->crear_texturas(render.get());
-    this->personajeJazzView->crear_animaciones();
+    
 
     this->personajeLoriView = new PersonajeLoriView();
     this->personajeLoriView->crear_texturas(render.get());
@@ -85,14 +85,12 @@ void Renderizado::crear_personajes() {
     this->personajeSpazView->crear_texturas(render.get());
     this->personajeSpazView->crear_animaciones();
     std::cout << "Se creo el personaje"<< std::endl;
+    */
 
 }
 
 Renderizado::~Renderizado() { 
     
-    delete this->personajeJazzView;
-    delete this->personajeLoriView;
-    delete this->personajeSpazView;
     std::cout << "Renderizador joineado\n";
 
 }
