@@ -21,6 +21,53 @@ bool ProtocoloCliente::enviar_accion_juego(uint8_t accion_juego) {
     return !was_closed;
 }
 
+MapaEntidades ProtocoloCliente::recibir_mapa() {
+    uint32_t cantidad_piezas;
+    bool was_closed;
+    skt.recvall(&cantidad_piezas, sizeof(cantidad_piezas), &was_closed);
+    cantidad_piezas = ntohl(cantidad_piezas);
+
+    MapaEntidades map;
+    recibir_entidad(cantidad_piezas, map);
+    return map;
+}
+
+void ProtocoloCliente::recibir_entidad(uint32_t cantidad_piezas, MapaEntidades& map) {
+    bool was_closed;
+    for (size_t i = 0; i < cantidad_piezas; i++) {
+        uint8_t tipo;
+        skt.recvall(&tipo, sizeof(tipo), &was_closed);
+
+        uint32_t cantidad_tipo;
+        skt.recvall(&cantidad_tipo, sizeof(cantidad_tipo), &was_closed);
+        cantidad_tipo = ntohl(cantidad_tipo);
+
+        std::vector<Position> posiciones(cantidad_tipo);
+        recibir_posiciones(cantidad_tipo, posiciones, was_closed);
+
+        std::string clave = determinar_tipo(tipo);
+        map[clave] = posiciones;
+    }
+}
+
+void ProtocoloCliente::recibir_posiciones(uint32_t cantidad_tipo, std::vector<Position>& posiciones, bool& was_closed) {
+    for (size_t i = 0; i < cantidad_tipo; i++) {
+        Position posicion;
+        skt.recvall(&posicion, sizeof(posicion), &was_closed);
+        posiciones[i] = posicion;
+    }
+}
+
+std::string ProtocoloCliente::determinar_tipo(uint8_t tipo) {
+    if (tipo == PISO) {
+        return "piso";
+    } else if (tipo == PARED) {
+        return "pared";
+    } 
+    return "unknown";
+}
+
+
 // Ver como recibir el evento final
 
 bool ProtocoloCliente::recibir_evento(Evento &evento) {

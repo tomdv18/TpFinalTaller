@@ -47,6 +47,11 @@ if(SERVER)
 		./common_src/queue.h
 		
 	)
+
+	# biblioteca YAML-CPP
+	find_package(yaml-cpp REQUIRED)
+	target_link_libraries(jazzservidor PRIVATE yaml-cpp)
+
 	target_compile_definitions(jazzservidor PUBLIC CONFIG_PATH="${CONFIG_FILE}")
 
 	set(SERVER_OUTPUT_DIR ${CMAKE_BINARY_DIR})
@@ -132,7 +137,10 @@ if(CLIENT)
 		./ventana_lobby/mainwindow.cpp
 		./ventana_lobby/resources.qrc
 	)
-	
+	# biblioteca YAML-CPP
+	find_package(yaml-cpp REQUIRED)
+	target_link_libraries(jazzservidor PRIVATE yaml-cpp)
+
 	target_link_libraries(jazzcliente PUBLIC Qt5::Widgets Qt5::Core SDL2pp::SDL2pp SDL2::SDL2main)
 	target_include_directories(jazzcliente PRIVATE ${PROJECT_SOURCE_DIR}/src)
 	target_include_directories(jazzcliente PUBLIC ${PROJECT_SOURCE_DIR}/src/client_src)

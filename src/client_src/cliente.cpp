@@ -129,9 +129,22 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
     return true;
 }
 
-
+static void print_map(const MapaEntidades& map) {
+    std::cout << map.size();
+    for (const auto& pair : map) {
+        const std::string& entity_type = pair.first;
+        const std::vector<Position>& positions = pair.second;
+        std::cout << "Entidad: " << entity_type << std::endl;
+        for (const auto& pos : positions) {
+            std::cout << "x: " << pos.x << ", y: " << pos.y << std::endl;
+        }
+    }
+}
 
 void Cliente::comunicarse_con_el_servidor() {
+    //ProtocoloCliente protocolo_temporal(skt);
+    //MapaEntidades mapa = protocolo_temporal.recibir_mapa();
+    //print_map(mapa);
     Queue<Evento> queue_eventos(MAX_EVENTOS);
     Queue<CodigoAccion> queue_accion(MAX_ACCIONES);
     RecibidorCliente recibidor_cliente(skt, queue_eventos, estado);

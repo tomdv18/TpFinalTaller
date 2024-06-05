@@ -16,6 +16,36 @@ RecibidorJugador::RecibidorJugador(ProtocoloServidor *protocolo_servidor,
         
 }
 
+// Leo un .yaml
+MapaEntidades importFromYAML(const std::string& filename) {
+    MapaEntidades entities;
+    YAML::Node config = YAML::LoadFile(filename);
+    // Verific0 si el nodo es válido
+    if (!config.IsMap()) {
+        // Manejo el caso en el que el nodo principal no sea un mapa
+        throw std::runtime_error("El archivo YAML no tiene un formato valido");
+    }
+
+    // Itero sobre cada entrada en el mapa
+    for (auto it = config.begin(); it != config.end(); ++it) {
+        std::string entity_name = it->first.as<std::string>();  // Obtener el nombre de la entidad
+
+        // Verifico si el valor asociado con la clave es una secuencia
+        if (!it->second.IsSequence()) {
+            // Manejar el caso en el que el valor asociado no sea una secuencia
+            throw std::runtime_error("Error: La entrada '" + entity_name + "' no es una secuencia de posiciones válida.");
+            continue;  // Pasar a la siguiente entrada en el mapa
+        }
+
+        // Itero sobre las posiciones de la entidad
+        for (std::size_t i = 0; i < it->second.size(); ++i) {
+            YAML::Node posNode = it->second[i];
+            Position pos = { posNode["x"].as<uint32_t>(), posNode["y"].as<uint32_t>() };
+            entities[entity_name].push_back(pos);
+        }
+    }
+    return entities;
+}
 
 void RecibidorJugador::run(){
     
@@ -120,6 +150,7 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>  &partida_encontrada, bool &
     
 
     if(this->queue_acciones != nullptr){
+        // Se creo la partida, o alguien se unio, debo enviar el mapa
         std::cout << "PARTIDA EMPEZADA " << std::endl;
         Accion accion;
         accion.id_jugador = id;
@@ -129,6 +160,11 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>  &partida_encontrada, bool &
 
         protocolo_servidor->enviar_confirmacion(EXITO, was_closed);
         protocolo_servidor->enviar_id_jugador(this->id,was_closed);
+
+        // Rompe aca, porque...
+        //MapaEntidades MapaEntidades = importFromYAML("mapa.yaml");
+
+        //protocolo_servidor->enviar_mapa(MapaEntidades);
     }else{
         protocolo_servidor->enviar_confirmacion(FALLO, was_closed);
     }

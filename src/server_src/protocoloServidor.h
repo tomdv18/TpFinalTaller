@@ -29,9 +29,14 @@ public:
 
     void close();
 
+    void enviar_mapa(const MapaEntidades& map);
+
     ~ProtocoloServidor();
 
 private:
+
+    void enviar_tipo_entidad(const std::string& entity_type, bool& was_closed);
+    void enviar_posiciones_entidad(const std::vector<Position>& positions, bool& was_closed);
 
 
 };

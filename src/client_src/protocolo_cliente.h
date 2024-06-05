@@ -15,6 +15,12 @@ class ProtocoloCliente {
 private:
     Socket& skt;     // Socket por el cual se comunicaran el cliente/servidor
 
+    void recibir_entidad(uint32_t cantidad_piezas, MapaEntidades& map);
+
+    void recibir_posiciones(uint32_t cantidad_tipo, std::vector<Position>& posiciones, bool& was_closed);
+
+    std::string determinar_tipo(uint8_t tipo);
+
 public:
     /**
      * Construyo el protocolo en funcion del socket al cual quieren
@@ -42,6 +48,8 @@ public:
      * @return false en caso de no poder recibir, true caso contrario.
      */
     bool recibir_evento(Evento &evento);
+
+    MapaEntidades recibir_mapa();
 
     /**
      * Desabilito las copias

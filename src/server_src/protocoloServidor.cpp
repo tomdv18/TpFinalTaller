@@ -73,6 +73,39 @@ void ProtocoloServidor::enviar_evento(bool &was_closed,Evento evento){
     */
 }
 
+void ProtocoloServidor::enviar_tipo_entidad(const std::string& entity_type, bool& was_closed) {
+    uint8_t entity_code;
+    if (entity_type == "piso") {
+        entity_code = PISO;
+    } else if (entity_type == "pared") {
+        entity_code = PARED;
+    }
+    skt_jugador.sendall(&entity_code, sizeof(entity_code), &was_closed);
+
+}
+
+void ProtocoloServidor::enviar_posiciones_entidad(const std::vector<Position>& positions, bool& was_closed) {
+    uint32_t largo = positions.size();
+    largo = htonl(largo);
+    skt_jugador.sendall(&largo, sizeof(largo), &was_closed);
+
+    for (const auto& pos : positions) {
+        skt_jugador.sendall(&pos, sizeof(pos), &was_closed);
+    }
+}
+
+void ProtocoloServidor::enviar_mapa(const MapaEntidades& map) {
+    bool was_closed;
+    uint32_t cantidad_entidades = map.size() - 1; // Excluye posiciones_jugadores
+    cantidad_entidades = htonl(cantidad_entidades);
+    skt_jugador.sendall(&cantidad_entidades, sizeof(cantidad_entidades), &was_closed);
+
+    for (const auto& pair : map) {
+        enviar_tipo_entidad( pair.first, was_closed);
+        enviar_posiciones_entidad( pair.second, was_closed);
+    }
+}
+
 
 void ProtocoloServidor::enviar_lista_partidas(MonitorPartidas &monitor_partidas, bool &was_closed){
     
