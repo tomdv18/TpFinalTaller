@@ -124,6 +124,8 @@ if(CLIENT)
 		./client_src/protocolo_cliente.h
 		./client_src/enviadorCliente.cpp
 		./client_src/enviadorCliente.h
+		./client_src/balaView.cpp
+		./client_src/balaView.h
 
 		./common_src/thread.h
 		./common_src/socket.h
