@@ -1,6 +1,6 @@
 #include "personajeSpazView.h"
 
-PersonajeSpazView::PersonajeSpazView() : PersonajeView() {}
+PersonajeSpazView::PersonajeSpazView(uint32_t id_jugador) : PersonajeView(id_jugador) {}
 
 void PersonajeSpazView::crear_texturas(SDL2pp::Renderer *render) {
 

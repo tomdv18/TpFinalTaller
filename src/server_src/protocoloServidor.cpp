@@ -106,7 +106,6 @@ void ProtocoloServidor::enviar_mapa(const MapaEntidades& map) {
     }
 }
 
-
 void ProtocoloServidor::enviar_lista_partidas(MonitorPartidas &monitor_partidas, bool &was_closed){
     
     InfoPartida info_partida;

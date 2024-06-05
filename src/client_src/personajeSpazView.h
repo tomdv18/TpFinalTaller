@@ -7,7 +7,7 @@ class PersonajeSpazView : public PersonajeView {
 
     public:
     
-    PersonajeSpazView();
+    PersonajeSpazView(uint32_t id_jugador);
 
     void crear_texturas(SDL2pp::Renderer *render) override;
 

@@ -14,7 +14,8 @@
 class PersonajeView {
 
     protected:
-
+    
+    uint32_t id_jugador;
     int posicion_x;
     int posicion_y;
     int width;
@@ -28,7 +29,7 @@ class PersonajeView {
 
     public:
 
-    PersonajeView();
+    PersonajeView(uint32_t id_jugador);
 
     ~PersonajeView();
 

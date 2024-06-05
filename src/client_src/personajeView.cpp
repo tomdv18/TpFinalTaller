@@ -7,7 +7,7 @@
 
 
 
-PersonajeView::PersonajeView() : posicion_x(0), posicion_y(0), width(50), height(50), texturas(nullptr), 
+PersonajeView::PersonajeView(uint32_t id_jugador) : id_jugador(id_jugador), posicion_x(0), posicion_y(0), width(50), height(50), texturas(nullptr), 
 facingLeft(false), isMoving(false), isRunning(false), isJumping(false) {
     animaciones.insert(std::make_pair(CAMINANDO, Animacion()));
     animaciones.insert(std::make_pair(CORRIENDO, Animacion()));
@@ -38,6 +38,8 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
     this->isMoving = bool (!evento.esta_quieto);
     this->isRunning = bool (evento.esta_corriendo);
     this->isJumping = bool (evento.esta_saltando);
+
+    std::cout << "EL personaje tine id: " << evento.id_personaje << std::endl;
     
     facingLeft = false;
     if(posicion_x > evento.posicion_x) {

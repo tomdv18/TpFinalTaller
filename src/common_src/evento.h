@@ -25,7 +25,6 @@ struct Evento{
     std::vector<EventoPersonaje> eventos_personaje;
 };
 
-
 enum Entidad: uint8_t {
     PISO,
     PARED,

@@ -15,7 +15,6 @@ RecibidorJugador::RecibidorJugador(ProtocoloServidor *protocolo_servidor,
                 {
         
 }
-
 // Leo un .yaml
 MapaEntidades importFromYAML(const std::string& filename) {
     MapaEntidades entities;
@@ -46,6 +45,7 @@ MapaEntidades importFromYAML(const std::string& filename) {
     }
     return entities;
 }
+
 
 void RecibidorJugador::run(){
     
@@ -148,9 +148,8 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>  &partida_encontrada, bool &
         }
     }
     
-
     if(this->queue_acciones != nullptr){
-        // Se creo la partida, o alguien se unio, debo enviar el mapa
+         // Se creo la partida, o alguien se unio, debo enviar el mapa
         std::cout << "PARTIDA EMPEZADA " << std::endl;
         Accion accion;
         accion.id_jugador = id;
@@ -160,7 +159,6 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>  &partida_encontrada, bool &
 
         protocolo_servidor->enviar_confirmacion(EXITO, was_closed);
         protocolo_servidor->enviar_id_jugador(this->id,was_closed);
-
         // Rompe aca, porque...
         //MapaEntidades MapaEntidades = importFromYAML("mapa.yaml");
 

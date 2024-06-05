@@ -25,6 +25,7 @@ private:
     Socket &skt;        
     std::atomic<bool> estado;
     Renderizado renderizado;
+    std::map<uint32_t, std::unique_ptr<PersonajeView>> personajes;
     uint32_t id_jugador;
     
 public:

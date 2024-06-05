@@ -7,7 +7,7 @@ class PersonajeJazzView : public PersonajeView {
 
     public:
     
-    PersonajeJazzView();
+    PersonajeJazzView(uint32_t id_jugador);
 
     void crear_texturas(SDL2pp::Renderer *render) override;
 
