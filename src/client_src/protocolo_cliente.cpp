@@ -73,6 +73,7 @@ std::string ProtocoloCliente::determinar_tipo(uint8_t tipo) {
 bool ProtocoloCliente::recibir_evento(Evento &evento) {
     bool was_closed = false;
     EventoPersonaje event_personaje;
+    EventoBala event_bala;
 
     //skt.recvall(&evento,sizeof(evento), &was_closed);
     uint8_t cant_personajes;
@@ -101,7 +102,29 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
         eventos_personajes.emplace_back(event_personaje);
     }
     
+    uint32_t cant_balas;
+    skt.recvall(&cant_balas,sizeof(cant_balas), &was_closed);
+    cant_balas = ntohl(cant_balas);
+
+    std::vector<EventoBala> eventos_balas;
+    eventos_balas.clear();
+    for(int i = 0; i < cant_balas; i++){
+        skt.recvall(&event_bala, sizeof(event_bala), &was_closed);
+        if(was_closed){
+            return !was_closed;
+        }
+        event_bala.id_jugador = ntohl(event_bala.id_jugador);
+        event_bala.id_bala = ntohl(event_bala.id_bala);
+        event_bala.posicion_x = ntohl(event_bala.posicion_x);
+        event_bala.posicion_y = ntohl(event_bala.posicion_y);
+       
+        eventos_balas.emplace_back(event_bala);
+    }
+
+
+    
     evento.eventos_personaje = eventos_personajes;
+    evento.eventos_bala = eventos_balas;
 
     /*
         La idea es recibir la cantidad de personajes q hay

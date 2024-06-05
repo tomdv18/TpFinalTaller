@@ -60,6 +60,23 @@ void ProtocoloServidor::enviar_evento(bool &was_closed,Evento evento){
             throw std::runtime_error("Error, se cerro la conexion con el servidor");
         }
     }
+
+
+    uint32_t cant_balas = (uint32_t) evento.eventos_bala.size();
+    cant_balas = htonl(cant_balas);
+    skt_jugador.sendall(&cant_balas, sizeof(cant_balas), &was_closed);
+
+    for(EventoBala b : evento.eventos_bala){  
+        b.id_jugador = htonl(b.id_jugador);
+        b.id_bala = htonl(b.id_bala);
+        b.posicion_x = htonl(b.posicion_x);
+        b.posicion_y = htonl(b.posicion_y);
+        skt_jugador.sendall(&b, sizeof(b), &was_closed);
+        if(was_closed){
+            throw std::runtime_error("Error, se cerro la conexion con el servidor");
+        }
+    }
+
     /*
 
     for(EventoEnemigo e : evento.eventos_enemigo){  

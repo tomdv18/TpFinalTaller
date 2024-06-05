@@ -8,6 +8,7 @@
 #include "personaje_lori.h"
 #include "personaje_spaz.h"
 #include "enemigo_lizzard.h"
+#include "controlador_balas.h"
 #include <iostream>
 #include <map>
 #include <chrono>
@@ -17,7 +18,7 @@ private:
 
     std::map<uint32_t, Personaje*> map_personajes;
     std::map<uint32_t, Enemigo*> map_enemigos;
-    
+    ControladorBalas controlador_balas;
 
 public:
     LogicaPartida();
@@ -37,6 +38,11 @@ public:
     void mover_correr_rapido(uint32_t id_jugador);
 
     void mover_correr(uint32_t id_jugador);
+
+    void disparar(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
+
+    void dejar_disparar(uint32_t id_jugador);
+
 
     void usar_habilidad(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 

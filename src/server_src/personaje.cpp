@@ -2,11 +2,13 @@
 
 
 
-Personaje::Personaje(uint32_t id_jugador) : id_jugador(id_jugador), posicion_x(0),posicion_y(0), vida(100), esta_quieto(0){
+Personaje::Personaje(uint32_t id_jugador) : id_jugador(id_jugador),
+    posicion_x(0),posicion_y(0), vida(100), esta_quieto(0),arma(){
     corriendo = false;
     usando_especial = false;
     saltando = false;
     esta_quieto = true;
+    esta_disparando = false;
     tiempo_salto = 0;
     tiempo_especial = 0;
     direccion_mirando = DERECHA;
@@ -49,6 +51,18 @@ void Personaje::mover_abajo() {
     std::cout << "POSICION DEL PERSONAJE (" << posicion_x << ", " << posicion_y << ")" << std::endl;
 }
 
+uint8_t Personaje::disparar(std::chrono::duration<double> tiempo_transcurrido){
+    esta_disparando = true;
+    if(arma.disparar(tiempo_transcurrido)){
+       return arma.obtener_bala();
+    }
+    return NINGUNA;
+}
+
+void Personaje::dejar_disparar(){
+    esta_disparando = false;
+}
+
 void Personaje::quedarse_quieto(){
     if(!saltando) {
         velocidad_x = 0;
@@ -62,6 +76,10 @@ void Personaje::correr_rapido(){
 
 void Personaje::correr(){
     corriendo = false;
+}
+
+void Personaje::recibir_golpe(uint8_t golpe){
+    this->vida -= golpe;
 }
 
 uint32_t Personaje::obtener_posicionX(){
@@ -88,9 +106,24 @@ uint8_t Personaje::obtener_habilidad(){
     return usando_especial;
 }
 
-uint8_t Personaje::obtener_saltando() {
+uint8_t Personaje::obtener_saltando(){
     return saltando;
 }
+
+uint8_t Personaje::obtener_disparando(){
+    return esta_disparando;
+}
+
+bool Personaje::hay_colision(uint32_t id_jugador, uint32_t pos_x, uint32_t pos_y, uint32_t ancho, uint32_t largo) {
+    return (this->posicion_x < pos_x + ancho && this->posicion_x + PERSONAJE_WIDTH > pos_x &&
+            this->posicion_y < pos_y + largo && this->posicion_y + PERSONAJE_HEIGHT > pos_y &&
+            this->id_jugador != id_jugador);
+}
+
+bool Personaje::mirando_izquierda(){
+    return direccion_mirando == IZQUIERDA;
+}
+
 
 void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido){
     int32_t nueva_posicion_x = posicion_x + static_cast<int32_t>(velocidad_x);
@@ -119,28 +152,17 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
      if (saltando) {
         double delta_tiempo = tiempo_segundos - tiempo_salto;
 
-        double nuevaY = static_cast<int32_t>(velocidad_y * delta_tiempo + 0.5 * GRAVEDAD * delta_tiempo * delta_tiempo);
-        //std::cout << "NUEVAY " << nuevaY << std::endl;
-        //if (nuevaY < 0) {
-        //    posicion_y = 0;
-        //}
-        //else {
-            posicion_y += nuevaY;
-        //}
+        posicion_y += static_cast<int32_t>(velocidad_y * delta_tiempo + 0.5 * GRAVEDAD * delta_tiempo * delta_tiempo);
         velocidad_y += GRAVEDAD * delta_tiempo;
 
-        // Controlar colisiones con el suelo
-        if (posicion_y > HEIGHT - PERSONAJE_HEIGHT) {
+        if (posicion_y > HEIGHT - PERSONAJE_HEIGHT) { // Si hay colision abajo
             posicion_y = HEIGHT - PERSONAJE_HEIGHT;
             saltando = false;
             velocidad_y = 0;
             velocidad_x = 0;
             std::cout << "ATERRIZO" << std::endl;
         }
-
-    
     }
-    
     
 }
 

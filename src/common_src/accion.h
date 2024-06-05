@@ -10,6 +10,7 @@ enum CodigoAccion : uint8_t{
     UNIRSE,   // Unirse a una partida
     SALIR,    // Salir del lobby, cerrar juego
     DISPARAR,   // Jugador dispara
+    DEJAR_DISPARAR,
     SALTAR,     // Jugador salta
     DERECHA,    // Jugador se mueve a derecha
     IZQUIERDA,  // Jugador se mueve a izquierda

@@ -29,6 +29,11 @@ class Renderizado {
     PersonajeLoriView *personajeLoriView;
     PersonajeSpazView *personajeSpazView;
 
+
+
+    // Map id_jugador, map de sus balas -> id_bala, balaView
+    //std::map<uint32_t, std::map<uint32_t, std::unique_ptr<BalaView>>> balas;
+
     public:
 
     explicit Renderizado(std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews);

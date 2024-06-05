@@ -5,6 +5,8 @@
 #include <cmath>
 #include <chrono>
 #include "../common_src/accion.h"
+#include "../common_src/evento.h"
+#include "arma.h"
 
 
 #define WIDTH 640
@@ -39,6 +41,12 @@ protected:
 
     uint8_t direccion_mirando;
 
+
+    bool esta_disparando;
+
+
+    Arma arma;
+    
 public:
     Personaje(uint32_t id_jugador);
 
@@ -58,6 +66,17 @@ public:
 
     virtual void correr();
 
+    virtual void recibir_golpe(uint8_t golpe);
+
+    virtual uint8_t disparar(std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void dejar_disparar();
+
+    virtual bool hay_colision(uint32_t id_jugador,uint32_t pos_x, uint32_t pos_y, uint32_t ancho, uint32_t largo);
+
+    virtual bool mirando_izquierda();
+
+
     //Acciones
 
     // Getters Snapshot
@@ -72,8 +91,10 @@ public:
     virtual uint8_t obtener_corriendo();
 
     virtual uint8_t obtener_habilidad();
-
+    
     virtual uint8_t obtener_saltando();
+
+    virtual uint8_t obtener_disparando();
 
     // Getters Snapshot
 

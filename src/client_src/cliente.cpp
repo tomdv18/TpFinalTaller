@@ -62,6 +62,9 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
                     case SDLK_k:
                         queue_accion.try_push(ESPECIAL);
                         break;
+                    case SDLK_l:
+                        queue_accion.try_push(DISPARAR);
+                        break;
                 }
                 break;  // Salir del bloque SDL_KEYDOWN
             }
@@ -118,6 +121,9 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
                                 queue_accion.try_push(*ultima_direccion);
                             }
                         }
+                        break;
+                    case SDLK_l:
+                        queue_accion.try_push(DEJAR_DISPARAR);
                         break;
                 }
                 break;

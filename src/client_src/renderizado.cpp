@@ -54,9 +54,64 @@ void Renderizado::renderizar(Evento evento) {
             personaje.renderizar_personaje(render);
         }
     }
+
+    // Creacion de las balas
+    /*
+    for (const EventoBala &e : evento.eventos_bala) {
+        if (balas.find(e.id_jugador) == balas.end()) {
+            // Crear una nueva lista de balas para este jugador
+                balas[e.id_jugador] = std::map<uint32_t, std::unique_ptr<BalaView>>();
+        }else{
+                
+            if (balas[e.id_jugador].find(e.id_bala) == balas[e.id_jugador].end()){
+            // Crear la bala
+                std::unique_ptr<BalaView> b = std::make_unique<BalaView>(texturas_balas, e.posicion_x, e.posicion_y);
+                balas[e.id_jugador][e.id_bala] = std::move(b);
+                std::cout << "CREANDO BALA PARA JUGADOR: " << e.id_jugador << std::endl;
+            }
+        }
+    }
+    */
+
+
     
 
     render->Clear();
+
+    // Renderizado de las balas de cada jugador
+    /*
+    for (const EventoBala &e : evento.eventos_bala) {
+            uint32_t id_jugador = e.id_jugador;
+            if (balas.find(id_jugador) != balas.end()) {
+                auto& lista_balas = balas[id_jugador]; // Balas del jugador
+
+                for (auto it = lista_balas.begin(); it != lista_balas.end(); ) {
+                    auto& bala = it->second;
+
+                    bala->actualizar(e, 50000);
+                    bala->renderizar(render);
+
+                    if (e.impacto) {
+                        // Eliminar la bala de la lista si hubo impacto
+                        it = lista_balas.erase(it);
+                    } else {
+                        ++it;
+                    }
+                }
+
+                // Si la lista de balas para este jugador está vacía después de eliminar, eliminar la entrada del jugador
+                if (lista_balas.empty()) {
+                    balas.erase(id_jugador);
+                }
+            }
+        }
+    */
+
+
+
+
+
+
     for (auto &personaje : this->personajesViews) {
 
         PersonajeView &p = *(personaje.second);

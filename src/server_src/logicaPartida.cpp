@@ -29,6 +29,14 @@ void LogicaPartida::ejecutar(Accion accion, std::chrono::time_point<std::chrono:
         case QUIETO:
             mover_quieto(accion.id_jugador);
             break; 
+        case DISPARAR:
+            disparar(accion.id_jugador, tiempo);
+            std::cout << "DISPARANDO" << std::endl;
+            break;
+        case DEJAR_DISPARAR:
+            dejar_disparar(accion.id_jugador);
+            std::cout << "DEJO DE DISPARAR" << std::endl;
+            break;
         case ESPECIAL:
             usar_habilidad(accion.id_jugador, tiempo);
         case JAZZ:
@@ -92,6 +100,28 @@ void LogicaPartida::mover_correr(uint32_t id_jugador){
     Personaje *personaje = map_personajes[id_jugador];
     if(personaje != nullptr){
         personaje->correr();
+    }
+}
+
+void LogicaPartida::disparar(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo){
+    std::chrono::time_point<std::chrono::high_resolution_clock> actual = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
+
+    Personaje *personaje = map_personajes[id_jugador];
+    if(personaje != nullptr){
+        uint8_t codigo_bala = personaje->disparar(tiempo_transcurrido);
+        if(codigo_bala != NINGUNA){
+            int velocidad = personaje->mirando_izquierda() ? -1 : 1;
+            controlador_balas.agregar_bala(codigo_bala,id_jugador,
+            personaje->obtener_posicionX(), personaje->obtener_posicionY() + PERSONAJE_HEIGHT/4, velocidad);
+        }
+    }
+}
+    
+void LogicaPartida::dejar_disparar(uint32_t id_jugador){
+    Personaje *personaje = map_personajes[id_jugador];
+    if(personaje != nullptr){
+        personaje->dejar_disparar();
     }
 }
 
@@ -160,6 +190,34 @@ void LogicaPartida::actualizar_partida(std::chrono::time_point<std::chrono::high
     for(const auto &par : map_enemigos){
         par.second->actualizar_posicion(tiempo_transcurrido);
     }
+
+    auto& balas = controlador_balas.obtener_balas();  // Referencia al vector de balas
+    //std::cout << "CANTIDAD BALAS: " << balas.size() << std::endl;
+    auto it = balas.begin();
+
+    while (it != balas.end()) {
+        it->actualizar_posicion();
+        for (const auto& par : map_personajes) {
+            if (par.second->hay_colision(
+                it->obtener_id_jugador(),
+                it->obtener_posicionX(),
+                it->obtener_posicionY(),
+                it->obtener_ancho(),
+                it->obtener_largo())) {
+                par.second->recibir_golpe(10);  // Por ahora hardcodeado recibe 10 de daño
+                std::cout << "HAY COLISION" << std::endl;
+                it->impactar();
+                break;
+            }
+        }
+
+        if (it->obtener_impacto() || it->obtener_posicionX() >= WIDTH) {
+            controlador_balas.remover_bala(it->obtener_id_bala());
+            //it = balas.erase(it);  
+        } else {
+            ++it;  
+        }
+    }
 }
 
 Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high_resolution_clock> start){
@@ -185,6 +243,19 @@ Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high
 
         evento.eventos_personaje.emplace_back(evento_personaje);
     }
+
+    for(Bala bala : controlador_balas.obtener_balas()){
+        EventoBala evento_bala;
+        evento_bala.id_jugador = bala.obtener_id_jugador();
+        evento_bala.id_bala = bala.obtener_id_bala();
+        evento_bala.posicion_x = bala.obtener_posicionX();
+        evento_bala.posicion_y = bala.obtener_posicionY();
+        evento_bala.impacto = bala.obtener_impacto();
+       
+
+        evento.eventos_bala.emplace_back(evento_bala);
+    }
+
 
     return evento;
 }

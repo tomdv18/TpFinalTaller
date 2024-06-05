@@ -34,7 +34,12 @@ if(SERVER)
 		./server_src/recibidorJugador.h
 		./server_src/servidor.cpp
 		./server_src/servidor.h
+		./server_src/arma.cpp
+		./server_src/arma.h
+		./server_src/controlador_balas.h
 		
+		./common_src/bala.cpp
+		./common_src/bala.h
 		./common_src/thread.h
 		./common_src/socket.h
 		./common_src/socket.cpp
@@ -119,7 +124,7 @@ if(CLIENT)
 		./client_src/protocolo_cliente.h
 		./client_src/enviadorCliente.cpp
 		./client_src/enviadorCliente.h
-		
+
 		./common_src/thread.h
 		./common_src/socket.h
 		./common_src/socket.cpp

@@ -20,9 +20,20 @@ struct __attribute__((packed)) EventoPersonaje{
 
 };
 
+struct __attribute__((packed)) EventoBala{
+
+    uint32_t id_jugador;
+    uint32_t id_bala;
+    uint32_t posicion_x;
+    uint32_t posicion_y;
+    uint8_t impacto;
+
+};
+
 struct Evento{
     uint16_t tiempo_restante;
     std::vector<EventoPersonaje> eventos_personaje;
+    std::vector<EventoBala> eventos_bala;
 };
 
 enum Entidad: uint8_t {
