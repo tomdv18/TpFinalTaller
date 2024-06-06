@@ -2,7 +2,7 @@
 
 
 Personaje::Personaje(uint32_t id_jugador):
-        id_jugador(id_jugador), posicion_x(150), posicion_y(0), vida(100), esta_quieto(0), arma() {
+        id_jugador(id_jugador), posicion_x(150), posicion_y(0), vida(100), esta_quieto(0), arma(), velocidad_x(0), velocidad_y(0){
     corriendo = false;
     usando_especial = false;
     saltando = false;

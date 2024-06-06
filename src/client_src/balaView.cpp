@@ -35,9 +35,9 @@ void BalaView::actualizar(EventoBala const &evento,float dt){
 }
 
 
- void BalaView::renderizar(SDL2pp::Renderer &render){
+ void BalaView::renderizar(SDL2pp::Renderer &render, int cam_x, int cam_y){
     
-    SDL2pp::Rect bala(posicion_x, posicion_y, 15, 15);
+    SDL2pp::Rect bala(posicion_x -cam_x, posicion_y-cam_y, 15, 15);
 
     SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
     animacion_bala.animar(render, bala, flip);

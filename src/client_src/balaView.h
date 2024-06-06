@@ -37,7 +37,7 @@ class BalaView{
 
     void actualizar(EventoBala const &evento,float dt);
 
-    void renderizar(SDL2pp::Renderer &render);
+    void renderizar(SDL2pp::Renderer &render, int cam_x, int cam_y);
 };
 
 

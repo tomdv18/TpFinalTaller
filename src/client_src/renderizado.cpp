@@ -82,6 +82,18 @@ void Renderizado::renderizar(Evento evento) {
 
     render->Clear();
 
+        mapa->dibujar_fondo(* render);
+    mapa->dibujar_entidades(*render, *camara);
+
+    auto it = personajesViews.find(id_jugador);
+    if (it == personajesViews.end()) {
+        // No hago nada.
+    } else {
+        // Enfoco la camara al jugador.
+        PersonajeView &personajeViewPtr = *(it->second);
+        camara->actualizar_posicion(personajeViewPtr.obtener_posicion_x(), personajeViewPtr.obtener_posicion_y());   
+    }
+
     // Renderizado de las balas de cada jugador
     
     for (const EventoBala &e : evento.eventos_bala) {
@@ -93,7 +105,7 @@ void Renderizado::renderizar(Evento evento) {
                 auto& bala = it->second;
 
                 bala->actualizar(e, 50000);
-                bala->renderizar(*render);
+                bala->renderizar(*render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
 
                 if (e.impacto) {
                         // Eliminar la bala de la lista si hubo impacto
@@ -108,18 +120,6 @@ void Renderizado::renderizar(Evento evento) {
                 balasViews.erase(id_jugador);
             }
         }
-    }
-
-    mapa->dibujar_fondo(* render);
-    mapa->dibujar_entidades(*render, *camara);
-
-    auto it = personajesViews.find(id_jugador);
-    if (it == personajesViews.end()) {
-        // No hago nada.
-    } else {
-        // Enfoco la camara al jugador.
-        PersonajeView &personajeViewPtr = *(it->second);
-        camara->actualizar_posicion(personajeViewPtr.obtener_posicion_x(), personajeViewPtr.obtener_posicion_y());   
     }
 
     for (auto &personaje : this->personajesViews) {
