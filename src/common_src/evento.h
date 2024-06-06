@@ -17,6 +17,7 @@ struct __attribute__((packed)) EventoPersonaje{
     uint8_t esta_corriendo;
     uint8_t usando_habilidad;
     uint8_t esta_saltando;
+    uint8_t esta_disparando;
 
 };
 
@@ -27,6 +28,7 @@ struct __attribute__((packed)) EventoBala{
     uint32_t posicion_x;
     uint32_t posicion_y;
     uint8_t impacto;
+    uint8_t tipo_bala;
 
 };
 

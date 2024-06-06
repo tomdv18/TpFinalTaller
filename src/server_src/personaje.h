@@ -72,10 +72,13 @@ public:
 
     virtual void dejar_disparar();
 
-    virtual bool hay_colision(uint32_t id_jugador,uint32_t pos_x, uint32_t pos_y, uint32_t ancho, uint32_t largo);
+    virtual bool hay_colision(uint32_t pos_x, uint32_t pos_y, uint32_t ancho, uint32_t largo);
 
     virtual bool mirando_izquierda();
 
+    virtual void posicion_X(uint32_t x);
+
+    virtual void posicion_Y(uint32_t y);
 
     //Acciones
 

@@ -17,7 +17,7 @@ public:
 
     void agregar_bala(uint8_t codigo_bala, uint32_t id_jugador, uint32_t pos_x, uint32_t pos_y, int velocidad) {
         uint32_t id_bala = obtener_id();
-        Bala nueva_bala(codigo_bala, pos_x, pos_y, id_jugador, id_bala, velocidad * obtener_velocidad(codigo_bala));
+        Bala nueva_bala(codigo_bala, pos_x+velocidad*PERSONAJE_HEIGHT, pos_y, id_jugador, id_bala, velocidad * obtener_velocidad(codigo_bala));
         balas.push_back(nueva_bala);
     }
 

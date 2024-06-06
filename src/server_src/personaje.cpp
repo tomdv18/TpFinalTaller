@@ -14,6 +14,15 @@ Personaje::Personaje(uint32_t id_jugador) : id_jugador(id_jugador),
     direccion_mirando = DERECHA;
 }
 
+void Personaje::posicion_X(uint32_t x){
+    this->posicion_x = x;
+}
+
+void Personaje::posicion_Y(uint32_t y){
+    this->posicion_y = y;
+}
+
+
 void Personaje::mover_derecha(){
     if(posicion_x + PERSONAJE_WIDTH < WIDTH) {
         velocidad_x = corriendo ? VELOCIDAD * 2 : VELOCIDAD;
@@ -114,10 +123,12 @@ uint8_t Personaje::obtener_disparando(){
     return esta_disparando;
 }
 
-bool Personaje::hay_colision(uint32_t id_jugador, uint32_t pos_x, uint32_t pos_y, uint32_t ancho, uint32_t largo) {
-    return (this->posicion_x < pos_x + ancho && this->posicion_x + PERSONAJE_WIDTH > pos_x &&
-            this->posicion_y < pos_y + largo && this->posicion_y + PERSONAJE_HEIGHT > pos_y &&
-            this->id_jugador != id_jugador);
+bool Personaje::hay_colision(uint32_t pos_x, uint32_t pos_y, uint32_t ancho, uint32_t largo) {
+    return (this->posicion_x < pos_x + ancho && 
+            this->posicion_x + PERSONAJE_WIDTH > pos_x &&
+            this->posicion_y < pos_y + largo && 
+            this->posicion_y + PERSONAJE_HEIGHT > pos_y);
+
 }
 
 bool Personaje::mirando_izquierda(){
@@ -133,6 +144,7 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
         esta_quieto = true;
     }
 
+    
     if (velocidad_x > 0) {
         if (nueva_posicion_x >= WIDTH - PERSONAJE_WIDTH) {
             posicion_x = WIDTH - PERSONAJE_WIDTH;  
@@ -147,8 +159,11 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
             posicion_x = nueva_posicion_x;
         }
     }
+    
 
 
+
+    
      if (saltando) {
         double delta_tiempo = tiempo_segundos - tiempo_salto;
 
@@ -163,6 +178,7 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
             std::cout << "ATERRIZO" << std::endl;
         }
     }
+    
     
 }
 
