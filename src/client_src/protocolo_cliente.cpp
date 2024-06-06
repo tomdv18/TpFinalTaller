@@ -156,7 +156,6 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
         event_enemigo.id_enemigo = ntohl(event_enemigo.id_enemigo);
         event_enemigo.posicion_x = ntohl(event_enemigo.posicion_x);
         event_enemigo.posicion_y = ntohl(event_enemigo.posicion_y);
-        event_enemigo.vida = ntohl(event_enemigo.vida);
         //std::cout << "RECIBIENDO ENEMIGO "  << event_enemigo.id_enemigo << "-" << event_enemigo.posicion_x << "-"   << event_enemigo.esta_vivo << "-" << event_enemigo.vida << std::endl;
         eventos_enemigos.emplace_back(event_enemigo);
     }

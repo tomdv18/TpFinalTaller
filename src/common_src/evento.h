@@ -47,6 +47,7 @@ struct __attribute__((packed)) EventoEnemigo{
     uint32_t posicion_x;
     uint32_t posicion_y;
     uint8_t vida;
+    uint8_t id_personaje;
     bool esta_vivo;
 
 };

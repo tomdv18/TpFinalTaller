@@ -5,8 +5,12 @@ if(SERVER)
 	add_executable(jazzservidor
 		./server_src/aceptador.cpp
 		./server_src/aceptador.h
-        ./server_src/enemigo_lizzard.cpp
+        ./server_src/enemigo_fencer.cpp
+        ./server_src/enemigo_fencer.h
+		./server_src/enemigo_lizzard.cpp
         ./server_src/enemigo_lizzard.h
+		./server_src/enemigo_rat.cpp
+        ./server_src/enemigo_rat.h
         ./server_src/enemigo.cpp
         ./server_src/enemigo.h
 		./server_src/enviadorJugador.cpp

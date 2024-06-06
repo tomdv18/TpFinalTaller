@@ -297,6 +297,7 @@ Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high
         eventos_enem.id_enemigo = par.first;
         eventos_enem.posicion_x = par.second->obtener_posicionX();
         eventos_enem.posicion_y = par.second->obtener_posicionY();
+        eventos_enem.id_personaje = par.second->obtener_personaje();
         eventos_enem.vida = par.second->obtener_vida();
         eventos_enem.esta_vivo = par.second->esta_vivo();
 
