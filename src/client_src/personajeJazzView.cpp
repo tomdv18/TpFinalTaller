@@ -1,6 +1,6 @@
 #include "personajeJazzView.h"
 
-PersonajeJazzView::PersonajeJazzView(uint32_t id_jugador) : PersonajeView(id_jugador) {}
+PersonajeJazzView::PersonajeJazzView(uint32_t id_jugador, int x, int y) : PersonajeView(id_jugador, x, y) {}
 
 void PersonajeJazzView::crear_texturas(SDL2pp::Renderer *render) {
 

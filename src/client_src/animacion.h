@@ -1,5 +1,7 @@
 #ifndef ANIMACION_H_
 #define ANIMACION_H_
+#define FRAME_RATE 40000
+
 
 #include <SDL2pp/SDL2pp.hh>
 
@@ -23,7 +25,7 @@ class Animacion {
 
     ~Animacion();
 
-    void acualizar(float dt);
+    void actualizar(float dt);
 
     void animar(SDL2pp::Renderer &render, SDL2pp::Rect dest, SDL_RendererFlip &flipType);
 

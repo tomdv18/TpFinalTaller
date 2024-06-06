@@ -32,7 +32,7 @@ class PersonajeView {
 
     public:
 
-    PersonajeView(uint32_t id_jugador);
+    PersonajeView(uint32_t id_jugador, int x, int y);
 
     ~PersonajeView();
 

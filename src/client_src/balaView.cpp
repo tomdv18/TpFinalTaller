@@ -29,7 +29,7 @@ void BalaView::actualizar(EventoBala const &evento,float dt){
         facingLeft = true;
     }
 
-    this->animacion_bala.acualizar(dt);
+    this->animacion_bala.actualizar(dt);
     this->posicion_x = evento.posicion_x;
     this->posicion_y = evento.posicion_y;
 }

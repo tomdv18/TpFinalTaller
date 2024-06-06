@@ -10,7 +10,6 @@
 #define MAX_ACCIONES 256
 #define WIDTH 640
 #define HEIGHT 480
-#define FRAME_RATE 50000
 
 Cliente::Cliente(Socket& skt): skt(skt), estado(true), personajes(), renderizado(personajes) {
     bool was_closed = false;
@@ -169,7 +168,7 @@ void Cliente::comunicarse_con_el_servidor() {
             auto fin = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double, std::milli> tiempo = fin - inicio;
             double tiempo_transcurrido = tiempo.count();
-            double frames = 1000/40.0; // casi el doble del server, asi lo procesa mas rapido y se ve mas fluido
+            double frames = 1000/40.0;
             double tiempo_descanso = frames - tiempo_transcurrido;
 
             if (tiempo_descanso > 0) {
@@ -177,11 +176,6 @@ void Cliente::comunicarse_con_el_servidor() {
             } else {
                 std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(frames)));
             }
-
-            // la cantidad de segundos que debo dormir se debe ajustar en función
-            // de la cantidad de tiempo que demoró el atrapar_eventos_entrada, efectuar_evento y
-            // renderizar?
-           // usleep(500000);
         }
     } catch (std::exception& e) {
         std::cout << e.what() << std::endl;

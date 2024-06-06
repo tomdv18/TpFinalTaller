@@ -4,6 +4,8 @@
 #include <exception>
 #include <unistd.h>
 #include <map>
+#include "animacion.h"
+
 
 Renderizado::Renderizado(std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews) : 
 personajesViews(personajesViews) {}
@@ -37,18 +39,18 @@ void Renderizado::renderizar(Evento evento) {
             std::unique_ptr<PersonajeView> personaje;
             switch(evento.id_personaje){
                 case JAZZ:
-                    personaje = std::unique_ptr<PersonajeView>(new PersonajeJazzView(evento.id_jugador));
+                    personaje = std::unique_ptr<PersonajeView>(new PersonajeJazzView(evento.id_jugador, evento.posicion_x, evento.posicion_y));
                     personaje->crear_texturas(render.get());
                     personaje->crear_animaciones();
                     
                     break;
                 case SPAZ:
-                    personaje = std::unique_ptr<PersonajeView>(new PersonajeSpazView(evento.id_jugador));
+                    personaje = std::unique_ptr<PersonajeView>(new PersonajeSpazView(evento.id_jugador, evento.posicion_x, evento.posicion_y));
                     personaje->crear_texturas(render.get());
                     personaje->crear_animaciones();
                     break;
                 case LORI:
-                    personaje = std::unique_ptr<PersonajeView>(new PersonajeLoriView(evento.id_jugador));
+                    personaje = std::unique_ptr<PersonajeView>(new PersonajeLoriView(evento.id_jugador, evento.posicion_x, evento.posicion_y));
                     personaje->crear_texturas(render.get());
                     personaje->crear_animaciones();
             }
@@ -58,7 +60,7 @@ void Renderizado::renderizar(Evento evento) {
                 
         }else{
             PersonajeView &personaje = *(personajesViews.at(evento.id_jugador));
-            personaje.actualizar_vista_personaje(evento,50000);
+            personaje.actualizar_vista_personaje(evento,FRAME_RATE);
         }
     }
 
@@ -104,7 +106,7 @@ void Renderizado::renderizar(Evento evento) {
             for (auto it = lista_balas.begin(); it != lista_balas.end(); ) {
                 auto& bala = it->second;
 
-                bala->actualizar(e, 50000);
+                bala->actualizar(e, FRAME_RATE);
                 bala->renderizar(*render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
 
                 if (e.impacto) {
