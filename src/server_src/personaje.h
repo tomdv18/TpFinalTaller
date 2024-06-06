@@ -6,7 +6,9 @@
 #include <chrono>
 #include "../common_src/accion.h"
 #include "../common_src/evento.h"
+#include "rectangulo.h"
 #include "arma.h"
+#include "objeto.h"
 
 
 #define WIDTH 640
@@ -14,11 +16,13 @@
 #define PERSONAJE_HEIGHT 50
 #define PERSONAJE_WIDTH 50
 #define VELOCIDAD 5
-#define VELOCIDAD_SALTO 25
+#define VELOCIDAD_SALTO 15
 #define GRAVEDAD 3
 #define ENFRIAMIENTO_JAZZ 5
 #define ENFRIAMIENTO_LORI 5
 #define ENFRIAMIENTO_SPAZ 5
+
+class Objeto;
 
 class Personaje{
 protected:
@@ -28,8 +32,8 @@ protected:
     uint8_t vida;
     bool esta_quieto;
 
-    double velocidad_x;
-    double velocidad_y;
+    uint32_t velocidad_x;
+    uint32_t velocidad_y;
 
     bool corriendo;
 
@@ -101,7 +105,7 @@ public:
 
     // Getters Snapshot
 
-    virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido);
+    virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*> &map_objetos);
 
     virtual ~Personaje();
 

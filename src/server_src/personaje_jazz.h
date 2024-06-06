@@ -18,7 +18,7 @@ public:
 
     void mover_izquierda() override;
 
-    void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido) override;
+    void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*> &map_objetos) override;
 
 
 };

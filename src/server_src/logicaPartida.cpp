@@ -3,7 +3,12 @@
 #define DURACION_PARTIDA 120.0f
 
 LogicaPartida::LogicaPartida(){
-    map_objetos[0] = new Zanahoria(0, 100, 430, 50, 50, 10);
+   //map_objetos[0] = new Zanahoria(0, 100, 430, 50, 50, 10);
+    map_objetos[0] = new Zanahoria(0, 0, 400, 1, 1000, 250);
+    map_objetos[1] = new Solido(0, 0, 400, 1, 1000, 250);
+   
+
+   //map_objetos[1] = new Zanahoria(1, 400, 0, 250, 50, 700);
     //map_enemigos[0] = new Lizzard(0); // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
 }
 
@@ -20,7 +25,7 @@ void LogicaPartida::ejecutar(Accion accion, std::chrono::time_point<std::chrono:
             mover_arriba(accion.id_jugador, tiempo);
             break;
         case ABAJO:
-            mover_abajo(accion.id_jugador);  
+            //mover_abajo(accion.id_jugador);  
             break; 
         case CORRER_RAPIDO:
             mover_correr_rapido(accion.id_jugador);
@@ -186,35 +191,8 @@ void LogicaPartida::actualizar_partida(std::chrono::time_point<std::chrono::high
     std::chrono::time_point<std::chrono::high_resolution_clock> actual = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
     for(const auto &par_personaje : map_personajes){
-        uint32_t pos_actual = par_personaje.second->obtener_posicionX();
-        uint32_t pos_actual_y = par_personaje.second->obtener_posicionY();
-        par_personaje.second->actualizar_posicion(tiempo_transcurrido);
-
-        Rectangulo rect_personaje = {  par_personaje.second->obtener_posicionX(),
-                                    par_personaje.second->obtener_posicionY(),
-                                    PERSONAJE_WIDTH,
-                                    PERSONAJE_HEIGHT};
-        //Calcular colision con objetos
-        
-        for (const auto& par_objeto : map_objetos) {
-            par_objeto.second->reaparecer(tiempo_transcurrido);
-
-            Rectangulo rect_objeto = {  par_objeto.second->obtener_posicionX(),
-                                    par_objeto.second->obtener_posicionY(),
-                                    par_objeto.second->obtener_ancho(),
-                                    par_objeto.second->obtener_alto() };
-
-            if(par_objeto.second->obtener_mostrar()){
-                if(rect_personaje.hay_colision_x(rect_objeto) && rect_personaje.hay_colision_y(rect_objeto)){
-                    std::cout << "HAY COLISION CON OBJETO" << std::endl;
-                    par_personaje.second->posicion_X(pos_actual);
-                    //par_personaje.second->posicion_Y(pos_actual_y);
-                }
-             
-
-                }
-        }
-        
+        par_personaje.second->actualizar_posicion(tiempo_transcurrido, map_objetos);
+    
     }
     for(const auto &par : map_enemigos){
         par.second->actualizar_posicion(tiempo_transcurrido);

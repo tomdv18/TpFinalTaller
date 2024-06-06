@@ -8,8 +8,11 @@
 #include "personaje.h"
 
 enum CodigoObjeto : uint8_t{
-    ZANAHORIA
+    ZANAHORIA,
+    SOLIDO
 };
+
+class Personaje;
 
 class Objeto{
 protected:
@@ -19,8 +22,8 @@ protected:
     
     uint32_t posicion_y;
 
-    uint8_t ancho;
-    uint8_t alto;
+    uint32_t ancho;
+    uint32_t alto;
 
     double tiempo_reaparicion;
 
@@ -29,16 +32,16 @@ protected:
     bool mostrar;
 
 public:
-    Objeto(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y, double tiempo_reaparicion, uint8_t ancho, uint8_t alto);
+    Objeto(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y, double tiempo_reaparicion, uint32_t ancho, uint32_t alto);
 
     // Getters Snapshot
     virtual uint32_t obtener_posicionX();
 
     virtual uint32_t obtener_posicionY();
 
-    virtual uint8_t obtener_ancho();
+    virtual uint32_t obtener_ancho();
 
-    virtual uint8_t obtener_alto();
+    virtual uint32_t obtener_alto();
 
     virtual bool obtener_mostrar();
 

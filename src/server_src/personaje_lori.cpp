@@ -22,9 +22,9 @@ void Lori::usar_habilidad(std::chrono::duration<double> tiempo_transcurrido){
 
 
 
-void Lori::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido){
+void Lori::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*> &map_objetos){
     if(!saltando){
         usando_especial = false;
     }
-    Personaje::actualizar_posicion(tiempo_transcurrido);
+    Personaje::actualizar_posicion(tiempo_transcurrido, map_objetos);
 }

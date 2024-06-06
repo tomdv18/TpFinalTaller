@@ -26,7 +26,7 @@ void Animacion::acualizar(float dt) {
         this->frame_actual += 1;
         this->frame_actual = this->frame_actual % this->cantidad_frames; 
         this->elapsed -= FRAME_RATE;
-        std::cout << "EL frame_actual es: " << frame_actual << std::endl;
+        //std::cout << "EL frame_actual es: " << frame_actual << std::endl;
     }
 
 }

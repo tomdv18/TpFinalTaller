@@ -39,7 +39,7 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
     this->isRunning = bool (evento.esta_corriendo);
     this->isJumping = bool (evento.esta_saltando);
 
-    std::cout << "EL personaje tine id: " << evento.id_personaje << std::endl;
+    //std::cout << "EL personaje tine id: " << evento.id_personaje << std::endl;
     
     facingLeft = false;
     if(posicion_x > evento.posicion_x) {
@@ -49,9 +49,10 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
     if(isJumping) {
         this->animaciones.at(SALTANDO);
         this->posicion_y = evento.posicion_y;
+        this->posicion_x = evento.posicion_x;
     }
 
-    if(this->isMoving && !this->isRunning) {
+    if(this->isMoving && !this->isRunning && !this->isJumping) {
         this->animaciones.at(CAMINANDO).acualizar(dt);
         this->posicion_x = evento.posicion_x;
         this->posicion_y = evento.posicion_y;
@@ -61,6 +62,8 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
         this->posicion_y = evento.posicion_y;
     } else if(!this->isMoving) {
         this->animaciones.at(QUIETO_CLIENTE).acualizar(dt);
+        this->posicion_x = evento.posicion_x;
+        this->posicion_y = evento.posicion_y;
     }
       
 }

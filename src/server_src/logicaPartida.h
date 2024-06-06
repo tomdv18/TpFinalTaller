@@ -10,6 +10,7 @@
 #include "enemigo_lizzard.h"
 #include "controlador_balas.h"
 #include "objeto_zanahoria.h"
+#include "objeto_solido.h"
 #include "rectangulo.h"
 #include <iostream>
 #include <map>

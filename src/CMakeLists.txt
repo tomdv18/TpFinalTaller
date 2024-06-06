@@ -37,6 +37,14 @@ if(SERVER)
 		./server_src/arma.cpp
 		./server_src/arma.h
 		./server_src/controlador_balas.h
+		./server_src/objeto.cpp
+		./server_src/objeto.h
+		./server_src/objeto_zanahoria.cpp
+		./server_src/objeto_zanahoria.h
+		./server_src/objeto_solido.cpp
+		./server_src/objeto_solido.h
+		./server_src/rectangulo.h
+
 		
 		./common_src/bala.cpp
 		./common_src/bala.h

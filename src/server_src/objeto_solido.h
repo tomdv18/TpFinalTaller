@@ -1,5 +1,5 @@
-#ifndef SERVER_OBJETO_ZANAHORIA_H_
-#define SERVER_OBJETO_ZANAHORIA_H_
+#ifndef SERVER_OBJETO_SOLIDO_H_
+#define SERVER_OBJETO_SOLIDO_H_
 
 #include <iostream>
 #include <cmath>
@@ -7,11 +7,11 @@
 #include "../common_src/accion.h"
 #include "objeto.h"
 
-class Zanahoria : public Objeto{
+class Solido : public Objeto{
 
 
 public:
-    Zanahoria(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y, double tiempo_reaparicion, uint32_t ancho, uint32_t alto);
+    Solido(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y, double tiempo_reaparicion, uint32_t ancho, uint32_t alto);
 
     virtual uint8_t obtener_objeto() override;
 

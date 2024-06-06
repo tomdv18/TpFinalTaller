@@ -74,9 +74,10 @@ void Personaje::dejar_disparar(){
 
 void Personaje::quedarse_quieto(){
     if(!saltando) {
-        velocidad_x = 0;
         esta_quieto = true;
+        //velocidad_x = 0;
     }
+    velocidad_x = 0;
 }
 
 void Personaje::correr_rapido(){
@@ -136,48 +137,77 @@ bool Personaje::mirando_izquierda(){
 }
 
 
-void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido){
-    int32_t nueva_posicion_x = posicion_x + static_cast<int32_t>(velocidad_x);
-    double tiempo_segundos = tiempo_transcurrido.count();
-
-    if(velocidad_x == 0 && velocidad_y == 0 && !saltando){
-        esta_quieto = true;
-    }
-
-    
-    if (velocidad_x > 0) {
-        if (nueva_posicion_x >= WIDTH - PERSONAJE_WIDTH) {
-            posicion_x = WIDTH - PERSONAJE_WIDTH;  
-        } else {
-            posicion_x = nueva_posicion_x;
-        }
-    }
-    else if (velocidad_x < 0) {
-        if (nueva_posicion_x <= 0) {
-            posicion_x = 0;  
-        } else {
-            posicion_x = nueva_posicion_x;
-        }
-    }
-    
-
-
-
-    
-     if (saltando) {
+void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*> &map_objetos){
+        int32_t nueva_posicion_x = posicion_x + (velocidad_x);
+        double tiempo_segundos = tiempo_transcurrido.count();
         double delta_tiempo = tiempo_segundos - tiempo_salto;
 
-        posicion_y += static_cast<int32_t>(velocidad_y * delta_tiempo + 0.5 * GRAVEDAD * delta_tiempo * delta_tiempo);
+        if(velocidad_x == 0 && velocidad_y == 0 && !saltando){
+            esta_quieto = true;
+        }
+
         velocidad_y += GRAVEDAD * delta_tiempo;
+
+        Rectangulo rect_personaje = {   posicion_x + velocidad_x,
+                                        posicion_y,
+                                        PERSONAJE_WIDTH,
+                                        PERSONAJE_HEIGHT};
+
+        Rectangulo rect_personaje_arriba = {   posicion_x,
+                                        posicion_y + velocidad_y,
+                                        PERSONAJE_WIDTH,
+                                        PERSONAJE_HEIGHT};
+
+
+        for (const auto& par_objeto : map_objetos) {
+            par_objeto.second->reaparecer(tiempo_transcurrido);
+
+            Rectangulo rect_objeto = {par_objeto.second->obtener_posicionX(),
+                                        par_objeto.second->obtener_posicionY(),
+                                        par_objeto.second->obtener_ancho(),
+                                        par_objeto.second->obtener_alto() };
+
+            if(par_objeto.second->obtener_mostrar()){
+                if(par_objeto.second->obtener_objeto() == SOLIDO){
+                    if(rect_personaje.hay_colision(rect_objeto)){
+                            std::cout << "HAY COLISION CON OBJETO SOLIDO" << std::endl;
+                            velocidad_x = 0;
+                    }
+                    if(rect_personaje_arriba.hay_colision(rect_objeto)){
+                        std::cout << "HAY COLISION CON OBJETO SOLIDO" << std::endl;
+                        velocidad_y = 0;
+                        saltando = false;
+                        if(velocidad_x == 0){
+                            esta_quieto = true;
+                            std::cout << "QUEDARSE QUIETO" << std::endl;
+                        }
+                        std::cout << "VELOCIDAD EN X "<<(int) velocidad_x << std::endl;
+                    }else{
+                        saltando = true;
+                    }
+                }else{
+                    if(rect_personaje.hay_colision(rect_objeto)){
+                        //std::cout << "HAY COLISION CON OBJETO NORMAL" << std::endl;
+                        par_objeto.second->interactuar_personaje(this, tiempo_transcurrido);
+                    }
+                }
+
+            }
+
+        }
+
+        posicion_x += velocidad_x;
+        posicion_y += velocidad_y;
+    
+
+ 
+    
 
         if (posicion_y > HEIGHT - PERSONAJE_HEIGHT) { // Si hay colision abajo
             posicion_y = HEIGHT - PERSONAJE_HEIGHT;
             saltando = false;
-            velocidad_y = 0;
-            velocidad_x = 0;
-            std::cout << "ATERRIZO" << std::endl;
         }
-    }
+    
     
     
 }

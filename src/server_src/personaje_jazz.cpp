@@ -33,8 +33,8 @@ void Jazz::mover_izquierda(){
     }
 }
 
-void Jazz::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido){
-    Personaje::actualizar_posicion(tiempo_transcurrido);
+void Jazz::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*> &map_objetos){
+    Personaje::actualizar_posicion(tiempo_transcurrido, map_objetos);
     if(!saltando){
         usando_especial = false;
     }

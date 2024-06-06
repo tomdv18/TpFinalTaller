@@ -1,3 +1,5 @@
+#ifndef SERVER_RECTANGULO_H_
+#define SERVER_RECTANGULO_H_
 
 #include <iostream>
 
@@ -28,3 +30,6 @@ public:
                 this->y + this->alto > otro.y);
     }
 };
+
+
+#endif

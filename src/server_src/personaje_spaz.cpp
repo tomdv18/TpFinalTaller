@@ -51,8 +51,8 @@ void Spaz::quedarse_quieto(){
     }
 }
 
-void Spaz::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido){
-    Personaje::actualizar_posicion(tiempo_transcurrido);
+void Spaz::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*> &map_objetos){
+    Personaje::actualizar_posicion(tiempo_transcurrido, map_objetos);
     if(usando_especial){
         if(tiempo_transcurrido.count() - tiempo_especial > 0.75){
             usando_especial = false;
