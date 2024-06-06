@@ -12,6 +12,8 @@
 #include "personajeLoriView.h"
 #include "personajeSpazView.h"
 #include "direcciones.h"
+#include "mapa.h"
+#include "camara.h"
 
 #include "protocolo_cliente.h"
 
@@ -28,7 +30,8 @@ class Renderizado {
     PersonajeJazzView *personajeJazzView;
     PersonajeLoriView *personajeLoriView;
     PersonajeSpazView *personajeSpazView;
-
+    std::unique_ptr<Mapa> mapa;
+    std::unique_ptr<Camara> camara;
 
 
     // Map id_jugador, map de sus balas -> id_bala, balaView
@@ -49,6 +52,10 @@ class Renderizado {
     void crear_ventana_y_render(const std::string& title, int width, int height);
 
     void crear_personajes();
+
+    void iniciar_mapa(MapaEntidades &&map);
+
+    void iniciar_camara(Camara &&cam);
 
     void renderizar(Evento evento);
 
