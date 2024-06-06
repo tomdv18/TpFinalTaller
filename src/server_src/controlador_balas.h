@@ -1,10 +1,11 @@
 #ifndef SERVER_CONTROLADOR_BALAS_H_
 #define SERVER_CONTROLADOR_BALAS_H_
 
-#include "../common_src/bala.h"
-#include <vector>
-#include <unordered_set>
 #include <algorithm>
+#include <unordered_set>
+#include <vector>
+
+#include "../common_src/bala.h"
 
 class ControladorBalas {
 private:
@@ -13,11 +14,13 @@ private:
     uint32_t proximo_id;
 
 public:
-    ControladorBalas() : proximo_id(0) {}
+    ControladorBalas(): proximo_id(0) {}
 
-    void agregar_bala(uint8_t codigo_bala, uint32_t id_jugador, uint32_t pos_x, uint32_t pos_y, int velocidad) {
+    void agregar_bala(uint8_t codigo_bala, uint32_t id_jugador, uint32_t pos_x, uint32_t pos_y,
+                      int velocidad) {
         uint32_t id_bala = obtener_id();
-        Bala nueva_bala(codigo_bala, pos_x+velocidad*PERSONAJE_HEIGHT, pos_y, id_jugador, id_bala, velocidad * obtener_velocidad(codigo_bala));
+        Bala nueva_bala(codigo_bala, pos_x + velocidad * PERSONAJE_HEIGHT, pos_y, id_jugador,
+                        id_bala, velocidad * obtener_velocidad(codigo_bala));
         balas.push_back(nueva_bala);
     }
 
@@ -32,9 +35,7 @@ public:
         }
     }
 
-    std::vector<Bala> &obtener_balas() {
-        return balas;
-    }
+    std::vector<Bala>& obtener_balas() { return balas; }
 
 private:
     uint32_t obtener_id() {
@@ -47,8 +48,8 @@ private:
         }
     }
 
-    int obtener_velocidad(uint8_t codigo_bala){
-        switch(codigo_bala){
+    int obtener_velocidad(uint8_t codigo_bala) {
+        switch (codigo_bala) {
             case NORMAL:
                 return 10;
             default:

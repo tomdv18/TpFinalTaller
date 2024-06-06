@@ -3,12 +3,13 @@
 
 #include "../common_src/socket.h"
 #include "../common_src/thread.h"
-#include "recibidorJugador.h"
+
 #include "enviadorJugador.h"
+#include "recibidorJugador.h"
 
 class MonitorPartidas;
 
-class Jugador{
+class Jugador {
 private:
     uint32_t id;
 
@@ -24,7 +25,7 @@ private:
 
 
 public:
-    Jugador(uint32_t id, Socket skt, MonitorPartidas &monitor_partidas);
+    Jugador(uint32_t id, Socket skt, MonitorPartidas& monitor_partidas);
 
     bool esta_vivo();
 
@@ -34,8 +35,5 @@ public:
 
     ~Jugador();
 };
-
-
-
 
 #endif

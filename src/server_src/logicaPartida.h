@@ -2,23 +2,24 @@
 #define SERVER_LOGICA_PARTIDA_H_
 
 
+#include <chrono>
+#include <iostream>
+#include <map>
+
 #include "../common_src/accion.h"
 #include "../common_src/evento.h"
+
+#include "controlador_balas.h"
+#include "enemigo_lizzard.h"
+#include "objeto_solido.h"
+#include "objeto_zanahoria.h"
 #include "personaje_jazz.h"
 #include "personaje_lori.h"
 #include "personaje_spaz.h"
-#include "enemigo_lizzard.h"
-#include "controlador_balas.h"
-#include "objeto_zanahoria.h"
-#include "objeto_solido.h"
 #include "rectangulo.h"
-#include <iostream>
-#include <map>
-#include <chrono>
 
-class LogicaPartida{
+class LogicaPartida {
 private:
-
     std::map<uint32_t, Personaje*> map_personajes;
     std::map<uint32_t, Enemigo*> map_enemigos;
     std::map<uint32_t, Objeto*> map_objetos;
@@ -27,13 +28,15 @@ private:
 public:
     LogicaPartida();
 
-    void ejecutar(Accion accion, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
+    void ejecutar(Accion accion,
+                  std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     void mover_derecha(uint32_t id_jugador);
 
     void mover_izquierda(uint32_t id_jugador);
 
-    void mover_arriba(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
+    void mover_arriba(uint32_t id_jugador,
+                      std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     void mover_abajo(uint32_t id_jugador);
 
@@ -43,12 +46,14 @@ public:
 
     void mover_correr(uint32_t id_jugador);
 
-    void disparar(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
+    void disparar(uint32_t id_jugador,
+                  std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     void dejar_disparar(uint32_t id_jugador);
 
 
-    void usar_habilidad(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
+    void usar_habilidad(uint32_t id_jugador,
+                        std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     void abandonar_partida(uint32_t id_jugador);
 
@@ -60,14 +65,6 @@ public:
 
     ~LogicaPartida();
 };
-
-
-
-
-
-
-
-
 
 
 #endif

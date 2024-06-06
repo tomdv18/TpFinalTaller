@@ -1,7 +1,9 @@
 #include <iostream>
+
+#include "../common_src/socket.h"
+
 #include "personaje.h"
 #include "servidor.h"
-#include "../common_src/socket.h"
 
 int main(int argc, char* argv[]) {
     try {

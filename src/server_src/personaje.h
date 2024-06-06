@@ -1,14 +1,17 @@
 #ifndef SERVER_PERSONAJE_H_
 #define SERVER_PERSONAJE_H_
 
-#include <iostream>
-#include <cmath>
 #include <chrono>
+#include <cmath>
+#include <iostream>
+#include <map>
+
 #include "../common_src/accion.h"
 #include "../common_src/evento.h"
-#include "rectangulo.h"
+
 #include "arma.h"
 #include "objeto.h"
+#include "rectangulo.h"
 
 
 #define WIDTH 640
@@ -24,7 +27,7 @@
 
 class Objeto;
 
-class Personaje{
+class Personaje {
 protected:
     uint32_t id_jugador;
     uint32_t posicion_x;
@@ -50,11 +53,11 @@ protected:
 
 
     Arma arma;
-    
-public:
-    Personaje(uint32_t id_jugador);
 
-    //Acciones
+public:
+    explicit Personaje(uint32_t id_jugador);
+
+    // Acciones
 
     virtual void mover_derecha();
 
@@ -84,7 +87,7 @@ public:
 
     virtual void posicion_Y(uint32_t y);
 
-    //Acciones
+    // Acciones
 
     // Getters Snapshot
     virtual uint32_t obtener_posicionX();
@@ -98,14 +101,15 @@ public:
     virtual uint8_t obtener_corriendo();
 
     virtual uint8_t obtener_habilidad();
-    
+
     virtual uint8_t obtener_saltando();
 
     virtual uint8_t obtener_disparando();
 
     // Getters Snapshot
 
-    virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*> &map_objetos);
+    virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,
+                                     std::map<uint32_t, Objeto*>& map_objetos);
 
     virtual ~Personaje();
 
