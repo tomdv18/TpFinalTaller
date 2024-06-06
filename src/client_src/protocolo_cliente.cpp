@@ -75,7 +75,7 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
     EventoPersonaje event_personaje;
     EventoBala event_bala;
     EventoObjeto event_objeto;
-    EventoEnemigo event_enemigo;
+        EventoEnemigo event_enemigo;
 
     uint8_t cant_personajes;
     skt.recvall(&cant_personajes,sizeof(cant_personajes),&was_closed);
@@ -122,7 +122,6 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
         eventos_balas.emplace_back(event_bala);
     }
 
-    
     uint32_t cant_objeto;
     skt.recvall(&cant_objeto,sizeof(cant_objeto), &was_closed);
     cant_objeto = ntohl(cant_objeto);
@@ -140,7 +139,7 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
         std::cout << "RECIBIENDO OBJETO" << std::endl;
         eventos_objeto.emplace_back(event_objeto);
     }
-    
+
     uint32_t cant_enemigos;
 
     skt.recvall(&cant_enemigos,sizeof(uint32_t), &was_closed);
@@ -158,6 +157,7 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
         event_enemigo.posicion_y = ntohl(event_enemigo.posicion_y);
         //std::cout << "RECIBIENDO ENEMIGO "  << event_enemigo.id_enemigo << "-" << event_enemigo.posicion_x << "-"   << event_enemigo.esta_vivo << "-" << event_enemigo.vida << std::endl;
         eventos_enemigos.emplace_back(event_enemigo);
+    
     }
 
 

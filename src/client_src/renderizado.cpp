@@ -4,14 +4,14 @@
 #include <exception>
 #include <unistd.h>
 #include <map>
-#include "paths.h"
 
-Renderizado::Renderizado(std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews) : cantidad_jugadores(1), personajesViews(personajesViews) {}
+Renderizado::Renderizado(std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews) : 
+personajesViews(personajesViews) {}
 
 void Renderizado::inicializar_SDL2pp() {
 
     this->sdl = std::make_unique<SDL2pp::SDL>(SDL_INIT_VIDEO);
-    ///
+
 }
 
 void Renderizado::recibir_id(uint32_t id_jugador){
@@ -27,11 +27,12 @@ void Renderizado::iniciar_camara(Camara &&cam) {
 }
 
 void Renderizado::renderizar(Evento evento) {
+    
     //render->SetDrawColor(0x80, 0x80, 0x80);
+    
     render->Clear();
     
     for(EventoPersonaje evento : evento.eventos_personaje){
-        std::cout << evento.id_jugador;
         if(personajesViews.find(evento.id_jugador) == personajesViews.end()){
             std::unique_ptr<PersonajeView> personaje;
             switch(evento.id_personaje){
@@ -58,68 +59,56 @@ void Renderizado::renderizar(Evento evento) {
         }else{
             PersonajeView &personaje = *(personajesViews.at(evento.id_jugador));
             personaje.actualizar_vista_personaje(evento,50000);
-
-            //personaje.renderizar_personaje(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
         }
     }
 
     // Creacion de las balas
-    /*
+
     for (const EventoBala &e : evento.eventos_bala) {
-        if (balas.find(e.id_jugador) == balas.end()) {
+        if (balasViews.find(e.id_jugador) == balasViews.end()) {
             // Crear una nueva lista de balas para este jugador
-                balas[e.id_jugador] = std::map<uint32_t, std::unique_ptr<BalaView>>();
+                balasViews[e.id_jugador] = std::map<uint32_t, std::unique_ptr<BalaView>>();
         }else{
                 
-            if (balas[e.id_jugador].find(e.id_bala) == balas[e.id_jugador].end()){
+            if (balasViews[e.id_jugador].find(e.id_bala) == balasViews[e.id_jugador].end()){
             // Crear la bala
-                std::unique_ptr<BalaView> b = std::make_unique<BalaView>(texturas_balas, e.posicion_x, e.posicion_y);
-                balas[e.id_jugador][e.id_bala] = std::move(b);
+                std::unique_ptr<BalaView> b = std::make_unique<BalaView>();
+                balasViews[e.id_jugador][e.id_bala] = std::move(b);
+                balasViews[e.id_jugador][e.id_bala]->crear_texturas(render.get());
                 std::cout << "CREANDO BALA PARA JUGADOR: " << e.id_jugador << std::endl;
             }
         }
     }
-    */
-
-
-    
-    
 
     render->Clear();
 
     // Renderizado de las balas de cada jugador
-    /*
+    
     for (const EventoBala &e : evento.eventos_bala) {
-            uint32_t id_jugador = e.id_jugador;
-            if (balas.find(id_jugador) != balas.end()) {
-                auto& lista_balas = balas[id_jugador]; // Balas del jugador
+        uint32_t id_jugador = e.id_jugador;
+        if (balasViews.find(id_jugador) != balasViews.end()) {
+            auto& lista_balas = balasViews[id_jugador]; // Balas del jugador
 
-                for (auto it = lista_balas.begin(); it != lista_balas.end(); ) {
-                    auto& bala = it->second;
+            for (auto it = lista_balas.begin(); it != lista_balas.end(); ) {
+                auto& bala = it->second;
 
-                    bala->actualizar(e, 50000);
-                    bala->renderizar(render);
+                bala->actualizar(e, 50000);
+                bala->renderizar(*render);
 
-                    if (e.impacto) {
+                if (e.impacto) {
                         // Eliminar la bala de la lista si hubo impacto
-                        it = lista_balas.erase(it);
-                    } else {
-                        ++it;
-                    }
-                }
-
-                // Si la lista de balas para este jugador está vacía después de eliminar, eliminar la entrada del jugador
-                if (lista_balas.empty()) {
-                    balas.erase(id_jugador);
+                    it = lista_balas.erase(it);
+                } else {
+                    ++it;
                 }
             }
+
+            // Si la lista de balas para este jugador está vacía después de eliminar, eliminar la entrada del jugador
+            if (lista_balas.empty()) {
+                balasViews.erase(id_jugador);
+            }
         }
-    */
-
-
-
-
-
+    }
 
     mapa->dibujar_fondo(* render);
     mapa->dibujar_entidades(*render, *camara);
@@ -134,8 +123,10 @@ void Renderizado::renderizar(Evento evento) {
     }
 
     for (auto &personaje : this->personajesViews) {
+
         PersonajeView &p = *(personaje.second);
         p.renderizar_personaje(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
+		
 	}
 
     render->Present();

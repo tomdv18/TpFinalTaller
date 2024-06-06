@@ -135,21 +135,21 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
     return true;
 }
 
-
 void Cliente::comunicarse_con_el_servidor() {
     ProtocoloCliente protocolo_temporal(skt);
     MapaEntidades mapa = protocolo_temporal.recibir_mapa();
     Camara camara(0, 0, WIDTH, HEIGHT);
-    //print_map(mapa);
+    
     Queue<Evento> queue_eventos(MAX_EVENTOS);
     Queue<CodigoAccion> queue_accion(MAX_ACCIONES);
     RecibidorCliente recibidor_cliente(skt, queue_eventos, estado);
     recibidor_cliente.start();
-
+    
     this->renderizado.recibir_id(id_jugador);
     this->renderizado.inicializar_SDL2pp();
     this->renderizado.crear_ventana_y_render("JazzJack Rabbit 2", WIDTH, HEIGHT);
     this->renderizado.crear_personajes();
+    
     this->renderizado.iniciar_mapa(std::move(mapa));
     this->renderizado.iniciar_camara(std::move(camara));
     EnviadorCliente enviador_cliente(skt, queue_accion);

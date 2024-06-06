@@ -8,13 +8,15 @@
 #include <map>
 #include "../common_src/evento.h"
 #include "animacion.h"
+#include "direcciones.h"
 
 #define BALA_HEIGHT 50
 #define BALA_WIDTH 50
 
 class BalaView{
-private:
-    std::map<std::string, std::shared_ptr<SDL2pp::Texture>> texturas;
+   
+   private:
+    SDL2pp::Texture *texturas_bala;
     int posicion_x;
     int posicion_y;
     int width;
@@ -23,15 +25,19 @@ private:
 
     bool facingLeft;
 
-public:
-    BalaView(std::map<std::string, std::shared_ptr<SDL2pp::Texture>> texturas, uint32_t pos_x, uint32_t pos_y);
+   public:
+    
+    BalaView();
 
+    ~BalaView();
+
+    SDL2pp::Texture crear_surface_y_texturas(std::string const &path_sprite, SDL2pp::Renderer *render);
+
+    void crear_texturas(SDL2pp::Renderer *render);
 
     void actualizar(EventoBala const &evento,float dt);
 
     void renderizar(SDL2pp::Renderer &render);
-
-
 };
 
 

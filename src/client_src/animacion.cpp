@@ -7,7 +7,6 @@
 #define FRAME_RATE 50000
 
 
-
 Animacion::Animacion() : texturas(nullptr), frame_actual(0),
 cantidad_frames(1), 
 size_frame(1), elapsed(0.0F) {}
@@ -26,7 +25,6 @@ void Animacion::acualizar(float dt) {
         this->frame_actual += 1;
         this->frame_actual = this->frame_actual % this->cantidad_frames; 
         this->elapsed -= FRAME_RATE;
-        //std::cout << "EL frame_actual es: " << frame_actual << std::endl;
     }
 
 }

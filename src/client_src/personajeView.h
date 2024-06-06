@@ -16,6 +16,7 @@ class PersonajeView {
     protected:
     
     uint32_t id_jugador;
+    int ultimas_posiciones_x[2]; //Ultima posicion y la anterior
     int posicion_x;
     int posicion_y;
     int width;
@@ -26,6 +27,8 @@ class PersonajeView {
     bool isMoving;
     bool isRunning;
     bool isJumping;
+    bool isShooting;
+    bool stopShooting; //Quiere decier que dejo de disparar.
 
     public:
 
@@ -60,6 +63,7 @@ class PersonajeView {
     virtual void definir_posicion_y(int y) {
         posicion_y = y;
     }
+
 };
 
 #endif //PERSONAJEVIEW_H_
