@@ -23,7 +23,7 @@ protected:
 
     double velocidad_x;
     uint8_t direccion_mirando;
-    bool esta_vivo;
+    bool vivo;
     int iteraciones_para_revivir;
     
     int pasos_patrullando;
@@ -43,7 +43,11 @@ public:
 
     virtual int obtener_danio();
 
+    virtual void matar();
 
+    virtual void revivir();
+
+    virtual bool esta_vivo();
     //Acciones
 
     // Getters Snapshot

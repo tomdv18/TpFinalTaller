@@ -9,7 +9,7 @@ Enemigo::Enemigo(uint32_t id_enemigo) : id_enemigo(id_enemigo),
     posicion_y(0), 
     vida(VIDA_DEFAULT), 
     esta_quieto(true), 
-    esta_vivo(true), 
+    vivo(true), 
     iteraciones_para_revivir(-1),
     pasos_patrullando(0),
     danio(DANIO_DEFAULT){
@@ -32,6 +32,18 @@ void Enemigo::mover_izquierda(){
         esta_quieto = false;
     }
     direccion_mirando = IZQUIERDA;
+}
+
+void Enemigo::matar(){
+    vivo = false;
+}
+
+void Enemigo::revivir(){
+    vivo = true;
+}
+
+bool Enemigo::esta_vivo(){
+    return vivo;
 }
 
 int Enemigo::obtener_danio(){

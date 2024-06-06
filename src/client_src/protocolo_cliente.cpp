@@ -75,6 +75,7 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
     EventoPersonaje event_personaje;
     EventoBala event_bala;
     EventoObjeto event_objeto;
+    EventoEnemigo event_enemigo;
 
     uint8_t cant_personajes;
     skt.recvall(&cant_personajes,sizeof(cant_personajes),&was_closed);
@@ -140,11 +141,32 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
         eventos_objeto.emplace_back(event_objeto);
     }
     
+    uint32_t cant_enemigos;
+
+    skt.recvall(&cant_enemigos,sizeof(uint32_t), &was_closed);
+    cant_enemigos = ntohl(cant_enemigos);
+
+    std::vector<EventoEnemigo> eventos_enemigos;
+    eventos_enemigos.clear();
+    for(int i = 0; i < cant_enemigos; i++){
+        skt.recvall(&event_enemigo, sizeof(event_enemigo), &was_closed);
+        if(was_closed){
+            return !was_closed;
+        }
+        event_enemigo.id_enemigo = ntohl(event_enemigo.id_enemigo);
+        event_enemigo.posicion_x = ntohl(event_enemigo.posicion_x);
+        event_enemigo.posicion_y = ntohl(event_enemigo.posicion_y);
+        event_enemigo.vida = ntohl(event_enemigo.vida);
+        //std::cout << "RECIBIENDO ENEMIGO "  << event_enemigo.id_enemigo << "-" << event_enemigo.posicion_x << "-"   << event_enemigo.esta_vivo << "-" << event_enemigo.vida << std::endl;
+        eventos_enemigos.emplace_back(event_enemigo);
+    }
+
 
     
     evento.eventos_personaje = eventos_personajes;
     evento.eventos_bala = eventos_balas;
     evento.eventos_objeto = eventos_objeto;
+    evento.eventos_enemigos = eventos_enemigos;
 
     /*
         La idea es recibir la cantidad de personajes q hay

@@ -93,10 +93,14 @@ void ProtocoloServidor::enviar_evento(bool &was_closed,Evento evento){
         }
     }
     
+    uint32_t cant_enemigos = (uint32_t) evento.eventos_enemigos.size();
+    cant_enemigos = htonl(cant_enemigos);
+    skt_jugador.sendall(&cant_enemigos, sizeof(uint32_t), &was_closed);
 
-    /*
-
-    for(EventoEnemigo e : evento.eventos_enemigo){  
+    for(EventoEnemigo e : evento.eventos_enemigos){
+        e.id_enemigo = htonl(e.id_enemigo);
+        e.posicion_x = htonl(e.posicion_x);
+        e.posicion_y = htonl(e.posicion_y);
         skt_jugador.sendall(&e, sizeof(e), &was_closed);
         if(was_closed){
             throw std::runtime_error("Error, se cerro la conexion con el servidor");
@@ -104,7 +108,6 @@ void ProtocoloServidor::enviar_evento(bool &was_closed,Evento evento){
     }
     
     
-    */
 }
 
 void ProtocoloServidor::enviar_tipo_entidad(const std::string& entity_type, bool& was_closed) {

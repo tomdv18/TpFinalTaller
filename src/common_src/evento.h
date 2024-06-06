@@ -41,12 +41,22 @@ struct __attribute__((packed)) EventoObjeto{
 
 };
 
+struct __attribute__((packed)) EventoEnemigo{
+
+    uint32_t id_enemigo;
+    uint32_t posicion_x;
+    uint32_t posicion_y;
+    uint8_t vida;
+    bool esta_vivo;
+
+};
 
 struct Evento{
     uint16_t tiempo_restante;
     std::vector<EventoPersonaje> eventos_personaje;
     std::vector<EventoObjeto> eventos_objeto;
     std::vector<EventoBala> eventos_bala;
+    std::vector<EventoEnemigo> eventos_enemigos;
 };
 
 enum Entidad: uint8_t {

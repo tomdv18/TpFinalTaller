@@ -17,7 +17,7 @@ LogicaPartida::LogicaPartida(){
    
 
    //map_objetos[1] = new Zanahoria(1, 400, 0, 250, 50, 700);
-    //map_enemigos[0] = new Lizzard(0); // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
+    map_enemigos[0] = new Lizzard(0); // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
 }
 
 
@@ -290,6 +290,18 @@ Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high
        
 
         evento.eventos_bala.emplace_back(evento_bala);
+    }
+
+    for (const auto &par : map_enemigos){
+        EventoEnemigo eventos_enem;
+        eventos_enem.id_enemigo = par.first;
+        eventos_enem.posicion_x = par.second->obtener_posicionX();
+        eventos_enem.posicion_y = par.second->obtener_posicionY();
+        eventos_enem.vida = par.second->obtener_vida();
+        eventos_enem.esta_vivo = par.second->esta_vivo();
+
+        evento.eventos_enemigos.emplace_back(eventos_enem);
+
     }
 
 
