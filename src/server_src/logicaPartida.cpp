@@ -3,6 +3,7 @@
 #define DURACION_PARTIDA 120.0f
 
 LogicaPartida::LogicaPartida(){
+    map_objetos[0] = new Zanahoria(0, 100, 430, 50, 50, 10);
     //map_enemigos[0] = new Lizzard(0); // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
 }
 
@@ -184,22 +185,58 @@ void LogicaPartida::agregar_personaje(Accion accion){
 void LogicaPartida::actualizar_partida(std::chrono::time_point<std::chrono::high_resolution_clock> tiempo){
     std::chrono::time_point<std::chrono::high_resolution_clock> actual = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
-    for(const auto &par : map_personajes){
-        par.second->actualizar_posicion(tiempo_transcurrido);
+    for(const auto &par_personaje : map_personajes){
+        uint32_t pos_actual = par_personaje.second->obtener_posicionX();
+        uint32_t pos_actual_y = par_personaje.second->obtener_posicionY();
+        par_personaje.second->actualizar_posicion(tiempo_transcurrido);
+
+        Rectangulo rect_personaje = {  par_personaje.second->obtener_posicionX(),
+                                    par_personaje.second->obtener_posicionY(),
+                                    PERSONAJE_WIDTH,
+                                    PERSONAJE_HEIGHT};
+        //Calcular colision con objetos
+        
+        for (const auto& par_objeto : map_objetos) {
+            par_objeto.second->reaparecer(tiempo_transcurrido);
+
+            Rectangulo rect_objeto = {  par_objeto.second->obtener_posicionX(),
+                                    par_objeto.second->obtener_posicionY(),
+                                    par_objeto.second->obtener_ancho(),
+                                    par_objeto.second->obtener_alto() };
+
+            if(par_objeto.second->obtener_mostrar()){
+                if(rect_personaje.hay_colision_x(rect_objeto) && rect_personaje.hay_colision_y(rect_objeto)){
+                    std::cout << "HAY COLISION CON OBJETO" << std::endl;
+                    par_personaje.second->posicion_X(pos_actual);
+                    //par_personaje.second->posicion_Y(pos_actual_y);
+                }
+             
+
+                }
+        }
+        
     }
     for(const auto &par : map_enemigos){
         par.second->actualizar_posicion(tiempo_transcurrido);
+
+        //Calcular colision con los personajes
     }
 
-    auto& balas = controlador_balas.obtener_balas();  // Referencia al vector de balas
-    //std::cout << "CANTIDAD BALAS: " << balas.size() << std::endl;
+    auto& balas = controlador_balas.obtener_balas();  
     auto it = balas.begin();
 
     while (it != balas.end()) {
         it->actualizar_posicion();
+                    
+        Rectangulo rect_bala = {  it->obtener_posicionX(),
+                                    it->obtener_posicionY(),
+                                    it->obtener_ancho(),
+                                    it->obtener_largo() };
+
+
+        // Calcular primero colision con enemigos
         for (const auto& par : map_personajes) {
             if (par.second->hay_colision(
-                it->obtener_id_jugador(),
                 it->obtener_posicionX(),
                 it->obtener_posicionY(),
                 it->obtener_ancho(),
@@ -240,6 +277,7 @@ Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high
         evento_personaje.esta_corriendo = par.second->obtener_corriendo();
         evento_personaje.usando_habilidad = par.second->obtener_habilidad();
         evento_personaje.esta_saltando = par.second->obtener_saltando();
+        evento_personaje.esta_disparando = par.second->obtener_disparando();
 
         evento.eventos_personaje.emplace_back(evento_personaje);
     }
@@ -251,6 +289,7 @@ Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high
         evento_bala.posicion_x = bala.obtener_posicionX();
         evento_bala.posicion_y = bala.obtener_posicionY();
         evento_bala.impacto = bala.obtener_impacto();
+        evento_bala.tipo_bala = bala.obtener_codigo();
        
 
         evento.eventos_bala.emplace_back(evento_bala);

@@ -9,6 +9,8 @@
 #include "personaje_spaz.h"
 #include "enemigo_lizzard.h"
 #include "controlador_balas.h"
+#include "objeto_zanahoria.h"
+#include "rectangulo.h"
 #include <iostream>
 #include <map>
 #include <chrono>
@@ -18,6 +20,7 @@ private:
 
     std::map<uint32_t, Personaje*> map_personajes;
     std::map<uint32_t, Enemigo*> map_enemigos;
+    std::map<uint32_t, Objeto*> map_objetos;
     ControladorBalas controlador_balas;
 
 public:
