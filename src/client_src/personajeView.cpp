@@ -68,9 +68,9 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
       
 }
 
-void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render) {
+void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y) {
     
-    SDL2pp::Rect personaje(posicion_x, posicion_y, width, height);
+    SDL2pp::Rect personaje(posicion_x-cam_x, posicion_y-cam_y, width, height); // Acomodo al personaja con la camara
     
     if(isMoving && !isRunning && !isJumping) {
         SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;

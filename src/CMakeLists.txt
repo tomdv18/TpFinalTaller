@@ -134,7 +134,11 @@ if(CLIENT)
 		./client_src/enviadorCliente.h
 		./client_src/balaView.cpp
 		./client_src/balaView.h
-
+		./client_src/mapa.cpp
+		./client_src/mapa.h
+		./client_src/camara.cpp
+		./client_src/camara.h
+		
 		./common_src/thread.h
 		./common_src/socket.h
 		./common_src/socket.cpp

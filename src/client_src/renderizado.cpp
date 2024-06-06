@@ -18,13 +18,20 @@ void Renderizado::recibir_id(uint32_t id_jugador){
     this->id_jugador = id_jugador;
 }
 
-void Renderizado::renderizar(Evento evento) {
+void Renderizado::iniciar_mapa(MapaEntidades &&map) {
+    this->mapa = std::make_unique<Mapa>(*render, std::move(map));
+}
 
-    render->SetDrawColor(0x80, 0x80, 0x80);
-    
+void Renderizado::iniciar_camara(Camara &&cam) {
+    this->camara = std::make_unique<Camara>(std::move(cam));
+}
+
+void Renderizado::renderizar(Evento evento) {
+    //render->SetDrawColor(0x80, 0x80, 0x80);
     render->Clear();
     
     for(EventoPersonaje evento : evento.eventos_personaje){
+        std::cout << evento.id_jugador;
         if(personajesViews.find(evento.id_jugador) == personajesViews.end()){
             std::unique_ptr<PersonajeView> personaje;
             switch(evento.id_personaje){
@@ -51,7 +58,8 @@ void Renderizado::renderizar(Evento evento) {
         }else{
             PersonajeView &personaje = *(personajesViews.at(evento.id_jugador));
             personaje.actualizar_vista_personaje(evento,50000);
-            personaje.renderizar_personaje(render);
+
+            //personaje.renderizar_personaje(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
         }
     }
 
@@ -74,6 +82,7 @@ void Renderizado::renderizar(Evento evento) {
     */
 
 
+    
     
 
     render->Clear();
@@ -112,11 +121,21 @@ void Renderizado::renderizar(Evento evento) {
 
 
 
-    for (auto &personaje : this->personajesViews) {
+    mapa->dibujar_fondo(* render);
+    mapa->dibujar_entidades(*render, *camara);
 
+    auto it = personajesViews.find(id_jugador);
+    if (it == personajesViews.end()) {
+        // No hago nada.
+    } else {
+        // Enfoco la camara al jugador.
+        PersonajeView &personajeViewPtr = *(it->second);
+        camara->actualizar_posicion(personajeViewPtr.obtener_posicion_x(), personajeViewPtr.obtener_posicion_y());   
+    }
+
+    for (auto &personaje : this->personajesViews) {
         PersonajeView &p = *(personaje.second);
-        p.renderizar_personaje(render);
-		
+        p.renderizar_personaje(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
 	}
 
     render->Present();

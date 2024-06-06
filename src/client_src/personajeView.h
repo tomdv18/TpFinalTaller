@@ -43,8 +43,23 @@ class PersonajeView {
 
     virtual void actualizar_vista_personaje(EventoPersonaje const &evento,float dt);
 
-    virtual void renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render);
+    virtual void renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y);
 
+    virtual int obtener_posicion_x() {
+        return posicion_x;
+    }
+
+    virtual int obtener_posicion_y() {
+        return posicion_y;
+    }
+
+    virtual void definir_posicion_x(int x) {
+        posicion_x = x;
+    }
+
+    virtual void definir_posicion_y(int y) {
+        posicion_y = y;
+    }
 };
 
 #endif //PERSONAJEVIEW_H_
