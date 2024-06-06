@@ -5,7 +5,15 @@
 LogicaPartida::LogicaPartida(){
    //map_objetos[0] = new Zanahoria(0, 100, 430, 50, 50, 10);
     map_objetos[0] = new Zanahoria(0, 0, 400, 1, 1000, 250);
-    map_objetos[1] = new Solido(0, 0, 400, 1, 1000, 250);
+
+    //map_objetos[1] = new Solido(1, 0, 400, 1, 1000, 250);
+    //map_objetos[2] = new Solido(1, 100, 0, 1, 5000, 25);
+    map_objetos[1] = new Solido(1, 100, 150, 1, 5000, 25);
+
+    //map_objetos[3] = new Solido(2, 100, 150, 1, 50, 500);
+    //map_objetos[4] = new Solido(3, 545, 150, 1, 25, 5000);
+ 
+
    
 
    //map_objetos[1] = new Zanahoria(1, 400, 0, 250, 50, 700);
@@ -240,7 +248,6 @@ Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high
     evento.eventos_personaje.clear();
     std::chrono::time_point<std::chrono::high_resolution_clock> actual = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> tiempo = actual - start;
-    //std::cout << "Tiempo transcurrido: " << DURACION_PARTIDA - (uint16_t)tiempo.count() << " segundos" << std::endl;
     evento.tiempo_restante = DURACION_PARTIDA - (uint16_t)tiempo.count();
 
     for(const auto &par : map_personajes){
@@ -259,6 +266,18 @@ Evento LogicaPartida::obtener_snapshot(std::chrono::time_point<std::chrono::high
 
         evento.eventos_personaje.emplace_back(evento_personaje);
     }
+
+    for(const auto &par : map_objetos){
+        EventoObjeto evento_objeto;
+        evento_objeto.id_objeto = par.second->obtener_id();
+        evento_objeto.posicion_x = par.second->obtener_posicionX();
+        evento_objeto.posicion_y = par.second->obtener_posicionY();
+        evento_objeto.mostrandose = par.second->obtener_mostrar();
+  
+      
+        evento.eventos_objeto.emplace_back(evento_objeto);
+    }
+
 
     for(Bala bala : controlador_balas.obtener_balas()){
         EventoBala evento_bala;

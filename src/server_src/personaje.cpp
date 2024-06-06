@@ -3,7 +3,7 @@
 
 
 Personaje::Personaje(uint32_t id_jugador) : id_jugador(id_jugador),
-    posicion_x(0),posicion_y(0), vida(100), esta_quieto(0),arma(){
+    posicion_x(150),posicion_y(0), vida(100), esta_quieto(0),arma(){
     corriendo = false;
     usando_especial = false;
     saltando = false;
@@ -170,18 +170,18 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
             if(par_objeto.second->obtener_mostrar()){
                 if(par_objeto.second->obtener_objeto() == SOLIDO){
                     if(rect_personaje.hay_colision(rect_objeto)){
-                            std::cout << "HAY COLISION CON OBJETO SOLIDO" << std::endl;
+                            //std::cout << "HAY COLISION CON OBJETO SOLIDO" << std::endl;
                             velocidad_x = 0;
                     }
                     if(rect_personaje_arriba.hay_colision(rect_objeto)){
-                        std::cout << "HAY COLISION CON OBJETO SOLIDO" << std::endl;
+                        //std::cout << "HAY COLISION CON OBJETO SOLIDO" << std::endl;
                         velocidad_y = 0;
                         saltando = false;
+                        /*
                         if(velocidad_x == 0){
                             esta_quieto = true;
-                            std::cout << "QUEDARSE QUIETO" << std::endl;
                         }
-                        std::cout << "VELOCIDAD EN X "<<(int) velocidad_x << std::endl;
+                        */
                     }else{
                         saltando = true;
                     }
@@ -202,11 +202,13 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
 
  
     
-
+        
         if (posicion_y > HEIGHT - PERSONAJE_HEIGHT) { // Si hay colision abajo
             posicion_y = HEIGHT - PERSONAJE_HEIGHT;
             saltando = false;
         }
+        
+        
     
     
     

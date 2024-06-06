@@ -74,8 +74,8 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
     bool was_closed = false;
     EventoPersonaje event_personaje;
     EventoBala event_bala;
+    EventoObjeto event_objeto;
 
-    //skt.recvall(&evento,sizeof(evento), &was_closed);
     uint8_t cant_personajes;
     skt.recvall(&cant_personajes,sizeof(cant_personajes),&was_closed);
     if(was_closed){
@@ -121,10 +121,30 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
         eventos_balas.emplace_back(event_bala);
     }
 
+    
+    uint32_t cant_objeto;
+    skt.recvall(&cant_objeto,sizeof(cant_objeto), &was_closed);
+    cant_objeto = ntohl(cant_objeto);
+
+    std::vector<EventoObjeto> eventos_objeto;
+    eventos_objeto.clear();
+    for(int i = 0; i < cant_objeto; i++){
+        skt.recvall(&event_objeto, sizeof(event_objeto), &was_closed);
+        if(was_closed){
+            return !was_closed;
+        }
+        event_objeto.id_objeto = ntohl(event_objeto.id_objeto);
+        event_objeto.posicion_x = ntohl(event_objeto.posicion_x);
+        event_objeto.posicion_y = ntohl(event_objeto.posicion_y);
+        std::cout << "RECIBIENDO OBJETO" << std::endl;
+        eventos_objeto.emplace_back(event_objeto);
+    }
+    
 
     
     evento.eventos_personaje = eventos_personajes;
     evento.eventos_bala = eventos_balas;
+    evento.eventos_objeto = eventos_objeto;
 
     /*
         La idea es recibir la cantidad de personajes q hay

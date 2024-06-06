@@ -32,9 +32,20 @@ struct __attribute__((packed)) EventoBala{
 
 };
 
+struct __attribute__((packed)) EventoObjeto{
+
+    uint32_t id_objeto;
+    uint32_t posicion_x;
+    uint32_t posicion_y;
+    uint8_t mostrandose;
+
+};
+
+
 struct Evento{
     uint16_t tiempo_restante;
     std::vector<EventoPersonaje> eventos_personaje;
+    std::vector<EventoObjeto> eventos_objeto;
     std::vector<EventoBala> eventos_bala;
 };
 

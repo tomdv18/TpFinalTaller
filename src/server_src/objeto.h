@@ -35,6 +35,9 @@ public:
     Objeto(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y, double tiempo_reaparicion, uint32_t ancho, uint32_t alto);
 
     // Getters Snapshot
+
+    virtual uint32_t obtener_id();
+    
     virtual uint32_t obtener_posicionX();
 
     virtual uint32_t obtener_posicionY();

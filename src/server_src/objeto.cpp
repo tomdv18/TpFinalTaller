@@ -10,6 +10,10 @@ Objeto::Objeto(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y, dou
 
 }
 
+uint32_t Objeto::obtener_id(){
+    return id_objeto;
+}
+
 uint32_t Objeto::obtener_posicionX(){
     return posicion_x;
 }
