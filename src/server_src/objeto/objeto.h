@@ -7,7 +7,7 @@
 
 #include "../common_src/accion.h"
 
-#include "personaje.h"
+#include "../personaje/personaje.h"
 
 enum CodigoObjeto : uint8_t { ZANAHORIA, SOLIDO };
 

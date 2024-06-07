@@ -29,15 +29,15 @@ void Spaz::mover_arriba(std::chrono::duration<double> tiempo_transcurrido) {
     }
 }
 
-void Spaz::mover_izquierda() {
+void Spaz::mover_izquierda(std::chrono::duration<double> tiempo_transcurrido) {
     if (!usando_especial) {
-        Personaje::mover_izquierda();
+        Personaje::mover_izquierda(tiempo_transcurrido);
     }
 }
 
-void Spaz::mover_derecha() {
+void Spaz::mover_derecha(std::chrono::duration<double> tiempo_transcurrido) {
     if (!usando_especial) {
-        Personaje::mover_derecha();
+        Personaje::mover_derecha(tiempo_transcurrido);
     }
 }
 
@@ -49,10 +49,10 @@ void Spaz::quedarse_quieto() {
 }
 
 void Spaz::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,
-                               std::map<uint32_t, Objeto*>& map_objetos) {
-    Personaje::actualizar_posicion(tiempo_transcurrido, map_objetos);
+                               std::map<uint32_t, Objeto*>& map_objetos, std::map<uint32_t, Objeto*>& map_objetos_comunes) {
+    Personaje::actualizar_posicion(tiempo_transcurrido, map_objetos, map_objetos_comunes);
     if (usando_especial) {
-        if (tiempo_transcurrido.count() - tiempo_especial > 0.75) {
+        if (tiempo_transcurrido.count() - tiempo_especial > 0.75) { // Tiempo que dura el desplazamiento
             usando_especial = false;
             velocidad_x = 0;
         }

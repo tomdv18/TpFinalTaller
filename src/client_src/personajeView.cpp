@@ -58,6 +58,24 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
         facingLeft = true;
     }
 
+    /*
+        CORRECCIONES
+        
+        facingLeft lo recibe del evento, no hace falta calcularlo
+
+        las posicones X e Y se deben actualizar independientemente de la animacion
+
+        Por ejemplo si salto esta actualizandose solo la posicion en Y
+        Con estas 2 lineas nos ahorramos todos los demas ifs
+    */
+
+    facingLeft = evento.mirando_izquierda;
+    estado = evento.codigo_estado;
+    this->posicion_x = evento.posicion_x;
+    this->posicion_y = evento.posicion_y;
+
+    // El update solo seria estas 4 cosas, y quizas algun dato mas del evento
+
     if(isJumping) {
         this->animaciones.at(SALTANDO)->acualizar(dt);
         this->posicion_y = evento.posicion_y;
@@ -89,6 +107,39 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
     
     SDL2pp::Rect personaje(posicion_x-cam_x, posicion_y-cam_y, width, height);
     
+    // Aca un ejemplo del switch con el patron de estados
+    switch (this->estado)
+    {
+    case ESTADO_QUIETO:{
+        SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+        if(isShooting){
+            animaciones.at(DISPARO_QUIETO)->animar(*render, personaje, flip);
+        }else{
+            animaciones.at(QUIETO_CLIENTE)->animar(*render, personaje, flip);
+        }
+        break;
+    }
+    case ESTADO_CAMINANDO:{
+        SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+        animaciones.at(CAMINANDO)->animar(*render, personaje, flip);
+        break;
+    }
+    case ESTADO_CORRIENDO:{
+        SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+        animaciones.at(CORRIENDO)->animar(*render, personaje, flip);
+        break;
+    }
+    case ESTADO_SALTANDO:{
+        SDL_RendererFlip flip = SDL_FLIP_NONE;
+        animaciones.at(SALTANDO)->animar(*render, personaje, flip);
+        break;
+    }
+    default:
+        break;
+    }
+
+
+    /*
     if(isMoving && !isRunning && !isJumping) {
         SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
         animaciones.at(CAMINANDO)->animar(*render, personaje, flip);
@@ -113,6 +164,7 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
         SDL_RendererFlip flip = SDL_FLIP_NONE;
         animaciones.at(DEJA_DISPARO_QUIETO)->animar(*render, personaje, flip);
     }
+    */
     
     
 }

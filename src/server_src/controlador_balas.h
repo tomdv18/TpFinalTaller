@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <unordered_set>
 #include <vector>
-#include "personaje.h"
+#include "./personaje/personaje.h"
 
 #include "../common_src/bala.h"
 

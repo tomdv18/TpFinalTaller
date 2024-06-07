@@ -62,9 +62,9 @@ void Enemigo::patrullar() {
             if (pasos_patrullando >= PASOS_POR_DIRECCION) {
                 pasos_patrullando = 0;
                 direccion_mirando = IZQUIERDA;
-                std::cout << "POSICION DEL ENEMIGO (" << posicion_x << ", " << posicion_y << ")"
-                          << std::endl;
-                std::cout << "CAMBIO DE DIRECCION PATRULLAJE DE DERECHA A IZQUIERDA" << std::endl;
+                //std::cout << "POSICION DEL ENEMIGO (" << posicion_x << ", " << posicion_y << ")"
+                          //<< std::endl;
+                //std::cout << "CAMBIO DE DIRECCION PATRULLAJE DE DERECHA A IZQUIERDA" << std::endl;
             } else {
                 mover_derecha();
                 pasos_patrullando++;
@@ -74,9 +74,9 @@ void Enemigo::patrullar() {
             if (pasos_patrullando >= PASOS_POR_DIRECCION) {
                 pasos_patrullando = 0;
                 direccion_mirando = DERECHA;
-                std::cout << "POSICION DEL ENEMIGO (" << posicion_x << ", " << posicion_y << ")"
-                          << std::endl;
-                std::cout << "CAMBIO DE DIRECCION PATRULLAJE DE IZQUIERDA A DERECHA" << std::endl;
+                //std::cout << "POSICION DEL ENEMIGO (" << posicion_x << ", " << posicion_y << ")"
+                   //       << std::endl;
+                //std::cout << "CAMBIO DE DIRECCION PATRULLAJE DE IZQUIERDA A DERECHA" << std::endl;
             } else {
                 mover_izquierda();
                 pasos_patrullando++;

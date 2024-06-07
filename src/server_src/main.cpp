@@ -2,7 +2,6 @@
 
 #include "../common_src/socket.h"
 
-#include "personaje.h"
 #include "servidor.h"
 
 int main(int argc, char* argv[]) {

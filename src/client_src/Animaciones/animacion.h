@@ -2,6 +2,7 @@
 #define ANIMACION_H_
 
 #include <SDL2pp/SDL2pp.hh>
+#include <memory>
 #define FRAME_RATE 40000
 
 class Animacion {

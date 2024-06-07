@@ -5,6 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2pp/SDL2pp.hh>
 #include "../src/client_src/Animaciones/animacion.h"
+#include "../common_src/codigo_estado.h"
 #include <memory>
 #include "../common_src/evento.h"
 #include <map>
@@ -28,6 +29,9 @@ class PersonajeView {
     bool isJumping;
     bool isShooting;
     bool stopShooting; //Quiere decier que dejo de disparar.
+
+
+    uint8_t estado; // Almacena el estado actual del personaje
 
     public:
 
