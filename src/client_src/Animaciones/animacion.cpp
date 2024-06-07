@@ -32,7 +32,7 @@ void Animacion::acualizar(float dt) {
 
         }
         this->elapsed -= FRAME_RATE;
-        std::cout << this->frame_actual << std::endl;
+        //std::cout << this->frame_actual << std::endl;
 
     }
 }
