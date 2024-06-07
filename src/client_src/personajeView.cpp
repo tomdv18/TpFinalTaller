@@ -32,75 +32,26 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
     this->isMoving = bool (!evento.esta_quieto);
     this->isRunning = bool (evento.esta_corriendo);
     this->isJumping = bool (evento.esta_saltando);
-    
-    this->ultimas_posiciones_x[0] = evento.posicion_x; //Ante ultima posicion
-    
-    if(isMoving) {
-        this->ultimas_posiciones_x[1] = posicion_x; //Posicion mas actualizada
-    }
-    
-
-    stopShooting = false;
-    if(this->isShooting != evento.esta_disparando && !evento.esta_disparando) {
-        stopShooting = true;
-    }
-    
-
     this->isShooting = bool (evento.esta_disparando);
-
-
-    facingLeft = false;
-    
-    if(ultimas_posiciones_x[1] > ultimas_posiciones_x[0] && ultimas_posiciones_x[0] != ultimas_posiciones_x[1]) {
-        facingLeft = true;
-    }
-    else if(posicion_x > evento.posicion_x) {
-        facingLeft = true;
-    }
-
-    /*
-        CORRECCIONES
-        
-        facingLeft lo recibe del evento, no hace falta calcularlo
-
-        las posicones X e Y se deben actualizar independientemente de la animacion
-
-        Por ejemplo si salto esta actualizandose solo la posicion en Y
-        Con estas 2 lineas nos ahorramos todos los demas ifs
-    */
-
-    facingLeft = evento.mirando_izquierda;
-    estado = evento.codigo_estado;
+    this->estado = evento.codigo_estado;
     this->posicion_x = evento.posicion_x;
     this->posicion_y = evento.posicion_y;
 
-    // El update solo seria estas 4 cosas, y quizas algun dato mas del evento
+    facingLeft = evento.mirando_izquierda;
 
-    if(isJumping) {
+    if(estado == ESTADO_SALTANDO) {
         this->animaciones.at(SALTANDO)->acualizar(dt);
-        this->posicion_y = evento.posicion_y;
-    }
-
-    if(this->isMoving && !this->isRunning) {
+    } else if(estado == ESTADO_CAMINANDO) {
         this->animaciones.at(CAMINANDO)->acualizar(dt);
-        this->posicion_x = evento.posicion_x;
-        this->posicion_y = evento.posicion_y;
-    } else if (this->isMoving && this->isRunning){
+    } else if (estado == ESTADO_CORRIENDO){
         this->animaciones.at(CORRIENDO)->acualizar(dt);
-        this->posicion_x = evento.posicion_x;
-        this->posicion_y = evento.posicion_y;
-    } else if(!this->isMoving && !this->isShooting) {
-        this->animaciones.at(QUIETO_CLIENTE)->acualizar(dt);
-    } else if(!this->isMoving && this->isShooting) {
-        this->animaciones.at(DISPARO_QUIETO)->acualizar(dt);
-    }
-
-    if(stopShooting) {
-        this->animaciones.at(DEJA_DISPARO_QUIETO)->acualizar(50000000);
-        //Funciona pero ocurre muy rapido
-    }
-    
-      
+    } else if(estado == ESTADO_QUIETO) {
+        if (this->isShooting) {
+            this->animaciones.at(DISPARO_QUIETO)->acualizar(dt);
+        } else {
+            this->animaciones.at(QUIETO_CLIENTE)->acualizar(dt);
+        }
+    } 
 }
 
 void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y) {
