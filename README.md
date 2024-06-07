@@ -2,5 +2,9 @@
 
 
 Para testear simplemente hay que correr
+
+```bash
 cd build
 ../tests/run.sh
+```
+
