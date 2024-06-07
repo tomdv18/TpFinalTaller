@@ -49,4 +49,3 @@ uint32_t Bala::obtener_posicionY() const{
 bool Bala::obtener_impacto() const{
     return impacto;
 }
-

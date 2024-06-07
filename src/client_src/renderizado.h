@@ -11,6 +11,10 @@
 #include "personajeJazzView.h"
 #include "personajeLoriView.h"
 #include "personajeSpazView.h"
+#include "enemigoView.h"
+#include "enemigoLizzardView.h"
+#include "enemigoFencerView.h"
+#include "enemigoRatView.h"
 #include "direcciones.h"
 #include "mapa.h"
 #include "camara.h"
@@ -25,6 +29,7 @@ class Renderizado {
     std::unique_ptr<SDL2pp::Window> window;
     std::unique_ptr<SDL2pp::Renderer> render;
     std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews;
+    std::map<uint32_t, std::unique_ptr<EnemigoView>> enemigosViews;
     BalasPersonajes mapa_balas_pj;
     uint32_t id_jugador;
     std::unique_ptr<Mapa> mapa;

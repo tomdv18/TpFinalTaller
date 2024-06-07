@@ -8,13 +8,10 @@
 
 #include "../common_src/accion.h"
 #include "../common_src/evento.h"
-#include "../common_src/codigo_estado.h"
-#include "./estado/estado.h"
 
 #include "arma.h"
 #include "objeto.h"
 #include "rectangulo.h"
-
 
 
 #define WIDTH 640
@@ -22,14 +19,13 @@
 #define PERSONAJE_HEIGHT 50
 #define PERSONAJE_WIDTH 50
 #define VELOCIDAD 5
-#define VELOCIDAD_SALTO 30
+#define VELOCIDAD_SALTO 15
 #define GRAVEDAD 3
 #define ENFRIAMIENTO_JAZZ 5
 #define ENFRIAMIENTO_LORI 5
 #define ENFRIAMIENTO_SPAZ 5
 
 class Objeto;
-class Estado;
 
 class Personaje {
 protected:
@@ -39,9 +35,8 @@ protected:
     uint8_t vida;
     bool esta_quieto;
 
-    int velocidad_x;
-    int velocidad_y;
-
+    uint32_t velocidad_x;
+    uint32_t velocidad_y;
 
     bool corriendo;
 
@@ -55,28 +50,18 @@ protected:
 
 
     bool esta_disparando;
-    bool muerto;
 
 
     Arma arma;
 
-    Estado *estado;
-
-    bool en_superficie;
-
-
 public:
     explicit Personaje(uint32_t id_jugador);
 
-
-    int obtener_velocidad(){
-        return velocidad_x;
-    }
     // Acciones
 
-    virtual void mover_derecha(std::chrono::duration<double> tiempo_transcurrido);
+    virtual void mover_derecha();
 
-    virtual void mover_izquierda(std::chrono::duration<double> tiempo_transcurrido);
+    virtual void mover_izquierda();
 
     virtual void mover_arriba(std::chrono::duration<double> tiempo_transcurrido);
 
@@ -84,11 +69,11 @@ public:
 
     virtual void quedarse_quieto();
 
-    virtual void correr_rapido(std::chrono::duration<double> tiempo_transcurrido);
+    virtual void correr_rapido();
 
     virtual void correr();
 
-    virtual void recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido);
+    virtual void recibir_golpe(uint8_t golpe);
 
     virtual uint8_t disparar(std::chrono::duration<double> tiempo_transcurrido);
 
@@ -101,8 +86,6 @@ public:
     virtual void posicion_X(uint32_t x);
 
     virtual void posicion_Y(uint32_t y);
-
-    virtual void revivir();
 
     // Acciones
 
@@ -123,10 +106,6 @@ public:
 
     virtual uint8_t obtener_disparando();
 
-    virtual uint8_t obtener_estado();
-
-    virtual bool esta_muerto();
-
     // Getters Snapshot
 
     virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,
@@ -139,14 +118,6 @@ public:
     virtual uint8_t obtener_personaje() = 0;
 
     virtual void usar_habilidad(std::chrono::duration<double> tiempo_transcurrido) = 0;
-
-public:
-    // Logica de Estados
-    void cambiarEstado(Estado *estado);
-
-    void manejarEstado(uint8_t codigo_estado, std::chrono::duration<double> tiempo_transcurrido);
-
-    void actualizar(double tiempo);
 };
 
 #endif

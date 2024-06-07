@@ -15,9 +15,9 @@ public:
 
     void usar_habilidad(std::chrono::duration<double> tiempo_transcurrido) override;
 
-    void mover_derecha(std::chrono::duration<double> tiempo_transcurrido) override;
+    void mover_derecha() override;
 
-    void mover_izquierda(std::chrono::duration<double> tiempo_transcurrido) override;
+    void mover_izquierda() override;
 
     void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,
                              std::map<uint32_t, Objeto*>& map_objetos) override;

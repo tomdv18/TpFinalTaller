@@ -8,55 +8,25 @@ LogicaPartida::LogicaPartida() {
 
     // map_objetos[1] = new Solido(1, 0, 400, 1, 1000, 250);
     // map_objetos[2] = new Solido(1, 100, 0, 1, 5000, 25);
-    map_objetos[1] = new Solido(1, 0, 400, 1, 5000, 100);
+    map_objetos[1] = new Solido(1, 100, 150, 1, 5000, 25);
 
-    map_objetos[2] = new Solido(2, 100, 150, 1, 5000, 25);
-
-    map_objetos[3] = new Solido(3, 75, 0, 1, 25, 5000); //X
-
-    map_objetos[4] = new Solido(4, 280, 70, 1, 150, 25);
-
-    map_objetos[5] = new Solido(5, 0, 0, 1, 5000, 50);
-
-    map_objetos[6] = new Solido(6, 590, 0, 1, 25, 5000); //X
+    // map_objetos[3] = new Solido(2, 100, 150, 1, 50, 500);
+    // map_objetos[4] = new Solido(3, 545, 150, 1, 25, 5000);
 
 
-
-/*
-
-    piso:
-  - x: 100
-    y: 150
-  - x: 260
-    y: 150
-  - x: 420
-    y: 150
-  - x: 280
-    y: 70
-pared:
-  - x: 100
-    y: 150
-  - x: 596
-    y: 150
-*/
-  
-    //map_enemigos[0] = new Lizzard(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
+    // map_objetos[1] = new Zanahoria(1, 400, 0, 250, 50, 700);
+    map_enemigos[0] = new Lizzard(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
 }
 
 
 void LogicaPartida::ejecutar(Accion accion,
                              std::chrono::time_point<std::chrono::high_resolution_clock> tiempo) {
-    
-    if(personaje_muerto(accion.id_jugador)){
-        return;
-    }
-
     switch (accion.codigo) {
         case DERECHA:
-            mover_derecha(accion.id_jugador, tiempo);
+            mover_derecha(accion.id_jugador);
             break;
         case IZQUIERDA:
-            mover_izquierda(accion.id_jugador, tiempo);
+            mover_izquierda(accion.id_jugador);
             break;
         case ARRIBA:
             mover_arriba(accion.id_jugador, tiempo);
@@ -65,7 +35,7 @@ void LogicaPartida::ejecutar(Accion accion,
             // mover_abajo(accion.id_jugador);
             break;
         case CORRER_RAPIDO:
-            mover_correr_rapido(accion.id_jugador, tiempo);
+            mover_correr_rapido(accion.id_jugador);
             break;
         case CORRER:
             mover_correr(accion.id_jugador);
@@ -94,23 +64,17 @@ void LogicaPartida::ejecutar(Accion accion,
     }
 }
 
-void LogicaPartida::mover_derecha(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo) {
-    std::chrono::time_point<std::chrono::high_resolution_clock> actual =
-            std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
+void LogicaPartida::mover_derecha(uint32_t id_jugador) {
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        personaje->mover_derecha(tiempo_transcurrido);
+        personaje->mover_derecha();
     }
 }
 
-void LogicaPartida::mover_izquierda(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo) {
-    std::chrono::time_point<std::chrono::high_resolution_clock> actual =
-            std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
+void LogicaPartida::mover_izquierda(uint32_t id_jugador) {
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        personaje->mover_izquierda(tiempo_transcurrido);
+        personaje->mover_izquierda();
     }
 }
 
@@ -140,13 +104,10 @@ void LogicaPartida::mover_quieto(uint32_t id_jugador) {
     }
 }
 
-void LogicaPartida::mover_correr_rapido(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo) {
-    std::chrono::time_point<std::chrono::high_resolution_clock> actual =
-            std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
+void LogicaPartida::mover_correr_rapido(uint32_t id_jugador) {
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        personaje->correr_rapido(tiempo_transcurrido);
+        personaje->correr_rapido();
     }
 }
 
@@ -168,8 +129,7 @@ void LogicaPartida::disparar(uint32_t id_jugador,
         uint8_t codigo_bala = personaje->disparar(tiempo_transcurrido);
         if (codigo_bala != NINGUNA) {
             int velocidad = personaje->mirando_izquierda() ? -1 : 1;
-            uint32_t salida_x = personaje->mirando_izquierda() ? personaje->obtener_posicionX()+PERSONAJE_WIDTH/2 : personaje->obtener_posicionX();
-            controlador_balas.agregar_bala(codigo_bala, id_jugador, salida_x,
+            controlador_balas.agregar_bala(codigo_bala, id_jugador, personaje->obtener_posicionX(),
                                            personaje->obtener_posicionY() + PERSONAJE_HEIGHT / 4,
                                            velocidad);
         }
@@ -200,9 +160,8 @@ void LogicaPartida::abandonar_partida(uint32_t id_jugador) {
 
     if (it != map_personajes.end()) {
         delete it->second;
-        it->second = nullptr;  
+
         map_personajes.erase(it);
-        std::cout << "JUGADOR ELIMINADO DE LA PARTIDA " << (int) id_jugador << std::endl;
     }
 }
 
@@ -268,27 +227,16 @@ void LogicaPartida::actualizar_partida(
         for (const auto& par: map_personajes) {
             if (par.second->hay_colision(it->obtener_posicionX(), it->obtener_posicionY(),
                                          it->obtener_ancho(), it->obtener_largo())) {
-                par.second->recibir_golpe(10,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+                par.second->recibir_golpe(10);  // Por ahora hardcodeado recibe 10 de daño
                 std::cout << "HAY COLISION" << std::endl;
                 it->impactar();
                 break;
             }
         }
 
-        // Colision con objetos
-        if(!it->obtener_impacto()){
-            for (const auto& par: map_objetos) {
-                Rectangulo rect_obj = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
-                                par.second->obtener_ancho(), par.second->obtener_alto()};
-                if (rect_obj.hay_colision(rect_bala)) {
-                    it->impactar();
-                    break;
-                }
-            }
-        }
-
         if (it->obtener_impacto() || it->obtener_posicionX() >= WIDTH) {
             controlador_balas.remover_bala(it->obtener_id_bala());
+            // it = balas.erase(it);
         } else {
             ++it;
         }
@@ -317,12 +265,6 @@ Evento LogicaPartida::obtener_snapshot(
         evento_personaje.usando_habilidad = par.second->obtener_habilidad();
         evento_personaje.esta_saltando = par.second->obtener_saltando();
         evento_personaje.esta_disparando = par.second->obtener_disparando();
-
-        evento_personaje.codigo_estado = par.second->obtener_estado();
-        evento_personaje.mirando_izquierda = par.second->mirando_izquierda();
-
-        //std::cout << "ESTADO PERSONAJE: " << (int)par.second->obtener_estado() << std::endl;
-        //std::cout << "VELOCIDAD X" << (int)par.second->obtener_velocidad() << std::endl;
 
         evento.eventos_personaje.emplace_back(evento_personaje);
     }
@@ -368,14 +310,6 @@ Evento LogicaPartida::obtener_snapshot(
     return evento;
 }
 
-
-bool LogicaPartida::personaje_muerto(uint32_t id_jugador){
-    Personaje* personaje = map_personajes[id_jugador];
-    if (personaje != nullptr) {
-        return personaje->esta_muerto();
-    }
-    return false;
-}
 
 LogicaPartida::~LogicaPartida() {
     for (auto& par: map_personajes) {

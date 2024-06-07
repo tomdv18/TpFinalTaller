@@ -63,6 +63,34 @@ void Renderizado::renderizar(Evento evento) {
             personaje.actualizar_vista_personaje(evento, FRAME_RATE);
         }
     }
+    
+    /*
+    //Creacion del mapa de enemigos del juego
+    for(EventoEnemigo &evento : evento.eventos_enemigos) {
+
+        if(enemigosViews.find(evento.id_enemigo) == enemigosViews.end()) {
+            std::unique_ptr<EnemigoView> enemigo;
+            switch(evento.id_enemigo){
+                case LIZZARD:
+                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoLizzardView());
+                    enemigo->crear_animaciones();
+                    enemigo->crear_texturas(render.get());
+                    
+                    
+                    break;
+                case FENCER:
+                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoFencerView());
+                    enemigo->crear_animaciones();
+                    enemigo->crear_texturas(render.get());
+                    break;
+                case RAT:
+                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoRatView());
+                    enemigo->crear_animaciones();
+                    enemigo->crear_texturas(render.get());      
+            }
+        }
+    }
+    */
 
     // Creacion del mapa de balas que tendra los jugadores
     for (const EventoBala &e : evento.eventos_bala) {
@@ -127,6 +155,19 @@ void Renderizado::renderizar(Evento evento) {
             mapa_balas_pj.eliminarBala(e.id_jugador, e.id_bala);
         }
     }
+
+
+    
+    // Renderizo enemigos
+    /*
+    for(auto &enemigo : this->enemigosViews) {
+
+        EnemigoView &e = *(enemigo.second);
+        e.renderizar_enemigo(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
+    }
+    */
+    
+
 
     /*
     // Renderizado de las balas de cada jugador

@@ -5,12 +5,8 @@ if(SERVER)
 	add_executable(jazzservidor
 		./server_src/aceptador.cpp
 		./server_src/aceptador.h
-        ./server_src/enemigo_fencer.cpp
-        ./server_src/enemigo_fencer.h
-		./server_src/enemigo_lizzard.cpp
+        ./server_src/enemigo_lizzard.cpp
         ./server_src/enemigo_lizzard.h
-		./server_src/enemigo_rat.cpp
-        ./server_src/enemigo_rat.h
         ./server_src/enemigo.cpp
         ./server_src/enemigo.h
 		./server_src/enviadorJugador.cpp
@@ -41,35 +37,9 @@ if(SERVER)
 		./server_src/arma.cpp
 		./server_src/arma.h
 		./server_src/controlador_balas.h
-		./server_src/objeto.cpp
-		./server_src/objeto.h
-		./server_src/objeto_zanahoria.cpp
-		./server_src/objeto_zanahoria.h
-		./server_src/objeto_solido.cpp
-		./server_src/objeto_solido.h
-		./server_src/rectangulo.h
-		
-		
-		
-		./server_src/estado/estado.h
-		./server_src/estado/estado.cpp
-		./server_src/estado/estado_caminando.cpp
-		./server_src/estado/estado_caminando.h
-		./server_src/estado/estado_quieto.cpp
-		./server_src/estado/estado_quieto.h
-		./server_src/estado/estado_corriendo.cpp
-		./server_src/estado/estado_corriendo.h
-		./server_src/estado/estado_saltando.cpp
-		./server_src/estado/estado_saltando.h
-		./server_src/estado/estado_herido.cpp
-		./server_src/estado/estado_herido.h
-		./server_src/estado/estado_muerto.cpp
-		./server_src/estado/estado_muerto.h
-
 		
 		./common_src/bala.cpp
 		./common_src/bala.h
-		./common_src/codigo_estado.h
 		./common_src/thread.h
 		./common_src/socket.h
 		./common_src/socket.cpp
@@ -87,7 +57,6 @@ if(SERVER)
 	find_package(yaml-cpp REQUIRED)
 	target_link_libraries(jazzservidor PRIVATE yaml-cpp)
 	target_compile_definitions(jazzservidor PUBLIC CONFIG_PATH="${CONFIG_FILE}")
-	target_include_directories(jazzservidor PUBLIC ${PROJECT_SOURCE_DIR}/server_src/estado)
 
 	set(SERVER_OUTPUT_DIR ${CMAKE_BINARY_DIR})
 
@@ -149,63 +118,15 @@ if(CLIENT)
 		./client_src/personajeLoriView.cpp
 		./client_src/personajeSpazView.h
 		./client_src/personajeSpazView.cpp
-		./client_src/Animaciones/animacion.h
-		./client_src/Animaciones/animacion.cpp
-		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_caminando.h
-		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_caminando.cpp
-		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_corriendo.h
-		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_corriendo.cpp
-		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_quieto.h
-		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_quieto.cpp
-		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_saltando.h
-		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_saltando.cpp
-		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_quieto.h
-		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_quieto.cpp
-		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_deja_disparo_quieto.h
-		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_deja_disparo_quieto.cpp
-		
-		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.h
-		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.cpp
-		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_corriendo.h
-		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_corriendo.cpp
-		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_quieto.h
-		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_quieto.cpp
-		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando.h
-		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando.cpp
-		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_quieto.h
-		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_quieto.cpp
-		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_deja_disparo_quieto.h
-		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_deja_disparo_quieto.cpp
-
-		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.h
-		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.cpp
-		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_corriendo.h
-		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_corriendo.cpp
-		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_quieto.h
-		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_quieto.cpp
-		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_saltando.h
-		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_saltando.cpp
-		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_quieto.h
-		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_quieto.cpp
-		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_deja_disparo_quieto.h
-		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_deja_disparo_quieto.cpp
-
-        ./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
-		./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.cpp
-		./client_src/balasPersonajes.h
-		./client_src/balasPersonajes.cpp
-
+		./client_src/animacion.h
+		./client_src/animacion.cpp
 		./client_src/protocolo_cliente.cpp
 		./client_src/protocolo_cliente.h
 		./client_src/enviadorCliente.cpp
 		./client_src/enviadorCliente.h
 		./client_src/balaView.cpp
 		./client_src/balaView.h
-		./client_src/mapa.cpp
-		./client_src/mapa.h
-		./client_src/camara.cpp
-		./client_src/camara.h
-		
+
 		./common_src/thread.h
 		./common_src/socket.h
 		./common_src/socket.cpp

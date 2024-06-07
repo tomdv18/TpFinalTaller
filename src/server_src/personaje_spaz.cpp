@@ -29,15 +29,15 @@ void Spaz::mover_arriba(std::chrono::duration<double> tiempo_transcurrido) {
     }
 }
 
-void Spaz::mover_izquierda(std::chrono::duration<double> tiempo_transcurrido) {
+void Spaz::mover_izquierda() {
     if (!usando_especial) {
-        Personaje::mover_izquierda(tiempo_transcurrido);
+        Personaje::mover_izquierda();
     }
 }
 
-void Spaz::mover_derecha(std::chrono::duration<double> tiempo_transcurrido) {
+void Spaz::mover_derecha() {
     if (!usando_especial) {
-        Personaje::mover_derecha(tiempo_transcurrido);
+        Personaje::mover_derecha();
     }
 }
 
