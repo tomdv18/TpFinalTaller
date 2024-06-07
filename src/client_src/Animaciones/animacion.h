@@ -14,7 +14,7 @@ class Animacion {
     int cantidad_frames;
     float size_frame;
     float elapsed;
-
+    bool loop;
    public:
 
     explicit Animacion();
@@ -26,6 +26,10 @@ class Animacion {
     virtual ~Animacion();
 
     virtual void acualizar(float dt);
+
+    virtual void en_loop(bool booleano);
+
+    virtual void reset_frame();
 
     virtual void animar(SDL2pp::Renderer &render, SDL2pp::Rect dest, SDL_RendererFlip &flipType);
 

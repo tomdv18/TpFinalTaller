@@ -40,16 +40,22 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
     facingLeft = evento.mirando_izquierda;
 
     if(estado == ESTADO_SALTANDO) {
+        this->animaciones.at(SALTANDO)->en_loop(false);
         this->animaciones.at(SALTANDO)->acualizar(dt);
     } else if(estado == ESTADO_CAMINANDO) {
+        this->animaciones.at(CAMINANDO)->en_loop(true);
         this->animaciones.at(CAMINANDO)->acualizar(dt);
     } else if (estado == ESTADO_CORRIENDO){
+        this->animaciones.at(CORRIENDO)->en_loop(true);
         this->animaciones.at(CORRIENDO)->acualizar(dt);
     } else if(estado == ESTADO_QUIETO) {
         if (this->isShooting) {
+            this->animaciones.at(DISPARO_QUIETO)->en_loop(true);
             this->animaciones.at(DISPARO_QUIETO)->acualizar(dt);
         } else {
+            this->animaciones.at(QUIETO_CLIENTE)->en_loop(true);
             this->animaciones.at(QUIETO_CLIENTE)->acualizar(dt);
+            this->animaciones.at(SALTANDO)->reset_frame();
         }
     } 
 }
