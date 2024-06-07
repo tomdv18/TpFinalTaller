@@ -4,8 +4,7 @@
 #include <exception>
 #include <unistd.h>
 #include <map>
-#include "animacion.h"
-
+#include "../src/client_src/Animaciones/animacion.h"
 
 Renderizado::Renderizado(std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews) : 
 personajesViews(personajesViews) {}
@@ -30,7 +29,7 @@ void Renderizado::iniciar_camara(Camara &&cam) {
 
 void Renderizado::renderizar(Evento evento) {
     
-    //render->SetDrawColor(0x80, 0x80, 0x80);
+    render->SetDrawColor(0x80, 0x80, 0x80);
     
     render->Clear();
     
@@ -40,19 +39,20 @@ void Renderizado::renderizar(Evento evento) {
             switch(evento.id_personaje){
                 case JAZZ:
                     personaje = std::unique_ptr<PersonajeView>(new PersonajeJazzView(evento.id_jugador, evento.posicion_x, evento.posicion_y));
-                    personaje->crear_texturas(render.get());
                     personaje->crear_animaciones();
+                    personaje->crear_texturas(render.get());
+                    
                     
                     break;
                 case SPAZ:
                     personaje = std::unique_ptr<PersonajeView>(new PersonajeSpazView(evento.id_jugador, evento.posicion_x, evento.posicion_y));
-                    personaje->crear_texturas(render.get());
                     personaje->crear_animaciones();
+                    personaje->crear_texturas(render.get());
                     break;
                 case LORI:
                     personaje = std::unique_ptr<PersonajeView>(new PersonajeLoriView(evento.id_jugador, evento.posicion_x, evento.posicion_y));
-                    personaje->crear_texturas(render.get());
                     personaje->crear_animaciones();
+                    personaje->crear_texturas(render.get());      
             }
             //std::unique_ptr<PersonajeView> p = std::unique_ptr<PersonajeView>(new PersonajeView(e.id_jugador,texturas));
             personajesViews[evento.id_jugador] = std::move(personaje);
@@ -60,12 +60,11 @@ void Renderizado::renderizar(Evento evento) {
                 
         }else{
             PersonajeView &personaje = *(personajesViews.at(evento.id_jugador));
-            personaje.actualizar_vista_personaje(evento,FRAME_RATE);
+            personaje.actualizar_vista_personaje(evento, FRAME_RATE);
         }
     }
 
     // Creacion de las balas
-
     for (const EventoBala &e : evento.eventos_bala) {
         if (balasViews.find(e.id_jugador) == balasViews.end()) {
             // Crear una nueva lista de balas para este jugador
@@ -76,15 +75,17 @@ void Renderizado::renderizar(Evento evento) {
             // Crear la bala
                 std::unique_ptr<BalaView> b = std::make_unique<BalaView>();
                 balasViews[e.id_jugador][e.id_bala] = std::move(b);
+                balasViews[e.id_jugador][e.id_bala]->crear_animaciones();
                 balasViews[e.id_jugador][e.id_bala]->crear_texturas(render.get());
                 std::cout << "CREANDO BALA PARA JUGADOR: " << e.id_jugador << std::endl;
             }
         }
     }
+    
 
     render->Clear();
 
-        mapa->dibujar_fondo(* render);
+    mapa->dibujar_fondo(* render);
     mapa->dibujar_entidades(*render, *camara);
 
     auto it = personajesViews.find(id_jugador);
@@ -97,7 +98,6 @@ void Renderizado::renderizar(Evento evento) {
     }
 
     // Renderizado de las balas de cada jugador
-    
     for (const EventoBala &e : evento.eventos_bala) {
         uint32_t id_jugador = e.id_jugador;
         if (balasViews.find(id_jugador) != balasViews.end()) {
@@ -137,23 +137,6 @@ void Renderizado::renderizar(Evento evento) {
 void Renderizado::crear_ventana_y_render(const std::string& title, int width, int height) {
     this->window = std::make_unique<SDL2pp::Window>(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
     this->render = std::make_unique<SDL2pp::Renderer>(*window, -1, SDL_RENDERER_ACCELERATED);
-}
-
-void Renderizado::crear_personajes() {
-    /*
-    this->personajeJazzView = new PersonajeJazzView();
-    
-
-    this->personajeLoriView = new PersonajeLoriView();
-    this->personajeLoriView->crear_texturas(render.get());
-    this->personajeLoriView->crear_animaciones();
-
-    this->personajeSpazView = new PersonajeSpazView();
-    this->personajeSpazView->crear_texturas(render.get());
-    this->personajeSpazView->crear_animaciones();
-    std::cout << "Se creo el personaje"<< std::endl;
-    */
-
 }
 
 Renderizado::~Renderizado() { 

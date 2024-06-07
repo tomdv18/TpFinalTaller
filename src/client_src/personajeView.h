@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2pp/SDL2pp.hh>
-#include "animacion.h"
+#include "../src/client_src/Animaciones/animacion.h"
 #include <memory>
 #include "../common_src/evento.h"
 #include <map>
@@ -21,8 +21,7 @@ class PersonajeView {
     int posicion_y;
     int width;
     int height;
-    std::map<std::string, SDL2pp::Texture> *texturas;
-    std::map<std::string, Animacion> animaciones;
+    std::map<std::string, std::unique_ptr<Animacion>> animaciones;
     bool facingLeft;
     bool isMoving;
     bool isRunning;
@@ -34,15 +33,11 @@ class PersonajeView {
 
     PersonajeView(uint32_t id_jugador, int x, int y);
 
-    ~PersonajeView();
-
-    virtual SDL2pp::Texture crear_surface_y_texturas(std::string const &path_sprites, SDL2pp::Renderer *render);
+    virtual ~PersonajeView();
     
-    virtual void crear_texturas(SDL2pp::Renderer *render) = 0;
+    virtual void crear_texturas(SDL2pp::Renderer *render);
 
     virtual void crear_animaciones() = 0;
-
-    virtual void referenciar_animaciones();
 
     virtual void actualizar_vista_personaje(EventoPersonaje const &evento,float dt);
 

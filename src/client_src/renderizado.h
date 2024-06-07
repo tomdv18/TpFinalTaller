@@ -19,25 +19,21 @@
 #include "protocolo_cliente.h"
 
 class Renderizado {
-    private:
-    //Queue<Evento> &queue_eventos;
-    private:
+    
+   private:
     std::unique_ptr<SDL2pp::SDL> sdl;
     std::unique_ptr<SDL2pp::Window> window;
     std::unique_ptr<SDL2pp::Renderer> render;
-    int cantidad_jugadores;
     std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews;
     std::map<uint32_t, std::map<uint32_t, std::unique_ptr<BalaView>>> balasViews;
     uint32_t id_jugador;
     std::unique_ptr<Mapa> mapa;
     std::unique_ptr<Camara> camara;
 
-
-
     // Map id_jugador, map de sus balas -> id_bala, balaView
     //std::map<uint32_t, std::map<uint32_t, std::unique_ptr<BalaView>>> balas;
 
-    public:
+   public:
 
     explicit Renderizado(std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews);
     
@@ -50,8 +46,6 @@ class Renderizado {
     void recibir_id(uint32_t id_jugador);
 
     void crear_ventana_y_render(const std::string& title, int width, int height);
-
-    void crear_personajes();
 
     void renderizar(Evento evento);
 

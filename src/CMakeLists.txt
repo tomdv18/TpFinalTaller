@@ -130,8 +130,50 @@ if(CLIENT)
 		./client_src/personajeLoriView.cpp
 		./client_src/personajeSpazView.h
 		./client_src/personajeSpazView.cpp
-		./client_src/animacion.h
-		./client_src/animacion.cpp
+		./client_src/Animaciones/animacion.h
+		./client_src/Animaciones/animacion.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_caminando.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_caminando.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_corriendo.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_corriendo.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_quieto.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_quieto.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_saltando.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_saltando.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_quieto.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_quieto.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_deja_disparo_quieto.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_deja_disparo_quieto.cpp
+		
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_corriendo.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_corriendo.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_quieto.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_quieto.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_quieto.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_quieto.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_deja_disparo_quieto.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_deja_disparo_quieto.cpp
+
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_corriendo.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_corriendo.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_quieto.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_quieto.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_saltando.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_saltando.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_quieto.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_quieto.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_deja_disparo_quieto.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_deja_disparo_quieto.cpp
+
+        ./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.cpp
+
 		./client_src/protocolo_cliente.cpp
 		./client_src/protocolo_cliente.h
 		./client_src/enviadorCliente.cpp

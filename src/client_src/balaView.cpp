@@ -2,25 +2,18 @@
 
 BalaView::BalaView() : 
 posicion_x(0), posicion_y(0), width(15), height(15), 
-texturas_bala(nullptr),
 facingLeft(false),
-animacion_bala(Animacion()) {}
+animacion_bala(nullptr) {}
 
-SDL2pp::Texture BalaView::crear_surface_y_texturas(std::string const &path_sprites, SDL2pp::Renderer *render) {
-    
-    SDL2pp::Surface surface(path_sprites);
-    surface.SetColorKey(true, SDL_MapRGB(surface.Get()->format, 44, 102, 150));
-    SDL2pp::Texture textures(*render, std::move(surface));
-
-    return std::move(textures);
+void BalaView::crear_animaciones() {
+    this->animacion_bala = std::unique_ptr<Animacion_Bala_Pistola>(new Animacion_Bala_Pistola());
 }
 
 void BalaView::crear_texturas(SDL2pp::Renderer *render) {
-
-    this->texturas_bala = new SDL2pp::Texture(crear_surface_y_texturas(PATH_PROYECTIL_PISTOLA, render));
-    this->animacion_bala.set_texturas(texturas_bala);
-    this->animacion_bala.set_size_frame(15);
+    std::cout << "DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" << std::endl;
+    this->animacion_bala->crear_texturas(render); 
 }
+
 
 void BalaView::actualizar(EventoBala const &evento,float dt){
 
@@ -29,7 +22,7 @@ void BalaView::actualizar(EventoBala const &evento,float dt){
         facingLeft = true;
     }
 
-    this->animacion_bala.actualizar(dt);
+    this->animacion_bala->acualizar(dt);
     this->posicion_x = evento.posicion_x;
     this->posicion_y = evento.posicion_y;
 }
@@ -40,10 +33,8 @@ void BalaView::actualizar(EventoBala const &evento,float dt){
     SDL2pp::Rect bala(posicion_x -cam_x, posicion_y-cam_y, 15, 15);
 
     SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
-    animacion_bala.animar(render, bala, flip);
+    animacion_bala->animar(render, bala, flip);
  
 }
 
-BalaView::~BalaView() {
-    delete this->texturas_bala;
-}
+BalaView::~BalaView() {}

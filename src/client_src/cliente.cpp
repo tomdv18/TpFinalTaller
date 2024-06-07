@@ -6,6 +6,7 @@
 #include <unordered_set>
 #include <optional>
 
+
 #define MAX_EVENTOS 256
 #define MAX_ACCIONES 256
 #define WIDTH 640
@@ -147,7 +148,6 @@ void Cliente::comunicarse_con_el_servidor() {
     this->renderizado.recibir_id(id_jugador);
     this->renderizado.inicializar_SDL2pp();
     this->renderizado.crear_ventana_y_render("JazzJack Rabbit 2", WIDTH, HEIGHT);
-    this->renderizado.crear_personajes();
     
     this->renderizado.iniciar_mapa(std::move(mapa));
     this->renderizado.iniciar_camara(std::move(camara));
@@ -168,6 +168,7 @@ void Cliente::comunicarse_con_el_servidor() {
             auto fin = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double, std::milli> tiempo = fin - inicio;
             double tiempo_transcurrido = tiempo.count();
+
             double frames = 1000/40.0;
             double tiempo_descanso = frames - tiempo_transcurrido;
 
@@ -176,6 +177,7 @@ void Cliente::comunicarse_con_el_servidor() {
             } else {
                 std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(frames)));
             }
+
         }
     } catch (std::exception& e) {
         std::cout << e.what() << std::endl;
