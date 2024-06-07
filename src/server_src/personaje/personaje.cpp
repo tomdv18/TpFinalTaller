@@ -5,7 +5,7 @@ Personaje::Personaje(uint32_t id_jugador):
         id_jugador(id_jugador), posicion_x(150), posicion_y(100), vida(100), esta_quieto(0), arma(), velocidad_x(0), velocidad_y(0), estado(nullptr){
     corriendo = false;
     usando_especial = false;
-    saltando = true;
+    saltando = true; //PORQUE TRUE??
     esta_quieto = true;
     esta_disparando = false;
     en_superficie = false;
