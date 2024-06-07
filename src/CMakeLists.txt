@@ -48,10 +48,28 @@ if(SERVER)
 		./server_src/objeto_solido.cpp
 		./server_src/objeto_solido.h
 		./server_src/rectangulo.h
+		
+		
+		
+		./server_src/estado/estado.h
+		./server_src/estado/estado.cpp
+		./server_src/estado/estado_caminando.cpp
+		./server_src/estado/estado_caminando.h
+		./server_src/estado/estado_quieto.cpp
+		./server_src/estado/estado_quieto.h
+		./server_src/estado/estado_corriendo.cpp
+		./server_src/estado/estado_corriendo.h
+		./server_src/estado/estado_saltando.cpp
+		./server_src/estado/estado_saltando.h
+		./server_src/estado/estado_herido.cpp
+		./server_src/estado/estado_herido.h
+		./server_src/estado/estado_muerto.cpp
+		./server_src/estado/estado_muerto.h
 
 		
 		./common_src/bala.cpp
 		./common_src/bala.h
+		./common_src/codigo_estado.h
 		./common_src/thread.h
 		./common_src/socket.h
 		./common_src/socket.cpp
@@ -69,6 +87,7 @@ if(SERVER)
 	find_package(yaml-cpp REQUIRED)
 	target_link_libraries(jazzservidor PRIVATE yaml-cpp)
 	target_compile_definitions(jazzservidor PUBLIC CONFIG_PATH="${CONFIG_FILE}")
+	target_include_directories(jazzservidor PUBLIC ${PROJECT_SOURCE_DIR}/server_src/estado)
 
 	set(SERVER_OUTPUT_DIR ${CMAKE_BINARY_DIR})
 

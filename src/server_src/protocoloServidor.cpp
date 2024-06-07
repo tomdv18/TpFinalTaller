@@ -81,7 +81,6 @@ void ProtocoloServidor::enviar_evento(bool& was_closed, Evento evento) {
 
 
     uint32_t cant_objetos = (uint32_t)evento.eventos_objeto.size();
-    std::cout << "MANDANDO LA CANTIDAD DE OBJETOS " << (int)cant_objetos << std::endl;
     cant_objetos = htonl(cant_objetos);
     skt_jugador.sendall(&cant_objetos, sizeof(cant_objetos), &was_closed);
 
