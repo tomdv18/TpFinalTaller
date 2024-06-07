@@ -8,7 +8,7 @@ Rat::Rat(uint32_t id_enemigo): Enemigo(id_enemigo) {
 }
 
 uint8_t Rat::obtener_personaje() {
-    return 0X02;  // CODIGO EJEMPLO
+    return RAT;
 }
 
 

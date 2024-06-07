@@ -19,10 +19,6 @@ public:
 
     void mover_arriba(std::chrono::duration<double> tiempo_transcurrido) override;
 
-    void mover_izquierda(std::chrono::duration<double> tiempo_transcurrido) override;
-
-    void mover_derecha(std::chrono::duration<double> tiempo_transcurrido) override;
-
     void quedarse_quieto() override;
 };
 

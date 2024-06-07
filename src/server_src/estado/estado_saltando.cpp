@@ -4,6 +4,7 @@
 #include "estado_saltando.h"
 #include "estado_herido.h"
 #include "estado_muerto.h"
+#include "estado_especial.h"
 
 EstadoSaltando::EstadoSaltando() : Estado(ESTADO_SALTANDO){}
 
@@ -12,6 +13,10 @@ void EstadoSaltando::manejarEstado(uint8_t codigo_estado, double tiempo){
 
     if(codigo_estado == ESTADO_MUERTO){
         this->personaje->cambiarEstado(new EstadoMuerto(tiempo));
+    }
+
+    if(codigo_estado == ESTADO_HERIDO){
+        this->personaje->cambiarEstado(new EstadoHerido(tiempo));
     }
 
     if(this->personaje->obtener_saltando()){
@@ -32,9 +37,9 @@ void EstadoSaltando::manejarEstado(uint8_t codigo_estado, double tiempo){
         std::cout << "ESTADO CORRIENDO" << std::endl;
         this->personaje->cambiarEstado(new EstadoCorriendo());
         break;
-    case ESTADO_HERIDO:
-        std::cout << "ESTADO HERIDO" << std::endl;
-        this->personaje->cambiarEstado(new EstadoHerido(tiempo));
+    case ESTADO_ESPECIAL:
+        std::cout << "ESTADO ESPECIAL" << std::endl;
+        this->personaje->cambiarEstado(new EstadoEspecial());
         break;
 
     

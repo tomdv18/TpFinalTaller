@@ -64,7 +64,7 @@ void Renderizado::renderizar(Evento evento) {
         }
     }
     
-    /*
+    
     //Creacion del mapa de enemigos del juego
     for(EventoEnemigo &evento : evento.eventos_enemigos) {
 
@@ -76,6 +76,7 @@ void Renderizado::renderizar(Evento evento) {
                     enemigo->crear_animaciones();
                     enemigo->crear_texturas(render.get());
                     
+                    std::cout << "CREANDO ENEMIGO LIZZARD" << std::endl;
                     
                     break;
                 case FENCER:
@@ -90,7 +91,7 @@ void Renderizado::renderizar(Evento evento) {
             }
         }
     }
-    */
+
 
     // Creacion del mapa de balas que tendra los jugadores
     for (const EventoBala &e : evento.eventos_bala) {
@@ -159,13 +160,13 @@ void Renderizado::renderizar(Evento evento) {
 
     
     // Renderizo enemigos
-    /*
+    
     for(auto &enemigo : this->enemigosViews) {
 
         EnemigoView &e = *(enemigo.second);
         e.renderizar_enemigo(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
     }
-    */
+    
     
 
 

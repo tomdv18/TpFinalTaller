@@ -65,6 +65,8 @@ if(SERVER)
 		./server_src/estado/estado_herido.h
 		./server_src/estado/estado_muerto.cpp
 		./server_src/estado/estado_muerto.h
+		./server_src/estado/estado_especial.cpp
+		./server_src/estado/estado_especial.h
 
 		
 		./common_src/bala.cpp
@@ -151,6 +153,17 @@ if(CLIENT)
 		./client_src/personajeLoriView.cpp
 		./client_src/personajeSpazView.h
 		./client_src/personajeSpazView.cpp
+		
+		
+		./client_src/enemigoView.cpp
+		./client_src/enemigoView.h
+		./client_src/enemigoFencerView.cpp
+		./client_src/enemigoFencerView.h
+		./client_src/enemigoLizzardView.cpp
+		./client_src/enemigoLizzardView.h
+		./client_src/enemigoRatView.cpp
+		./client_src/enemigoRatView.h
+		
 		./client_src/protocolo_cliente.cpp
 		./client_src/protocolo_cliente.h
 		./client_src/enviadorCliente.cpp
@@ -199,16 +212,24 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_deja_disparo_quieto.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_deja_disparo_quieto.cpp
 
-        ./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
+        	./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
 		./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.cpp
 		./client_src/balasPersonajes.h
 		./client_src/balasPersonajes.cpp
+		
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Fencer_caminando.cpp
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Fencer_caminando.h
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Lizzard_caminando.cpp
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Lizzard_caminando.h
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Rat_caminando.cpp
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Rat_caminando.h
 		
 		./client_src/mapa.cpp
 		./client_src/mapa.h
 		./client_src/camara.cpp
 		./client_src/camara.h
 
+		./common_src/codigo_enemigo.h
 		./common_src/thread.h
 		./common_src/socket.h
 		./common_src/socket.cpp

@@ -4,6 +4,7 @@
 #include "estado_saltando.h"
 #include "estado_herido.h"
 #include "estado_muerto.h"
+#include "estado_especial.h"
 
 EstadoCaminando::EstadoCaminando() : Estado(ESTADO_CAMINANDO){}
 
@@ -30,6 +31,11 @@ void EstadoCaminando::manejarEstado(uint8_t codigo_estado, double tiempo){
         std::cout << "ESTADO MUERTO" << std::endl;
         this->personaje->cambiarEstado(new EstadoMuerto(tiempo));
         break;
+    case ESTADO_ESPECIAL:
+        std::cout << "ESTADO ESPECIAL" << std::endl;
+        this->personaje->cambiarEstado(new EstadoEspecial());
+        break;
+
     
     default:
         break;

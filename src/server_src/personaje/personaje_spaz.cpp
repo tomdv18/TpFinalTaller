@@ -17,32 +17,19 @@ void Spaz::usar_habilidad(std::chrono::duration<double> tiempo_transcurrido) {
         } else {
             velocidad_x = -VELOCIDAD * 2;
         }
+        this->estado->manejarEstado(ESTADO_ESPECIAL, tiempo_transcurrido.count());
     }
 }
 
 void Spaz::mover_arriba(std::chrono::duration<double> tiempo_transcurrido) {
-    if (posicion_y > 0 && !saltando && !usando_especial) {
-        velocidad_y = -VELOCIDAD_SALTO;
-        esta_quieto = false;
-        saltando = true;
-        tiempo_salto = tiempo_transcurrido.count();
+    if(usando_especial){
+        return;
     }
-}
-
-void Spaz::mover_izquierda(std::chrono::duration<double> tiempo_transcurrido) {
-    if (!usando_especial) {
-        Personaje::mover_izquierda(tiempo_transcurrido);
-    }
-}
-
-void Spaz::mover_derecha(std::chrono::duration<double> tiempo_transcurrido) {
-    if (!usando_especial) {
-        Personaje::mover_derecha(tiempo_transcurrido);
-    }
+    Personaje::mover_arriba(tiempo_transcurrido);
 }
 
 void Spaz::quedarse_quieto() {
-    if (!saltando && !usando_especial) {
+    if (!usando_especial) {
         velocidad_x = 0;
         esta_quieto = true;
     }

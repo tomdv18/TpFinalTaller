@@ -40,7 +40,7 @@ pared:
     y: 150
 */
   
-    //map_enemigos[0] = new Lizzard(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
+    map_enemigos[0] = new Lizzard(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
 }
 
 
@@ -372,6 +372,7 @@ Evento LogicaPartida::obtener_snapshot(
         eventos_enem.id_personaje = par.second->obtener_personaje();
         eventos_enem.vida = par.second->obtener_vida();
         eventos_enem.esta_vivo = par.second->esta_vivo();
+        std::cout << "ENVIANDO ENEMIGO EN: " << eventos_enem.posicion_x << "   " << eventos_enem.posicion_y << std::endl;
 
         evento.eventos_enemigos.emplace_back(eventos_enem);
     }

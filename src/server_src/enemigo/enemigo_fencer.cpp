@@ -7,7 +7,7 @@ Fencer::Fencer(uint32_t id_enemigo): Enemigo(id_enemigo) {
 }
 
 uint8_t Fencer::obtener_personaje() {
-    return 0X01;  // codigos ejemplo
+    return FENCER;
 }
 
 

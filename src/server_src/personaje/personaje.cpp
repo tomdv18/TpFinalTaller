@@ -23,7 +23,8 @@ void Personaje::posicion_Y(uint32_t y) { this->posicion_y = y; }
 
 
 void Personaje::mover_derecha(std::chrono::duration<double> tiempo_transcurrido) {
- 
+    if(usando_especial)return;
+
     velocidad_x = corriendo ? VELOCIDAD * 2 : VELOCIDAD;
     esta_quieto = false;
     if(!corriendo){
@@ -37,6 +38,7 @@ void Personaje::mover_derecha(std::chrono::duration<double> tiempo_transcurrido)
 }
 
 void Personaje::mover_izquierda(std::chrono::duration<double> tiempo_transcurrido) {
+    if(usando_especial)return;
 
     velocidad_x = corriendo ? -VELOCIDAD * 2 : -VELOCIDAD;
     esta_quieto = false;
@@ -73,10 +75,12 @@ void Personaje::mover_abajo() {
 }
 
 uint8_t Personaje::disparar(std::chrono::duration<double> tiempo_transcurrido) {
-    esta_disparando = true;
-    if (arma.disparar(tiempo_transcurrido)) {
-        std::cout << "DISPARAR" << std::endl;
-        return arma.obtener_bala();
+    if(!usando_especial){
+        if (arma.disparar(tiempo_transcurrido)) {
+            std::cout << "DISPARAR" << std::endl;
+            esta_disparando = true;
+            return arma.obtener_bala();
+        }
     }
     return NINGUNA;
 }
@@ -165,6 +169,10 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
     }
 
 
+    std::cout << "VELOCIDAD EN Y: " << velocidad_y << std::endl;
+    std::cout << "ESTA SALTANDO: " << saltando << std::endl;
+    std::cout << "ESTA USANDO HABILIDAD: " << usando_especial << std::endl;
+
     uint32_t nueva_posicion_x = posicion_x + velocidad_x;
     uint32_t nueva_posicion_y = posicion_y + velocidad_y;
 
@@ -194,6 +202,7 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                     if (velocidad_y > 0) {  // Cayendo
                         nueva_posicion_y = rect_objeto.y - PERSONAJE_HEIGHT;
                         velocidad_y = 0;
+                        velocidad_x = 0;
                         saltando = false;
                         en_superficie = true;
                     } else if (velocidad_y < 0) {  // Saltando hacia arriba
@@ -201,13 +210,7 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                         velocidad_y = 0;
                     }
                 }
-            }/*  PARA OBJETOS COMUNES
-            else {
-                if (rect_personaje.hay_colision(rect_objeto)) {
-                    par_objeto.second->interactuar_personaje(this, tiempo_transcurrido);
-                }
             }
-            */
         }
     }
 

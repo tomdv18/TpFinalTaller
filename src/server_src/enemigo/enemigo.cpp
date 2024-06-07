@@ -6,8 +6,8 @@
 
 Enemigo::Enemigo(uint32_t id_enemigo):
         id_enemigo(id_enemigo),
-        posicion_x(10),
-        posicion_y(0),
+        posicion_x(150),
+        posicion_y(100),
         vida(VIDA_DEFAULT),
         esta_quieto(true),
         vivo(true),
