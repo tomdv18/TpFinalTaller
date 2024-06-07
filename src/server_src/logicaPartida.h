@@ -31,9 +31,9 @@ public:
     void ejecutar(Accion accion,
                   std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
-    void mover_derecha(uint32_t id_jugador);
+    void mover_derecha(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
-    void mover_izquierda(uint32_t id_jugador);
+    void mover_izquierda(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     void mover_arriba(uint32_t id_jugador,
                       std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
@@ -42,7 +42,7 @@ public:
 
     void mover_quieto(uint32_t id_jugador);
 
-    void mover_correr_rapido(uint32_t id_jugador);
+    void mover_correr_rapido(uint32_t id_jugador,std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     void mover_correr(uint32_t id_jugador);
 
@@ -64,6 +64,9 @@ public:
     Evento obtener_snapshot(std::chrono::time_point<std::chrono::high_resolution_clock> start);
 
     ~LogicaPartida();
+
+private:
+    bool personaje_muerto(uint32_t id_jugador);
 };
 
 

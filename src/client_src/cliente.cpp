@@ -112,15 +112,7 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
                         }
                         break;
                     case SDLK_LSHIFT:
-                        if (teclas_presionadas.empty()) {
-                            queue_accion.try_push(QUIETO);
-                            ultima_direccion.reset();
-                        } else {
-                            queue_accion.try_push(CORRER);
-                            if (ultima_direccion) {
-                                queue_accion.try_push(*ultima_direccion);
-                            }
-                        }
+                        queue_accion.try_push(CORRER);
                         break;
                     case SDLK_l:
                         queue_accion.try_push(DEJAR_DISPARAR);

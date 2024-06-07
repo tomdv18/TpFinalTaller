@@ -20,15 +20,15 @@ void Jazz::usar_habilidad(std::chrono::duration<double> tiempo_transcurrido) {
     }
 }
 
-void Jazz::mover_derecha() {
+void Jazz::mover_derecha(std::chrono::duration<double> tiempo_transcurrido) {
     if (!usando_especial) {
-        Personaje::mover_derecha();
+        Personaje::mover_derecha(tiempo_transcurrido);
     }
 }
 
-void Jazz::mover_izquierda() {
+void Jazz::mover_izquierda(std::chrono::duration<double> tiempo_transcurrido) {
     if (!usando_especial) {
-        Personaje::mover_izquierda();
+        Personaje::mover_izquierda(tiempo_transcurrido);
     }
 }
 
