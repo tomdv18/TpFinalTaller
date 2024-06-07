@@ -22,6 +22,7 @@ private:
     uint32_t posicion_y;
     uint8_t ancho;
     uint8_t largo;
+    uint8_t daño;
     bool impacto;
     int velocidad;
 
@@ -50,6 +51,8 @@ public:
     uint32_t obtener_posicionX() const;
 
     uint32_t obtener_posicionY() const;
+
+    uint8_t obtener_daño() const;
 
     bool obtener_impacto() const;
 

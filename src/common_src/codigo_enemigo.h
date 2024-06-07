@@ -1,5 +1,5 @@
-#ifndef CODIGO_ESTADO_H_
-#define CODIGO_ESTADO_H_
+#ifndef CODIGO_ENEMIGO_H_
+#define CODIGO_ENEMIGO_H_
 
 #include <iostream>
 

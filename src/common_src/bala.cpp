@@ -3,7 +3,7 @@
 
 Bala::Bala(uint8_t codigo_bala,uint32_t pos_x, uint32_t pos_y, uint32_t id_jugador, uint32_t id_bala, int velocidad) : 
     codigo_bala(codigo_bala), id_jugador(id_jugador),posicion_x(pos_x), posicion_y(pos_y),
-    largo(15), ancho(15),impacto(false), id_bala(id_bala), velocidad(velocidad)
+    largo(15), ancho(15),impacto(false), id_bala(id_bala), velocidad(velocidad), daño(10)
 
 {
     
@@ -44,6 +44,10 @@ uint32_t Bala::obtener_posicionX() const{
 
 uint32_t Bala::obtener_posicionY() const{
     return posicion_y;
+}
+
+uint8_t Bala::obtener_daño() const{
+    return daño;
 }
 
 bool Bala::obtener_impacto() const{

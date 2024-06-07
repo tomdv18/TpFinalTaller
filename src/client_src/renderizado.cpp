@@ -84,28 +84,28 @@ void Renderizado::renderizar(Evento evento) {
     for(EventoEnemigo &evento : evento.eventos_enemigos) {
         if(enemigosViews.find(evento.id_enemigo) == enemigosViews.end()) {
             std::unique_ptr<EnemigoView> enemigo;
-            switch(evento.id_enemigo){
+            switch(evento.id_enemigo) {
                 case LIZZARD:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoLizzardView());
-                    enemigo->crear_animaciones();
-                    enemigo->crear_texturas(render.get());
-                    
-                    //std::cout << "CREANDO ENEMIGO LIZZARD" << std::endl;
-                    
+                    enemigo = std::make_unique<EnemigoLizzardView>();
                     break;
                 case FENCER:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoFencerView());
-                    enemigo->crear_animaciones();
-                    enemigo->crear_texturas(render.get());
+                    enemigo = std::make_unique<EnemigoFencerView>();
                     break;
                 case RAT:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoRatView());
-                    enemigo->crear_animaciones();
-                    enemigo->crear_texturas(render.get());      
+                    enemigo = std::make_unique<EnemigoRatView>();
+                    break;
+                default:
+                    break;
             }
+            enemigo->crear_animaciones();
+            enemigo->crear_texturas(render.get());
+            enemigosViews[evento.id_enemigo] = std::move(enemigo);
+            std::cout << "CREANDO ENEMIGO" << std::endl;
+        } else {
+            EnemigoView &enemigo = *(enemigosViews.at(evento.id_enemigo));
+            enemigo.actualizar_vista_enemigo(evento, FRAME_RATE);
         }
     }
-
 
     // Creacion del mapa de balas que tendra los jugadores
     for (const EventoBala &e : evento.eventos_bala) {

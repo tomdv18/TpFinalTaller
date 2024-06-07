@@ -127,6 +127,11 @@ public:
 
     virtual bool esta_muerto();
 
+
+    virtual uint32_t obtener_ancho();
+
+    virtual uint32_t obtener_alto();
+
     // Getters Snapshot
 
     virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,

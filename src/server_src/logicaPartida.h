@@ -11,6 +11,8 @@
 
 #include "controlador_balas.h"
 #include "./enemigo/enemigo_lizzard.h"
+#include "./enemigo/enemigo_rat.h"
+#include "./enemigo/enemigo_fencer.h"
 #include "./objeto/objeto_solido.h"
 #include "./objeto/objeto_zanahoria.h"
 #include "./personaje/personaje_jazz.h"

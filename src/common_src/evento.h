@@ -40,6 +40,7 @@ struct __attribute__((packed)) EventoObjeto{
     uint32_t posicion_x;
     uint32_t posicion_y;
     uint8_t mostrandose;
+    uint8_t codigo_objeto;
 
 };
 
@@ -51,6 +52,7 @@ struct __attribute__((packed)) EventoEnemigo{
     uint8_t vida;
     uint8_t id_personaje;
     bool esta_vivo;
+    bool mirando_izquierda;
 
 };
 

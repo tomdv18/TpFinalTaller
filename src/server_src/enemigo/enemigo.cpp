@@ -3,11 +3,12 @@
 #define PASOS_POR_DIRECCION 15
 #define VIDA_DEFAULT 100
 #define DANIO_DEFAULT 25
+#define TIEMPO_REAPARICION 5
 
 Enemigo::Enemigo(uint32_t id_enemigo):
         id_enemigo(id_enemigo),
         posicion_x(150),
-        posicion_y(100),
+        posicion_y(250),
         vida(VIDA_DEFAULT),
         esta_quieto(true),
         vivo(true),
@@ -15,6 +16,11 @@ Enemigo::Enemigo(uint32_t id_enemigo):
         pasos_patrullando(0),
         danio(DANIO_DEFAULT) {
     direccion_mirando = DERECHA;
+
+    ancho = 50;
+    alto = 50;
+    tiempo_muerte = 0;
+    tiempo_reaparicion = 5;
 }
 
 void Enemigo::mover_derecha() {
@@ -31,6 +37,16 @@ void Enemigo::mover_izquierda() {
         esta_quieto = false;
     }
     direccion_mirando = IZQUIERDA;
+}
+
+void Enemigo::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido) {
+    int vida_restante = (int)this->vida - golpe; 
+    if(vida_restante <= 0){
+        vivo = false;
+        tiempo_muerte = tiempo_transcurrido.count();
+    } else{
+        vida = (uint8_t) vida_restante;
+    }
 }
 
 void Enemigo::matar() { vivo = false; }
@@ -55,6 +71,19 @@ uint32_t Enemigo::obtener_posicionY() { return posicion_y; }
 uint8_t Enemigo::obtener_vida() { return vida; }
 
 uint8_t Enemigo::obtener_movimiento() { return esta_quieto; }
+
+
+uint32_t Enemigo::obtener_alto(){
+    return alto;
+}
+
+uint32_t Enemigo::obtener_ancho(){
+    return ancho;
+}
+
+bool Enemigo::mirando_izquierda(){
+    return direccion_mirando == IZQUIERDA;
+}
 
 void Enemigo::patrullar() {
     switch (direccion_mirando) {
@@ -89,6 +118,15 @@ void Enemigo::patrullar() {
 }
 
 void Enemigo::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido) {
+    
+    if(tiempo_transcurrido.count() - tiempo_muerte >= tiempo_reaparicion){
+        vida = VIDA_DEFAULT;
+        vivo = true;
+    }
+
+    if(!vivo){
+        return;
+    }
 
     patrullar();
     int32_t nueva_posicion_x = posicion_x + static_cast<int32_t>(velocidad_x);

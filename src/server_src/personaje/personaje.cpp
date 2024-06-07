@@ -43,9 +43,9 @@ void Personaje::mover_izquierda(std::chrono::duration<double> tiempo_transcurrid
     velocidad_x = corriendo ? -VELOCIDAD * 2 : -VELOCIDAD;
     esta_quieto = false;
     if(!corriendo){
-            this->manejarEstado(ESTADO_CAMINANDO, tiempo_transcurrido);
+        this->manejarEstado(ESTADO_CAMINANDO, tiempo_transcurrido);
     }else{
-            this->manejarEstado(ESTADO_CORRIENDO, tiempo_transcurrido);
+        this->manejarEstado(ESTADO_CORRIENDO, tiempo_transcurrido);
     }
     direccion_mirando = IZQUIERDA;
     std::cout << "POSICION DEL PERSONAJE (" << posicion_x << ", " << posicion_y << ")" << std::endl;
@@ -53,7 +53,7 @@ void Personaje::mover_izquierda(std::chrono::duration<double> tiempo_transcurrid
 
 void Personaje::mover_arriba(std::chrono::duration<double> tiempo_transcurrido) {
     
-    if (en_superficie && !corriendo) {
+    if (!saltando && !corriendo) {
         velocidad_y = -VELOCIDAD_SALTO;
         esta_quieto = false;
         saltando = true;
@@ -109,11 +109,12 @@ void Personaje::correr() {
 }
 
 void Personaje::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido) {
-    this->vida -= golpe; 
-    if(this->vida <= 0){
+    int vida_restante = (int)this->vida - golpe; 
+    if(vida_restante <= 0){
         muerto = true;
         this->estado->manejarEstado(ESTADO_MUERTO,tiempo_transcurrido.count());
     } else {
+        vida = (uint8_t) vida_restante;
         this->estado->manejarEstado(ESTADO_HERIDO, tiempo_transcurrido.count());
     }
 }
@@ -144,6 +145,14 @@ uint8_t Personaje::obtener_estado(){
     return estado->obtener_estado();
 }
 
+uint32_t Personaje::obtener_ancho(){
+    return PERSONAJE_WIDTH;
+}
+
+uint32_t Personaje::obtener_alto(){
+    return PERSONAJE_HEIGHT;
+}
+
 bool Personaje::esta_muerto(){
     return muerto;
 }
@@ -161,6 +170,10 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
     double tiempo_segundos = tiempo_transcurrido.count();
     double delta_tiempo = tiempo_segundos - tiempo_salto;
     
+
+    if (tiempo_salto == 0) {
+        tiempo_salto = tiempo_segundos;
+    }
     
     if (!en_superficie) {
         velocidad_y += GRAVEDAD * delta_tiempo;
@@ -169,9 +182,9 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
     }
 
 
-    std::cout << "VELOCIDAD EN Y: " << velocidad_y << std::endl;
-    std::cout << "ESTA SALTANDO: " << saltando << std::endl;
-    std::cout << "ESTA USANDO HABILIDAD: " << usando_especial << std::endl;
+    std::cout << "VELOCIDAD Y: " << velocidad_y << std::endl;
+
+    en_superficie = false;
 
     uint32_t nueva_posicion_x = posicion_x + velocidad_x;
     uint32_t nueva_posicion_y = posicion_y + velocidad_y;
@@ -180,7 +193,6 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
     Rectangulo rect_personaje_arriba = {posicion_x, nueva_posicion_y, PERSONAJE_WIDTH, PERSONAJE_HEIGHT};
 
     for (const auto& par_objeto : map_objetos_solidos) {
-        //par_objeto.second->reaparecer(tiempo_transcurrido);
 
         Rectangulo rect_objeto = {
             par_objeto.second->obtener_posicionX(), par_objeto.second->obtener_posicionY(),
@@ -202,13 +214,15 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                     if (velocidad_y > 0) {  // Cayendo
                         nueva_posicion_y = rect_objeto.y - PERSONAJE_HEIGHT;
                         velocidad_y = 0;
-                        velocidad_x = 0;
                         saltando = false;
                         en_superficie = true;
+                        tiempo_salto = 0;
                     } else if (velocidad_y < 0) {  // Saltando hacia arriba
                         nueva_posicion_y = rect_objeto.y + rect_objeto.alto;
                         velocidad_y = 0;
                     }
+                } else{
+                   //en_superficie = false;
                 }
             }
         }
@@ -235,6 +249,10 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
 
     if(!saltando && velocidad_x == 0){
         this->manejarEstado(ESTADO_QUIETO, tiempo_transcurrido);
+    }
+
+    if(velocidad_x != 0 && !saltando){
+        this->manejarEstado(ESTADO_CAMINANDO, tiempo_transcurrido);
     }
 
     posicion_x = nueva_posicion_x;

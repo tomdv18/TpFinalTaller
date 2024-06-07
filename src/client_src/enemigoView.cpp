@@ -11,6 +11,11 @@ void EnemigoView::crear_texturas(SDL2pp::Renderer *render) {
 
 void EnemigoView::actualizar_vista_enemigo(EventoEnemigo &evento, float df) {
 
+    this->posicion_x = evento.posicion_x;
+    this->posicion_y = evento.posicion_y;
+
+    this->facingLeft = evento.mirando_izquierda;
+
     this->isMoving = true;
     if(this->isMoving) {
         this->animaciones.at(CAMINANDO)->acualizar(df);
