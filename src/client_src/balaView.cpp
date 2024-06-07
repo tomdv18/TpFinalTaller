@@ -1,8 +1,8 @@
 #include "balaView.h"
 
-BalaView::BalaView() : 
-posicion_x(0), posicion_y(0), width(15), height(15), 
-facingLeft(false),
+BalaView::BalaView(bool face, int x, int y) : 
+posicion_x(y), posicion_y(y), width(BALA_WIDTH), height(BALA_HEIGHT), 
+facingLeft(face),
 animacion_bala(nullptr) {}
 
 void BalaView::crear_animaciones() {
@@ -10,7 +10,6 @@ void BalaView::crear_animaciones() {
 }
 
 void BalaView::crear_texturas(SDL2pp::Renderer *render) {
-    std::cout << "DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" << std::endl;
     this->animacion_bala->crear_texturas(render); 
 }
 
@@ -32,7 +31,7 @@ void BalaView::actualizar(EventoBala const &evento,float dt){
     
     SDL2pp::Rect bala(posicion_x -cam_x, posicion_y-cam_y, 15, 15);
 
-    SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+    SDL_RendererFlip flip = facingLeft ? SDL_FLIP_NONE: SDL_FLIP_HORIZONTAL;
     animacion_bala->animar(render, bala, flip);
  
 }

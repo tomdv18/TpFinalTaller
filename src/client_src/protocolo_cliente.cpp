@@ -136,7 +136,7 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
         event_objeto.id_objeto = ntohl(event_objeto.id_objeto);
         event_objeto.posicion_x = ntohl(event_objeto.posicion_x);
         event_objeto.posicion_y = ntohl(event_objeto.posicion_y);
-        std::cout << "RECIBIENDO OBJETO" << std::endl;
+        //std::cout << "RECIBIENDO OBJETO" << std::endl;
         eventos_objeto.emplace_back(event_objeto);
     }
 

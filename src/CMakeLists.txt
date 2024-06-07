@@ -192,6 +192,8 @@ if(CLIENT)
 
         ./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
 		./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.cpp
+		./client_src/balasPersonajes.h
+		./client_src/balasPersonajes.cpp
 
 		./client_src/protocolo_cliente.cpp
 		./client_src/protocolo_cliente.h

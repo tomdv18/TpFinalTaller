@@ -13,6 +13,9 @@ facingLeft(false), isMoving(false), isRunning(false), isJumping(false), isShooti
     ultimas_posiciones_x[1] = 0;
 }
 
+bool PersonajeView::obtener_face() {
+    return facingLeft;
+}
 void PersonajeView::crear_texturas(SDL2pp::Renderer *render) {
     
     this->animaciones.at(CAMINANDO)->crear_texturas(render);
@@ -79,7 +82,6 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
         //Funciona pero ocurre muy rapido
     }
     
-    std::cout << "EL STOP :" << stopShooting << std::endl;
       
 }
 

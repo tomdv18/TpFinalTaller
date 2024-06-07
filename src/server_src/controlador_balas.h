@@ -40,6 +40,7 @@ public:
 
 private:
     uint32_t obtener_id() {
+        /*
         if (ids_disponibles.empty()) {
             return proximo_id++;
         } else {
@@ -47,6 +48,9 @@ private:
             ids_disponibles.erase(id);
             return id;
         }
+        */
+       proximo_id += 1;
+        return proximo_id;
     }
 
     int obtener_velocidad(uint8_t codigo_bala) {

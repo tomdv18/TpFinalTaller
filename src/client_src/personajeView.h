@@ -31,6 +31,8 @@ class PersonajeView {
 
     public:
 
+    virtual bool obtener_face();
+
     PersonajeView(uint32_t id_jugador, int x, int y);
 
     virtual ~PersonajeView();

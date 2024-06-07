@@ -7,7 +7,7 @@
 #include "../src/client_src/Animaciones/animacion.h"
 
 Renderizado::Renderizado(std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews) : 
-personajesViews(personajesViews) {}
+personajesViews(personajesViews), mapa_balas_pj() {}
 
 void Renderizado::inicializar_SDL2pp() {
 
@@ -29,7 +29,7 @@ void Renderizado::iniciar_camara(Camara &&cam) {
 
 void Renderizado::renderizar(Evento evento) {
     
-    render->SetDrawColor(0x80, 0x80, 0x80);
+    //render->SetDrawColor(0x80, 0x80, 0x80);
     
     render->Clear();
     
@@ -64,10 +64,13 @@ void Renderizado::renderizar(Evento evento) {
         }
     }
 
-    // Creacion de las balas
+    // Creacion del mapa de balas que tendra los jugadores
     for (const EventoBala &e : evento.eventos_bala) {
+        mapa_balas_pj.agregarNuevoMapaBalas(e.id_jugador);
+        /*
         if (balasViews.find(e.id_jugador) == balasViews.end()) {
             // Crear una nueva lista de balas para este jugador
+            std::cout << "SAASASASSA\n";
                 balasViews[e.id_jugador] = std::map<uint32_t, std::unique_ptr<BalaView>>();
         }else{
                 
@@ -80,23 +83,52 @@ void Renderizado::renderizar(Evento evento) {
                 std::cout << "CREANDO BALA PARA JUGADOR: " << e.id_jugador << std::endl;
             }
         }
+        */
     }
-    
+    // Actualiza la camara
+    {
+        auto it = personajesViews.find(id_jugador);
+        if (it == personajesViews.end()) {
+            // No hago nada.
+        } else {
+            // Enfoco la camara al jugador.
+            PersonajeView &personajeViewPtr = *(it->second);
+            camara->actualizar_posicion(personajeViewPtr.obtener_posicion_x(), personajeViewPtr.obtener_posicion_y());   
+        }
+    }
 
-    render->Clear();
-
-    mapa->dibujar_fondo(* render);
-    mapa->dibujar_entidades(*render, *camara);
-
-    auto it = personajesViews.find(id_jugador);
-    if (it == personajesViews.end()) {
-        // No hago nada.
-    } else {
-        // Enfoco la camara al jugador.
+    // Agrego la bala
+    for (const EventoBala &e : evento.eventos_bala) {
+        auto it = personajesViews.find(e.id_jugador);
         PersonajeView &personajeViewPtr = *(it->second);
-        camara->actualizar_posicion(personajeViewPtr.obtener_posicion_x(), personajeViewPtr.obtener_posicion_y());   
+
+        // Defino la face de la bala
+        std::unique_ptr<BalaView> bala_nueva = std::make_unique<BalaView>(personajeViewPtr.obtener_face(), e.posicion_x, e.posicion_y);
+        bala_nueva->crear_animaciones();
+        bala_nueva->crear_texturas(render.get());
+        mapa_balas_pj.agregarBala(e.id_jugador, e.id_bala, std::move(bala_nueva));
     }
 
+    // Renderizo el fondo
+    {
+        render->Clear();
+        mapa->dibujar_fondo(* render);
+        mapa->dibujar_entidades(*render, *camara);
+    }
+
+    // Renderizo balas y verifico el impacto
+    for (const EventoBala &e : evento.eventos_bala) {
+        BalaView* bala = mapa_balas_pj.obtenerBala(e.id_jugador, e.id_bala);
+        bala->actualizar(e, FRAME_RATE);
+        bala->renderizar(*render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
+
+        if(e.impacto) {
+            std::cout << "----------------------IMPACTO---------------\n"; // Nunca impacta...
+            mapa_balas_pj.eliminarBala(e.id_jugador, e.id_bala);
+        }
+    }
+
+    /*
     // Renderizado de las balas de cada jugador
     for (const EventoBala &e : evento.eventos_bala) {
         uint32_t id_jugador = e.id_jugador;
@@ -123,6 +155,7 @@ void Renderizado::renderizar(Evento evento) {
             }
         }
     }
+    */
 
     for (auto &personaje : this->personajesViews) {
 
@@ -132,6 +165,8 @@ void Renderizado::renderizar(Evento evento) {
 	}
 
     render->Present();
+    //mapa_balas_pj.eliminarTodasLasBalas();
+    //personajesViews.clear();
 }
 
 void Renderizado::crear_ventana_y_render(const std::string& title, int width, int height) {

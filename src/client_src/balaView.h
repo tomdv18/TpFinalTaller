@@ -11,8 +11,8 @@
 #include "../src/client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h"
 #include "direcciones.h"
 
-#define BALA_HEIGHT 50
-#define BALA_WIDTH 50
+#define BALA_HEIGHT 15
+#define BALA_WIDTH 15
 
 class BalaView{
    
@@ -28,7 +28,7 @@ class BalaView{
 
    public:
     
-    BalaView();
+    BalaView(bool face, int x, int y);
 
     ~BalaView();
 
