@@ -128,6 +128,9 @@ void Renderizado::renderizar(Evento evento) {
                 case ZANAHORIA:
                     objeto = std::unique_ptr<ObjetoView>(new ObjetoZanahoriaView());
                     break;
+                case BALA_VELOZ:
+                    objeto = std::unique_ptr<ObjetoView>(new ObjetoZanahoriaView());
+                    break;
                 default:
                     break;
             }

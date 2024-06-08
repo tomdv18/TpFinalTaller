@@ -59,6 +59,8 @@ public:
     void usar_habilidad(uint32_t id_jugador,
                         std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
+    void cambiar_bala(uint32_t id_jugador);
+
     void abandonar_partida(uint32_t id_jugador);
 
     void agregar_personaje(Accion accion);

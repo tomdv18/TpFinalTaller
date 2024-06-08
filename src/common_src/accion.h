@@ -20,6 +20,7 @@ enum CodigoAccion : uint8_t{
     CORRER_RAPIDO,  // Jugador corre rapido
     ESPECIAL,    // Jugador usa habilidad especial
     LOBBY,    // Volver al lobby
+    CAMBIAR_ARMA,
 
     ARRIBA,
     ABAJO,

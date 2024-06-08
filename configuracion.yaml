@@ -32,7 +32,7 @@ estado:
 municion:
   bala_normal:
     municion: 0
-    tiempo_entre_disparo: 4
+    tiempo_entre_disparo: 2
     velocidad_del_proyectil: 10
     danio: 1
     rango_explosion: 0
@@ -41,8 +41,8 @@ municion:
     tiempo_reaparicion: 0
   bala_veloz:
     municion: 60
-    tiempo_entre_disparo: 4
-    velocidad_del_proyectil: 20
+    tiempo_entre_disparo: 0.1
+    velocidad_del_proyectil: 30
     danio: 1
     rango_explosion: 0
     ancho: 10

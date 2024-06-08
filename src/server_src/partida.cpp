@@ -70,7 +70,7 @@ void Partida::run() {
         auto inicio = std::chrono::high_resolution_clock::now();
         while (queue_acciones.try_pop(accion) && cantidad_eventos < 100) {
             logica_partida.ejecutar(accion, start);
-            std::cout << "ACCION " << (int)accion.codigo << std::endl;
+            //std::cout << "ACCION " << (int)accion.codigo << std::endl;
             cantidad_eventos++;
         }
 

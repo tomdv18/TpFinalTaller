@@ -19,6 +19,9 @@ Personaje::Personaje(uint32_t id_jugador):
     tiempo_salto = 0;
     tiempo_especial = 0;
     puntos = 0;
+    bala_actual = BALA_NORMAL;
+    municiones[BALA_NORMAL] = -1; // -1 para que sea infinita
+    tiempo_disparo = -CONFIG.obtenerBala(BALA_NORMAL).tiempo_entre_disparo;
     direccion_mirando = DERECHA;
     ancho = CONFIG.getAnchoPersonaje();
     alto = CONFIG.getAltoPersonaje();
@@ -87,11 +90,27 @@ void Personaje::mover_abajo() {
 }
 
 uint8_t Personaje::disparar(std::chrono::duration<double> tiempo_transcurrido) {
+    /*
     if(!usando_especial && !intoxicado){
         if (arma.disparar(tiempo_transcurrido)) {
             std::cout << "DISPARAR" << std::endl;
             esta_disparando = true;
             return arma.obtener_bala();
+        }
+    }
+    return NINGUNO;
+    */
+   double tiempo = tiempo_transcurrido.count();
+   if(!usando_especial && !intoxicado ){
+        esta_disparando = true;
+        if((tiempo - tiempo_disparo) < CONFIG.obtenerBala(bala_actual).tiempo_entre_disparo) return NINGUNO;
+        if(municiones[bala_actual] == -1 ){
+            tiempo_disparo = tiempo;
+            return bala_actual;
+        } else if (municiones[bala_actual] > 0) {
+            municiones[bala_actual]--;
+            tiempo_disparo = tiempo;
+            return bala_actual;
         }
     }
     return NINGUNO;
@@ -150,6 +169,28 @@ void Personaje::curarse(int vida_restaurada){
     if(vida > CONFIG.getVidaPersonaje()){
         vida = CONFIG.getVidaPersonaje();
     }
+}
+
+ void Personaje::cambiar_bala_siguiente() {
+    auto it = municiones.find(bala_actual);
+        // Buscar el siguiente arma con municiones
+    while (true) {
+        it++;
+        if (it == municiones.end()) {
+            it = municiones.begin(); // Volver al principio si llegamos al final
+        }
+        if (it->second > 0 || it->second == -1) {
+            bala_actual = it->first;
+            break;
+        }
+    }
+    std::cout << "ARMA CAMBIADA A: " << (int) bala_actual << std::endl;
+    std::cout << "CON BALAS: " << (int) it->second << std::endl;
+}
+
+void Personaje::agarrar_municion(uint8_t codigo_municion, int municion){
+    std::cout << "MUNICION AGARRADA: " << (int) codigo_municion << std::endl;
+    municiones[codigo_municion] += municion;
 }
 
 void Personaje::revivir(){
@@ -237,7 +278,7 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
         velocidad_y = 0;
     }
 
-    std::cout << "PUNTUACION:" << puntos << std::endl;
+    //std::cout << "PUNTUACION:" << puntos << std::endl;
     //std::cout << "ESTA INVULNERABLE: " << (int) invulnerable << std::endl;
 
     //std::cout << "ESTA INTOXICADO: " << (int) intoxicado << std::endl;

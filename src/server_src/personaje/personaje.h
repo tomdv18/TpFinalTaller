@@ -62,7 +62,7 @@ protected:
     uint32_t puntos;
 
     uint8_t bala_actual;
-    // Map tipo de bala -> municion de esa bala
+    double tiempo_disparo;
     std::map<uint8_t,int> municiones;
 
 public:
@@ -111,6 +111,10 @@ public:
     virtual void asignar_puntos(uint32_t puntos);
 
     virtual void curarse(int vida_restaurada);
+
+    virtual void cambiar_bala_siguiente();
+
+    virtual void agarrar_municion(uint8_t codigo_municion, int municion);
 
     // Acciones
 

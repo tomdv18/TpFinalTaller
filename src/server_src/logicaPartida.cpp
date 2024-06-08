@@ -14,7 +14,7 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(){
 
     map_objetos_solidos[5] = new Solido(5, 0, 0, 1, 5000, 50);   //Limite del mapa arriba
 
-    map_objetos_solidos[6] = new Solido(6, 590, 150, 1, 25, 5000); //X pared derecha
+    map_objetos_solidos[6] = new Solido(6, 590, 150, 1, 10, 5000); //X pared derecha
 
 
 /*
@@ -53,9 +53,12 @@ pared:
   
     map_enemigos[0] = new Rat(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
 
-    map_objetos_comunes[0] = fabrica_objetos.crear_objeto(ZANAHORIA,400,275,false);
+    map_objetos_comunes[0] = fabrica_objetos.crear_objeto(ZANAHORIA,400,275,true);
     map_objetos_comunes[1] = fabrica_objetos.crear_objeto(GEMA,475,275,false);
-    map_objetos_comunes[2] = fabrica_objetos.crear_objeto(MONEDA,525,275,false);
+    map_objetos_comunes[2] = fabrica_objetos.crear_objeto(MONEDA,475,200,false);
+    map_objetos_comunes[3] = fabrica_objetos.crear_objeto(BALA_VELOZ,525,275,false);
+
+
 }
 
 
@@ -82,26 +85,32 @@ void LogicaPartida::ejecutar(Accion accion,
             break;
         case CORRER:
             mover_correr(accion.id_jugador);
+            break;
         case QUIETO:
             mover_quieto(accion.id_jugador);
             break;
         case DISPARAR:
             disparar(accion.id_jugador, tiempo);
-            std::cout << "DISPARANDO" << std::endl;
+            //std::cout << "DISPARANDO" << std::endl;
             break;
         case DEJAR_DISPARAR:
             dejar_disparar(accion.id_jugador);
-            std::cout << "DEJO DE DISPARAR" << std::endl;
+            //std::cout << "DEJO DE DISPARAR" << std::endl;
             break;
         case ESPECIAL:
             usar_habilidad(accion.id_jugador, tiempo);
+            break;
+        case CAMBIAR_ARMA:
+            cambiar_bala(accion.id_jugador);
         case JAZZ:
             agregar_personaje(accion);
             break;
         case SPAZ:
             agregar_personaje(accion);
+            break;
         case LORI:
             agregar_personaje(accion);
+            break;
         default:
             break;
     }
@@ -189,8 +198,8 @@ void LogicaPartida::disparar(uint32_t id_jugador,
         uint8_t codigo_bala = personaje->disparar(tiempo_transcurrido);
         if (codigo_bala != NINGUNO) {
             int velocidad = personaje->mirando_izquierda() ? -1 : 1;
-            int salida_x = personaje->mirando_izquierda() ? personaje->obtener_posicionX() + PERSONAJE_WIDTH/2 : personaje->obtener_posicionX();
-            controlador_balas.agregar_bala(codigo_bala, id_jugador, salida_x,
+            uint32_t offset = personaje->mirando_izquierda() ? -CONFIG.getAnchoPersonaje()/2 : velocidad * (CONFIG.getAnchoPersonaje());
+            controlador_balas.agregar_bala(codigo_bala, id_jugador, personaje->obtener_posicionX(), offset,
                                            personaje->obtener_posicionY() + PERSONAJE_HEIGHT / 4,
                                            velocidad);
         }
@@ -214,6 +223,14 @@ void LogicaPartida::usar_habilidad(
     if (personaje != nullptr) {
         if(personaje->esta_muerto()) return;
         personaje->usar_habilidad(tiempo_transcurrido);
+    }
+}
+
+void LogicaPartida::cambiar_bala(uint32_t id_jugador){
+    Personaje* personaje = map_personajes[id_jugador];
+    if (personaje != nullptr) {
+        if(personaje->esta_muerto()) return;
+        personaje->cambiar_bala_siguiente();
     }
 }
 
@@ -307,9 +324,6 @@ void LogicaPartida::actualizar_partida(
                                 it->obtener_ancho(), it->obtener_largo()};
 
 
-        // Calcular primero colision con enemigos
-        
-        
         for (const auto& par: map_enemigos) {
             Rectangulo rect_enemigo = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
                     par.second->obtener_ancho(), par.second->obtener_alto()};
@@ -327,7 +341,7 @@ void LogicaPartida::actualizar_partida(
             for (const auto& par: map_personajes) {
                 Rectangulo rect_personaje = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
                                 par.second->obtener_ancho(), par.second->obtener_alto()};
-                if(rect_personaje.hay_colision(rect_bala)){
+                if(rect_personaje.hay_colision(rect_bala) && it->obtener_id_jugador() != par.first){  // No se puede hacer daño solo
                     if(!par.second->esta_muerto()){
                         par.second->recibir_golpe(100,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
                         it->impactar();

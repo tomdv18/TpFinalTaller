@@ -65,6 +65,8 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
                     case SDLK_l:
                         queue_accion.try_push(DISPARAR);
                         break;
+                    case SDLK_r:
+                        queue_accion.try_push(CAMBIAR_ARMA);
                 }
                 break;  // Salir del bloque SDL_KEYDOWN
             }
