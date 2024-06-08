@@ -14,11 +14,10 @@ Enemigo::Enemigo(uint32_t id_enemigo):
         iteraciones_para_revivir(-1),
         pasos_patrullando(0),
         danio(CONFIG.obtener_danio_default_enemigo()),
-        tiempo_reaparicion(CONFIG.obtenerTiempoReaparicionEnemigo()) {
-    direccion_mirando = DERECHA;
-
-    ancho = 50;
-    alto = 50;
+        tiempo_reaparicion(CONFIG.obtenerTiempoReaparicionEnemigo()),
+        direccion_mirando(DERECHA),
+        ancho(CONFIG.obtenerAnchoEnemigo()),
+        alto(CONFIG.obtenerAltoEnemigo()){
     tiempo_muerte = 0;
 }
 
