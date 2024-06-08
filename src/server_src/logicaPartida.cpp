@@ -3,22 +3,18 @@
 #define DURACION_PARTIDA 120.0f
 
 LogicaPartida::LogicaPartida(){
-    // map_objetos_solidos[0] = new Zanahoria(0, 100, 430, 50, 50, 10);
-    //map_objetos_solidos[0] = new Zanahoria(0, 0, 400, 1, 1000, 250);
 
-    // map_objetos_solidos[1] = new Solido(1, 0, 400, 1, 1000, 250);
-    // map_objetos_solidos[2] = new Solido(1, 100, 0, 1, 5000, 25);
-    map_objetos_solidos[1] = new Solido(1, 0, 400, 1, 5000, 100);
+    //map_objetos_solidos[1] = new Solido(1, 0, 550, 1, 5000, 100); //Limite del mapa abajo
 
-    map_objetos_solidos[2] = new Solido(2, 100, 150, 1, 5000, 25);
+    map_objetos_solidos[2] = new Solido(2, 100, 300, 1, 5000, 25); //Piso grande
 
-    map_objetos_solidos[3] = new Solido(3, 75, 0, 1, 25, 5000); //X
+    map_objetos_solidos[3] = new Solido(3, 75, 0, 1, 25, 5000); //X pared izq
 
-    map_objetos_solidos[4] = new Solido(4, 280, 70, 1, 150, 25);
+    map_objetos_solidos[4] = new Solido(4, 280, 225, 1, 150, 25);  //Piso chiquito
 
-    map_objetos_solidos[5] = new Solido(5, 0, 0, 1, 5000, 50);
+    map_objetos_solidos[5] = new Solido(5, 0, 0, 1, 5000, 50);   //Limite del mapa arriba
 
-    map_objetos_solidos[6] = new Solido(6, 590, 0, 1, 25, 5000); //X
+    map_objetos_solidos[6] = new Solido(6, 590, 150, 1, 25, 5000); //X pared derecha
 
 
 
@@ -40,7 +36,7 @@ pared:
     y: 150
 */
   
-    map_enemigos[0] = new Lizzard(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
+    map_enemigos[0] = new Rat(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
 }
 
 
@@ -174,7 +170,8 @@ void LogicaPartida::disparar(uint32_t id_jugador,
         uint8_t codigo_bala = personaje->disparar(tiempo_transcurrido);
         if (codigo_bala != NINGUNA) {
             int velocidad = personaje->mirando_izquierda() ? -1 : 1;
-            controlador_balas.agregar_bala(codigo_bala, id_jugador, personaje->obtener_posicionX(),
+            int salida_x = personaje->mirando_izquierda() ? personaje->obtener_posicionX() + PERSONAJE_WIDTH/2 : personaje->obtener_posicionX();
+            controlador_balas.agregar_bala(codigo_bala, id_jugador, salida_x,
                                            personaje->obtener_posicionY() + PERSONAJE_HEIGHT / 4,
                                            velocidad);
         }
@@ -262,6 +259,7 @@ void LogicaPartida::actualizar_partida(
         par.second->actualizar_posicion(tiempo_transcurrido);
 
         // Calcular colision con los personajes
+        // Si el personaje esta usando la habilidad, el enemigo es quien recibe el daño
     }
 
     auto& balas = controlador_balas.obtener_balas();
@@ -275,18 +273,36 @@ void LogicaPartida::actualizar_partida(
 
 
         // Calcular primero colision con enemigos
-        for (const auto& par: map_personajes) {
-            if (par.second->hay_colision(it->obtener_posicionX(), it->obtener_posicionY(),
-                                         it->obtener_ancho(), it->obtener_largo())) {
-                
-                if(par.second->esta_muerto()){
+        
+        
+        for (const auto& par: map_enemigos) {
+            Rectangulo rect_enemigo = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
+                    par.second->obtener_ancho(), par.second->obtener_alto()};
+            if(rect_enemigo.hay_colision(rect_bala)){
+                if(!par.second->esta_vivo()){
                     // Si esta muerto lo ignoro
                     continue;
                 }
-                par.second->recibir_golpe(100,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
-                std::cout << "HAY COLISION" << std::endl;
+                par.second->recibir_golpe(200,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
                 it->impactar();
                 break;
+            }
+        }
+            
+
+        if(!it->obtener_impacto()){
+            for (const auto& par: map_personajes) {
+                Rectangulo rect_personaje = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
+                                par.second->obtener_ancho(), par.second->obtener_alto()};
+                if(rect_personaje.hay_colision(rect_bala)){
+                    if(par.second->esta_muerto()){
+                            // Si esta muerto lo ignoro
+                        continue;
+                    }
+                    par.second->recibir_golpe(100,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+                    it->impactar();
+                    break;
+                }
             }
         }
 
@@ -304,7 +320,6 @@ void LogicaPartida::actualizar_partida(
 
         if (it->obtener_impacto() || it->obtener_posicionX() >= WIDTH) {
             controlador_balas.remover_bala(it->obtener_id_bala());
-            // it = balas.erase(it);
         } else {
             ++it;
         }
@@ -346,6 +361,7 @@ Evento LogicaPartida::obtener_snapshot(
         evento_objeto.posicion_x = par.second->obtener_posicionX();
         evento_objeto.posicion_y = par.second->obtener_posicionY();
         evento_objeto.mostrandose = par.second->obtener_mostrar();
+        evento_objeto.codigo_objeto = par.second->obtener_objeto();
 
         evento.eventos_objeto.emplace_back(evento_objeto);
     }
@@ -360,6 +376,7 @@ Evento LogicaPartida::obtener_snapshot(
         evento_bala.impacto = bala.obtener_impacto();
         evento_bala.tipo_bala = bala.obtener_codigo();
 
+        std::cout << "IMPACTO " << (int)evento_bala.impacto << std::endl;
 
         evento.eventos_bala.emplace_back(evento_bala);
     }
@@ -372,7 +389,7 @@ Evento LogicaPartida::obtener_snapshot(
         eventos_enem.id_personaje = par.second->obtener_personaje();
         eventos_enem.vida = par.second->obtener_vida();
         eventos_enem.esta_vivo = par.second->esta_vivo();
-        std::cout << "ENVIANDO ENEMIGO EN: " << eventos_enem.posicion_x << "   " << eventos_enem.posicion_y << std::endl;
+        eventos_enem.mirando_izquierda = par.second->mirando_izquierda();
 
         evento.eventos_enemigos.emplace_back(eventos_enem);
     }
@@ -388,6 +405,13 @@ LogicaPartida::~LogicaPartida() {
     }
 
     for (auto& par: map_objetos_solidos) {
+        delete par.second;
+    }
+
+    for (auto& par: map_objetos_comunes) {
+        delete par.second;
+    }
+    for (auto& par: map_enemigos) {
         delete par.second;
     }
 }

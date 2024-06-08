@@ -22,8 +22,13 @@ protected:
     int8_t vida;
     bool esta_quieto;
 
+    uint32_t ancho;
+    uint32_t alto;
+
 
     double velocidad_x;
+    double tiempo_muerte;
+    double tiempo_reaparicion;
     uint8_t direccion_mirando;
     bool vivo;
     int iteraciones_para_revivir;
@@ -43,13 +48,13 @@ public:
     // Acciones
     virtual void quedarse_quieto();
 
-    virtual int obtener_danio();
-
     virtual void matar();
 
     virtual void revivir();
 
     virtual bool esta_vivo();
+
+    virtual void recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido);
     // Acciones
 
     // Getters Snapshot
@@ -61,6 +66,13 @@ public:
 
     virtual uint8_t obtener_movimiento();
 
+    virtual uint32_t obtener_ancho();
+
+    virtual uint32_t obtener_alto();
+
+    virtual int obtener_danio();
+
+    virtual bool mirando_izquierda();
 
     // Getters Snapshot
 

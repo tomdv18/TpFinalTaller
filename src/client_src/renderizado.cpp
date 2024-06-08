@@ -33,7 +33,9 @@ void Renderizado::renderizar(Evento evento) {
     
     render->Clear();
     
+    std::vector<uint32_t> jugadoresJugando = {}; // Vector de jugadores jugando actualmente
     for(EventoPersonaje evento : evento.eventos_personaje){
+        jugadoresJugando.push_back(evento.id_jugador); // Agrego a los jugadores actuales
         if(personajesViews.find(evento.id_jugador) == personajesViews.end()){
             std::unique_ptr<PersonajeView> personaje;
             switch(evento.id_personaje){
@@ -63,35 +65,47 @@ void Renderizado::renderizar(Evento evento) {
             personaje.actualizar_vista_personaje(evento, FRAME_RATE);
         }
     }
-    
-    
-    //Creacion del mapa de enemigos del juego
-    for(EventoEnemigo &evento : evento.eventos_enemigos) {
 
-        if(enemigosViews.find(evento.id_enemigo) == enemigosViews.end()) {
-            std::unique_ptr<EnemigoView> enemigo;
-            switch(evento.id_enemigo){
-                case LIZZARD:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoLizzardView());
-                    enemigo->crear_animaciones();
-                    enemigo->crear_texturas(render.get());
-                    
-                    std::cout << "CREANDO ENEMIGO LIZZARD" << std::endl;
-                    
-                    break;
-                case FENCER:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoFencerView());
-                    enemigo->crear_animaciones();
-                    enemigo->crear_texturas(render.get());
-                    break;
-                case RAT:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoRatView());
-                    enemigo->crear_animaciones();
-                    enemigo->crear_texturas(render.get());      
+    // Saco a los jugadores que ya no estan jugando, es decir, se desconectaron
+    {
+        for (auto it = personajesViews.begin(); it != personajesViews.end(); ) {
+            // Busco el ID en el vector
+            if (std::find(jugadoresJugando.begin(), jugadoresJugando.end(), it->first) == jugadoresJugando.end()) {
+                // Si no se encuentra, elimino la entrada del mapa
+                it = personajesViews.erase(it);
+            } else {
+                // Si se encuentra, avanzar al siguiente ID
+                ++it;
             }
         }
     }
 
+    //Creacion del mapa de enemigos del juego
+    for(EventoEnemigo &evento : evento.eventos_enemigos) {
+        if(enemigosViews.find(evento.id_enemigo) == enemigosViews.end()) {
+            std::unique_ptr<EnemigoView> enemigo;
+            switch(evento.id_enemigo) {
+                case LIZZARD:
+                    enemigo = std::make_unique<EnemigoLizzardView>();
+                    break;
+                case FENCER:
+                    enemigo = std::make_unique<EnemigoFencerView>();
+                    break;
+                case RAT:
+                    enemigo = std::make_unique<EnemigoRatView>();
+                    break;
+                default:
+                    break;
+            }
+            enemigo->crear_animaciones();
+            enemigo->crear_texturas(render.get());
+            enemigosViews[evento.id_enemigo] = std::move(enemigo);
+            std::cout << "CREANDO ENEMIGO" << std::endl;
+        } else {
+            EnemigoView &enemigo = *(enemigosViews.at(evento.id_enemigo));
+            enemigo.actualizar_vista_enemigo(evento, FRAME_RATE);
+        }
+    }
 
     // Creacion del mapa de balas que tendra los jugadores
     for (const EventoBala &e : evento.eventos_bala) {
@@ -151,24 +165,19 @@ void Renderizado::renderizar(Evento evento) {
         bala->actualizar(e, FRAME_RATE);
         bala->renderizar(*render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
 
-        if(e.impacto) {
-            std::cout << "----------------------IMPACTO---------------\n"; // Nunca impacta...
+        if( (bool)e.impacto) {
+            // Nunca impacta...
+            std::cout << "-----------------------------------IMPACTO-------------------------------\n"; // Nunca impacta...
             mapa_balas_pj.eliminarBala(e.id_jugador, e.id_bala);
         }
     }
-
-
     
     // Renderizo enemigos
-    
     for(auto &enemigo : this->enemigosViews) {
 
         EnemigoView &e = *(enemigo.second);
         e.renderizar_enemigo(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
     }
-    
-    
-
 
     /*
     // Renderizado de las balas de cada jugador
@@ -176,13 +185,10 @@ void Renderizado::renderizar(Evento evento) {
         uint32_t id_jugador = e.id_jugador;
         if (balasViews.find(id_jugador) != balasViews.end()) {
             auto& lista_balas = balasViews[id_jugador]; // Balas del jugador
-
             for (auto it = lista_balas.begin(); it != lista_balas.end(); ) {
                 auto& bala = it->second;
-
                 bala->actualizar(e, FRAME_RATE);
                 bala->renderizar(*render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
-
                 if (e.impacto) {
                         // Eliminar la bala de la lista si hubo impacto
                     it = lista_balas.erase(it);
@@ -190,7 +196,6 @@ void Renderizado::renderizar(Evento evento) {
                     ++it;
                 }
             }
-
             // Si la lista de balas para este jugador está vacía después de eliminar, eliminar la entrada del jugador
             if (lista_balas.empty()) {
                 balasViews.erase(id_jugador);
@@ -198,7 +203,7 @@ void Renderizado::renderizar(Evento evento) {
         }
     }
     */
-
+ 
     for (auto &personaje : this->personajesViews) {
 
         PersonajeView &p = *(personaje.second);
@@ -207,8 +212,6 @@ void Renderizado::renderizar(Evento evento) {
 	}
 
     render->Present();
-    //mapa_balas_pj.eliminarTodasLasBalas();
-    //personajesViews.clear();
 }
 
 void Renderizado::crear_ventana_y_render(const std::string& title, int width, int height) {

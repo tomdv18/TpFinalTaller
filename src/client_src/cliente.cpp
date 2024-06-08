@@ -153,10 +153,10 @@ void Cliente::comunicarse_con_el_servidor() {
 
             Evento evento;
 
-            queue_eventos.try_pop(evento);
-
-            renderizado.renderizar(evento);
-
+            if(queue_eventos.try_pop(evento)) {
+                renderizado.renderizar(evento);
+            }
+            
             auto fin = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double, std::milli> tiempo = fin - inicio;
             double tiempo_transcurrido = tiempo.count();

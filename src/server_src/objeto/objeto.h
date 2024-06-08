@@ -6,10 +6,11 @@
 #include <iostream>
 
 #include "../common_src/accion.h"
+#include "../common_src/codigo_objeto.h"
 
 #include "../personaje/personaje.h"
 
-enum CodigoObjeto : uint8_t { ZANAHORIA, SOLIDO };
+
 
 class Personaje;
 
