@@ -33,9 +33,13 @@ void Enemigo::mover_izquierda() {
     direccion_mirando = IZQUIERDA;
 }
 
-void Enemigo::matar() { vivo = false; }
+void Enemigo::matar() { 
+    vida = 0;
+    vivo = false; }
 
-void Enemigo::revivir() { vivo = true; }
+void Enemigo::revivir() { 
+    vida = VIDA_DEFAULT;
+    vivo = true; }
 
 bool Enemigo::esta_vivo() { return vivo; }
 

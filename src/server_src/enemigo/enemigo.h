@@ -19,7 +19,7 @@ protected:
     uint32_t id_enemigo;  // EL ATRIBUTO ID PROBABLEMENTE HAYA QUE REMOVERLO
     uint32_t posicion_x;
     uint32_t posicion_y;
-    uint8_t vida;
+    int8_t vida;
     bool esta_quieto;
 
 
