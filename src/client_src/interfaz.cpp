@@ -10,7 +10,8 @@ rect(),
 sdl_ttf(),
 font("../src/client_src/Images/Jazz-Jackrabbit-2.ttf", 24), 
 id_jugador(id_jugador), 
-texto()
+texto(),
+tiempo(0)
 {
                 
         SDL2pp::Surface vida("../src/client_src/Images/vida.png");
@@ -40,7 +41,9 @@ void Interfaz::mostrar_municiones() {}
 
 void Interfaz::mostrar_arma_seleccionada() {}
 
-void Interfaz::mostrar_tiempo() {}
+void Interfaz::definir_tiempo(uint16_t tiempo) {
+    this->tiempo = tiempo;
+}
 
 void Interfaz::mostrar_top_3() {}
 
@@ -51,7 +54,7 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
     if (it == personajesViews.end()) {
         return;
     }
-    // Enfoco la camara al jugador.
+    // Muestro vida
     PersonajeView &personajeViewPtr = *(it->second);
     uint8_t vida = personajeViewPtr.obtener_vida();
     std::string texto = std::to_string(vida);
@@ -60,10 +63,20 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
     rect.w = (ICONO_WIDHT);
     rect.h = (ICONO_HEIGHT);
     render.Copy(* texturas["vida"], SDL2pp::NullOpt, rect);
-    SDL2pp::Surface vida_texto = font.RenderText_Solid(texto, SDL_Color{0, 0, 0, 0}); // Color negro
-    SDL2pp::Texture texto_textura(render, vida_texto);
-    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ICONO_WIDHT+5, alto_ventana-vida_texto.GetHeight()-5, ICONO_WIDHT+10, ICONO_HEIGHT+10));
-     
+    SDL2pp::Surface surface_texto = font.RenderText_Solid(texto, SDL_Color{0, 0, 0, 0}); // Color negro
+    SDL2pp::Texture texto_textura(render, surface_texto);
+    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ICONO_WIDHT+5, alto_ventana-surface_texto.GetHeight()-5, ICONO_WIDHT+10, ICONO_HEIGHT+10));
+
+    // Muestro tiempo
+
+    texto = std::to_string(tiempo);
+    SDL_Color color = {0, 0, 0, 0};
+    if (this->tiempo <= 30) { // Ver como terminar el juego...
+        color = {255, 0, 0, 0};
+    }
+    surface_texto = font.RenderText_Solid(texto, color);
+    texto_textura = SDL2pp::Texture(render, surface_texto);
+    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ancho_ventana/2.0, 0, 50, 50));
 }
 
 Interfaz::~Interfaz() {

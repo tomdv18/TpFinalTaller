@@ -15,6 +15,7 @@ class Interfaz {
         std::map<std::string, SDL2pp::Texture*> texturas;
         uint32_t id_jugador;
         std::string texto;
+        uint16_t tiempo;
 
         void mostrar_vida();
 
@@ -24,14 +25,15 @@ class Interfaz {
 
         void mostrar_arma_seleccionada();
 
-        void mostrar_tiempo();
-
         void mostrar_top_3();
 
         void mostrar_tablero_final();
 
     public:
         explicit Interfaz(SDL2pp::Renderer &render, int ancho, int alto, uint32_t id_jugador);
+
+        void definir_tiempo(uint16_t tiempo);
+
 
         void mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews);
 
