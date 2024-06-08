@@ -1,6 +1,6 @@
 #include "objetoGemaView.h"
 
-ObjetoGemaView::ObjetoGemaView(int x, int y) : ObjetoView(x, y) {}
+ObjetoGemaView::ObjetoGemaView() : ObjetoView() {}
 
 void ObjetoGemaView::crear_animacion() {
 

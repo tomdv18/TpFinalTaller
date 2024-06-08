@@ -5,8 +5,10 @@
 #include "objetoView.h"
 
 class ObjetoMonedaView : public ObjetoView {
+    
+   public:
 
-    explicit ObjetoMonedaView(int x, int y);
+    explicit ObjetoMonedaView();
 
     void crear_animacion() override;
 

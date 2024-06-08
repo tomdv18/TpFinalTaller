@@ -1,6 +1,6 @@
 #include "objetoMonedaView.h"
 
-ObjetoMonedaView::ObjetoMonedaView(int x, int y) : ObjetoView(x, y) {}
+ObjetoMonedaView::ObjetoMonedaView() : ObjetoView() {}
 
 void ObjetoMonedaView::crear_animacion() {
 

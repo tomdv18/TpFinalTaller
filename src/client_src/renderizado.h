@@ -5,6 +5,7 @@
 #include "../common_src/queue.h"
 #include "../common_src/evento.h"
 #include "../common_src/codigo_enemigo.h"
+#include "../common_src/codigo_objeto.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2pp/SDL2pp.hh>

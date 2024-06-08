@@ -6,7 +6,9 @@
 
 class ObjetoZanahoriaView : public ObjetoView {
 
-    explicit ObjetoZanahoriaView(int x, int y);
+   public:
+
+    explicit ObjetoZanahoriaView();
 
     void crear_animacion() override;
 

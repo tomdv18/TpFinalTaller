@@ -85,6 +85,7 @@ void Renderizado::renderizar(Evento evento) {
             }
         }
     }
+    
 
     //Creacion del mapa de enemigos del juego
     for(EventoEnemigo &evento : evento.eventos_enemigos) {
@@ -92,13 +93,13 @@ void Renderizado::renderizar(Evento evento) {
             std::unique_ptr<EnemigoView> enemigo;
             switch(evento.id_enemigo) {
                 case LIZZARD:
-                    enemigo = std::make_unique<EnemigoLizzardView>();
+                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoLizzardView());
                     break;
                 case FENCER:
-                    enemigo = std::make_unique<EnemigoFencerView>();
+                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoFencerView());
                     break;
                 case RAT:
-                    enemigo = std::make_unique<EnemigoRatView>();
+                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoRatView());
                     break;
                 default:
                     break;
@@ -112,20 +113,20 @@ void Renderizado::renderizar(Evento evento) {
             enemigo.actualizar_vista_enemigo(evento, FRAME_RATE);
         }
     }
-    /*
+    
     //Crear de gemas, monedas y zanahorias del juego
     for(auto &evento : evento.eventos_objeto) {
         if(objetosViews.find(evento.id_objeto) == objetosViews.end()) {
             std::unique_ptr<ObjetoView> objeto;
             switch(evento.id_objeto) {
                 case GEMA:
-                    objeto = std::make_unique<ObjetoGemaView>();
+                    objeto = std::unique_ptr<ObjetoView>(new ObjetoGemaView());
                     break;
                 case MONEDA:
-                    objeto = std::make_unique<ObjetoGemaView>();
+                    objeto = std::unique_ptr<ObjetoView>(new ObjetoMonedaView());
                     break;
                 case ZANAHORIA:
-                    objeto = std::make_unique<ObjetoZanahoriaView>();
+                    objeto = std::unique_ptr<ObjetoView>(new ObjetoZanahoriaView());
                     break;
                 default:
                     break;
@@ -139,7 +140,7 @@ void Renderizado::renderizar(Evento evento) {
             objeto.actualizar_vista_objeto(evento, FRAME_RATE);
         }
     }
-    */
+    
 
     // Creacion del mapa de balas que tendra los jugadores
     for (const EventoBala &e : evento.eventos_bala) {
@@ -214,16 +215,13 @@ void Renderizado::renderizar(Evento evento) {
         e.renderizar_enemigo(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
     }
     
-    /*
+    
     // Renderizo objetos
     for(auto &objeto : this->objetosViews) {
 
         ObjetoView &o = *(objeto.second);
         o.renderizar_objeto(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
     }
-    */
-
-
     /*
     // Renderizado de las balas de cada jugador
     for (const EventoBala &e : evento.eventos_bala) {

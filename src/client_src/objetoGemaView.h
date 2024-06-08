@@ -6,7 +6,9 @@
 
 class ObjetoGemaView : public ObjetoView {
 
-    explicit ObjetoGemaView(int x, int y);
+   public:
+
+    explicit ObjetoGemaView();
 
     void crear_animacion() override;
 

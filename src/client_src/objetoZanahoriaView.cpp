@@ -1,6 +1,6 @@
 #include "objetoZanahoriaView.h"
 
-ObjetoZanahoriaView::ObjetoZanahoriaView(int x, int y) : ObjetoView(x, y) {}
+ObjetoZanahoriaView::ObjetoZanahoriaView() : ObjetoView() {}
 
 void ObjetoZanahoriaView::crear_animacion() {
 

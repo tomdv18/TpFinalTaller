@@ -16,7 +16,7 @@ class ObjetoView {
 
    public:
 
-    explicit ObjetoView(int x, int y);
+    explicit ObjetoView();
 
     virtual void crear_texturas(SDL2pp::Renderer *render);
 

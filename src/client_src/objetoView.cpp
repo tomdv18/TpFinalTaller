@@ -1,6 +1,6 @@
 #include "objetoView.h"
 
-ObjetoView::ObjetoView(int x, int y) : posicion_x(x), posicion_y(y), animacion(nullptr), widht(25), height(25) {}
+ObjetoView::ObjetoView() : posicion_x(0), posicion_y(0), animacion(nullptr), widht(25), height(25) {}
 
 void ObjetoView::crear_texturas(SDL2pp::Renderer *render)  {
     

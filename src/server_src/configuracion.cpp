@@ -14,7 +14,7 @@ Configuracion& Configuracion::config() {
 Configuracion::Configuracion(const YAML::Node& config) {
          // Personaje
         
-        vida_personaje = config["personaje"]["vida"].as<uint8_t>();
+        vida_personaje = config["personaje"]["vida"].as<int>();
         velocidad_x_personaje = config["personaje"]["velocidad_x"].as<int>();
         velocidad_y_personaje = config["personaje"]["velocidad_y"].as<int>();
         gravedad = config["personaje"]["gravedad"].as<int>();
