@@ -46,10 +46,14 @@ void Enemigo::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_
         vida = (uint8_t) vida_restante;
     }
 }
+void Enemigo::matar() { 
+    vida = 0;
+    vivo = false; }
 
-void Enemigo::matar() { vivo = false; }
 
-void Enemigo::revivir() { vivo = true; }
+void Enemigo::revivir() { 
+    vida = VIDA_DEFAULT;
+    vivo = true; }
 
 bool Enemigo::esta_vivo() { return vivo; }
 

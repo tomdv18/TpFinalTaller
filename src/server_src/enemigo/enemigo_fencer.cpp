@@ -11,6 +11,9 @@ uint8_t Fencer::obtener_personaje() {
     return FENCER;
 }
 
+void Fencer::revivir() { 
+    vida = VIDA_FENCER;
+    vivo = true; }
 
 void Fencer::mover_derecha() { Enemigo::mover_derecha(); }
 

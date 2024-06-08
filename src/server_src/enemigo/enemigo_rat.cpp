@@ -11,6 +11,10 @@ uint8_t Rat::obtener_personaje() {
     return RAT;
 }
 
+void Rat::revivir(){
+    vida = VIDA_RAT;
+    vivo = true;
+}
 
 void Rat::mover_derecha() { Enemigo::mover_derecha(); }
 

@@ -12,6 +12,8 @@ private:
 public:
     explicit Fencer(uint32_t id_enemigo);
 
+    void revivir() override;
+
     uint8_t obtener_personaje() override;
 
     void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido) override;

@@ -98,7 +98,7 @@ TEST_F(PersonajeJazzTest, obtenerPersonaje){
 
 
 int main(int argc, char*argv[]){
-    std::cout << "Tests Personaje JAZZ" << std::endl;
+    std::cout << "\nTests Personaje JAZZ\n" << std::endl;
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
