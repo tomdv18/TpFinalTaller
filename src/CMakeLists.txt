@@ -158,7 +158,6 @@ if(CLIENT)
 		./client_src/personajeView.h
 		./client_src/personajeView.cpp
 		./client_src/direcciones.h
-		./client_src/direcciones.cpp
 		./client_src/personajeJazzView.h
 		./client_src/personajeJazzView.cpp
 		./client_src/personajeLoriView.h
@@ -175,6 +174,15 @@ if(CLIENT)
 		./client_src/enemigoLizzardView.h
 		./client_src/enemigoRatView.cpp
 		./client_src/enemigoRatView.h
+
+		./client_src/objetoView.h
+		./client_src/objetoView.cpp
+		./client_src/objetoGemaView.h
+		./client_src/objetoGemaView.cpp
+		./client_src/objetoMonedaView.h
+		./client_src/objetoMonedaView.cpp
+		./client_src/objetoZanahoriaView.h
+		./client_src/objetoZanahoriaView.cpp
 		
 		./client_src/protocolo_cliente.cpp
 		./client_src/protocolo_cliente.h
@@ -235,6 +243,13 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Lizzard_caminando.h
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Rat_caminando.cpp
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Rat_caminando.h
+
+		./client_src/Animaciones/Animaciones_Objetos/animacion_gema.cpp
+		./client_src/Animaciones/Animaciones_Objetos/animacion_gema.h
+		./client_src/Animaciones/Animaciones_Objetos/animacion_moneda.cpp
+		./client_src/Animaciones/Animaciones_Objetos/animacion_moneda.h
+		./client_src/Animaciones/Animaciones_Objetos/animacion_zanahoria.cpp
+		./client_src/Animaciones/Animaciones_Objetos/animacion_zanahoria.h
 		
 		./client_src/mapa.cpp
 		./client_src/mapa.h

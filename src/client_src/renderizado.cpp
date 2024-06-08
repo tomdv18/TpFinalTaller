@@ -112,6 +112,34 @@ void Renderizado::renderizar(Evento evento) {
             enemigo.actualizar_vista_enemigo(evento, FRAME_RATE);
         }
     }
+    /*
+    //Crear de gemas, monedas y zanahorias del juego
+    for(auto &evento : evento.eventos_objeto) {
+        if(objetosViews.find(evento.id_objeto) == objetosViews.end()) {
+            std::unique_ptr<ObjetoView> objeto;
+            switch(evento.id_objeto) {
+                case GEMA:
+                    objeto = std::make_unique<ObjetoGemaView>();
+                    break;
+                case MONEDA:
+                    objeto = std::make_unique<ObjetoGemaView>();
+                    break;
+                case ZANAHORIA:
+                    objeto = std::make_unique<ObjetoZanahoriaView>();
+                    break;
+                default:
+                    break;
+            }
+            objeto->crear_animacion();
+            objeto->crear_texturas(render.get());
+            objetosViews[evento.id_objeto] = std::move(objeto);
+            std::cout << "Creando Objeto" << std::endl;
+        } else {
+            ObjetoView &objeto = *(objetosViews.at(evento.id_objeto));
+            objeto.actualizar_vista_objeto(evento, FRAME_RATE);
+        }
+    }
+    */
 
     // Creacion del mapa de balas que tendra los jugadores
     for (const EventoBala &e : evento.eventos_bala) {
@@ -185,6 +213,16 @@ void Renderizado::renderizar(Evento evento) {
         EnemigoView &e = *(enemigo.second);
         e.renderizar_enemigo(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
     }
+    
+    /*
+    // Renderizo objetos
+    for(auto &objeto : this->objetosViews) {
+
+        ObjetoView &o = *(objeto.second);
+        o.renderizar_objeto(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
+    }
+    */
+
 
     /*
     // Renderizado de las balas de cada jugador

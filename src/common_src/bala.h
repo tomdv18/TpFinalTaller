@@ -2,7 +2,14 @@
 #define COMMON_BALA_H_
 
 #include <iostream>
-#include "../common_src/codigo_objeto.h"
+
+
+// Aca van a ir los tipos de bala
+enum CodigoBala : uint8_t{
+    NORMAL,
+    NINGUNA
+
+};
 
 class Bala{
 private:
@@ -10,21 +17,19 @@ private:
     uint8_t codigo_bala;
     uint32_t id_jugador;
     uint32_t id_bala;
+
     uint32_t posicion_x;
     uint32_t posicion_y;
     uint8_t ancho;
     uint8_t largo;
-    bool impacto;
-
     uint8_t danio;
+    bool impacto;
     int velocidad;
-    double tiempo_entre_disparo;
-    uint32_t rango_explosion;
-    uint16_t municion;
+
 
 
 public:
-    Bala(uint8_t codigo_bala,uint32_t pos_x, uint32_t pos_y, uint32_t id_jugador, uint32_t id_bala, int velocidad, uint8_t danio, double tiempo_entre_disparo, uint32_t rango_explosion, int municion, uint32_t ancho, uint32_t largo);
+    Bala(uint8_t codigo_bala,uint32_t pos_x, uint32_t pos_y, uint32_t id_jugador, uint32_t id_bala, int velocidad);
 
     void actualizar_posicion();
 
