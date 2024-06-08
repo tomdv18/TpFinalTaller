@@ -15,11 +15,8 @@ Mapa::Mapa(SDL2pp::Renderer &render, MapaEntidades &&map):
 mapa(std::move(map)), src(), dest(){
         // Cargo las texturas (deberia estar en una clase aparte?, ver con Santiago)
         SDL2pp::Surface fondo("../src/mapas/beach_fondo.png");
-        SDL2pp::Texture fondo_textura(render, (fondo));
         SDL2pp::Surface piso("../src/mapas/beach_piso.png");
-        SDL2pp::Texture piso_textura(render, (piso));
         SDL2pp::Surface pared("../src/mapas/beach_pared.png");
-        SDL2pp::Texture pared_textura(render, (pared));
 
         texturas["fondo"] = new SDL2pp::Texture(render, fondo);
         texturas["piso"] = new SDL2pp::Texture(render, piso);

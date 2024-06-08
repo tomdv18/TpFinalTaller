@@ -20,6 +20,8 @@
 #include "mapa.h"
 #include "camara.h"
 #include "balasPersonajes.h"
+#include "interfaz.h"
+
 
 #include "protocolo_cliente.h"
 
@@ -35,7 +37,7 @@ class Renderizado {
     uint32_t id_jugador;
     std::unique_ptr<Mapa> mapa;
     std::unique_ptr<Camara> camara;
-
+    std::unique_ptr<Interfaz> interfaz;
     // Map id_jugador, map de sus balas -> id_bala, balaView
     //std::map<uint32_t, std::map<uint32_t, std::unique_ptr<BalaView>>> balas;
 
@@ -59,6 +61,7 @@ class Renderizado {
 
     void iniciar_camara(Camara &&cam);
 
+    void iniciar_interfaz(int w, int h);
 };
 
 #endif

@@ -27,6 +27,10 @@ void Renderizado::iniciar_camara(Camara &&cam) {
     this->camara = std::make_unique<Camara>(std::move(cam));
 }
 
+void Renderizado::iniciar_interfaz(int w, int h) {
+    this->interfaz = std::make_unique<Interfaz>(*render, w, h, id_jugador);
+}
+
 void Renderizado::renderizar(Evento evento) {
     
     //render->SetDrawColor(0x80, 0x80, 0x80);
@@ -56,12 +60,14 @@ void Renderizado::renderizar(Evento evento) {
                     personaje->crear_animaciones();
                     personaje->crear_texturas(render.get());      
             }
+            personaje->definir_vida(evento.vida);
             //std::unique_ptr<PersonajeView> p = std::unique_ptr<PersonajeView>(new PersonajeView(e.id_jugador,texturas));
             personajesViews[evento.id_jugador] = std::move(personaje);
             std::cout << "CREANDO JUGADOR" << std::endl;
                 
         }else{
             PersonajeView &personaje = *(personajesViews.at(evento.id_jugador));
+            personaje.definir_vida(evento.vida);
             personaje.actualizar_vista_personaje(evento, FRAME_RATE);
         }
     }
@@ -152,10 +158,11 @@ void Renderizado::renderizar(Evento evento) {
         mapa_balas_pj.agregarBala(e.id_jugador, e.id_bala, std::move(bala_nueva));
     }
 
-    // Renderizo el fondo
+    // Renderizo el fondo y HUD
     {
         render->Clear();
         mapa->dibujar_fondo(* render);
+        interfaz->mostrar_hud(*render, personajesViews);
         mapa->dibujar_entidades(*render, *camara);
     }
 

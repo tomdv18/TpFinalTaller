@@ -212,7 +212,7 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_deja_disparo_quieto.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_deja_disparo_quieto.cpp
 
-        	./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
+        ./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
 		./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.cpp
 		./client_src/balasPersonajes.h
 		./client_src/balasPersonajes.cpp
@@ -228,6 +228,8 @@ if(CLIENT)
 		./client_src/mapa.h
 		./client_src/camara.cpp
 		./client_src/camara.h
+		./client_src/interfaz.cpp
+		./client_src/interfaz.h
 
 		./common_src/codigo_enemigo.h
 		./common_src/thread.h

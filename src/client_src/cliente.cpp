@@ -143,6 +143,8 @@ void Cliente::comunicarse_con_el_servidor() {
     
     this->renderizado.iniciar_mapa(std::move(mapa));
     this->renderizado.iniciar_camara(std::move(camara));
+    this->renderizado.iniciar_interfaz(WIDTH, HEIGHT);
+
     EnviadorCliente enviador_cliente(skt, queue_accion);
     enviador_cliente.start();
     try {

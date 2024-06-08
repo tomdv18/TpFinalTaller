@@ -17,6 +17,10 @@ class PersonajeView {
     protected:
     
     uint32_t id_jugador;
+    int vida;
+    //int puntaje;
+    //arma seleccionada?
+    //municiones?
     int ultimas_posiciones_x[2]; //Ultima posicion y la anterior
     int posicion_x;
     int posicion_y;
@@ -48,6 +52,14 @@ class PersonajeView {
     virtual void actualizar_vista_personaje(EventoPersonaje const &evento,float dt);
 
     virtual void renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y);
+
+    virtual void definir_vida(uint8_t vida) {
+        this->vida = int(vida);
+    }
+
+    virtual uint8_t obtener_vida() {
+        return this->vida;
+    }
 
     virtual int obtener_posicion_x() {
         return posicion_x;
