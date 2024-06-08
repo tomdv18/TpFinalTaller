@@ -62,6 +62,7 @@ void Renderizado::renderizar(Evento evento) {
                     personaje->crear_texturas(render.get());      
             }
             personaje->definir_vida(evento.vida);
+            personaje->definir_puntos(evento.puntos);
             //std::unique_ptr<PersonajeView> p = std::unique_ptr<PersonajeView>(new PersonajeView(e.id_jugador,texturas));
             personajesViews[evento.id_jugador] = std::move(personaje);
             std::cout << "CREANDO JUGADOR" << std::endl;
@@ -69,6 +70,7 @@ void Renderizado::renderizar(Evento evento) {
         }else{
             PersonajeView &personaje = *(personajesViews.at(evento.id_jugador));
             personaje.definir_vida(evento.vida);
+            personaje.definir_puntos(evento.puntos);
             personaje.actualizar_vista_personaje(evento, FRAME_RATE);
         }
     }

@@ -18,6 +18,7 @@ class PersonajeView {
     
     uint32_t id_jugador;
     int vida;
+    int puntos;
     //int puntaje;
     //arma seleccionada?
     //municiones?
@@ -52,6 +53,14 @@ class PersonajeView {
     virtual void actualizar_vista_personaje(EventoPersonaje const &evento,float dt);
 
     virtual void renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y);
+
+    virtual void definir_puntos(uint32_t puntos) {
+        this->puntos = int(puntos);
+    }
+
+    virtual uint32_t obtener_puntos() {
+        return this->puntos;
+    }
 
     virtual void definir_vida(uint8_t vida) {
         this->vida = int(vida);

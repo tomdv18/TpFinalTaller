@@ -7,8 +7,22 @@
 
 
 
-PersonajeView::PersonajeView(uint32_t id_jugador, int x, int y) : id_jugador(id_jugador),ultimas_posiciones_x(), posicion_x(x), posicion_y(y), width(PERSONAJE_WIDTH), height(PERSONAJE_HEIGHT), 
-facingLeft(false), isMoving(false), isRunning(false), isJumping(false), isShooting(false), stopShooting(false) {
+PersonajeView::PersonajeView(uint32_t id_jugador, int x, int y) : 
+id_jugador(id_jugador),
+ultimas_posiciones_x(), 
+posicion_x(x), 
+posicion_y(y), 
+width(PERSONAJE_WIDTH), 
+height(PERSONAJE_HEIGHT), 
+facingLeft(false), 
+isMoving(false), 
+isRunning(false), 
+isJumping(false), 
+isShooting(false), 
+stopShooting(false),
+puntos(0),
+vida(0)
+{
     ultimas_posiciones_x[0] = 0;
     ultimas_posiciones_x[1] = 0;
 }
