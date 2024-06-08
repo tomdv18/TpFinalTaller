@@ -154,7 +154,7 @@ void Personaje::curarse(int vida_restaurada){
 
 void Personaje::revivir(){
     // Aca deberia setearse alguna nueva posicion de spawn
-    this->vida = 100;
+    this->vida = CONFIG.getVidaPersonaje();
     this->muerto = false;
 }
 
