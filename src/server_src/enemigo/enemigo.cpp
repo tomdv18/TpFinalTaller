@@ -1,26 +1,24 @@
 #include "enemigo.h"
 
 #define PASOS_POR_DIRECCION 15
-#define VIDA_DEFAULT 100
-#define DANIO_DEFAULT 1
-#define TIEMPO_REAPARICION 5
+
+#define CONFIG Configuracion::config()
 
 Enemigo::Enemigo(uint32_t id_enemigo):
         id_enemigo(id_enemigo),
         posicion_x(150),
         posicion_y(250),
-        vida(VIDA_DEFAULT),
+        vida(CONFIG.obtenerVidaDefaultEnemigo()),
         esta_quieto(true),
         vivo(true),
         iteraciones_para_revivir(-1),
         pasos_patrullando(0),
-        danio(DANIO_DEFAULT) {
-    direccion_mirando = DERECHA;
-
-    ancho = 50;
-    alto = 50;
+        danio(CONFIG.obtener_danio_default_enemigo()),
+        tiempo_reaparicion(CONFIG.obtenerTiempoReaparicionEnemigo()),
+        direccion_mirando(DERECHA),
+        ancho(CONFIG.obtenerAnchoEnemigo()),
+        alto(CONFIG.obtenerAltoEnemigo()){
     tiempo_muerte = 0;
-    tiempo_reaparicion = 5;
 }
 
 void Enemigo::mover_derecha() {
@@ -117,10 +115,11 @@ void Enemigo::patrullar() {
     }
 }
 
+
 void Enemigo::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido) {
     
     if(tiempo_transcurrido.count() - tiempo_muerte >= tiempo_reaparicion){
-        vida = VIDA_DEFAULT;
+        vida = CONFIG.obtenerVidaDefaultEnemigo(); //POTENCIAL BUG SI NO SE IMPLEMENTA EN LAS CLASES HIJAS
         vivo = true;
     }
 

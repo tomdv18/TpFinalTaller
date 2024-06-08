@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(JazzJackRabbit2)
 
-set(CONFIG_FILE "${CMAKE_SOURCE_DIR}/configuraciones.yaml")
+set(CONFIG_FILE "${CMAKE_SOURCE_DIR}/configuracion.yaml")
 # Define una función para configurar las pruebas para un personaje específico
 function(configure_personaje_test TEST_NAME PERSONAJE_NAME)
     add_executable(${TEST_NAME} test_${PERSONAJE_NAME}.cpp)

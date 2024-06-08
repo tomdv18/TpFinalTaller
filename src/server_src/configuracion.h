@@ -61,6 +61,17 @@ private:
     // Atributo de objeto
 
     std::map<uint8_t, ConfigObjeto> config_objetos;
+
+    //Atributos de enemigos
+
+    int vida_default_enemigo;
+    int danio_default_enemigo;
+    int ancho_enemigo;
+    int alto_enemigo;
+    int vida_fencer;
+    int vida_lizzard;
+    int vida_rat;
+    double tiempo_reaparicion_enemigo;
     
     Configuracion(const YAML::Node& config);
 
@@ -115,6 +126,17 @@ public:
             throw std::runtime_error("Objeto no encontrado en la config.");
         }
     }
+
+    //Getters para enemigos
+    int obtenerVidaDefaultEnemigo() const {return vida_default_enemigo;}
+    int obtener_danio_default_enemigo() const {return danio_default_enemigo;}
+    int obtenerAnchoEnemigo() const {return ancho_enemigo;}
+    int obtenerAltoEnemigo() const {return alto_enemigo;}
+    int obtenerVidaFencer() const {return vida_fencer;}
+    int obtenerVidaLizzard() const {return vida_lizzard;}
+    int obtenerVidaRat() const {return vida_rat;}
+    double obtenerTiempoReaparicionEnemigo() const {return tiempo_reaparicion_enemigo;}
+
 };
 
 

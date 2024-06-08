@@ -7,6 +7,7 @@
 
 #include "../common_src/accion.h"
 #include "../common_src/codigo_enemigo.h"
+#include "../configuracion.h"
 
 #define WIDTH 640
 #define HEIGHT 480

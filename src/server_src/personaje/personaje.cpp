@@ -195,7 +195,7 @@ void Personaje::agarrar_municion(uint8_t codigo_municion, int municion){
 
 void Personaje::revivir(){
     // Aca deberia setearse alguna nueva posicion de spawn
-    this->vida = 100;
+    this->vida = CONFIG.getVidaPersonaje();
     this->muerto = false;
 }
 
