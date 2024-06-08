@@ -87,6 +87,17 @@ objeto:
     ancho: 25
     alto: 25
 
+enemigo:
+  tiempo_reaparicion_enemigo: 5
+  vida_default: 100
+  danio_default: 1
+  fencer:
+    vida: 120
+  lizzard: 
+    vida: 100
+  rat:
+    vida: 50
+
 
 
 

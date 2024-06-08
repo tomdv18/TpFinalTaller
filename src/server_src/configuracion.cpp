@@ -76,23 +76,32 @@ Configuracion::Configuracion(const YAML::Node& config) {
             {"moneda", MONEDA}
         };
 
-    for (const auto& entry : config["objeto"]) {
-        std::string codigo_objeto_str = entry.first.as<std::string>();
-        if (codigo_objetos.find(codigo_objeto_str) != codigo_objetos.end()) {
-            uint8_t codigo_objeto = codigo_objetos[codigo_objeto_str];
-            ConfigObjeto config_objeto;
-            config_objeto.ancho = entry.second["ancho"].as<uint32_t>();
-            config_objeto.alto = entry.second["alto"].as<uint32_t>();
-            config_objeto.tiempo_reaparicion = entry.second["tiempo_reaparicion"].as<double>();
-            if (entry.second["vida_restaurada"]) {
-                config_objeto.vida_restaurada = entry.second["vida_restaurada"].as<uint32_t>();
+        for (const auto& entry : config["objeto"]) {
+            std::string codigo_objeto_str = entry.first.as<std::string>();
+            if (codigo_objetos.find(codigo_objeto_str) != codigo_objetos.end()) {
+                uint8_t codigo_objeto = codigo_objetos[codigo_objeto_str];
+                ConfigObjeto config_objeto;
+                config_objeto.ancho = entry.second["ancho"].as<uint32_t>();
+                config_objeto.alto = entry.second["alto"].as<uint32_t>();
+                config_objeto.tiempo_reaparicion = entry.second["tiempo_reaparicion"].as<double>();
+                if (entry.second["vida_restaurada"]) {
+                    config_objeto.vida_restaurada = entry.second["vida_restaurada"].as<uint32_t>();
+                }
+                if (entry.second["puntos_otorgados"]) {
+                    config_objeto.puntos_otorgados = entry.second["puntos_otorgados"].as<uint32_t>();
+                }
+                config_objetos[codigo_objeto] = config_objeto;
             }
-            if (entry.second["puntos_otorgados"]) {
-                config_objeto.puntos_otorgados = entry.second["puntos_otorgados"].as<uint32_t>();
-            }
-            config_objetos[codigo_objeto] = config_objeto;
         }
-    }
+
+        //Enemigos
+        vida_default_enemigo = config["enemigo"]["vida_default"].as<int>();
+        danio_default_enemigo = config["enemigo"]["danio_default"].as<int>();
+        vida_fencer = config["enemigo"]["fencer"]["vida"].as<int>();
+        vida_lizzard = config["enemigo"]["lizzard"]["vida"].as<int>();
+        vida_rat = config["enemigo"]["rat"]["vida"].as<int>();
+        tiempo_reaparicion_enemigo = config["enemigo"]["tiempo_reaparicion_enemigo"].as<double>();
+
 
 
 }
