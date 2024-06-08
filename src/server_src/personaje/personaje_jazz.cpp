@@ -1,17 +1,16 @@
 #include "personaje_jazz.h"
 
-#include <map>
+#define CONFIG Configuracion::config()
 
-
-Jazz::Jazz(uint32_t id_jugador): Personaje(id_jugador) { tiempo_especial = -ENFRIAMIENTO_JAZZ; }
+Jazz::Jazz(uint32_t id_jugador): Personaje(id_jugador) { tiempo_especial = - CONFIG.getEnfriamientoHabilidadJazz(); }
 
 uint8_t Jazz::obtener_personaje() { return JAZZ; }
 
 void Jazz::usar_habilidad(std::chrono::duration<double> tiempo_transcurrido) {
     
-    if (en_superficie && !corriendo &&
-        (tiempo_transcurrido.count() - tiempo_especial) >= ENFRIAMIENTO_JAZZ) {
-        velocidad_y = -VELOCIDAD_SALTO - 15;
+    if (!saltando && !corriendo &&
+        (tiempo_transcurrido.count() - tiempo_especial) >= CONFIG.getEnfriamientoHabilidadJazz()) {
+        velocidad_y = -CONFIG.getVelocidadYHabilidadJazz();
         velocidad_x = 0;
         esta_quieto = false;
         saltando = true;
@@ -25,7 +24,7 @@ void Jazz::usar_habilidad(std::chrono::duration<double> tiempo_transcurrido) {
 
 
 void Jazz::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,
-                               std::map<uint32_t, Objeto*>& map_objetos, std::map<uint32_t, Objeto*>& map_objetos_comunes) {
+                               std::map<uint32_t, Objeto*>& map_objetos, std::map<uint32_t, std::unique_ptr<Objeto>>& map_objetos_comunes) {
     if(!saltando){
         usando_especial = false;
     }

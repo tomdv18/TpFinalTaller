@@ -13,10 +13,12 @@ void EstadoSaltando::manejarEstado(uint8_t codigo_estado, double tiempo){
 
     if(codigo_estado == ESTADO_MUERTO){
         this->personaje->cambiarEstado(new EstadoMuerto(tiempo));
+        return;
     }
 
     if(codigo_estado == ESTADO_HERIDO){
         this->personaje->cambiarEstado(new EstadoHerido(tiempo));
+        return;
     }
 
     if(this->personaje->obtener_saltando()){

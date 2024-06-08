@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 project(JazzJackRabbit2)
 
+set(CONFIG_FILE "${CMAKE_SOURCE_DIR}/configuraciones.yaml")
 # Define una función para configurar las pruebas para un personaje específico
 function(configure_personaje_test TEST_NAME PERSONAJE_NAME)
     add_executable(${TEST_NAME} test_${PERSONAJE_NAME}.cpp)
-    target_link_libraries(${TEST_NAME} PRIVATE GTest::gtest GTest::gtest_main)
+    target_link_libraries(${TEST_NAME} PRIVATE GTest::gtest GTest::gtest_main yaml-cpp)
     target_include_directories(${TEST_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/common_src ${CMAKE_SOURCE_DIR}/src/server_src)
     target_sources(${TEST_NAME} PRIVATE
         ${CMAKE_SOURCE_DIR}/src/common_src/accion.h
@@ -19,7 +20,9 @@ function(configure_personaje_test TEST_NAME PERSONAJE_NAME)
         ${CMAKE_SOURCE_DIR}/src/server_src/estado/estado_corriendo.cpp
         ${CMAKE_SOURCE_DIR}/src/server_src/estado/estado_caminando.cpp
         ${CMAKE_SOURCE_DIR}/src/server_src/estado/estado_saltando.cpp
+        ${CMAKE_SOURCE_DIR}/src/server_src/configuracion.cpp
     )
+    target_compile_definitions(${TEST_NAME} PUBLIC CONFIG_PATH="${CONFIG_FILE}")
 endfunction()
 
 # Configura las pruebas para los diferentes personajes

@@ -1,5 +1,5 @@
-#ifndef SERVER_OBJETO_SOLIDO_H_
-#define SERVER_OBJETO_SOLIDO_H_
+#ifndef OBJETO_SOLIDO_H_
+#define OBJETO_SOLIDO_H_
 
 #include <chrono>
 #include <cmath>

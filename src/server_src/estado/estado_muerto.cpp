@@ -6,6 +6,8 @@
 #include "estado_herido.h"
 #include "estado_especial.h"
 
+#define CONFIG Configuracion::config()
+
 EstadoMuerto::EstadoMuerto(double tiempo_muerte) : Estado(ESTADO_MUERTO){
     this->tiempo_muerte = tiempo_muerte;
     this->cambiar_estado = false;
@@ -48,9 +50,10 @@ void EstadoMuerto::manejarEstado(uint8_t codigo_estado, double tiempo){
 }
 
 void EstadoMuerto::actualizar(double tiempo){
-    if(tiempo - tiempo_muerte >= TIEMPO_MUERTO){
+    if(tiempo - tiempo_muerte >= CONFIG.getTiempoEstadoMuerto()){
         cambiar_estado = true;
         this->personaje->revivir();
+        this->personaje->volverse_invulnerable(tiempo);
         this->personaje->cambiarEstado(new EstadoQuieto());
     }
 }

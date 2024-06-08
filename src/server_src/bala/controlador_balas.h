@@ -4,9 +4,11 @@
 #include <algorithm>
 #include <unordered_set>
 #include <vector>
-#include "./personaje/personaje.h"
+#include "../personaje/personaje.h"
+#include "bala.h"
+#include "../configuracion.h"
 
-#include "../common_src/bala.h"
+#define CONFIG Configuracion::config()
 
 class ControladorBalas {
 private:
@@ -17,12 +19,26 @@ private:
 public:
     ControladorBalas(): proximo_id(0) {}
 
+
     void agregar_bala(uint8_t codigo_bala, uint32_t id_jugador, uint32_t pos_x, uint32_t pos_y,
                       int velocidad) {
         uint32_t id_bala = obtener_id();
-        Bala nueva_bala(codigo_bala, pos_x + velocidad * PERSONAJE_HEIGHT, pos_y, id_jugador,
-                        id_bala, velocidad * obtener_velocidad(codigo_bala));
-        balas.push_back(nueva_bala);
+       
+        
+        const ConfigBala& config_bala = CONFIG.obtenerBala(codigo_bala);
+
+        balas.push_back(Bala(codigo_bala,
+                         pos_x + velocidad * CONFIG.getAnchoPersonaje(),
+                         pos_y,
+                         id_jugador,
+                         id_bala,
+                         velocidad *  config_bala.velocidad_del_proyectil,
+                         config_bala.danio,
+                         config_bala.tiempo_entre_disparo,
+                         config_bala.rango_explosion,
+                         config_bala.municion,
+                         config_bala.ancho,
+                         config_bala.largo));
     }
 
     void remover_bala(uint32_t id_bala) {
@@ -53,14 +69,6 @@ private:
         return proximo_id;
     }
 
-    int obtener_velocidad(uint8_t codigo_bala) {
-        switch (codigo_bala) {
-            case NORMAL:
-                return 10;
-            default:
-                return 0;
-        }
-    }
 };
 
 #endif

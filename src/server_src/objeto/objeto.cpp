@@ -2,7 +2,7 @@
 
 
 Objeto::Objeto(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y,
-               double tiempo_reaparicion, uint32_t ancho, uint32_t alto):
+               double tiempo_reaparicion, uint32_t ancho, uint32_t alto, bool envenenado):
         id_objeto(id_objeto),
         posicion_x(posicion_x),
         posicion_y(posicion_y),
@@ -10,7 +10,7 @@ Objeto::Objeto(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y,
         tiempo_interaccion(-tiempo_reaparicion),
         mostrar(true),
         ancho(ancho),
-        alto(alto) {}
+        alto(alto), envenenado(envenenado) {}
 
 uint32_t Objeto::obtener_id() { return id_objeto; }
 

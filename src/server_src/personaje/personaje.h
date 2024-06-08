@@ -5,28 +5,15 @@
 #include <cmath>
 #include <iostream>
 #include <map>
-
 #include "../common_src/accion.h"
 #include "../common_src/evento.h"
 #include "../common_src/codigo_estado.h"
 #include "../estado/estado.h"
-
 #include "../arma.h"
 #include "../objeto/objeto.h"
 #include "../rectangulo.h"
+#include "../configuracion.h"
 
-
-
-#define WIDTH 640
-#define HEIGHT 480
-#define PERSONAJE_HEIGHT 50
-#define PERSONAJE_WIDTH 50
-#define VELOCIDAD 5
-#define VELOCIDAD_SALTO 30
-#define GRAVEDAD 3
-#define ENFRIAMIENTO_JAZZ 5
-#define ENFRIAMIENTO_LORI 5
-#define ENFRIAMIENTO_SPAZ 5
 
 class Objeto;
 class Estado;
@@ -36,8 +23,10 @@ protected:
     uint32_t id_jugador;
     uint32_t posicion_x;
     uint32_t posicion_y;
-    int vida; //DEBE SER INT PARA PODER SER NEGATIVO
+    uint8_t vida; //DEBE SER INT PARA PODER SER NEGATIVO
     bool esta_quieto;
+    uint32_t ancho;
+    uint32_t alto;
 
     int velocidad_x;
     int velocidad_y;
@@ -57,6 +46,12 @@ protected:
     bool esta_disparando;
     bool muerto;
 
+    bool invulnerable;
+    double tiempo_invulnerable;
+
+    bool intoxicado;
+    double tiempo_intoxicado;
+
 
     Arma arma;
 
@@ -64,6 +59,10 @@ protected:
 
     bool en_superficie;
 
+
+    uint8_t bala_actual;
+    // Map tipo de bala -> municion de esa bala
+    std::map<uint8_t,int> municiones;
 
 public:
     explicit Personaje(uint32_t id_jugador);
@@ -104,6 +103,11 @@ public:
 
     virtual void revivir();
 
+    virtual void volverse_invulnerable(double tiempo);
+
+    virtual void intoxicarse(double tiempo);
+
+
     // Acciones
 
     // Getters Snapshot
@@ -127,15 +131,18 @@ public:
 
     virtual bool esta_muerto();
 
+    virtual bool es_invulnerable();
 
     virtual uint32_t obtener_ancho();
 
     virtual uint32_t obtener_alto();
 
+    virtual uint8_t obtener_intoxicado();
+
     // Getters Snapshot
 
     virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,
-                                     std::map<uint32_t, Objeto*>& map_objetos, std::map<uint32_t, Objeto*>& map_objetos_comunes);
+                                     std::map<uint32_t, Objeto*>& map_objetos, std::map<uint32_t, std::unique_ptr<Objeto>>& map_objetos_comunes);
 
     virtual ~Personaje();
 

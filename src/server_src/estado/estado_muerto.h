@@ -4,8 +4,6 @@
 
 #include "estado.h"
 
-#define TIEMPO_MUERTO 5
-
 class EstadoMuerto : public Estado {
 private:
    double tiempo_muerte;

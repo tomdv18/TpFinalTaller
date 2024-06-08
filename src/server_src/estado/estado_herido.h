@@ -4,11 +4,9 @@
 
 #include "estado.h"
 
-#define TIEMPO_HERIDO 2
-
 class EstadoHerido : public Estado {
 private:
-   bool tiempo_impacto;
+   double tiempo_impacto;
 
    bool cambiar_animacion;
 

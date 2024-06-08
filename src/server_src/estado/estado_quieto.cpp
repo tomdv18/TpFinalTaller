@@ -37,8 +37,6 @@ void EstadoQuieto::manejarEstado(uint8_t codigo_estado, double tiempo){
         std::cout << "ESTADO ESPECIAL" << std::endl;
         this->personaje->cambiarEstado(new EstadoEspecial());
         break;
-
-    
     default:
         break;
     }

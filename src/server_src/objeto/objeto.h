@@ -1,5 +1,5 @@
-#ifndef SERVER_OBJETO_H_
-#define SERVER_OBJETO_H_
+#ifndef OBJETO_H_
+#define OBJETO_H_
 
 #include <chrono>
 #include <cmath>
@@ -31,9 +31,11 @@ protected:
 
     bool mostrar;
 
+    bool envenenado;
+
 public:
     Objeto(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y, double tiempo_reaparicion,
-           uint32_t ancho, uint32_t alto);
+           uint32_t ancho, uint32_t alto, bool envenenado);
 
     // Getters Snapshot
 

@@ -1,7 +1,7 @@
 #include "arma.h"
 
 
-Arma::Arma(): balas(100), tiempo_disparo(-TIEMPO_ENTRE_DISPARO), codigo_bala(NORMAL) {}
+Arma::Arma(): balas(100), tiempo_disparo(-TIEMPO_ENTRE_DISPARO), codigo_bala(BALA_NORMAL) {}
 
 bool Arma::disparar(std::chrono::duration<double> tiempo_transcurrido) {
     double tiempo = tiempo_transcurrido.count();

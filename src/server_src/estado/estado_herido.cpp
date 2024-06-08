@@ -6,6 +6,9 @@
 #include "estado_muerto.h"
 #include "estado_especial.h"
 
+#define CONFIG Configuracion::config()
+
+
 EstadoHerido::EstadoHerido(double tiempo_impacto) : Estado(ESTADO_HERIDO){
     this->tiempo_impacto = tiempo_impacto;
     this->cambiar_animacion = false;
@@ -17,6 +20,7 @@ void EstadoHerido::manejarEstado(uint8_t codigo_estado, double tiempo){
 
     if(codigo_estado == ESTADO_MUERTO){
         this->personaje->cambiarEstado(new EstadoMuerto(tiempo));
+        return;
     }
 
 
@@ -41,9 +45,11 @@ void EstadoHerido::manejarEstado(uint8_t codigo_estado, double tiempo){
     case ESTADO_QUIETO:
         std::cout << "ESTADO QUIETO" << std::endl;
         this->personaje->cambiarEstado(new EstadoQuieto());
+        break;
     case ESTADO_ESPECIAL: 
         std::cout << "ESTADO ESPECIAL" << std::endl;
         this->personaje->cambiarEstado(new EstadoEspecial());
+        break;
     
     
     default:
@@ -52,7 +58,7 @@ void EstadoHerido::manejarEstado(uint8_t codigo_estado, double tiempo){
 }
 
 void EstadoHerido::actualizar(double tiempo){
-    if(tiempo - tiempo_impacto >= TIEMPO_HERIDO){
+    if(tiempo - tiempo_impacto >= CONFIG.getTiempoEstadoHerido()){
         cambiar_animacion = true;
     }
 }

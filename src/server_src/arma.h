@@ -4,7 +4,7 @@
 #include <chrono>
 #include <iostream>
 
-#include "../common_src/bala.h"
+#include "./bala/bala.h"
 
 #define TIEMPO_ENTRE_DISPARO 0.5
 
@@ -14,7 +14,7 @@ private:
 
     double tiempo_disparo;
 
-    CodigoBala codigo_bala;
+    uint8_t codigo_bala;
 
 public:
     Arma();

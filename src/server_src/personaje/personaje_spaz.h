@@ -15,7 +15,7 @@ public:
     void usar_habilidad(std::chrono::duration<double> tiempo_transcurrido) override;
 
     void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,
-                             std::map<uint32_t, Objeto*>& map_objetos, std::map<uint32_t, Objeto*>& map_objetos_comunes) override;
+                             std::map<uint32_t, Objeto*>& map_objetos, std::map<uint32_t, std::unique_ptr<Objeto>>& map_objetos_comunes) override;
 
     void mover_arriba(std::chrono::duration<double> tiempo_transcurrido) override;
 

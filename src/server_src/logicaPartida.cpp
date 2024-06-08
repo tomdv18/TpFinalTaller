@@ -2,7 +2,7 @@
 
 #define DURACION_PARTIDA 120.0f
 
-LogicaPartida::LogicaPartida(){
+LogicaPartida::LogicaPartida() : fabrica_objetos(){
 
     //map_objetos_solidos[1] = new Solido(1, 0, 550, 1, 5000, 100); //Limite del mapa abajo
 
@@ -15,7 +15,6 @@ LogicaPartida::LogicaPartida(){
     map_objetos_solidos[5] = new Solido(5, 0, 0, 1, 5000, 50);   //Limite del mapa arriba
 
     map_objetos_solidos[6] = new Solido(6, 590, 150, 1, 25, 5000); //X pared derecha
-
 
 
 /*
@@ -35,8 +34,26 @@ pared:
   - x: 596
     y: 150
 */
+
+    //Enemigo necesita
+    /*
+
+    posicion en X
+    posicion en Y
+
+    
+    */
+
+   /*
+
+    LEER YAML DEL MAPA INICIALIZAR TODAS ESTAS COSAS
+    SETEAR ZONAS DE RESPAWN PARA JUGADOR
+   
+   */
   
     map_enemigos[0] = new Rat(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
+
+    map_objetos_comunes[0] = fabrica_objetos.crear_objeto(ZANAHORIA,250,250,false);
 }
 
 
@@ -168,7 +185,7 @@ void LogicaPartida::disparar(uint32_t id_jugador,
     if (personaje != nullptr) {
         if(personaje->esta_muerto()) return;
         uint8_t codigo_bala = personaje->disparar(tiempo_transcurrido);
-        if (codigo_bala != NINGUNA) {
+        if (codigo_bala != NINGUNO) {
             int velocidad = personaje->mirando_izquierda() ? -1 : 1;
             int salida_x = personaje->mirando_izquierda() ? personaje->obtener_posicionX() + PERSONAJE_WIDTH/2 : personaje->obtener_posicionX();
             controlador_balas.agregar_bala(codigo_bala, id_jugador, salida_x,
@@ -258,8 +275,24 @@ void LogicaPartida::actualizar_partida(
     for (const auto& par: map_enemigos) {
         par.second->actualizar_posicion(tiempo_transcurrido);
 
-        // Calcular colision con los personajes
-        // Si el personaje esta usando la habilidad, el enemigo es quien recibe el daño
+        Rectangulo rect_enemigo = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
+                    par.second->obtener_ancho(), par.second->obtener_alto()};
+        if(par.second->esta_vivo()){
+            for (const auto& par: map_personajes) {
+                    Rectangulo rect_personaje = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
+                                    par.second->obtener_ancho(), par.second->obtener_alto()};
+                    if(rect_personaje.hay_colision(rect_enemigo)){
+                        if(!par.second->esta_muerto()){
+                                // Si esta muerto lo ignoro
+                            if(par.second->obtener_habilidad()){
+                                // El personaje le hace daño a el
+                            } else{
+                                par.second->recibir_golpe(50,tiempo_transcurrido); 
+                            } 
+                        }
+                    }
+            }
+        }            
     }
 
     auto& balas = controlador_balas.obtener_balas();
@@ -279,13 +312,11 @@ void LogicaPartida::actualizar_partida(
             Rectangulo rect_enemigo = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
                     par.second->obtener_ancho(), par.second->obtener_alto()};
             if(rect_enemigo.hay_colision(rect_bala)){
-                if(!par.second->esta_vivo()){
-                    // Si esta muerto lo ignoro
-                    continue;
+                if(par.second->esta_vivo()){
+                    par.second->recibir_golpe(200,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+                    it->impactar();
+                    break;
                 }
-                par.second->recibir_golpe(200,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
-                it->impactar();
-                break;
             }
         }
             
@@ -295,13 +326,11 @@ void LogicaPartida::actualizar_partida(
                 Rectangulo rect_personaje = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
                                 par.second->obtener_ancho(), par.second->obtener_alto()};
                 if(rect_personaje.hay_colision(rect_bala)){
-                    if(par.second->esta_muerto()){
-                            // Si esta muerto lo ignoro
-                        continue;
+                    if(!par.second->esta_muerto()){
+                        par.second->recibir_golpe(100,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+                        it->impactar();
+                        break;
                     }
-                    par.second->recibir_golpe(100,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
-                    it->impactar();
-                    break;
                 }
             }
         }
@@ -351,6 +380,7 @@ Evento LogicaPartida::obtener_snapshot(
         evento_personaje.esta_disparando = par.second->obtener_disparando();
         evento_personaje.codigo_estado = par.second->obtener_estado();
         evento_personaje.mirando_izquierda = par.second->mirando_izquierda();
+        evento_personaje.esta_intoxicado = par.second->obtener_intoxicado();
 
         evento.eventos_personaje.emplace_back(evento_personaje);
     }
@@ -408,9 +438,11 @@ LogicaPartida::~LogicaPartida() {
         delete par.second;
     }
 
+    /*
     for (auto& par: map_objetos_comunes) {
         delete par.second;
     }
+    */
     for (auto& par: map_enemigos) {
         delete par.second;
     }

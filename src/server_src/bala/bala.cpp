@@ -1,9 +1,9 @@
 #include "bala.h"
 
 
-Bala::Bala(uint8_t codigo_bala,uint32_t pos_x, uint32_t pos_y, uint32_t id_jugador, uint32_t id_bala, int velocidad) : 
+Bala::Bala(uint8_t codigo_bala,uint32_t pos_x, uint32_t pos_y, uint32_t id_jugador, uint32_t id_bala, int velocidad, uint8_t danio, double tiempo_entre_disparo, uint32_t rango_explosion, int municion, uint32_t ancho, uint32_t largo) : 
     codigo_bala(codigo_bala), id_jugador(id_jugador),posicion_x(pos_x), posicion_y(pos_y),
-    largo(15), ancho(15),impacto(false), id_bala(id_bala), velocidad(velocidad), daño(10)
+    largo(largo), ancho(ancho),impacto(false), id_bala(id_bala), velocidad(velocidad), danio(danio), tiempo_entre_disparo(tiempo_entre_disparo)
 
 {
     
@@ -47,7 +47,7 @@ uint32_t Bala::obtener_posicionY() const{
 }
 
 uint8_t Bala::obtener_daño() const{
-    return daño;
+    return danio;
 }
 
 bool Bala::obtener_impacto() const{

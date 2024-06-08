@@ -1,4 +1,5 @@
 option(SERVER "Build server" ON)
+set(CONFIG_FILE "${CMAKE_SOURCE_DIR}/configuracion.yaml")
 if(SERVER)
 	SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread")
 
@@ -40,14 +41,25 @@ if(SERVER)
 		./server_src/servidor.h
 		./server_src/arma.cpp
 		./server_src/arma.h
-		./server_src/controlador_balas.h
+		./server_src/bala/controlador_balas.h
+		./server_src/bala/bala.cpp
+		./server_src/bala/bala.h
 		./server_src/objeto/objeto.cpp
 		./server_src/objeto/objeto.h
 		./server_src/objeto/objeto_zanahoria.cpp
 		./server_src/objeto/objeto_zanahoria.h
 		./server_src/objeto/objeto_solido.cpp
 		./server_src/objeto/objeto_solido.h
+		./server_src/objeto/fabrica_objetos.h
+		./server_src/objeto/objeto_gema.cpp
+		./server_src/objeto/objeto_gema.h
+		./server_src/objeto/objeto_moneda.cpp
+		./server_src/objeto/objeto_moneda.h
+		./server_src/objeto/objeto_municion.cpp
+		./server_src/objeto/objeto_municion.h
 		./server_src/rectangulo.h
+		./server_src/configuracion.cpp
+		./server_src/configuracion.h
 		
 		
 		
@@ -69,8 +81,7 @@ if(SERVER)
 		./server_src/estado/estado_especial.h
 
 		
-		./common_src/bala.cpp
-		./common_src/bala.h
+		#./common_src/codigo_bala.h
 		./common_src/thread.h
 		./common_src/socket.h
 		./common_src/socket.cpp
@@ -88,6 +99,7 @@ if(SERVER)
 	find_package(yaml-cpp REQUIRED)
 	target_link_libraries(jazzservidor PRIVATE yaml-cpp)
 	target_compile_definitions(jazzservidor PUBLIC CONFIG_PATH="${CONFIG_FILE}")
+	
 	target_include_directories(jazzservidor PUBLIC ${PROJECT_SOURCE_DIR}/server_src/estado)
 	target_include_directories(jazzservidor PUBLIC ${PROJECT_SOURCE_DIR}/server_src/objeto)
 	target_include_directories(jazzservidor PUBLIC ${PROJECT_SOURCE_DIR}/server_src/personaje)
@@ -251,7 +263,7 @@ if(CLIENT)
 
 	# biblioteca YAML-CPP
 	find_package(yaml-cpp REQUIRED)
-	target_link_libraries(jazzservidor PRIVATE yaml-cpp)
+	target_link_libraries(jazzcliente PRIVATE yaml-cpp)
 	
 	target_link_libraries(jazzcliente PUBLIC Qt5::Widgets Qt5::Core SDL2pp::SDL2pp SDL2::SDL2main)
 	target_include_directories(jazzcliente PRIVATE ${PROJECT_SOURCE_DIR}/src)
