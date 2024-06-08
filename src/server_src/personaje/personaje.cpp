@@ -18,6 +18,7 @@ Personaje::Personaje(uint32_t id_jugador):
     tiempo_invulnerable = 0;
     tiempo_salto = 0;
     tiempo_especial = 0;
+    puntos = 0;
     direccion_mirando = DERECHA;
     ancho = CONFIG.getAnchoPersonaje();
     alto = CONFIG.getAltoPersonaje();
@@ -121,8 +122,8 @@ void Personaje::correr() {
 
 void Personaje::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido) {
     if(invulnerable) return;
-    int vida_restante = (int)this->vida - golpe; 
-    if(vida_restante <= 0){
+    this->vida -= golpe; 
+    if(vida <= 0){
         std::cout << "MUERTO" << std::endl;
         muerto = true;
         vida = 0;
@@ -130,7 +131,6 @@ void Personaje::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiemp
         velocidad_y = 0;
         this->estado->manejarEstado(ESTADO_MUERTO,tiempo_transcurrido.count());
     } else {
-        vida = (uint8_t) vida_restante;
         this->estado->manejarEstado(ESTADO_HERIDO, tiempo_transcurrido.count());
         volverse_invulnerable(tiempo_transcurrido.count());
     }
@@ -139,6 +139,17 @@ void Personaje::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiemp
 void Personaje::intoxicarse(double tiempo){
     tiempo_intoxicado = tiempo;
     intoxicado = true;
+}
+
+void Personaje::asignar_puntos(uint32_t puntos){
+    this->puntos += puntos;
+}
+
+void Personaje::curarse(int vida_restaurada){
+    vida += vida_restaurada;
+    if(vida > CONFIG.getVidaPersonaje()){
+        vida = CONFIG.getVidaPersonaje();
+    }
 }
 
 void Personaje::revivir(){
@@ -226,7 +237,7 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
         velocidad_y = 0;
     }
 
-    //std::cout << "VELOCIDAD Y:" << velocidad_y << std::endl;
+    std::cout << "PUNTUACION:" << puntos << std::endl;
     //std::cout << "ESTA INVULNERABLE: " << (int) invulnerable << std::endl;
 
     //std::cout << "ESTA INTOXICADO: " << (int) intoxicado << std::endl;

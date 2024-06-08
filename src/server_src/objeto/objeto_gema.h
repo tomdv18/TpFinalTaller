@@ -12,7 +12,7 @@
 #define REAPARICION_GEMA 5
 
 class Gema: public Objeto {
-
+    uint32_t puntos_otorgados;
 
 public:
     Gema(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y,

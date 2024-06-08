@@ -23,7 +23,7 @@ protected:
     uint32_t id_jugador;
     uint32_t posicion_x;
     uint32_t posicion_y;
-    uint8_t vida; //DEBE SER INT PARA PODER SER NEGATIVO
+    int vida; //DEBE SER INT PARA PODER SER NEGATIVO
     bool esta_quieto;
     uint32_t ancho;
     uint32_t alto;
@@ -59,6 +59,7 @@ protected:
 
     bool en_superficie;
 
+    uint32_t puntos;
 
     uint8_t bala_actual;
     // Map tipo de bala -> municion de esa bala
@@ -107,6 +108,9 @@ public:
 
     virtual void intoxicarse(double tiempo);
 
+    virtual void asignar_puntos(uint32_t puntos);
+
+    virtual void curarse(int vida_restaurada);
 
     // Acciones
 

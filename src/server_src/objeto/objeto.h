@@ -60,7 +60,7 @@ public:
     virtual uint8_t obtener_objeto() = 0;
 
     virtual void interactuar_personaje(Personaje* personaje,
-                                       std::chrono::duration<double> tiempo_transcurrido) = 0;
+                                       std::chrono::duration<double> tiempo_transcurrido);
 };
 
 

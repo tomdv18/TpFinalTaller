@@ -13,9 +13,10 @@ class FabricaObjetos{
     uint32_t id;
 public:
     FabricaObjetos(){
-        id = 0;
+        id = -1;
     }
     std::unique_ptr<Objeto> crear_objeto(uint8_t codigo_objeto, uint32_t posicion_x,uint32_t posicion_y, bool envenenado){
+        id++;
         switch(codigo_objeto){
             case ZANAHORIA:
                 return std::make_unique<Zanahoria>(id,posicion_x,posicion_y,REAPARICION_ZANAHORIA,ANCHO_ZANAHORIA,ALTO_ZANAHORIA, envenenado);
@@ -30,7 +31,6 @@ public:
             default:
                 return nullptr;
         }
-        id++;
     }
     
 };

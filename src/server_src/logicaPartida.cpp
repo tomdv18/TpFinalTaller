@@ -53,7 +53,9 @@ pared:
   
     map_enemigos[0] = new Rat(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
 
-    map_objetos_comunes[0] = fabrica_objetos.crear_objeto(ZANAHORIA,250,250,false);
+    map_objetos_comunes[0] = fabrica_objetos.crear_objeto(ZANAHORIA,400,275,false);
+    map_objetos_comunes[1] = fabrica_objetos.crear_objeto(GEMA,475,275,false);
+    map_objetos_comunes[2] = fabrica_objetos.crear_objeto(MONEDA,525,275,false);
 }
 
 
@@ -287,7 +289,7 @@ void LogicaPartida::actualizar_partida(
                             if(par.second->obtener_habilidad()){
                                 // El personaje le hace daño a el
                             } else{
-                                par.second->recibir_golpe(50,tiempo_transcurrido); 
+                                par.second->recibir_golpe(1,tiempo_transcurrido); 
                             } 
                         }
                     }

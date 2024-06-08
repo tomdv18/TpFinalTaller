@@ -31,4 +31,11 @@ void Objeto::reaparecer(std::chrono::duration<double> tiempo_transcurrido) {
     }
 }
 
+void Objeto::interactuar_personaje(Personaje* personaje,
+                                       std::chrono::duration<double> tiempo_transcurrido){
+    if(this->envenenado){
+        personaje->intoxicarse(tiempo_transcurrido.count());
+    }
+}
+
 Objeto::~Objeto() {}

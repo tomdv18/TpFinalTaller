@@ -4,6 +4,15 @@
 #include <yaml-cpp/yaml.h>
 
 
+
+struct ConfigObjeto {
+    uint32_t ancho;
+    uint32_t alto;
+    double tiempo_reaparicion;
+    uint32_t vida_restaurada;
+    uint32_t puntos_otorgados;
+};
+
 struct ConfigBala {
         uint16_t municion;
         double tiempo_entre_disparo;
@@ -48,6 +57,10 @@ private:
     // Atributos de municion
 
     std::map<uint8_t, ConfigBala> config_balas;
+
+    // Atributo de objeto
+
+    std::map<uint8_t, ConfigObjeto> config_objetos;
     
     Configuracion(const YAML::Node& config);
 
@@ -90,6 +103,16 @@ public:
             return it->second;
         } else {
             throw std::runtime_error("Bala no encontrada en la config.");
+        }
+    }
+
+    // Getters para Objetos
+    const ConfigObjeto& obtenerObjeto(uint8_t codigo_objeto) const {
+        auto it = config_objetos.find(codigo_objeto);
+        if (it != config_objetos.end()) {
+            return it->second;
+        } else {
+            throw std::runtime_error("Objeto no encontrado en la config.");
         }
     }
 };

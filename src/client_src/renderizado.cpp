@@ -118,7 +118,7 @@ void Renderizado::renderizar(Evento evento) {
     for(auto &evento : evento.eventos_objeto) {
         if(objetosViews.find(evento.id_objeto) == objetosViews.end()) {
             std::unique_ptr<ObjetoView> objeto;
-            switch(evento.id_objeto) {
+            switch(evento.codigo_objeto) {
                 case GEMA:
                     objeto = std::unique_ptr<ObjetoView>(new ObjetoGemaView());
                     break;
@@ -218,8 +218,10 @@ void Renderizado::renderizar(Evento evento) {
     
     // Renderizo objetos
     for(auto &objeto : this->objetosViews) {
-
         ObjetoView &o = *(objeto.second);
+        if(!o.mostrandose()){
+            continue;
+        }
         o.renderizar_objeto(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
     }
     /*

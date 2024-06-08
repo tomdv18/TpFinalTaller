@@ -2,7 +2,7 @@
 
 #define PASOS_POR_DIRECCION 15
 #define VIDA_DEFAULT 100
-#define DANIO_DEFAULT 25
+#define DANIO_DEFAULT 1
 #define TIEMPO_REAPARICION 5
 
 Enemigo::Enemigo(uint32_t id_enemigo):

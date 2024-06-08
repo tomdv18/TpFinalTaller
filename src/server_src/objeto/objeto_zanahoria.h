@@ -13,7 +13,7 @@
 #define REAPARICION_ZANAHORIA 5
 
 class Zanahoria: public Objeto {
-
+    int vida_restaurada;
 
 public:
     Zanahoria(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y,

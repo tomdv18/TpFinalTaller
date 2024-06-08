@@ -13,7 +13,7 @@
 #define REAPARICION_MONEDA 5
 
 class Moneda: public Objeto {
-
+    uint32_t puntos_otorgados;
 
 public:
     Moneda(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y,

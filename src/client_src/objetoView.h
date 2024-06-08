@@ -13,10 +13,13 @@ class ObjetoView {
     int widht;
     int height;
     std::unique_ptr<Animacion> animacion;
+    bool mostrarse;
 
    public:
 
     explicit ObjetoView();
+
+    virtual bool mostrandose();
 
     virtual void crear_texturas(SDL2pp::Renderer *render);
 

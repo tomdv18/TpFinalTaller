@@ -1,4 +1,5 @@
 #include "configuracion.h"
+#include "../common_src/codigo_objeto.h"
 #include <fstream>
 #include <iostream>
 
@@ -46,10 +47,10 @@ Configuracion::Configuracion(const YAML::Node& config) {
         // Municion
 
         std::map<std::string, uint8_t> codigo_balas = {
-            {"bala_normal", 0},
-            {"bala_veloz", 1},
-            {"cohete_rapido", 2},
-            {"cohete_toxico", 3}
+            {"bala_normal", BALA_NORMAL},
+            {"bala_veloz", BALA_VELOZ},
+            {"cohete_rapido", COHETE_RAPIDO},
+            {"cohete_toxico", COHETE_TOXICO}
         };
 
         for (const auto& entry : config["municion"]) {
@@ -68,6 +69,30 @@ Configuracion::Configuracion(const YAML::Node& config) {
                 };
             }
         }
+
+        std::map<std::string, uint8_t> codigo_objetos = {
+            {"zanahoria", ZANAHORIA},
+            {"gema", GEMA},
+            {"moneda", MONEDA}
+        };
+
+    for (const auto& entry : config["objeto"]) {
+        std::string codigo_objeto_str = entry.first.as<std::string>();
+        if (codigo_objetos.find(codigo_objeto_str) != codigo_objetos.end()) {
+            uint8_t codigo_objeto = codigo_objetos[codigo_objeto_str];
+            ConfigObjeto config_objeto;
+            config_objeto.ancho = entry.second["ancho"].as<uint32_t>();
+            config_objeto.alto = entry.second["alto"].as<uint32_t>();
+            config_objeto.tiempo_reaparicion = entry.second["tiempo_reaparicion"].as<double>();
+            if (entry.second["vida_restaurada"]) {
+                config_objeto.vida_restaurada = entry.second["vida_restaurada"].as<uint32_t>();
+            }
+            if (entry.second["puntos_otorgados"]) {
+                config_objeto.puntos_otorgados = entry.second["puntos_otorgados"].as<uint32_t>();
+            }
+            config_objetos[codigo_objeto] = config_objeto;
+        }
+    }
 
 
 }
