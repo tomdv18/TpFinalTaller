@@ -33,7 +33,8 @@ void Renderizado::iniciar_interfaz(int w, int h) {
 
 void Renderizado::renderizar(Evento evento) {
     
-    //render->SetDrawColor(0x80, 0x80, 0x80);
+    // Defino tiempo
+    this->interfaz->definir_tiempo(evento.tiempo_restante);
     
     render->Clear();
     
