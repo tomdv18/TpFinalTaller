@@ -32,9 +32,9 @@ estado:
 municion:
   bala_normal:
     municion: 0
-    tiempo_entre_disparo: 2
+    tiempo_entre_disparo: 0.75
     velocidad_del_proyectil: 10
-    danio: 1
+    danio: 2
     rango_explosion: 0
     ancho: 10
     largo: 10

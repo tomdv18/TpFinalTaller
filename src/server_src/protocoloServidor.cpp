@@ -57,6 +57,8 @@ void ProtocoloServidor::enviar_evento(bool& was_closed, Evento evento) {
         p.id_jugador = htonl(p.id_jugador);
         p.posicion_x = htonl(p.posicion_x);
         p.posicion_y = htonl(p.posicion_y);
+        p.puntos = htonl(p.puntos);
+        p.municion = htonl(p.municion);
         skt_jugador.sendall(&p, sizeof(p), &was_closed);
         if (was_closed) {
             throw std::runtime_error("Error, se cerro la conexion con el servidor");

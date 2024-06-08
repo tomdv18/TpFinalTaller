@@ -28,6 +28,14 @@ public:
                 const ConfigBala& config_bala = CONFIG.obtenerBala(codigo_objeto);
                 return std::make_unique<Municion>(id,posicion_x,posicion_y,config_bala.tiempo_reaparicion, config_bala.ancho,config_bala.largo, codigo_objeto, config_bala.municion);
             }
+            case COHETE_RAPIDO:{
+                const ConfigBala& config_bala = CONFIG.obtenerBala(codigo_objeto);
+                return std::make_unique<Municion>(id,posicion_x,posicion_y,config_bala.tiempo_reaparicion, config_bala.ancho,config_bala.largo, codigo_objeto, config_bala.municion);
+            }
+            case COHETE_TOXICO:{
+                const ConfigBala& config_bala = CONFIG.obtenerBala(codigo_objeto);
+                return std::make_unique<Municion>(id,posicion_x,posicion_y,config_bala.tiempo_reaparicion, config_bala.ancho,config_bala.largo, codigo_objeto, config_bala.municion);
+            }
             default:
                 return nullptr;
         }

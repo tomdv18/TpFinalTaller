@@ -147,6 +147,11 @@ public:
 
     virtual uint8_t obtener_intoxicado();
 
+    virtual uint32_t obtener_puntos();
+
+    virtual uint8_t obtener_bala_actual();
+
+    virtual uint32_t obtener_municion_actual();
     // Getters Snapshot
 
     virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,

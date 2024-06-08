@@ -11,6 +11,8 @@ struct __attribute__((packed)) EventoPersonaje{
     uint32_t id_jugador;
     uint32_t posicion_x;
     uint32_t posicion_y;
+    uint32_t puntos;
+    uint32_t municion;
     uint8_t vida;
     uint8_t id_personaje;
     uint8_t esta_quieto;
@@ -21,6 +23,7 @@ struct __attribute__((packed)) EventoPersonaje{
     uint8_t codigo_estado;
     uint8_t mirando_izquierda;
     uint8_t esta_intoxicado;
+    uint8_t bala_actual;
 
 };
 

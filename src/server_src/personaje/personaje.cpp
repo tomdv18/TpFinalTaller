@@ -247,6 +247,18 @@ bool Personaje::es_invulnerable(){
     return invulnerable;
 }
 
+uint32_t Personaje::obtener_puntos(){
+    return puntos;
+}
+
+uint8_t Personaje::obtener_bala_actual(){
+    return bala_actual;
+}
+
+uint32_t Personaje::obtener_municion_actual(){
+    return municiones[bala_actual];
+}
+
 bool Personaje::hay_colision(uint32_t pos_x, uint32_t pos_y, uint32_t ancho, uint32_t largo) {
     return (this->posicion_x<pos_x + ancho&& this->posicion_x + this->ancho > pos_x &&
             this->posicion_y<pos_y + largo&& this->posicion_y + this->alto > pos_y);

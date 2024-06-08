@@ -317,6 +317,8 @@ void LogicaPartida::actualizar_partida(
     auto& balas = controlador_balas.obtener_balas();
     auto it = balas.begin();
 
+    
+
     while (it != balas.end()) {
         it->actualizar_posicion();
 
@@ -343,7 +345,7 @@ void LogicaPartida::actualizar_partida(
                                 par.second->obtener_ancho(), par.second->obtener_alto()};
                 if(rect_personaje.hay_colision(rect_bala) && it->obtener_id_jugador() != par.first){  // No se puede hacer daño solo
                     if(!par.second->esta_muerto()){
-                        par.second->recibir_golpe(100,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+                        par.second->recibir_golpe(it->obtener_danio(),tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
                         it->impactar();
                         break;
                     }
@@ -397,6 +399,9 @@ Evento LogicaPartida::obtener_snapshot(
         evento_personaje.codigo_estado = par.second->obtener_estado();
         evento_personaje.mirando_izquierda = par.second->mirando_izquierda();
         evento_personaje.esta_intoxicado = par.second->obtener_intoxicado();
+        evento_personaje.puntos = par.second->obtener_puntos();
+        evento_personaje.bala_actual = par.second->obtener_bala_actual();
+        evento_personaje.municion = par.second->obtener_municion_actual();
 
         evento.eventos_personaje.emplace_back(evento_personaje);
     }

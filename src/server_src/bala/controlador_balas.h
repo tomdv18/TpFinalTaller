@@ -24,7 +24,6 @@ public:
                       int velocidad) {
         uint32_t id_bala = obtener_id();
        
-        //  pos_x + velocidad * (CONFIG.getAnchoPersonaje())
         const ConfigBala& config_bala = CONFIG.obtenerBala(codigo_bala);
         balas.push_back(Bala(codigo_bala,
                          pos_x + offset,

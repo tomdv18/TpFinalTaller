@@ -100,6 +100,8 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
         event_personaje.id_jugador = ntohl(event_personaje.id_jugador);
         event_personaje.posicion_x = ntohl(event_personaje.posicion_x);
         event_personaje.posicion_y = ntohl(event_personaje.posicion_y);
+        event_personaje.puntos = ntohl(event_personaje.puntos);
+        event_personaje.municion = ntohl(event_personaje.municion);
         eventos_personajes.emplace_back(event_personaje);
     }
     
