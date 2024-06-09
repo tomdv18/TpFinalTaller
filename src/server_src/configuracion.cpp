@@ -36,7 +36,7 @@ Configuracion::Configuracion(const YAML::Node& config) {
         velocidad_y_habilidad_lori = config["lori"]["velocidad_y_habilidad"].as<int>();
 
         //partida
-        duracion_segundos = config["tiempo_partida"]
+        duracion_segundos = config["tiempo_partida"].as<int>();
 
         // Pantalla
         ancho_pantalla = config["pantalla"]["lim_x"].as<int>();
