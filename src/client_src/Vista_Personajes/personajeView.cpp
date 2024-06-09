@@ -32,6 +32,7 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
     this->isRunning = bool (evento.esta_corriendo);
     this->isJumping = bool (evento.esta_saltando);
     this->isShooting = bool (evento.esta_disparando);
+    this->isIntoxicated = bool (evento.esta_intoxicado);
     this->estado = evento.codigo_estado;
     this->posicion_x = evento.posicion_x;
     this->posicion_y = evento.posicion_y;
@@ -41,17 +42,14 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
     if(estado == ESTADO_SALTANDO) {
         this->animaciones.at(SALTANDO)->en_loop(false);
         this->animaciones.at(SALTANDO)->acualizar(dt);
-    } else if(estado == ESTADO_INTOXICADO) {
-        if(this->isMoving) {
+    }  else if(estado == ESTADO_CAMINANDO) {
+        if (this->isIntoxicated) {
             this->animaciones.at(INTOXICADO_CAMINANDO)->en_loop(true);
             this->animaciones.at(INTOXICADO_CAMINANDO)->acualizar(dt);
-        } else {
-            this->animaciones.at(INTOXICADO_QUIETO)->en_loop(true);
-            this->animaciones.at(INTOXICADO_QUIETO)->acualizar(dt);
+        } else{
+            this->animaciones.at(CAMINANDO)->en_loop(true);
+            this->animaciones.at(CAMINANDO)->acualizar(dt);
         }
-    } else if(estado == ESTADO_CAMINANDO) {
-        this->animaciones.at(CAMINANDO)->en_loop(true);
-        this->animaciones.at(CAMINANDO)->acualizar(dt);
     } else if (estado == ESTADO_CORRIENDO){
         this->animaciones.at(CORRIENDO)->en_loop(true);
         this->animaciones.at(CORRIENDO)->acualizar(dt);
@@ -59,12 +57,15 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
         if (this->isShooting) {
             this->animaciones.at(DISPARO_QUIETO)->en_loop(true);
             this->animaciones.at(DISPARO_QUIETO)->acualizar(dt);
+        } else if(this->isIntoxicated){
+            this->animaciones.at(INTOXICADO_QUIETO)->en_loop(true);
+            this->animaciones.at(INTOXICADO_QUIETO)->acualizar(dt);
         } else {
             this->animaciones.at(QUIETO_CLIENTE)->en_loop(true);
             this->animaciones.at(QUIETO_CLIENTE)->acualizar(dt);
             this->animaciones.at(SALTANDO)->reset_frame();
         }
-    } 
+    }
 }
 
 void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y) {
@@ -77,6 +78,8 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
         SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
         if(isShooting){
             animaciones.at(DISPARO_QUIETO)->animar(*render, personaje, flip);
+        }else if(isIntoxicated){
+            animaciones.at(INTOXICADO_QUIETO)->animar(*render, personaje, flip);
         }else{
             animaciones.at(QUIETO_CLIENTE)->animar(*render, personaje, flip);
         }
@@ -84,7 +87,11 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
     }
     case ESTADO_CAMINANDO:{
         SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
-        animaciones.at(CAMINANDO)->animar(*render, personaje, flip);
+        if(isIntoxicated){
+            animaciones.at(INTOXICADO_CAMINANDO)->animar(*render, personaje, flip);
+        }else{
+            animaciones.at(CAMINANDO)->animar(*render, personaje, flip);
+        }
         break;
     }
     case ESTADO_CORRIENDO:{
