@@ -4,6 +4,7 @@
 
 #define CONFIG Configuracion::config()
 
+
 Enemigo::Enemigo(uint32_t id_enemigo):
         id_enemigo(id_enemigo),
         posicion_x(150),
@@ -22,8 +23,8 @@ Enemigo::Enemigo(uint32_t id_enemigo):
 }
 
 void Enemigo::mover_derecha() {
-    if (posicion_x + PERSONAJE_WIDTH < WIDTH) {
-        velocidad_x = VELOCIDAD;
+    if (posicion_x + ancho < WIDTH) {
+        velocidad_x = CONFIG.obtenerVelocidadEnemigos();
         esta_quieto = false;
     }
     direccion_mirando = DERECHA;
@@ -31,7 +32,7 @@ void Enemigo::mover_derecha() {
 
 void Enemigo::mover_izquierda() {
     if (posicion_x > 0) {
-        velocidad_x = -VELOCIDAD;
+        velocidad_x = -CONFIG.obtenerVelocidadEnemigos();
         esta_quieto = false;
     }
     direccion_mirando = IZQUIERDA;
@@ -140,8 +141,8 @@ void Enemigo::actualizar_posicion(std::chrono::duration<double> tiempo_transcurr
     }
 
     if (velocidad_x > 0) {
-        if (nueva_posicion_x >= WIDTH - PERSONAJE_WIDTH) {
-            posicion_x = WIDTH - PERSONAJE_WIDTH;
+        if (nueva_posicion_x >= WIDTH - ancho) {
+            posicion_x = WIDTH - ancho;
         } else {
             posicion_x = nueva_posicion_x;
         }

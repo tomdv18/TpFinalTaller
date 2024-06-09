@@ -11,9 +11,6 @@
 
 #define WIDTH 640
 #define HEIGHT 480
-#define PERSONAJE_HEIGHT 50
-#define PERSONAJE_WIDTH 50
-#define VELOCIDAD 5
 
 class Enemigo {
 protected:

@@ -97,6 +97,7 @@ Configuracion::Configuracion(const YAML::Node& config) {
         //Enemigos
         vida_default_enemigo = config["enemigo"]["vida_default"].as<int>();
         danio_default_enemigo = config["enemigo"]["danio_default"].as<int>();
+        velocidad_enemigo = config ["enemigo"]["velocidad_default"].as<int>();
         ancho_enemigo = config["enemigo"]["ancho"].as<int>();
         alto_enemigo = config["enemigo"]["alto"].as<int>();
         vida_fencer = config["enemigo"]["fencer"]["vida"].as<int>();
