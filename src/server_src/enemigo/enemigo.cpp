@@ -22,8 +22,8 @@ Enemigo::Enemigo(uint32_t id_enemigo):
 }
 
 void Enemigo::mover_derecha() {
-    if (posicion_x + PERSONAJE_WIDTH < WIDTH) {
-        velocidad_x = VELOCIDAD;
+    if (posicion_x + ancho < WIDTH) {
+        velocidad_x = CONFIG.obtenerVelocidadEnemigos();
         esta_quieto = false;
     }
     direccion_mirando = DERECHA;
@@ -31,7 +31,7 @@ void Enemigo::mover_derecha() {
 
 void Enemigo::mover_izquierda() {
     if (posicion_x > 0) {
-        velocidad_x = -VELOCIDAD;
+        velocidad_x = -CONFIG.obtenerVelocidadEnemigos();;
         esta_quieto = false;
     }
     direccion_mirando = IZQUIERDA;
@@ -47,9 +47,13 @@ void Enemigo::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_
     }
 }
 
-void Enemigo::matar() { vivo = false; }
+void Enemigo::matar() { 
+    vida = 0;
+    vivo = false; }
 
-void Enemigo::revivir() { vivo = true; }
+void Enemigo::revivir() { 
+    vida = CONFIG.obtenerVidaDefaultEnemigo();
+    vivo = true; }
 
 bool Enemigo::esta_vivo() { return vivo; }
 
@@ -136,8 +140,8 @@ void Enemigo::actualizar_posicion(std::chrono::duration<double> tiempo_transcurr
     }
 
     if (velocidad_x > 0) {
-        if (nueva_posicion_x >= WIDTH - PERSONAJE_WIDTH) {
-            posicion_x = WIDTH - PERSONAJE_WIDTH;
+         if (nueva_posicion_x >= WIDTH - ancho) {
+            posicion_x = WIDTH - ancho;
         } else {
             posicion_x = nueva_posicion_x;
         }

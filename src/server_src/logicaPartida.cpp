@@ -1,6 +1,7 @@
 #include "logicaPartida.h"
 
-#define DURACION_PARTIDA 120.0f
+
+#define CONFIG Configuracion::config()
 
 LogicaPartida::LogicaPartida() : fabrica_objetos(){
 
@@ -200,7 +201,7 @@ void LogicaPartida::disparar(uint32_t id_jugador,
             int velocidad = personaje->mirando_izquierda() ? -1 : 1;
             uint32_t offset = personaje->mirando_izquierda() ? -CONFIG.getAnchoPersonaje()/2 : velocidad * (CONFIG.getAnchoPersonaje());
             controlador_balas.agregar_bala(codigo_bala, id_jugador, personaje->obtener_posicionX(), offset,
-                                           personaje->obtener_posicionY() + PERSONAJE_HEIGHT / 4,
+                                           personaje->obtener_posicionY() + CONFIG.getAnchoPersonaje() / 4,
                                            velocidad);
         }
     }
@@ -381,7 +382,7 @@ Evento LogicaPartida::obtener_snapshot(
     std::chrono::time_point<std::chrono::high_resolution_clock> actual =
             std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> tiempo = actual - start;
-    evento.tiempo_restante = DURACION_PARTIDA - (uint16_t)tiempo.count();
+    evento.tiempo_restante = CONFIG.getDuracionPartida() - (uint16_t)tiempo.count();
 
     for (const auto& par: map_personajes) {
         EventoPersonaje evento_personaje;

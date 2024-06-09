@@ -23,7 +23,7 @@ protected:
     uint32_t id_jugador;
     uint32_t posicion_x;
     uint32_t posicion_y;
-    int vida; //DEBE SER INT PARA PODER SER NEGATIVO
+    int8_t vida; //DEBE SER INT PARA PODER SER NEGATIVO
     bool esta_quieto;
     uint32_t ancho;
     uint32_t alto;
@@ -105,6 +105,8 @@ public:
     virtual void revivir();
 
     virtual void volverse_invulnerable(double tiempo);
+
+    virtual void volverse_vulnerable();
 
     virtual void intoxicarse(double tiempo);
 

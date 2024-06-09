@@ -35,6 +35,9 @@ Configuracion::Configuracion(const YAML::Node& config) {
         velocidad_x_habilidad_lori = config["lori"]["velocidad_x_habilidad"].as<int>();
         velocidad_y_habilidad_lori = config["lori"]["velocidad_y_habilidad"].as<int>();
 
+        //partida
+        duracion_segundos = config["tiempo_partida"].as<int>();
+
         // Pantalla
         ancho_pantalla = config["pantalla"]["lim_x"].as<int>();
         alto_pantalla = config["pantalla"]["lim_y"].as<int>();
@@ -97,6 +100,7 @@ Configuracion::Configuracion(const YAML::Node& config) {
         //Enemigos
         vida_default_enemigo = config["enemigo"]["vida_default"].as<int>();
         danio_default_enemigo = config["enemigo"]["danio_default"].as<int>();
+        velocidad_enemigo = config ["enemigo"]["velocidad_default"].as<int>();
         ancho_enemigo = config["enemigo"]["ancho"].as<int>();
         alto_enemigo = config["enemigo"]["alto"].as<int>();
         vida_fencer = config["enemigo"]["fencer"]["vida"].as<int>();

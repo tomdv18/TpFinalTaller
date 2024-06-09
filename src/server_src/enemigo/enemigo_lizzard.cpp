@@ -15,6 +15,11 @@ void Lizzard::mover_derecha() { Enemigo::mover_derecha(); }
 
 void Lizzard::mover_izquierda() { Enemigo::mover_izquierda(); }
 
+void Lizzard::revivir(){
+    vida = CONFIG.obtenerVidaLizzard();
+    vivo = true;
+}
+
 void Lizzard::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido) {
     if(tiempo_transcurrido.count() - tiempo_muerte >= tiempo_reaparicion){
         vida = CONFIG.obtenerVidaLizzard();

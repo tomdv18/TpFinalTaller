@@ -205,7 +205,11 @@ void Personaje::volverse_invulnerable(double tiempo){
         invulnerable = true;
     }
 }
-
+void Personaje::volverse_vulnerable(){ //METODO PARA TESTING
+    if(invulnerable){
+        invulnerable = false;
+    }
+}
 
 uint32_t Personaje::obtener_posicionX() { return posicion_x; }
 
