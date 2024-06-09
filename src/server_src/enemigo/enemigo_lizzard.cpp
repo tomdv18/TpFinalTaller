@@ -10,10 +10,6 @@ uint8_t Lizzard::obtener_personaje() {
     return LIZZARD;
 }
 
-void Lizzard::revivir(){
-    vida = CONFIG.obtenerVidaLizzard();
-    vivo = true;
-}
 
 void Lizzard::mover_derecha() { Enemigo::mover_derecha(); }
 

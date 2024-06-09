@@ -11,13 +11,16 @@
 
 #define WIDTH 640
 #define HEIGHT 480
+#define PERSONAJE_HEIGHT 50
+#define PERSONAJE_WIDTH 50
+#define VELOCIDAD 5
 
 class Enemigo {
 protected:
     uint32_t id_enemigo;  // EL ATRIBUTO ID PROBABLEMENTE HAYA QUE REMOVERLO
     uint32_t posicion_x;
     uint32_t posicion_y;
-    int8_t vida;
+    uint8_t vida;
     bool esta_quieto;
 
     uint32_t ancho;

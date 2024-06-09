@@ -20,7 +20,6 @@
 #include "./personaje/personaje_spaz.h"
 #include "rectangulo.h"
 
-
 class LogicaPartida {
 private:
     std::map<uint32_t, Personaje*> map_personajes;

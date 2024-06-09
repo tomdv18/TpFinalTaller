@@ -9,22 +9,25 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2pp/SDL2pp.hh>
-#include "personajeView.h"
-#include "personajeJazzView.h"
-#include "personajeLoriView.h"
-#include "personajeSpazView.h"
-#include "enemigoView.h"
-#include "enemigoLizzardView.h"
-#include "enemigoFencerView.h"
-#include "enemigoRatView.h"
-#include "objetoView.h"
-#include "objetoGemaView.h"
-#include "objetoMonedaView.h"
-#include "objetoZanahoriaView.h"
+#include "../src/client_src/Vista_Personajes/personajeView.h"
+#include "../src/client_src/Vista_Personajes/personajeJazzView.h"
+#include "../src/client_src/Vista_Personajes/personajeLoriView.h"
+#include "../src/client_src/Vista_Personajes/personajeSpazView.h"
+#include "../src/client_src/Vista_Enemigos/enemigoView.h"
+#include "../src/client_src/Vista_Enemigos/enemigoLizzardView.h"
+#include "../src/client_src/Vista_Enemigos/enemigoFencerView.h"
+#include "../src/client_src/Vista_Enemigos/enemigoRatView.h"
+#include "../src/client_src/Vista_Objetos/objetoView.h"
+#include "../src/client_src/Vista_Objetos/objetoGemaView.h"
+#include "../src/client_src/Vista_Objetos/objetoMonedaView.h"
+#include "../src/client_src/Vista_Objetos/objetoZanahoriaView.h"
+#include "../src/client_src/Vista_Objetos/objetoMunicionTipo_1View.h"
+#include "../src/client_src/Vista_Objetos/objetoMunicionTipo_2View.h"
+#include "../src/client_src/Vista_Objetos/objetoMunicionTipo_3View.h"
 #include "direcciones.h"
 #include "mapa.h"
 #include "camara.h"
-#include "balasPersonajes.h"
+#include "../src/client_src/Vista_Proyectiles/balasPersonajes.h"
 #include "interfaz.h"
 
 
@@ -44,8 +47,6 @@ class Renderizado {
     std::unique_ptr<Mapa> mapa;
     std::unique_ptr<Camara> camara;
     std::unique_ptr<Interfaz> interfaz;
-    // Map id_jugador, map de sus balas -> id_bala, balaView
-    //std::map<uint32_t, std::map<uint32_t, std::unique_ptr<BalaView>>> balas;
 
    public:
 

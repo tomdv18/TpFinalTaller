@@ -90,7 +90,6 @@ objeto:
 enemigo:
   tiempo_reaparicion_enemigo: 5
   vida_default: 100
-  velocidad_default: 3
   danio_default: 1
   ancho: 50
   alto: 50

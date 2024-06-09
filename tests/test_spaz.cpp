@@ -28,7 +28,7 @@ TEST_F(PersonajeSpazTest, obtenerPersonaje){
 
 
 int main(int argc, char*argv[]){
-    std::cout << "\nTests Personaje SPAZ\n" << std::endl;
+    std::cout << "Tests Personaje SPAZ" << std::endl;
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

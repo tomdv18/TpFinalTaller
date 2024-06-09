@@ -66,7 +66,6 @@ private:
 
     int vida_default_enemigo;
     int danio_default_enemigo;
-    int velocidad_enemigo;
     int ancho_enemigo;
     int alto_enemigo;
     int vida_fencer;
@@ -131,7 +130,6 @@ public:
     //Getters para enemigos
     int obtenerVidaDefaultEnemigo() const {return vida_default_enemigo;}
     int obtener_danio_default_enemigo() const {return danio_default_enemigo;}
-    int obtenerVelocidadEnemigos() const {return velocidad_enemigo;}
     int obtenerAnchoEnemigo() const {return ancho_enemigo;}
     int obtenerAltoEnemigo() const {return alto_enemigo;}
     int obtenerVidaFencer() const {return vida_fencer;}

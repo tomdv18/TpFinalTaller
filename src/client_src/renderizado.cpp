@@ -29,6 +29,7 @@ void Renderizado::iniciar_camara(Camara &&cam) {
 
 void Renderizado::iniciar_interfaz(int w, int h) {
     this->interfaz = std::make_unique<Interfaz>(*render, w, h, id_jugador);
+    std::cout << "sdrfgdsfdsfdsf"<< std::endl;
 }
 
 void Renderizado::renderizar(Evento evento) {
@@ -37,7 +38,6 @@ void Renderizado::renderizar(Evento evento) {
     this->interfaz->definir_tiempo(evento.tiempo_restante);
     
     render->Clear();
-    
     std::vector<uint32_t> jugadoresJugando = {}; // Vector de jugadores jugando actualmente
     for(EventoPersonaje evento : evento.eventos_personaje){
         jugadoresJugando.push_back(evento.id_jugador); // Agrego a los jugadores actuales
@@ -45,36 +45,25 @@ void Renderizado::renderizar(Evento evento) {
             std::unique_ptr<PersonajeView> personaje;
             switch(evento.id_personaje){
                 case JAZZ:
-                    personaje = std::unique_ptr<PersonajeView>(new PersonajeJazzView(evento.id_jugador, evento.posicion_x, evento.posicion_y));
-                    personaje->crear_animaciones();
-                    personaje->crear_texturas(render.get());
-                    
-                    
+                    personaje = std::unique_ptr<PersonajeView>(new PersonajeJazzView(evento));
                     break;
                 case SPAZ:
-                    personaje = std::unique_ptr<PersonajeView>(new PersonajeSpazView(evento.id_jugador, evento.posicion_x, evento.posicion_y));
-                    personaje->crear_animaciones();
-                    personaje->crear_texturas(render.get());
+                    personaje = std::unique_ptr<PersonajeView>(new PersonajeSpazView(evento));
                     break;
                 case LORI:
-                    personaje = std::unique_ptr<PersonajeView>(new PersonajeLoriView(evento.id_jugador, evento.posicion_x, evento.posicion_y));
-                    personaje->crear_animaciones();
-                    personaje->crear_texturas(render.get());      
+                    personaje = std::unique_ptr<PersonajeView>(new PersonajeLoriView(evento));    
             }
+            personaje->crear_texturas(render.get());
             personaje->definir_vida(evento.vida);
-            personaje->definir_puntos(evento.puntos);
-            //std::unique_ptr<PersonajeView> p = std::unique_ptr<PersonajeView>(new PersonajeView(e.id_jugador,texturas));
             personajesViews[evento.id_jugador] = std::move(personaje);
             std::cout << "CREANDO JUGADOR" << std::endl;
                 
         }else{
             PersonajeView &personaje = *(personajesViews.at(evento.id_jugador));
             personaje.definir_vida(evento.vida);
-            personaje.definir_puntos(evento.puntos);
             personaje.actualizar_vista_personaje(evento, FRAME_RATE);
         }
     }
-
     // Saco a los jugadores que ya no estan jugando, es decir, se desconectaron
     {
         for (auto it = personajesViews.begin(); it != personajesViews.end(); ) {
@@ -107,7 +96,6 @@ void Renderizado::renderizar(Evento evento) {
                 default:
                     break;
             }
-            enemigo->crear_animaciones();
             enemigo->crear_texturas(render.get());
             enemigosViews[evento.id_enemigo] = std::move(enemigo);
             std::cout << "CREANDO ENEMIGO" << std::endl;
@@ -118,6 +106,7 @@ void Renderizado::renderizar(Evento evento) {
     }
     
     //Crear de gemas, monedas y zanahorias del juego
+    std::cout << "DFFFFSSDDSF" << std::endl;
     for(auto &evento : evento.eventos_objeto) {
         if(objetosViews.find(evento.id_objeto) == objetosViews.end()) {
             std::unique_ptr<ObjetoView> objeto;
@@ -132,12 +121,14 @@ void Renderizado::renderizar(Evento evento) {
                     objeto = std::unique_ptr<ObjetoView>(new ObjetoZanahoriaView());
                     break;
                 case BALA_VELOZ:
-                    objeto = std::unique_ptr<ObjetoView>(new ObjetoZanahoriaView());
-                    break;
+                   objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_1View());
+                   break;
+                case BALA_NORMAL:
+                    objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_2View());
+                    break; 
                 default:
                     break;
             }
-            objeto->crear_animacion();
             objeto->crear_texturas(render.get());
             objetosViews[evento.id_objeto] = std::move(objeto);
             std::cout << "Creando Objeto" << std::endl;
@@ -146,6 +137,8 @@ void Renderizado::renderizar(Evento evento) {
             objeto.actualizar_vista_objeto(evento, FRAME_RATE);
         }
     }
+
+    std::cout << "SALASDASDF" << std::endl;
     
 
     // Creacion del mapa de balas que tendra los jugadores
@@ -188,7 +181,6 @@ void Renderizado::renderizar(Evento evento) {
 
         // Defino la face de la bala
         std::unique_ptr<BalaView> bala_nueva = std::make_unique<BalaView>(personajeViewPtr.obtener_face(), e.posicion_x, e.posicion_y);
-        bala_nueva->crear_animaciones();
         bala_nueva->crear_texturas(render.get());
         mapa_balas_pj.agregarBala(e.id_jugador, e.id_bala, std::move(bala_nueva));
     }
@@ -230,30 +222,6 @@ void Renderizado::renderizar(Evento evento) {
         }
         o.renderizar_objeto(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
     }
-    /*
-    // Renderizado de las balas de cada jugador
-    for (const EventoBala &e : evento.eventos_bala) {
-        uint32_t id_jugador = e.id_jugador;
-        if (balasViews.find(id_jugador) != balasViews.end()) {
-            auto& lista_balas = balasViews[id_jugador]; // Balas del jugador
-            for (auto it = lista_balas.begin(); it != lista_balas.end(); ) {
-                auto& bala = it->second;
-                bala->actualizar(e, FRAME_RATE);
-                bala->renderizar(*render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
-                if (e.impacto) {
-                        // Eliminar la bala de la lista si hubo impacto
-                    it = lista_balas.erase(it);
-                } else {
-                    ++it;
-                }
-            }
-            // Si la lista de balas para este jugador está vacía después de eliminar, eliminar la entrada del jugador
-            if (lista_balas.empty()) {
-                balasViews.erase(id_jugador);
-            }
-        }
-    }
-    */
  
     for (auto &personaje : this->personajesViews) {
 

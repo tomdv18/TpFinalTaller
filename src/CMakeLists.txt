@@ -155,41 +155,51 @@ if(CLIENT)
 		./client_src/recibidor_cliente.h
 		./client_src/renderizado.cpp
 		./client_src/renderizado.h
-		./client_src/personajeView.h
-		./client_src/personajeView.cpp
 		./client_src/direcciones.h
-		./client_src/personajeJazzView.h
-		./client_src/personajeJazzView.cpp
-		./client_src/personajeLoriView.h
-		./client_src/personajeLoriView.cpp
-		./client_src/personajeSpazView.h
-		./client_src/personajeSpazView.cpp
+		
+		./client_src/Vista_Personajes/personajeView.h
+		./client_src/Vista_Personajes/personajeView.cpp
+		./client_src/Vista_Personajes/personajeJazzView.h
+		./client_src/Vista_Personajes/personajeJazzView.cpp
+		./client_src/Vista_Personajes/personajeLoriView.h
+		./client_src/Vista_Personajes/personajeLoriView.cpp
+		./client_src/Vista_Personajes/personajeSpazView.h
+		./client_src/Vista_Personajes/personajeSpazView.cpp
 		
 		
-		./client_src/enemigoView.cpp
-		./client_src/enemigoView.h
-		./client_src/enemigoFencerView.cpp
-		./client_src/enemigoFencerView.h
-		./client_src/enemigoLizzardView.cpp
-		./client_src/enemigoLizzardView.h
-		./client_src/enemigoRatView.cpp
-		./client_src/enemigoRatView.h
+		./client_src/Vista_Enemigos/enemigoView.cpp
+		./client_src/Vista_Enemigos/enemigoView.h
+		./client_src/Vista_Enemigos/enemigoFencerView.cpp
+		./client_src/Vista_Enemigos/enemigoFencerView.h
+		./client_src/Vista_Enemigos/enemigoLizzardView.cpp
+		./client_src/Vista_Enemigos/enemigoLizzardView.h
+		./client_src/Vista_Enemigos/enemigoRatView.cpp
+		./client_src/Vista_Enemigos/enemigoRatView.h
 
-		./client_src/objetoView.h
-		./client_src/objetoView.cpp
-		./client_src/objetoGemaView.h
-		./client_src/objetoGemaView.cpp
-		./client_src/objetoMonedaView.h
-		./client_src/objetoMonedaView.cpp
-		./client_src/objetoZanahoriaView.h
-		./client_src/objetoZanahoriaView.cpp
+		./client_src/Vista_Objetos/objetoView.h
+		./client_src/Vista_Objetos/objetoView.cpp
+		./client_src/Vista_Objetos/objetoGemaView.h
+		./client_src/Vista_Objetos/objetoGemaView.cpp
+		./client_src/Vista_Objetos/objetoMonedaView.h
+		./client_src/Vista_Objetos/objetoMonedaView.cpp
+		./client_src/Vista_Objetos/objetoZanahoriaView.h
+		./client_src/Vista_Objetos/objetoZanahoriaView.cpp
+		./client_src/Vista_Objetos/objetoMunicionTipo_1View.h
+		./client_src/Vista_Objetos/objetoMunicionTipo_1View.cpp
+		./client_src/Vista_Objetos/objetoMunicionTipo_2View.h
+		./client_src/Vista_Objetos/objetoMunicionTipo_2View.cpp
+		./client_src/Vista_Objetos/objetoMunicionTipo_3View.h
+		./client_src/Vista_Objetos/objetoMunicionTipo_3View.cpp
 		
 		./client_src/protocolo_cliente.cpp
 		./client_src/protocolo_cliente.h
 		./client_src/enviadorCliente.cpp
 		./client_src/enviadorCliente.h
-		./client_src/balaView.cpp
-		./client_src/balaView.h
+		
+		./client_src/Vista_Proyectiles/balaView.cpp
+		./client_src/Vista_Proyectiles/balaView.h
+		./client_src/Vista_Proyectiles/balasPersonajes.h
+		./client_src/Vista_Proyectiles/balasPersonajes.cpp
 		
 		./client_src/Animaciones/animacion.h
 		./client_src/Animaciones/animacion.cpp
@@ -205,6 +215,10 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_quieto.cpp
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_deja_disparo_quieto.h
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_deja_disparo_quieto.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_intoxicado_caminando.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_intoxicado_caminando.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_intoxicado_quieto.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_intoxicado_quieto.cpp
 
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.cpp
@@ -218,6 +232,10 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_quieto.cpp
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_deja_disparo_quieto.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_deja_disparo_quieto.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_intoxicado_caminando.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_intoxicado_caminando.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_intoxicado_quieto.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_intoxicado_quieto.cpp
 
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.cpp
@@ -231,11 +249,13 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_quieto.cpp
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_deja_disparo_quieto.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_deja_disparo_quieto.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_intoxicado_caminando.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_intoxicado_caminando.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_intoxicado_quieto.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_intoxicado_quieto.cpp
 
         ./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
 		./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.cpp
-		./client_src/balasPersonajes.h
-		./client_src/balasPersonajes.cpp
 		
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Fencer_caminando.cpp
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Fencer_caminando.h
@@ -250,6 +270,12 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Objetos/animacion_moneda.h
 		./client_src/Animaciones/Animaciones_Objetos/animacion_zanahoria.cpp
 		./client_src/Animaciones/Animaciones_Objetos/animacion_zanahoria.h
+		./client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_1.cpp
+		./client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_1.h
+		./client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_2.cpp
+		./client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_2.h
+		./client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_3.cpp
+		./client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_3.h
 		
 		./client_src/mapa.cpp
 		./client_src/mapa.h
