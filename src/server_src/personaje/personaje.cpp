@@ -140,7 +140,7 @@ void Personaje::correr() {
 }
 
 void Personaje::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido) {
-    if(invulnerable) {return};
+    if(invulnerable) {return;}
     this->vida -= golpe; 
     if(vida <= 0){
         std::cout << "MUERTO" << std::endl;
