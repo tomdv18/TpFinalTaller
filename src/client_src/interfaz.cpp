@@ -35,7 +35,9 @@ tiempo(0)
 
 void Interfaz::mostrar_vida() {}
 
-void Interfaz::mostrar_puntaje() {}
+void Interfaz::definir_puntaje(uint32_t puntaje) {
+    this->puntos = puntaje;
+}
 
 void Interfaz::mostrar_municiones() {}
 
@@ -77,6 +79,18 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
     surface_texto = font.RenderText_Solid(texto, color);
     texto_textura = SDL2pp::Texture(render, surface_texto);
     render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ancho_ventana/2.0, 0, 50, 50));
+
+
+    // Muestro puntaje del jugador
+    color = {0, 0, 0, 0};
+    texto = "x" + std::to_string(personajeViewPtr.obtener_puntos());
+    surface_texto = font.RenderText_Solid(texto, color);
+    texto_textura = SDL2pp::Texture(render, surface_texto);
+    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(0, 0, 50, 50));
+
+    // Muestro los mejores 3 puntajes de los jugadores
+
+    // Ver como rellenar el texto de blanco, asi se ve mejor...
 }
 
 Interfaz::~Interfaz() {
