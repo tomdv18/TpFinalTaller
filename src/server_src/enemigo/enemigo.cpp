@@ -52,7 +52,7 @@ void Enemigo::matar() {
 
 
 void Enemigo::revivir() { 
-    vida = VIDA_DEFAULT;
+    vida = CONFIG.obtenerVidaDefaultEnemigo();
     vivo = true; }
 
 bool Enemigo::esta_vivo() { return vivo; }

@@ -12,7 +12,7 @@ uint8_t Rat::obtener_personaje() {
 }
 
 void Rat::revivir(){
-    vida = VIDA_RAT;
+    vida = CONFIG.obtenerVidaRat();
     vivo = true;
 }
 

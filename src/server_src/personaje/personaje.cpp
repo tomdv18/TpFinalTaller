@@ -140,7 +140,7 @@ void Personaje::correr() {
 }
 
 void Personaje::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido) {
-    if(invulnerable) return;
+    if(invulnerable) {return};
     this->vida -= golpe; 
     if(vida <= 0){
         std::cout << "MUERTO" << std::endl;
@@ -206,6 +206,11 @@ void Personaje::volverse_invulnerable(double tiempo){
     }
 }
 
+void Personaje::volverse_vulnerable(){ //METODO PARA TESTING
+    if(invulnerable){
+        invulnerable = false;
+    }
+}
 
 uint32_t Personaje::obtener_posicionX() { return posicion_x; }
 

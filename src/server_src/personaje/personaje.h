@@ -106,6 +106,8 @@ public:
 
     virtual void volverse_invulnerable(double tiempo);
 
+    virtual void volverse_vulnerable();
+
     virtual void intoxicarse(double tiempo);
 
     virtual void asignar_puntos(uint32_t puntos);
