@@ -23,6 +23,7 @@ void PersonajeView::crear_texturas(SDL2pp::Renderer *render) {
     this->animaciones.at(DEJA_DISPARO_QUIETO)->crear_texturas(render);
     this->animaciones.at(INTOXICADO_QUIETO)->crear_texturas(render);
     this->animaciones.at(INTOXICADO_CAMINANDO)->crear_texturas(render);
+    this->animaciones.at(HERIDO)->crear_texturas(render);
 
 }
 
@@ -63,9 +64,22 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
         } else {
             this->animaciones.at(QUIETO_CLIENTE)->en_loop(true);
             this->animaciones.at(QUIETO_CLIENTE)->acualizar(dt);
-            this->animaciones.at(SALTANDO)->reset_frame();
         }
+    } else if( estado == ESTADO_HERIDO){
+        this->animaciones.at(HERIDO)->en_loop(false);
+        this->animaciones.at(HERIDO)->acualizar(dt*0.4);
     }
+
+    // Resetear las animaciones necesarias
+    if(estado != ESTADO_SALTANDO){
+        this->animaciones.at(SALTANDO)->reset_frame();
+    }
+
+    if(estado != ESTADO_HERIDO){
+        this->animaciones.at(HERIDO)->reset_frame();
+    }
+
+
 }
 
 void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y) {
@@ -102,6 +116,11 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
     case ESTADO_SALTANDO:{
         SDL_RendererFlip flip = SDL_FLIP_NONE;
         animaciones.at(SALTANDO)->animar(*render, personaje, flip);
+        break;
+    }
+    case ESTADO_HERIDO:{
+        SDL_RendererFlip flip = SDL_FLIP_NONE;
+        animaciones.at(HERIDO)->animar(*render, personaje, flip);
         break;
     }
     default:

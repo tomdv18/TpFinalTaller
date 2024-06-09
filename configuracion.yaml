@@ -27,7 +27,7 @@ pantalla:
 
 estado:
   tiempo_estado_muerto: 5
-  tiempo_estado_herido: 3
+  tiempo_estado_herido: 1.5
 
 municion:
   bala_normal:

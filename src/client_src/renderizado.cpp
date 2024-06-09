@@ -138,7 +138,7 @@ void Renderizado::renderizar(Evento evento) {
         }
     }
 
-    std::cout << "SALASDASDF" << std::endl;
+    //std::cout << "SALASDASDF" << std::endl;
     
 
     // Creacion del mapa de balas que tendra los jugadores
