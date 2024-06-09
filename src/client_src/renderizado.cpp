@@ -55,12 +55,14 @@ void Renderizado::renderizar(Evento evento) {
             }
             personaje->crear_texturas(render.get());
             personaje->definir_vida(evento.vida);
+            personaje->definir_puntos(evento.puntos);
             personajesViews[evento.id_jugador] = std::move(personaje);
             std::cout << "CREANDO JUGADOR" << std::endl;
                 
         }else{
             PersonajeView &personaje = *(personajesViews.at(evento.id_jugador));
             personaje.definir_vida(evento.vida);
+            personaje.definir_puntos(evento.puntos);
             personaje.actualizar_vista_personaje(evento, FRAME_RATE);
         }
     }
@@ -106,7 +108,6 @@ void Renderizado::renderizar(Evento evento) {
     }
     
     //Crear de gemas, monedas y zanahorias del juego
-    std::cout << "DFFFFSSDDSF" << std::endl;
     for(auto &evento : evento.eventos_objeto) {
         if(objetosViews.find(evento.id_objeto) == objetosViews.end()) {
             std::unique_ptr<ObjetoView> objeto;
@@ -189,7 +190,6 @@ void Renderizado::renderizar(Evento evento) {
     {
         render->Clear();
         mapa->dibujar_fondo(* render);
-        interfaz->mostrar_hud(*render, personajesViews);
         mapa->dibujar_entidades(*render, *camara);
     }
 
@@ -230,6 +230,7 @@ void Renderizado::renderizar(Evento evento) {
 		
 	}
 
+    interfaz->mostrar_hud(*render, personajesViews);
     render->Present();
 }
 

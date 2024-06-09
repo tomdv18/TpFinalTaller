@@ -8,7 +8,8 @@
 
 
 PersonajeView::PersonajeView(EventoPersonaje &evento) : id_jugador(evento.id_jugador), posicion_x(evento.posicion_x), posicion_y(evento.posicion_y), width(PERSONAJE_WIDTH), height(PERSONAJE_HEIGHT), 
-facingLeft(false), isMoving(false), isRunning(false), isJumping(false), isShooting(false), stopShooting(false) {}
+facingLeft(false), isMoving(false), isRunning(false), isJumping(false), isShooting(false), stopShooting(false),
+vida(0), puntaje(0) {}
 
 bool PersonajeView::obtener_face() {
     return facingLeft;
