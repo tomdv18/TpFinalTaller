@@ -45,6 +45,15 @@ TEST_F(PersonajeJazzTest, IniciaSinVelocidad){
     EXPECT_EQ(personaje->obtener_velocidad(), 0);
 }
 
+TEST_F(PersonajeJazzTest, IniciaInvulnerable){
+    EXPECT_EQ(personaje->es_invulnerable(), true);
+}
+
+TEST_F(PersonajeJazzTest, CambioVulnerabilidad){
+    personaje->volverse_vulnerable();
+    EXPECT_EQ(personaje->es_invulnerable(), false);
+}
+
 TEST_F(PersonajeJazzTest, AlMoverseNoEstaQuieto){
     std::chrono::duration<double> tiempo_transcurrido(0.5);
     personaje->mover_derecha(tiempo_transcurrido); //Hago un movimiento
@@ -64,16 +73,18 @@ TEST_F(PersonajeJazzTest, DejarDeDisparar){
 }
 
 TEST_F(PersonajeJazzTest, AlRecibirDanioBajaLaVida){
-    uint8_t vida_incial = personaje->obtener_vida();
+    int8_t vida_incial = personaje->obtener_vida();
+    personaje->volverse_vulnerable();
     std::chrono::duration<double> tiempo_transcurrido(0.5);
-    personaje->recibir_golpe(uint8_t(10), tiempo_transcurrido);
+    personaje->recibir_golpe(uint8_t(1), tiempo_transcurrido);
     EXPECT_LT(personaje->obtener_vida(), vida_incial);
 }
 
 TEST_F(PersonajeJazzTest, Muerte){
-    uint8_t vida_incial = personaje->obtener_vida();
+    int8_t vida_incial = personaje->obtener_vida();
+    personaje->volverse_vulnerable();
     std::chrono::duration<double> tiempo_transcurrido(0.5);
-    personaje->recibir_golpe(uint8_t(vida_incial + uint8_t(100)), tiempo_transcurrido); // le hago un danio mayor a su vida
+    personaje->recibir_golpe(uint8_t(vida_incial + uint8_t(1)), tiempo_transcurrido); // le hago un danio mayor a su vida
     EXPECT_EQ(personaje->esta_muerto(), true);
 }
 
@@ -98,7 +109,7 @@ TEST_F(PersonajeJazzTest, obtenerPersonaje){
 
 
 int main(int argc, char*argv[]){
-    std::cout << "Tests Personaje JAZZ" << std::endl;
+    std::cout << "\nTests Personaje JAZZ\n" << std::endl;
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

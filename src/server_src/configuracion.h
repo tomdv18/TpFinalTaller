@@ -45,6 +45,10 @@ private:
     int velocidad_x_habilidad_lori;
     int velocidad_y_habilidad_lori;
 
+    //Atributos de partida
+
+    int duracion_segundos;
+
     // Atributos de pantalla
     int ancho_pantalla;
     int alto_pantalla;
@@ -66,6 +70,7 @@ private:
 
     int vida_default_enemigo;
     int danio_default_enemigo;
+    int velocidad_enemigo;
     int ancho_enemigo;
     int alto_enemigo;
     int vida_fencer;
@@ -99,6 +104,9 @@ public:
     int getAnchoPersonaje() const { return ancho_personaje; }
     int getAltoPersonaje() const { return alto_personaje; }
 
+    //Getters para valores de partida
+    int getDuracionPartida() const {return duracion_segundos;}
+
     // Getters para los valores de la pantalla
     int getAnchoPantalla() const { return ancho_pantalla; }
     int getAltoPantalla() const { return alto_pantalla; }
@@ -130,6 +138,7 @@ public:
     //Getters para enemigos
     int obtenerVidaDefaultEnemigo() const {return vida_default_enemigo;}
     int obtener_danio_default_enemigo() const {return danio_default_enemigo;}
+    int obtenerVelocidadEnemigos() const {return velocidad_enemigo;}
     int obtenerAnchoEnemigo() const {return ancho_enemigo;}
     int obtenerAltoEnemigo() const {return alto_enemigo;}
     int obtenerVidaFencer() const {return vida_fencer;}

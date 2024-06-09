@@ -10,7 +10,10 @@ Rat::Rat(uint32_t id_enemigo): Enemigo(id_enemigo) {
 uint8_t Rat::obtener_personaje() {
     return RAT;
 }
-
+void Rat::revivir(){
+    vida = CONFIG.obtenerVidaRat();
+    vivo = true;
+}
 
 void Rat::mover_derecha() { Enemigo::mover_derecha(); }
 
