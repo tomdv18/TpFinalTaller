@@ -9,9 +9,6 @@ const uint32_t id_jugador = 00;
 const uint32_t posx = 0;
 const uint32_t posy = 0;
 
-/*PERSONAJE JAZZ HEREDA DE LA CLASE PERSONAJE. AL PERSONAJE SER UNA CLASE ABSTRACTA
-NO ES POSIBLE TESTEARLA USANDO GTESTS. PROBAR LOS METODOS PRINCIPALES DE JAZZ
-ES LO MISMO QUE PROBAR LOS DE LA CLASE PERSONAJE*/
 struct BalaTest : testing::Test{
     Bala * bala;
     const ConfigBala& config_bala = CONFIG.obtenerBala(BALA_NORMAL);
@@ -37,7 +34,7 @@ TEST_F(BalaTest, IdBala){
 }
 
 TEST_F(BalaTest, IdJugador){
-    EXPECT_EQ(bala->obtener_id_jugador, id_jugador);
+    EXPECT_EQ(bala->obtener_id_jugador(), id_jugador);
 }
 
 TEST_F(BalaTest, CodigoBala){
@@ -67,7 +64,7 @@ TEST_F(BalaTest, Impacto){
 
 
 int main(int argc, char*argv[]){
-    std::cout << "\nTests Personaje JAZZ\n" << std::endl;
+    std::cout << "\nTests Bala\n" << std::endl;
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

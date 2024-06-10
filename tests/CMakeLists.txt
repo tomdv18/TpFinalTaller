@@ -41,6 +41,13 @@ function(configure_test TEST_NAME TEST_TYPE NAME)
             ${CMAKE_SOURCE_DIR}/src/server_src/enemigo/enemigo.cpp
             ${CMAKE_SOURCE_DIR}/src/server_src/enemigo/enemigo_${NAME}.cpp
         )
+
+    elseif(TEST_TYPE STREQUAL "bala")
+        target_sources(${TEST_NAME} PRIVATE
+        ${COMMON_SOURCES}
+        ${CMAKE_SOURCE_DIR}/src/server_src/bala/bala.cpp
+        ${CMAKE_SOURCE_DIR}/src/server_src/bala/controlador_balas.h
+        )
     endif()
     target_compile_definitions(${TEST_NAME} PUBLIC CONFIG_PATH="${CONFIG_FILE}")
 endfunction()
@@ -54,4 +61,8 @@ configure_test(test_personaje_lori personaje lori)
 configure_test(test_enemigo_fencer enemigo fencer)
 configure_test(test_enemigo_rat enemigo rat)
 configure_test(test_enemigo_lizzard enemigo lizzard)
+
+#Test de Bala
+configure_test(test_bala bala bala)
+configure_test(test_controlador_balas bala controlador_balas)
 
