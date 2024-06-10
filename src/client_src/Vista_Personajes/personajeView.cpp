@@ -120,7 +120,7 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
         break;
     }
     case ESTADO_HERIDO:{
-        SDL_RendererFlip flip = SDL_FLIP_NONE;
+        SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
         animaciones.at(HERIDO)->animar(*render, personaje, flip);
         break;
     }
