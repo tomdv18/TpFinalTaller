@@ -1,0 +1,10 @@
+/home/smsx42/Escritorio/TpFinalTaller-rama_unificada/build/CMakeFiles/rebuild_cache.dir
+/home/smsx42/Escritorio/TpFinalTaller-rama_unificada/build/CMakeFiles/edit_cache.dir
+/home/smsx42/Escritorio/TpFinalTaller-rama_unificada/build/src/CMakeFiles/edit_cache.dir
+/home/smsx42/Escritorio/TpFinalTaller-rama_unificada/build/src/CMakeFiles/jazzcliente.dir
+/home/smsx42/Escritorio/TpFinalTaller-rama_unificada/build/src/CMakeFiles/rebuild_cache.dir
+/home/smsx42/Escritorio/TpFinalTaller-rama_unificada/build/src/CMakeFiles/jazzservidor.dir
+/home/smsx42/Escritorio/TpFinalTaller-rama_unificada/build/src/CMakeFiles/jazzcliente_autogen.dir
+/home/smsx42/Escritorio/TpFinalTaller-rama_unificada/build/lib/libSDL2pp/CMakeFiles/rebuild_cache.dir
+/home/smsx42/Escritorio/TpFinalTaller-rama_unificada/build/lib/libSDL2pp/CMakeFiles/edit_cache.dir
+/home/smsx42/Escritorio/TpFinalTaller-rama_unificada/build/lib/libSDL2pp/CMakeFiles/SDL2pp.dir

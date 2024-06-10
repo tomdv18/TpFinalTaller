@@ -1,82 +1,196 @@
 #include "cliente.h"
-#include <SDL2/SDL.h>
 
+#include <SDL2pp/SDL2pp.hh>
 #include <syslog.h>
+#include <unistd.h>
+#include <unordered_set>
+#include <optional>
 
-#define MAX_EVENTOS 256 // Numero a definir
 
-Cliente::Cliente(const char* hostname, const char* servname):
-skt(hostname, servname), protocolo_cliente(skt)
-{}
+#define MAX_EVENTOS 256
+#define MAX_ACCIONES 256
+#define WIDTH 640
+#define HEIGHT 480
+
+Cliente::Cliente(Socket& skt): skt(skt), estado(true), personajes(), renderizado(personajes) {
+    bool was_closed = false;
+    skt.recvall(&id_jugador,sizeof(id_jugador), &was_closed);
+    id_jugador = ntohl(id_jugador);
+}
 
 bool Cliente::verificar_argumentos(int argc, char* args[]) {
     if (argc != 3) {
         syslog(LOG_ERR, "Bad program call. Expected %s <hostname> <servname>", args[0]);
         return false;
     }
+    //
     return true;
 }
 
-/**
- * Lee entrada standar (estando en el juego).
-*/
-static AccionJuego leer_entrada_estandar(SDL_Event &event){
-    AccionJuego accion_juego = NINGUNA; // En teoria, nunca debe valer esto, capaz conviene un map
-    
-    // Ver como leer teclas con SDL (Santiago)
-    /**
-     * if(event.key.keysym.sym == LEFT) {
-     * accion_juego = DERECHA
-     * }
-    */
+bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
+    static std::unordered_set<SDL_Keycode> teclas_presionadas;
+    static std::optional<CodigoAccion> ultima_direccion;
 
-    if(event.key.keysym.sym == SDLK_RIGHT) {
-        accion_juego = AccionJuego::DERECHA;
-        return accion_juego;
-    } else if (event.key.keysym.sym == SDLK_LEFT) {
-        accion_juego = AccionJuego::IZQUIERDA;
-        return accion_juego;
-    } else if (event.key.keysym.sym == SDLK_UP) {
-        accion_juego = AccionJuego::ARRIBA;
-        return accion_juego;
-    } else if (event.key.keysym.sym == SDLK_DOWN) {
-        accion_juego = AccionJuego::ABAJO;
-        return accion_juego;
+    SDL_Event evento;
+    while (SDL_PollEvent(&evento)) {
+        switch (evento.type) {
+            case SDL_KEYDOWN: {  // Presiono la tecla
+                SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)evento;
+                teclas_presionadas.insert(keyEvent.keysym.sym);
+                switch (keyEvent.keysym.sym) {
+                    case SDLK_q:
+                        return false;
+                    case SDLK_d:
+                        queue_accion.try_push(DERECHA);
+                        ultima_direccion = DERECHA;
+                        break;
+                    case SDLK_a:
+                        queue_accion.try_push(IZQUIERDA);
+                        ultima_direccion = IZQUIERDA;
+                        break;
+                    case SDLK_w:
+                        queue_accion.try_push(ARRIBA);
+                        ultima_direccion = ARRIBA;
+                        break;
+                    case SDLK_s:
+                        queue_accion.try_push(ABAJO);
+                        ultima_direccion = ABAJO;
+                        break;
+                    case SDLK_LSHIFT:
+                        queue_accion.try_push(CORRER_RAPIDO);
+                        break;
+                    case SDLK_k:
+                        queue_accion.try_push(ESPECIAL);
+                        break;
+                    case SDLK_l:
+                        queue_accion.try_push(DISPARAR);
+                        break;
+                    case SDLK_r:
+                        queue_accion.try_push(CAMBIAR_ARMA);
+                }
+                break;  // Salir del bloque SDL_KEYDOWN
+            }
+            case SDL_KEYUP: {
+                SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)evento;
+                teclas_presionadas.erase(keyEvent.keysym.sym);
+                switch (keyEvent.keysym.sym) {
+                    case SDLK_d:
+                    case SDLK_a:
+                    case SDLK_w:
+                    case SDLK_s:
+                        if (teclas_presionadas.empty()) {
+                            queue_accion.try_push(QUIETO);
+                            ultima_direccion.reset();
+                        } else {
+                            bool alguna_tecla_direccion_presionada = false;
+                            for (const auto& tecla : teclas_presionadas) {
+                                switch (tecla) {
+                                    case SDLK_d:
+                                        queue_accion.try_push(DERECHA);
+                                        ultima_direccion = DERECHA;
+                                        alguna_tecla_direccion_presionada = true;
+                                        break;
+                                    case SDLK_a:
+                                        queue_accion.try_push(IZQUIERDA);
+                                        ultima_direccion = IZQUIERDA;
+                                        alguna_tecla_direccion_presionada = true;
+                                        break;
+                                    case SDLK_w:
+                                        queue_accion.try_push(ARRIBA);
+                                        ultima_direccion = ARRIBA;
+                                        alguna_tecla_direccion_presionada = true;
+                                        break;
+                                    case SDLK_s:
+                                        queue_accion.try_push(ABAJO);
+                                        ultima_direccion = ABAJO;
+                                        alguna_tecla_direccion_presionada = true;
+                                        break;
+                                }
+                            }
+                            if (!alguna_tecla_direccion_presionada) {
+                                queue_accion.try_push(QUIETO);
+                                ultima_direccion.reset();
+                            }
+                        }
+                        break;
+                    case SDLK_LSHIFT:
+                        queue_accion.try_push(CORRER);
+                        break;
+                    case SDLK_l:
+                        queue_accion.try_push(DEJAR_DISPARAR);
+                        break;
+                }
+                break;
+            }
+            case SDL_QUIT:
+                return false;
+        }
     }
-    // Asi con las demas acciones...
-    return accion_juego;
+    return true;
 }
 
 void Cliente::comunicarse_con_el_servidor() {
-    Queue<Evento> queue_eventos(MAX_EVENTOS);
-    RecibidorCliente recibidor_cliente(skt, queue_eventos);
-    Renderizado renderizado(queue_eventos); 
+    ProtocoloCliente protocolo_temporal(skt);
+    std::cout << "Hola" << std::endl;
+    MapaEntidades mapa = protocolo_temporal.recibir_mapa();
+    Camara camara(0, 0, WIDTH, HEIGHT);
     
-    SDL_Event event;
+    Queue<Evento> queue_eventos(MAX_EVENTOS);
+    Queue<CodigoAccion> queue_accion(MAX_ACCIONES);
+    RecibidorCliente recibidor_cliente(skt, queue_eventos, estado);
+    std::cout << "Hola" << std::endl;
     recibidor_cliente.start();
-    renderizado.start();
-    bool running = true;
-    while(running) {
-        while(SDL_PollEvent(&event)) {
+    
+    this->renderizado.recibir_id(id_jugador);
+    this->renderizado.inicializar_SDL2pp();
+    this->renderizado.crear_ventana_y_render("JazzJack Rabbit 2", WIDTH, HEIGHT);
+    std::cout << "Hola" << std::endl;
+    this->renderizado.iniciar_mapa(std::move(mapa));
+    std::cout << "Hola2" << std::endl;
+    this->renderizado.iniciar_camara(std::move(camara));
+    this->renderizado.iniciar_interfaz(WIDTH, HEIGHT);
 
-            if (event.type == SDL_QUIT) {
-                running = false;
-                break;
+    EnviadorCliente enviador_cliente(skt, queue_accion);
+    enviador_cliente.start();
+    try {
+
+        while (estado) {
+            auto inicio = std::chrono::high_resolution_clock::now();
+            estado = atrapar_eventos_entrada(queue_accion);
+
+            Evento evento;
+
+            if(queue_eventos.try_pop(evento)) {
+                if (!renderizado.renderizar(evento)) {
+                    break;
+                };
+            }
+            
+            auto fin = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double, std::milli> tiempo = fin - inicio;
+            double tiempo_transcurrido = tiempo.count();
+
+            double frames = 1000/40.0;
+            double tiempo_descanso = frames - tiempo_transcurrido;
+
+            if (tiempo_descanso > 0) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(tiempo_descanso)));
+            } else {
+                std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(frames)));
             }
 
-            if(event.type == SDL_KEYDOWN) {
-
-                AccionJuego accion_juego = leer_entrada_estandar(event);
-                if (accion_juego == AccionJuego::SALIR) {
-                    break;
-                }
-                if(!protocolo_cliente.enviar_accion_juego(accion_juego)) {
-                    break;
-                }
-            }
         }
+    } catch (std::exception& e) {
+        std::cout << e.what() << std::endl;
+        return;
     }
+    if (estado) {
+        renderizado.mostrar_tablero_final();    
+    }
+    
+    queue_accion.close();
     queue_eventos.close();
+    
     terminar_comunicacion();
 }
 

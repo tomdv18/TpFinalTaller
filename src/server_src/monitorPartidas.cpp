@@ -1,12 +1,15 @@
 #include "monitorPartidas.h"
 
 
-MonitorPartidas::MonitorPartidas(){}
+MonitorPartidas::MonitorPartidas(): contador_partidas(0) {}
 
 
-Queue<Accion>* MonitorPartidas::crear_partida(uint32_t id_creador,uint8_t cant_jugadores, Queue<Evento> *queue_jugador){
-    Partida *nueva_partida = new Partida(id_creador, cant_jugadores, (uint32_t)partidas.size(), queue_jugador);
-    partidas.emplace(partidas.size(),nueva_partida);
+Queue<Accion>* MonitorPartidas::crear_partida(uint32_t id_creador, uint8_t cant_jugadores,
+                                              Queue<Evento>* queue_jugador) {
+    Partida* nueva_partida =
+            new Partida(id_creador, cant_jugadores, contador_partidas, queue_jugador);
+    partidas.emplace(contador_partidas, nueva_partida);
+    contador_partidas++;
     std::cout << "\nPARTIDA CREADA POR EL JUGADOR  " << id_creador << std::endl;
     std::cout << "CANTIDAD DE JUGADORES " << (int)cant_jugadores << std::endl;
     // Empiezo hilo partida
@@ -14,7 +17,7 @@ Queue<Accion>* MonitorPartidas::crear_partida(uint32_t id_creador,uint8_t cant_j
     return nueva_partida->obtener_queue();
 }
 
-void MonitorPartidas::listar_partidas(){
+void MonitorPartidas::listar_partidas() {
     for (auto it = partidas.begin(); it != partidas.end(); ++it) {
         uint32_t key = it->first;
         Partida* partida = it->second;
@@ -24,8 +27,8 @@ void MonitorPartidas::listar_partidas(){
 }
 
 
-
-Queue<Accion>* MonitorPartidas::unir_jugador(uint32_t id_jugador, uint32_t id_partida, Queue<Evento> *queue_jugador){
+Queue<Accion>* MonitorPartidas::unir_jugador(uint32_t id_jugador, uint32_t id_partida,
+                                             Queue<Evento>* queue_jugador) {
     auto it = partidas.find(id_partida);
 
     // Buscar la partida en el map
@@ -35,12 +38,12 @@ Queue<Accion>* MonitorPartidas::unir_jugador(uint32_t id_jugador, uint32_t id_pa
     } else {
         // Partida no encontrada, devuelvo nullptr
         std::cout << "Error, partida no encontrada" << std::endl;
-        return nullptr; 
+        return nullptr;
     }
 }
 
 
-void MonitorPartidas::borrar_jugador(uint32_t id_jugador){
+void MonitorPartidas::borrar_jugador(uint32_t id_jugador) {
     auto it = partidas.begin();
     while (it != partidas.end()) {
         Partida* partida = it->second;
@@ -50,16 +53,23 @@ void MonitorPartidas::borrar_jugador(uint32_t id_jugador){
             partida->stop();
             partida->join();
             delete partida;
-            it = partidas.erase(it); 
+            it = partidas.erase(it);
         } else {
             ++it;
         }
     }
 }
 
-std::map<uint32_t, Partida*> MonitorPartidas::obtener_partidas(){
-    return partidas;
+void MonitorPartidas::borrar_partidas() {
+    for (auto& par: partidas) {
+        par.second->stop();
+        par.second->join();
+        delete par.second;
+    }
+    partidas.clear();
 }
 
+const std::map<uint32_t, Partida*>* MonitorPartidas::obtener_partidas() const { return &partidas; }
 
-MonitorPartidas::~MonitorPartidas(){}
+
+MonitorPartidas::~MonitorPartidas() {}

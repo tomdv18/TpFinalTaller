@@ -1,16 +1,20 @@
 #ifndef SERVER_PARTIDA_H_
 #define SERVER_PARTIDA_H_
 
-#include "../common_src/queue.h"
+#include <iostream>
+#include <list>
+#include <map>
+
 #include "../common_src/accion.h"
 #include "../common_src/evento.h"
+#include "../common_src/queue.h"
 #include "../common_src/thread.h"
-#include "logicaPartida.h"
-#include <iostream>
-#include <map>
-#include <list>
 
-class Partida : public Thread{
+#include "logicaPartida.h"
+
+#define FPS 15
+
+class Partida: public Thread {
 private:
     uint32_t id;
 
@@ -27,13 +31,13 @@ private:
     LogicaPartida logica_partida;
 
 public:
-    Partida(uint32_t id_creador, uint8_t max_jugadores, uint32_t id, Queue<Evento> *queue_jugador);
+    Partida(uint32_t id_creador, uint8_t max_jugadores, uint32_t id, Queue<Evento>* queue_jugador);
 
     Queue<Accion>* obtener_queue();
 
     void listar_jugadores();
 
-    Queue<Accion>* unir_jugador(uint32_t id_jugador, Queue<Evento> *queue_jugador);
+    Queue<Accion>* unir_jugador(uint32_t id_jugador, Queue<Evento>* queue_jugador);
 
     bool borrar_jugador(uint32_t id_jugador);
 
@@ -41,16 +45,12 @@ public:
 
     uint8_t max();
 
+    uint32_t creador();
+
     void run() override;
 
     ~Partida() override;
 };
-
-
-
-
-
-
 
 
 #endif

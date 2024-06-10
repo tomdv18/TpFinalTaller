@@ -3,7 +3,7 @@
 
 #include <string>
 #include "../common_src/socket.h"
-#include "../common_src/accion_juego.h"
+#include "../common_src/accion.h"
 #include "../common_src/evento.h"
 
 /**
@@ -16,6 +16,12 @@ private:
     Socket& skt;     // Socket por el cual se comunicaran el cliente/servidor
 
 public:
+
+    void recibir_entidad(uint32_t cantidad_piezas, MapaEntidades& map);
+
+    void recibir_posiciones(uint32_t cantidad_tipo, std::vector<Position>& posiciones, bool& was_closed);
+
+    std::string determinar_tipo(uint8_t tipo);
     /**
      * Construyo el protocolo en funcion del socket al cual quieren
      * comunicarse.
@@ -24,7 +30,7 @@ public:
      */
     explicit ProtocoloCliente(Socket& skt);
 
-    Evento deserializar(uint8_t byte);
+    //Evento deserializar(uint8_t byte);
 
 
     /**
@@ -33,7 +39,7 @@ public:
      * @param accion Referencia de la accion a enviar.
      * @return false en caso de no poder enviar, true caso contrario.
      */
-    bool enviar_accion_juego(AccionJuego &accion_juego);
+    bool enviar_accion_juego(uint8_t accion_juego);
 
     /**
      * Deserializa y recibe el evento del servidor.
@@ -42,6 +48,8 @@ public:
      * @return false en caso de no poder recibir, true caso contrario.
      */
     bool recibir_evento(Evento &evento);
+
+    MapaEntidades recibir_mapa();
 
     /**
      * Desabilito las copias

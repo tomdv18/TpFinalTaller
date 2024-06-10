@@ -11,9 +11,10 @@ class RecibidorCliente: public Thread {
     private:
     ProtocoloCliente protocolo_cliente;
     Queue<Evento> &queue_eventos;
+    std::atomic<bool> &estado_cliente; // Representa el estado del cliente
     
     public:
-    explicit RecibidorCliente(Socket& skt, Queue<Evento>& queue);
+    explicit RecibidorCliente(Socket& skt, Queue<Evento>& queue, std::atomic<bool>& estado);
 
     /**
      * Ejecuta el hilo encargado de recibir todo

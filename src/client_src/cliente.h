@@ -5,9 +5,14 @@
 #include "protocolo_cliente.h"
 #include "renderizado.h"
 #include "recibidor_cliente.h"
+#include "enviadorCliente.h"
 #include "../common_src/queue.h"
-#include "../common_src/accion_juego.h"
+#include "../common_src/accion.h"
 #include "../common_src/evento.h"
+#include <arpa/inet.h>
+
+
+
 
 /**
  * TDA Cliente.
@@ -17,17 +22,19 @@
 
 class Cliente {
 private:
-    Socket skt;        
-    ProtocoloCliente protocolo_cliente;
+    Socket &skt;        
+    std::atomic<bool> estado;
+    Renderizado renderizado;
+    std::map<uint32_t, std::unique_ptr<PersonajeView>> personajes;
+    uint32_t id_jugador;
     
 public:
     /**
      * Constructor de la clase Cliente.
      *
-     * @param hostname El nombre del host al que se conectará el cliente.
-     * @param servname El nombre del servicio o puerto al que se conectará el cliente.
+     * @param skt El socket con el que se comunicara con el cliente.
      */
-    explicit Cliente(const char* hostname, const char* servname);
+    explicit Cliente(Socket &skt);
 
     /**
      * Verifica si se proporcionan los argumentos esperados.

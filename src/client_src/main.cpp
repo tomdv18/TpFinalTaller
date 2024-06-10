@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "lobby.h"
+#include "cliente.h"
 
 #include <QApplication>
 #include "../ventana_lobby/mainwindow.h"
@@ -9,10 +10,6 @@
 int main(int argc, char* argv[]) {
     try {
         if (argc == 3) {
-            /*
-                Iniciar la ventana Main
-            
-            */
             // Inicio app
             QApplication app(argc,argv);
 
@@ -24,24 +21,20 @@ int main(int argc, char* argv[]) {
             // Creo el mainwindow
             MainWindow mainWindow(&lobby);
             mainWindow.show();
+            
 
 
             if(app.exec()){
+                lobby.close();
                 throw std::runtime_error("ERROR");
             }
+            
+            Cliente cliente(lobby.obtener_socket());
+            cliente.comunicarse_con_el_servidor();
+            //lobby.close();
+            //cliente.comunicarse_con_el_servidor();
+            //lobby.main();
 
-            // Ejecuto la app
-            // POSIBLE WHILE DEL LOBBY
-            /*
-            while(true){
-                mainWindow.show();
-                if(app.exec()){
-                    throw std::runtime_error("ERROR");
-                }
-                lobby.main();
-            }
-            */
-            lobby.main();
             return 0;
         } else {
             std::cerr << "Bad program call. Expected " << argv[0] << " <hostname> <servername>"
