@@ -51,7 +51,7 @@ configure_test(test_personaje_spaz personaje spaz)
 configure_test(test_personaje_lori personaje lori)
 
 # Configura las pruebas para los diferentes enemigos
-
 configure_test(test_enemigo_fencer enemigo fencer)
 configure_test(test_enemigo_rat enemigo rat)
 configure_test(test_enemigo_lizzard enemigo lizzard)
+
