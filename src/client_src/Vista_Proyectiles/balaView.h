@@ -7,8 +7,14 @@
 #include <iostream>
 #include <map>
 #include "../src/common_src/evento.h"
+#include "../src/common_src/codigo_objeto.h"
+
 #include "../src/client_src/Animaciones/animacion.h"
 #include "../src/client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h"
+#include "../src/client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_1.h"
+#include "../src/client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_2.h"
+#include "../src/client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_3.h"
+
 #include "../src/client_src/direcciones.h"
 
 #define BALA_HEIGHT 15
@@ -28,11 +34,11 @@ class BalaView {
 
    public:
     
-    BalaView(bool face, int x, int y);
+    BalaView(bool face, int x, int y, uint8_t tipo);
 
     ~BalaView();
 
-    void crear_animaciones();
+    void crear_animaciones(uint8_t tipo);
 
     void crear_texturas(SDL2pp::Renderer *render);
 
