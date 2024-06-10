@@ -15,12 +15,12 @@ endif()
 option(TESTING "Build internal testing suite" OFF)
 
 include_directories(${CMAKE_SOURCE_DIR})
-include(cmakeupdate/UpdateSubmodules.cmake)
+
 add_subdirectory(src)
-add_subdirectory(tests)
-add_subdirectory(extern/googletest) ##HABRIA QUE CAMBIARLO PERO POR AHORA LO DEJO ASI
+
 
 if (TESTING)
+    include(cmakeupdate/UpdateSubmodules.cmake)
     add_subdirectory(tests)
     add_subdirectory(extern/googletest)
 endif()

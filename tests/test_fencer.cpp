@@ -17,7 +17,6 @@ struct EnemigoFencerTest : testing::Test{
     }
 };
 
-
 TEST_F(EnemigoFencerTest, IniciaQuieto){
     EXPECT_EQ(enemigo->obtener_movimiento(), true);
 }
