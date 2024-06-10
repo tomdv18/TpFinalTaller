@@ -3,6 +3,12 @@
 
 #include <iostream>
 #include "../common_src/codigo_objeto.h"
+#include "../personaje/personaje.h"
+#include "../enemigo/enemigo.h"
+
+
+class Personaje;
+class Enemigo;
 
 class Bala{
 private:
@@ -51,7 +57,13 @@ public:
 
     bool obtener_impacto() const;
 
-};
+    void inflingir_danio(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido);
+
+    void inflingir_danio(Enemigo *enemigo, std::chrono::duration<double> tiempo_transcurrido);
+
+
+
+};  
 
 
 

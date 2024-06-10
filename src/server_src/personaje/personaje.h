@@ -8,11 +8,14 @@
 #include "../common_src/accion.h"
 #include "../common_src/evento.h"
 #include "../common_src/codigo_estado.h"
+#include "../enemigo/enemigo.h"
 #include "../estado/estado.h"
-#include "../arma.h"
 #include "../objeto/objeto.h"
 #include "../rectangulo.h"
 #include "../configuracion.h"
+
+
+#include "../bala/bala.h"
 
 
 class Objeto;
@@ -52,9 +55,6 @@ protected:
     bool intoxicado;
     double tiempo_intoxicado;
 
-
-    Arma arma;
-
     Estado *estado;
 
     bool en_superficie;
@@ -64,6 +64,8 @@ protected:
     uint8_t bala_actual;
     double tiempo_disparo;
     std::map<uint8_t,int> municiones;
+
+    uint8_t danio_habilidad;
 
 public:
     explicit Personaje(uint32_t id_jugador);
@@ -88,7 +90,19 @@ public:
 
     virtual void correr();
 
+    virtual void recibir_golpe(Bala bala, std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void recibir_golpe(Enemigo *enemigo, std::chrono::duration<double> tiempo_transcurrido);
+
     virtual void recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void inflingir_danio_bala(Enemigo *enemigo, std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void inflingir_danio_bala(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void inflingir_danio_habilidad(Enemigo *enemigo, std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void inflingir_danio_habilidad(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido);
 
     virtual uint8_t disparar(std::chrono::duration<double> tiempo_transcurrido);
 
@@ -154,6 +168,9 @@ public:
     virtual uint8_t obtener_bala_actual();
 
     virtual uint32_t obtener_municion_actual();
+
+    virtual uint8_t obtener_danio_habilidad();
+
     // Getters Snapshot
 
     virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,

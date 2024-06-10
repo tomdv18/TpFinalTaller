@@ -35,6 +35,11 @@ Configuracion::Configuracion(const YAML::Node& config) {
         velocidad_x_habilidad_lori = config["lori"]["velocidad_x_habilidad"].as<int>();
         velocidad_y_habilidad_lori = config["lori"]["velocidad_y_habilidad"].as<int>();
 
+        danio_habilidad_jazz = config["jazz"]["danio_habilidad"].as<uint8_t>();
+        danio_habilidad_spaz = config["spaz"]["danio_habilidad"].as<uint8_t>();
+        danio_habilidad_lori = config["lori"]["danio_habilidad"].as<uint8_t>();
+
+
         //partida
         duracion_segundos = config["tiempo_partida"].as<int>();
 
@@ -103,9 +108,19 @@ Configuracion::Configuracion(const YAML::Node& config) {
         velocidad_enemigo = config ["enemigo"]["velocidad_default"].as<int>();
         ancho_enemigo = config["enemigo"]["ancho"].as<int>();
         alto_enemigo = config["enemigo"]["alto"].as<int>();
+
+        danio_fencer = config["enemigo"]["fencer"]["danio"].as<int>();
         vida_fencer = config["enemigo"]["fencer"]["vida"].as<int>();
+        puntos_fencer = config["enemigo"]["fencer"]["puntos"].as<uint32_t>();
+
+        danio_lizzard = config["enemigo"]["lizzard"]["danio"].as<int>();
         vida_lizzard = config["enemigo"]["lizzard"]["vida"].as<int>();
+        puntos_lizzard = config["enemigo"]["lizzard"]["puntos"].as<uint32_t>();
+
+        danio_rat = config["enemigo"]["rat"]["danio"].as<int>();
         vida_rat = config["enemigo"]["rat"]["vida"].as<int>();
+        puntos_rat = config["enemigo"]["rat"]["puntos"].as<uint32_t>();
+
         tiempo_reaparicion_enemigo = config["enemigo"]["tiempo_reaparicion_enemigo"].as<double>();
 
 

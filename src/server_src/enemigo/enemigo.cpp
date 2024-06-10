@@ -19,6 +19,8 @@ Enemigo::Enemigo(uint32_t id_enemigo):
         ancho(CONFIG.obtenerAnchoEnemigo()),
         alto(CONFIG.obtenerAltoEnemigo()){
     tiempo_muerte = 0;
+    puntos = 0;
+    velocidad_x = 10;
 }
 
 void Enemigo::mover_derecha() {
@@ -37,31 +39,46 @@ void Enemigo::mover_izquierda() {
     direccion_mirando = IZQUIERDA;
 }
 
+void Enemigo::recibir_golpe(Bala bala, std::chrono::duration<double> tiempo_transcurrido){
+    bala.inflingir_danio(this, tiempo_transcurrido);
+}
+
+void Enemigo::recibir_golpe(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido){
+    personaje->inflingir_danio_habilidad(this, tiempo_transcurrido);
+}
+
+
 void Enemigo::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido) {
-    int vida_restante = (int)this->vida - golpe; 
-    if(vida_restante <= 0){
+    vida -= golpe; 
+    std::cout << "VIDA ACTUAL"<< (int) vida << std::endl;
+    if(vida <= 0){
         vivo = false;
+        vida = 0;
         tiempo_muerte = tiempo_transcurrido.count();
-    } else{
-        vida = (uint8_t) vida_restante;
     }
 }
+
+void Enemigo::inflingir_danio(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido){
+    personaje->recibir_golpe(this->danio,tiempo_transcurrido);
+}
+
 
 void Enemigo::matar() { 
     vida = 0;
     vivo = false; }
 
 void Enemigo::revivir() { 
-    vida = CONFIG.obtenerVidaDefaultEnemigo();
     vivo = true; }
 
 bool Enemigo::esta_vivo() { return vivo; }
 
 int Enemigo::obtener_danio() { return danio; }
 
+uint32_t Enemigo::obtener_puntos(){ return puntos; }
+
 
 void Enemigo::quedarse_quieto() {
-    velocidad_x = 0;
+    //velocidad_x = 0;
     esta_quieto = true;
 }
 
@@ -122,11 +139,6 @@ void Enemigo::patrullar() {
 
 void Enemigo::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido) {
     
-    if(tiempo_transcurrido.count() - tiempo_muerte >= tiempo_reaparicion){
-        vida = CONFIG.obtenerVidaDefaultEnemigo(); //POTENCIAL BUG SI NO SE IMPLEMENTA EN LAS CLASES HIJAS
-        vivo = true;
-    }
-
     if(!vivo){
         return;
     }
@@ -152,6 +164,35 @@ void Enemigo::actualizar_posicion(std::chrono::duration<double> tiempo_transcurr
             posicion_x = nueva_posicion_x;
         }
     }
+    
+
+   /*
+   if (!vivo) {
+        return;
+    }
+
+    // Actualizar posición basada en la velocidad
+    int32_t nueva_posicion_x = posicion_x + velocidad_x;
+    int32_t nueva_posicion_y = posicion_y;
+
+
+    int32_t cell_x = nueva_posicion_x / 50;
+    int32_t cell_y = nueva_posicion_y / 50;
+
+    std::cout << "CELDA: " << cell_x << "   " << cell_y << std::endl;
+
+    // Verificar colisión revisando la celda del grid
+    if (grid.count(cell_x) && grid[cell_x].count(cell_y)) {
+        if(grid.at(cell_x).at(cell_y).tiene_objeto_solido){
+            std::cout << "COLISION" << std::endl;
+            velocidad_x = -velocidad_x;
+        }
+    }
+   
+    posicion_x = nueva_posicion_x;
+    posicion_y = nueva_posicion_y;
+    */
+
 }
 
 

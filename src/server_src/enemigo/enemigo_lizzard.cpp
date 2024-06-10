@@ -4,6 +4,8 @@
 Lizzard::Lizzard(uint32_t id_enemigo): Enemigo(id_enemigo) {
     std::cout << "LIZZARD CREADO" << std::endl;
     vida = CONFIG.obtenerVidaLizzard();
+    puntos = CONFIG.obtenerPuntosLizzard();
+    danio = CONFIG.obtenerDanioLizzard();
 }
 
 uint8_t Lizzard::obtener_personaje() {

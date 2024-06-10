@@ -2,7 +2,11 @@
 
 #define CONFIG Configuracion::config()
 
-Spaz::Spaz(uint32_t id_jugador): Personaje(id_jugador) { tiempo_especial = - CONFIG.getEnfriamientoHabilidadSpaz(); }
+Spaz::Spaz(uint32_t id_jugador): Personaje(id_jugador) { 
+    tiempo_especial = - CONFIG.getEnfriamientoHabilidadSpaz(); 
+    danio_habilidad = CONFIG.getDanioHabilidadSpaz();
+    
+}
 
 uint8_t Spaz::obtener_personaje() { return SPAZ; }
 

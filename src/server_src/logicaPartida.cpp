@@ -3,10 +3,10 @@
 
 #define CONFIG Configuracion::config()
 
-LogicaPartida::LogicaPartida() : fabrica_objetos(){
+LogicaPartida::LogicaPartida() : fabrica_objetos(), mapa("../src/mapas/mapa.yaml"){
 
     //map_objetos_solidos[1] = new Solido(1, 0, 550, 1, 5000, 100); //Limite del mapa abajo
-
+    
     map_objetos_solidos[2] = new Solido(2, 100, 300, 1, 5000, 25); //Piso grande
 
     map_objetos_solidos[3] = new Solido(3, 75, 0, 1, 25, 5000); //X pared izq
@@ -16,8 +16,19 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(){
     map_objetos_solidos[5] = new Solido(5, 0, 0, 1, 5000, 50);   //Limite del mapa arriba
 
     map_objetos_solidos[6] = new Solido(6, 590, 150, 1, 10, 5000); //X pared derecha
+    
+
+   /*
+    map_objetos_solidos[2] = new Solido(2, 100, 300, 1, 5000, 25); //Piso grande
 
 
+    map_objetos_solidos[3] = new Solido(3, 0, 300, 1, 50, 50); //Piso grande
+    map_objetos_solidos[4] = new Solido(4, 0, 350, 1, 50, 50); //Piso grande
+    map_objetos_solidos[5] = new Solido(5, 0, 400, 1, 50, 50); //Piso grande
+
+    map_objetos_solidos[6] = new Solido(6, 590, 250, 1, 50, 50); //Piso grande
+    map_objetos_solidos[7] = new Solido(7, 50, 250, 1, 50, 50);
+    */
 /*
 
     piso:
@@ -52,14 +63,59 @@ pared:
    
    */
   
-    map_enemigos[0] = new Rat(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
+
+    map_enemigos[0] = new Lizzard(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
 
     map_objetos_comunes[0] = fabrica_objetos.crear_objeto(ZANAHORIA,400,275,true);
     map_objetos_comunes[1] = fabrica_objetos.crear_objeto(GEMA,475,275,false);
     map_objetos_comunes[2] = fabrica_objetos.crear_objeto(MONEDA,475,200,false);
     map_objetos_comunes[3] = fabrica_objetos.crear_objeto(BALA_VELOZ,525,275,false);
 
+   //map_objetos_comunes[4] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,425,200,false);
+    /*
+    grid.clear();
+    cell_size = 50;
 
+    // Iterar sobre todos los objetos sólidos y añadirlos al grid
+    for (const auto& objeto : map_objetos_solidos) {
+        int32_t cell_x = objeto.second->obtener_posicionX()/ cell_size;
+        int32_t cell_y = objeto.second->obtener_posicionY() / cell_size;
+
+        // Añadir el objeto sólido a la celda correspondiente en el grid
+        grid[cell_x][cell_y].tiene_objeto_solido = true;
+    }
+
+    int32_t cell_x = 75 / cell_size;
+    int32_t cell_y = 0 / cell_size;
+
+    // Verificar colisión revisando la celda del grid
+    if (grid.count(cell_x) && grid[cell_x].count(cell_y)) {
+        std::cout << grid.at(cell_x).at(cell_y).tiene_objeto_solido << std::endl;
+    }
+
+    std::cout << "POSICION: " <<100/cell_size << std::endl;
+
+    uint32_t width = 1000;
+    uint32_t height = 1000;
+
+    uint32_t grid_width = (width + cell_size - 1) / cell_size;
+    uint32_t grid_height = (height + cell_size - 1) / cell_size;
+
+
+    
+    for (int32_t x = 0; x < grid_width; ++x) {
+        for (int32_t y = 0; y < grid_height; ++y) {
+            if (grid.count(x) && grid[x].count(y)) {
+                // Acción sobre la celda en (x, y)
+                GridCell& cell = grid[x][y];
+                if(cell.tiene_objeto_solido){
+                    std::cout << "POSICION: " << x << "   " << y <<std::endl;
+                }
+            }
+        }
+    }
+    */
+    
 }
 
 
@@ -289,25 +345,50 @@ void LogicaPartida::actualizar_partida(
 
     for (const auto& par_personaje: map_personajes) {
         par_personaje.second->actualizar_posicion(tiempo_transcurrido, map_objetos_solidos, map_objetos_comunes);
+        Rectangulo rect_personaje = {par_personaje.second->obtener_posicionX(), par_personaje.second->obtener_posicionY(),
+                                    par_personaje.second->obtener_ancho(), par_personaje.second->obtener_alto()};
+        // Ver colision con otros personajes
+
+        //ASDASD
+        //std::cout << "CELDA ACTUAL X: " << par_personaje.second->obtener_posicionX()/ cell_size << std::endl;
+        //std::cout << "CELDA ACTUAL Y: " << par_personaje.second->obtener_posicionY()/ cell_size << std::endl;
+
+        
+        for (const auto& par_otro: map_personajes) {
+            Rectangulo rect_otro = {par_otro.second->obtener_posicionX(), par_otro.second->obtener_posicionY(),
+                                    par_otro.second->obtener_ancho(), par_otro.second->obtener_alto()};
+            if(!par_otro.second->esta_muerto() && par_otro.first != par_personaje.first){
+                if(rect_personaje.hay_colision(rect_otro) && par_personaje.second->obtener_habilidad()){
+                   par_personaje.second->inflingir_danio_habilidad(par_otro.second, tiempo_transcurrido);
+                }
+            }                       
+        }
+        
     }
     
     
     for (const auto& par: map_enemigos) {
         par.second->actualizar_posicion(tiempo_transcurrido);
 
+        //ASD
+        //std::cout << "CELDA ACTUAL X: " << par.second->obtener_posicionX()/ cell_size << std::endl;
+        //std::cout << "CELDA ACTUAL Y: " << par.second->obtener_posicionY()/ cell_size << std::endl;
+
         Rectangulo rect_enemigo = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
                     par.second->obtener_ancho(), par.second->obtener_alto()};
         if(par.second->esta_vivo()){
-            for (const auto& par: map_personajes) {
-                    Rectangulo rect_personaje = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
-                                    par.second->obtener_ancho(), par.second->obtener_alto()};
+            for (const auto& par_pj: map_personajes) {
+                    Rectangulo rect_personaje = {par_pj.second->obtener_posicionX(), par_pj.second->obtener_posicionY(),
+                                    par_pj.second->obtener_ancho(), par_pj.second->obtener_alto()};
                     if(rect_personaje.hay_colision(rect_enemigo)){
-                        if(!par.second->esta_muerto()){
+                        if(!par_pj.second->esta_muerto()){
                                 // Si esta muerto lo ignoro
-                            if(par.second->obtener_habilidad()){
+                            if(par_pj.second->obtener_habilidad()){
                                 // El personaje le hace daño a el
+                                par.second->recibir_golpe(par_pj.second, tiempo_transcurrido);
                             } else{
-                                par.second->recibir_golpe(1,tiempo_transcurrido); 
+                                // El personaje recibe danio
+                                par_pj.second->recibir_golpe(par.second,tiempo_transcurrido); 
                             } 
                         }
                     }
@@ -332,7 +413,10 @@ void LogicaPartida::actualizar_partida(
                     par.second->obtener_ancho(), par.second->obtener_alto()};
             if(rect_enemigo.hay_colision(rect_bala)){
                 if(par.second->esta_vivo()){
-                    par.second->recibir_golpe(200,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+                    par.second->recibir_golpe(*it,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+                    if(!par.second->esta_vivo()){
+                        map_personajes[it->obtener_id_jugador()]->asignar_puntos(par.second->obtener_puntos());
+                    }
                     it->impactar();
                     break;
                 }
@@ -346,7 +430,7 @@ void LogicaPartida::actualizar_partida(
                                 par.second->obtener_ancho(), par.second->obtener_alto()};
                 if(rect_personaje.hay_colision(rect_bala) && it->obtener_id_jugador() != par.first){  // No se puede hacer daño solo
                     if(!par.second->esta_muerto()){
-                        par.second->recibir_golpe(it->obtener_danio(),tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+                        par.second->recibir_golpe(*it,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
                         it->impactar();
                         break;
                     }

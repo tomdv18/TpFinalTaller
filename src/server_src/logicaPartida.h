@@ -20,6 +20,10 @@
 #include "./personaje/personaje_spaz.h"
 #include "rectangulo.h"
 
+
+#include "mapa.h"
+
+
 class LogicaPartida {
 private:
     std::map<uint32_t, Personaje*> map_personajes;
@@ -28,6 +32,12 @@ private:
     std::map<uint32_t, std::unique_ptr<Objeto>> map_objetos_comunes;
     ControladorBalas controlador_balas;
     FabricaObjetos fabrica_objetos;
+
+
+    // GRidmap
+    //std::unordered_map<int32_t, std::unordered_map<int32_t, GridCell>> grid;
+    //uint32_t cell_size;
+    Map mapa;
 
 public:
     LogicaPartida();

@@ -79,6 +79,8 @@ if(SERVER)
 		./server_src/estado/estado_muerto.h
 		./server_src/estado/estado_especial.cpp
 		./server_src/estado/estado_especial.h
+		
+		./server_src/mapa.h
 
 		
 		#./common_src/codigo_bala.h

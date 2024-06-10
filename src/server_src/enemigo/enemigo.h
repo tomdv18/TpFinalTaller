@@ -8,6 +8,12 @@
 #include "../common_src/accion.h"
 #include "../common_src/codigo_enemigo.h"
 #include "../configuracion.h"
+#include "../personaje/personaje.h"
+#include "../bala/bala.h"
+
+
+class Personaje;
+class Bala;
 
 #define WIDTH 640
 #define HEIGHT 480
@@ -17,7 +23,8 @@ protected:
     uint32_t id_enemigo;  // EL ATRIBUTO ID PROBABLEMENTE HAYA QUE REMOVERLO
     uint32_t posicion_x;
     uint32_t posicion_y;
-    int8_t vida;
+    int vida;
+    uint32_t puntos;
     bool esta_quieto;
 
     uint32_t ancho;
@@ -53,6 +60,15 @@ public:
     virtual bool esta_vivo();
 
     virtual void recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido);
+    
+    virtual void recibir_golpe(Bala bala, std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void recibir_golpe(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido);
+
+
+    virtual void inflingir_danio(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido);
+
+    
     // Acciones
 
     // Getters Snapshot
@@ -71,6 +87,8 @@ public:
     virtual int obtener_danio();
 
     virtual bool mirando_izquierda();
+
+    virtual uint32_t obtener_puntos();
 
     // Getters Snapshot
 

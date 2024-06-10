@@ -57,7 +57,6 @@ uint32_t Partida::creador() { return id_creador; }
 
 void Partida::run() {
 
-
     auto start = std::chrono::high_resolution_clock::now();  // Guarda el tiempo de inicio
     std::atomic<bool> _tiempo_corriendo = true;
 
@@ -75,7 +74,6 @@ void Partida::run() {
         }
 
         logica_partida.actualizar_partida(start);
-
 
         Evento snapshot = logica_partida.obtener_snapshot(start);
 
