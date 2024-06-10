@@ -25,6 +25,11 @@ void PersonajeView::crear_texturas(SDL2pp::Renderer *render) {
     this->animaciones.at(INTOXICADO_QUIETO)->crear_texturas(render);
     this->animaciones.at(INTOXICADO_CAMINANDO)->crear_texturas(render);
     this->animaciones.at(HERIDO)->crear_texturas(render);
+    this->animaciones.at(MUERTO)->crear_texturas(render);
+    this->animaciones.at(HABILIDAD)->crear_texturas(render);
+
+    
+
 
 }
 
@@ -69,15 +74,29 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
     } else if( estado == ESTADO_HERIDO){
         this->animaciones.at(HERIDO)->en_loop(false);
         this->animaciones.at(HERIDO)->acualizar(dt*0.4);
+    } else if( estado == ESTADO_MUERTO){
+        this->animaciones.at(MUERTO)->en_loop(false);
+        this->animaciones.at(MUERTO)->acualizar(dt*0.4);
+    } else if ( estado == ESTADO_ESPECIAL){
+        this->animaciones.at(HABILIDAD)->en_loop(false);
+        this->animaciones.at(HABILIDAD)->acualizar(dt*0.8);
     }
 
-    // Resetear las animaciones necesarias
+    // Resetear las animaciones necesarias (No loop)
     if(estado != ESTADO_SALTANDO){
         this->animaciones.at(SALTANDO)->reset_frame();
     }
 
+    if(estado != ESTADO_ESPECIAL){
+        this->animaciones.at(HABILIDAD)->reset_frame();
+    }
+
     if(estado != ESTADO_HERIDO){
         this->animaciones.at(HERIDO)->reset_frame();
+    }
+
+    if(estado != ESTADO_MUERTO){
+        this->animaciones.at(MUERTO)->reset_frame();
     }
 
 
@@ -123,6 +142,15 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
         SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
         animaciones.at(HERIDO)->animar(*render, personaje, flip);
         break;
+    }
+    case ESTADO_MUERTO:{
+        SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+        animaciones.at(MUERTO)->animar(*render, personaje, flip);
+        break;
+    }
+    case ESTADO_ESPECIAL:{
+        SDL_RendererFlip flip = SDL_FLIP_NONE;
+        animaciones.at(HABILIDAD)->animar(*render, personaje, flip);
     }
     default:
         break;

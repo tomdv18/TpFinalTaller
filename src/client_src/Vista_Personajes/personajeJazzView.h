@@ -11,6 +11,9 @@
 #include "../src/client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_intoxicado_quieto.h"
 #include "../src/client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_intoxicado_caminando.h"
 #include "../src/client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_herido.h"
+#include "../src/client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_muerte.h"
+#include "../src/client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_habilidad.h"
+
 
 
 class PersonajeJazzView : public PersonajeView {

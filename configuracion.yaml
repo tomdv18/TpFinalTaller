@@ -1,5 +1,5 @@
 personaje:
-  vida: 10
+  vida: 1
   velocidad_x: 5
   velocidad_y: 30 
   gravedad: 3

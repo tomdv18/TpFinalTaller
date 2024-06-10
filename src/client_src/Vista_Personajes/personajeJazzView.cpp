@@ -15,6 +15,8 @@ void PersonajeJazzView::crear_animaciones() {
     this->animaciones.insert(std::make_pair(INTOXICADO_QUIETO, new Animacion_Jazz_Intoxicado_Quieto));
     this->animaciones.insert(std::make_pair(INTOXICADO_CAMINANDO, new Animacion_Jazz_Intoxicado_Caminando));
     this->animaciones.insert(std::make_pair(HERIDO, new Animacion_Jazz_Herido()));
+    this->animaciones.insert(std::make_pair(MUERTO, new Animacion_Jazz_Muerte()));
+    this->animaciones.insert(std::make_pair(HABILIDAD, new Animacion_Jazz_Habilidad()));
 }
 
 

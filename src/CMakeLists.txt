@@ -219,9 +219,12 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_intoxicado_caminando.cpp
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_intoxicado_quieto.h
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_intoxicado_quieto.cpp
-		
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_herido.h
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_herido.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_muerte.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_muerte.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_habilidad.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_habilidad.cpp
 
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.cpp

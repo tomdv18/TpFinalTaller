@@ -13,6 +13,8 @@ char const PATH_JAZZ_MUERTE[] = "../src/client_src/Images/Jazz_muerte.png";
 char const PATH_JAZZ_INTOXICADO_QUIETO[] = "../src/client_src/Images/Jazz_intoxicado_quieto.png";
 char const PATH_JAZZ_INTOXICADO_CAMINANDO[] = "../src/client_src/Images/Jazz_intoxicado_caminando.png";
 char const PATH_JAZZ_HERIDO[] = "../src/client_src/Images/Jazz_herido.png";
+char const PATH_JAZZ_HABILIDAD[] = "../src/client_src/Images/Jazz_habilidad.png";
+
 
 char const PATH_LORI_CAMINANDO[] = "../src/client_src/Images/Lori_caminando.png";
 char const PATH_LORI_QUIETO[] = "../src/client_src/Images/Lori_quieto.png";
@@ -56,5 +58,7 @@ char const DEJA_DISPARO_QUIETO[] = "Dejar_Disparo_Quieto";
 char const INTOXICADO_QUIETO[] = "Intoxicado_Quieto";
 char const INTOXICADO_CAMINANDO[] = "Intoxicado_Caminando";
 char const HERIDO[] = "Herido";
+char const MUERTO[] = "Muerto";
+char const HABILIDAD[] = "Habilidad";
 
 #endif 
