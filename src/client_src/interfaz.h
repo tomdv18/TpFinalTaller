@@ -17,16 +17,13 @@ class Interfaz {
         std::string texto;
         uint16_t tiempo;
         uint32_t puntos;
+        std::vector<std::pair<uint32_t, uint32_t>> puntajes;
 
         void mostrar_vida();
 
         void mostrar_municiones();
 
         void mostrar_arma_seleccionada();
-
-        void mostrar_top_3();
-
-        void mostrar_tablero_final();
 
     public:
         explicit Interfaz(SDL2pp::Renderer &render, int ancho, int alto, uint32_t id_jugador);
@@ -36,6 +33,9 @@ class Interfaz {
         void definir_puntaje(uint32_t puntaje);
 
         void mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews);
+
+        void mostrar_tabla_final(SDL2pp::Renderer &render);
+
 
         ~Interfaz();
 };

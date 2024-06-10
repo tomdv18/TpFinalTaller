@@ -32,8 +32,10 @@ void Renderizado::iniciar_interfaz(int w, int h) {
     std::cout << "sdrfgdsfdsfdsf"<< std::endl;
 }
 
-void Renderizado::renderizar(Evento evento) {
-    
+bool Renderizado::renderizar(Evento evento) {
+    if(evento.tiempo_restante == 0) {
+        return false;
+    }
     // Defino tiempo
     this->interfaz->definir_tiempo(evento.tiempo_restante);
     
@@ -232,11 +234,20 @@ void Renderizado::renderizar(Evento evento) {
 
     interfaz->mostrar_hud(*render, personajesViews);
     render->Present();
+    return true;
 }
 
 void Renderizado::crear_ventana_y_render(const std::string& title, int width, int height) {
     this->window = std::make_unique<SDL2pp::Window>(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
     this->render = std::make_unique<SDL2pp::Renderer>(*window, -1, SDL_RENDERER_ACCELERATED);
+}
+
+void Renderizado::mostrar_tablero_final() {
+    render->Clear();
+    mapa->dibujar_fondo(*render);
+    interfaz->mostrar_tabla_final(*render);
+    render->Present();
+    SDL_Delay(3000); // Muestro la tabla final por 3 segundos
 }
 
 Renderizado::~Renderizado() { 

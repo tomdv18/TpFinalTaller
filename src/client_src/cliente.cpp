@@ -158,7 +158,9 @@ void Cliente::comunicarse_con_el_servidor() {
             Evento evento;
 
             if(queue_eventos.try_pop(evento)) {
-                renderizado.renderizar(evento);
+                if (!renderizado.renderizar(evento)) {
+                    break;
+                };
             }
             
             auto fin = std::chrono::high_resolution_clock::now();
@@ -179,6 +181,10 @@ void Cliente::comunicarse_con_el_servidor() {
         std::cout << e.what() << std::endl;
         return;
     }
+    if (estado) {
+        renderizado.mostrar_tablero_final();    
+    }
+    
     queue_accion.close();
     queue_eventos.close();
     

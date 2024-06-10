@@ -62,13 +62,15 @@ class Renderizado {
 
     void crear_ventana_y_render(const std::string& title, int width, int height);
 
-    void renderizar(Evento evento);
+    bool renderizar(Evento evento);
 
     void iniciar_mapa(MapaEntidades &&map);
 
     void iniciar_camara(Camara &&cam);
 
     void iniciar_interfaz(int w, int h);
+
+    void mostrar_tablero_final();
 };
 
 #endif

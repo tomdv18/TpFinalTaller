@@ -11,7 +11,8 @@ sdl_ttf(),
 font("../src/client_src/Images/Jazz-Jackrabbit-2.ttf", 24), 
 id_jugador(id_jugador), 
 texto(),
-tiempo(0)
+tiempo(0),
+puntajes()
 {
                 
         SDL2pp::Surface vida("../src/client_src/Images/vida.png");
@@ -47,9 +48,26 @@ void Interfaz::definir_tiempo(uint16_t tiempo) {
     this->tiempo = tiempo;
 }
 
-void Interfaz::mostrar_top_3() {}
+void Interfaz::mostrar_tabla_final(SDL2pp::Renderer &render) {
+    size_t i = 0;
+    SDL_Color color = {255, 255, 255, 255};
+    for (const auto &entry : puntajes) {
+        uint32_t id = entry.first;
+        uint32_t puntaje = entry.second;
+        std::cout << "ID: " << id << " - Puntaje: " << puntaje << std::endl;
 
-void Interfaz::mostrar_tablero_final() {}
+        // Muestro puntaje del jugador
+        std::string texto = std::to_string(id) + ": " + std::to_string(puntaje);
+        SDL2pp::Surface surface_texto = font.RenderText_Solid(texto, color);
+        SDL2pp::Texture texto_textura(render, surface_texto);
+        
+        // Calcular posición de renderizado
+        int x = ancho_ventana/2.0; // Ajustar para que no se salga de la ventana
+        int y = i * 50;
+        render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(x, y, 100, 30));
+        i++;
+    }
+}
 
 void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews) {
     auto it = personajesViews.find(id_jugador);
@@ -73,6 +91,7 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
 
     texto = std::to_string(tiempo);
     SDL_Color color = {255, 255, 255, 255};
+
     if (this->tiempo <= 30) { // Ver como terminar el juego...
         color = {255, 0, 0, 0};
     }
@@ -90,8 +109,8 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
 
     // Muestro los mejores 3 puntajes de los jugadores
         // Vector para almacenar los puntajes
-    std::vector<std::pair<uint32_t, uint32_t>> puntajes;
-
+    puntajes.clear();
+    
         // Recorrer el mapa y extraer los puntajes
     for (const auto &entry : personajesViews) {
         uint32_t id = entry.first;
