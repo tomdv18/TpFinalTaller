@@ -18,19 +18,23 @@ puntajes()
         SDL2pp::Surface vida("../src/client_src/Images/vida.png");
         vida.SetColorKey(true, SDL_MapRGB(vida.Get()->format, 0, 128, 255));
 
-        SDL2pp::Surface bala_tipo_1("../src/client_src/Images/bala_tipo_1.png");
-        bala_tipo_1.SetColorKey(true, SDL_MapRGB(bala_tipo_1.Get()->format, 0, 128, 255));
+        SDL2pp::Surface bala_tipo_3("../src/client_src/Images/bala_tipo_0.png");
+        bala_tipo_3.SetColorKey(true, SDL_MapRGB(bala_tipo_3.Get()->format, 44, 102, 150));        
 
-        SDL2pp::Surface bala_tipo_2("../src/client_src/Images/bala_tipo_2.png");
-        bala_tipo_2.SetColorKey(true, SDL_MapRGB(bala_tipo_2.Get()->format, 0, 128, 255));
+        SDL2pp::Surface bala_tipo_4("../src/client_src/Images/bala_tipo_1.png");
+        bala_tipo_4.SetColorKey(true, SDL_MapRGB(bala_tipo_4.Get()->format, 0, 128, 255));
 
-        SDL2pp::Surface bala_tipo_3("../src/client_src/Images/bala_tipo_3.png");
-        bala_tipo_3.SetColorKey(true, SDL_MapRGB(bala_tipo_3.Get()->format, 0, 128, 255));
+        SDL2pp::Surface bala_tipo_5("../src/client_src/Images/bala_tipo_2.png");
+        bala_tipo_5.SetColorKey(true, SDL_MapRGB(bala_tipo_5.Get()->format, 0, 128, 255));
+
+        SDL2pp::Surface bala_tipo_6("../src/client_src/Images/bala_tipo_3.png");
+        bala_tipo_6.SetColorKey(true, SDL_MapRGB(bala_tipo_6.Get()->format, 0, 128, 255));
 
         texturas["vida"] = new SDL2pp::Texture(render, vida);
-        texturas["bala_tipo_1"] = new SDL2pp::Texture(render, bala_tipo_1);
-        texturas["bala_tipo_2"] = new SDL2pp::Texture(render, bala_tipo_2);
         texturas["bala_tipo_3"] = new SDL2pp::Texture(render, bala_tipo_3);
+        texturas["bala_tipo_4"] = new SDL2pp::Texture(render, bala_tipo_4);
+        texturas["bala_tipo_5"] = new SDL2pp::Texture(render, bala_tipo_5);
+        texturas["bala_tipo_6"] = new SDL2pp::Texture(render, bala_tipo_6);
 }
 
 
@@ -124,7 +128,7 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
     });
 
     // Mostrar los puntajes
-    std::cout << "-------------------------" << std::endl;
+    //std::cout << "-------------------------" << std::endl;
     size_t i = 0;
     for (const auto &entry : puntajes) {
         if (i >= 3) {
@@ -132,7 +136,7 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
         }
         uint32_t id = entry.first;
         uint32_t puntaje = entry.second;
-        std::cout << "ID: " << id << " - Puntaje: " << puntaje << std::endl;
+        //std::cout << "ID: " << id << " - Puntaje: " << puntaje << std::endl;
         
         if (entry.first == id_jugador) {
             color = {0, 255, 0, 0};
@@ -140,9 +144,9 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
             color = {255, 255, 255, 255};
         }
         // Muestro puntaje del jugador
-        std::string texto = std::to_string(id) + ": " + std::to_string(puntaje);
-        SDL2pp::Surface surface_texto = font.RenderText_Solid(texto, color);
-        SDL2pp::Texture texto_textura(render, surface_texto);
+        texto = std::to_string(id) + ": " + std::to_string(puntaje);
+        surface_texto = font.RenderText_Solid(texto, color);
+        texto_textura = SDL2pp::Texture(render, surface_texto);
         
         // Calcular posición de renderizado
         int x = ancho_ventana - 130; // Ajustar para que no se salga de la ventana
@@ -151,11 +155,33 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
         
         i++;
     }
-    // Ver como rellenar el texto de blanco, asi se ve mejor...
 
-    
+    // Muestro las municiones
+    color = SDL_Color({255, 255, 255, 255});
+    if(personajeViewPtr.obtener_cantidad_municion() == -1) {
+        texto = "INF";
+    } else {
+        texto = std::to_string(personajeViewPtr.obtener_cantidad_municion());
+    }
+    surface_texto = font.RenderText_Solid(texto, color);
+    texto_textura = SDL2pp::Texture(render, surface_texto);
+    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ancho_ventana-50, alto_ventana-20, 50, 20));
+
+    // Muestro el tipo de bala
+    // Ver como rellenar el texto de blanco, asi se ve mejor...
+    std::cout << "MUNICIONES: " << personajeViewPtr.obtener_cantidad_municion() << std::endl;
+    std::cout << "TIPO_ BALA: " << personajeViewPtr.obtener_tipo_bala() << std::endl;
+
+    std::string tipo_bala = "bala_tipo_" + std::to_string(personajeViewPtr.obtener_tipo_bala());
+    rect.x = (ancho_ventana-ICONO_WIDHT-50);
+    rect.y = (alto_ventana-ICONO_HEIGHT);
+    rect.w = (ICONO_WIDHT);
+    rect.h = (ICONO_HEIGHT);
+    render.Copy(*texturas[tipo_bala], SDL2pp::NullOpt, SDL2pp::Rect(rect.x, rect.y, rect.w, rect.h));
 }
 
 Interfaz::~Interfaz() {
-
+    for (auto& pair : texturas) {
+        delete pair.second;
+    }
 }

@@ -58,6 +58,8 @@ bool Renderizado::renderizar(Evento evento) {
             personaje->crear_texturas(render.get());
             personaje->definir_vida(evento.vida);
             personaje->definir_puntos(evento.puntos);
+            personaje->definir_cantidad_municion(evento.municion);
+            personaje->definir_tipo_bala(evento.bala_actual);
             personajesViews[evento.id_jugador] = std::move(personaje);
             std::cout << "CREANDO JUGADOR" << std::endl;
                 
@@ -65,6 +67,8 @@ bool Renderizado::renderizar(Evento evento) {
             PersonajeView &personaje = *(personajesViews.at(evento.id_jugador));
             personaje.definir_vida(evento.vida);
             personaje.definir_puntos(evento.puntos);
+            personaje.definir_cantidad_municion(evento.municion);
+            personaje.definir_tipo_bala(evento.bala_actual);
             personaje.actualizar_vista_personaje(evento, FRAME_RATE);
         }
     }

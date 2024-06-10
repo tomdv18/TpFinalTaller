@@ -18,8 +18,8 @@ class PersonajeView {
     uint32_t id_jugador;
     int vida;
     int puntaje;
-    //arma seleccionada?
-    //municiones?
+    int tipo_bala;
+    int cantidad_municion;
     int posicion_x;
     int posicion_y;
     int width;
@@ -52,11 +52,27 @@ class PersonajeView {
 
     virtual void renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y);
 
+    virtual void definir_tipo_bala(uint8_t tipo_bala) {
+        this->tipo_bala = int(tipo_bala);
+    }
+
+    virtual int obtener_tipo_bala() {
+        return this->tipo_bala;
+    }
+
+    virtual void definir_cantidad_municion(uint32_t municiones) {
+        this->cantidad_municion = int(municiones);
+    }
+
+    virtual int obtener_cantidad_municion() {
+        return this->cantidad_municion;
+    }
+
     virtual void definir_puntos(uint32_t puntos) {
         this->puntaje = int(puntos);
     }
 
-    virtual uint8_t obtener_puntos() {
+    virtual int obtener_puntos() {
         return this->puntaje;
     }
 
@@ -64,7 +80,7 @@ class PersonajeView {
         this->vida = int(vida);
     }
 
-    virtual uint8_t obtener_vida() {
+    virtual int obtener_vida() {
         return this->vida;
     }
 
