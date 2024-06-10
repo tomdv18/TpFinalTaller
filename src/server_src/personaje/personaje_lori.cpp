@@ -3,11 +3,7 @@
 
 #define CONFIG Configuracion::config()
 
-Lori::Lori(uint32_t id_jugador): Personaje(id_jugador) { 
-    tiempo_especial = -CONFIG.getEnfriamientoHabilidadLori(); 
-    danio_habilidad = CONFIG.getDanioHabilidadLori();
-    
-}
+Lori::Lori(uint32_t id_jugador): Personaje(id_jugador) { tiempo_especial = -CONFIG.getEnfriamientoHabilidadLori(); }
 
 uint8_t Lori::obtener_personaje() { return LORI; }
 

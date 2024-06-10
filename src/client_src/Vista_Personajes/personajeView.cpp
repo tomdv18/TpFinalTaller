@@ -1,4 +1,5 @@
 #include "personajeView.h"
+#include <iostream>
 
 #define WIDTH 640
 #define HEIGHT 480
@@ -16,19 +17,29 @@ bool PersonajeView::obtener_face() {
 }
 void PersonajeView::crear_texturas(SDL2pp::Renderer *render) {
     
+    std::cout << "textura 5" << std::endl;
     this->animaciones.at(CAMINANDO)->crear_texturas(render);
+    std::cout << "textura 6" << std::endl;
     this->animaciones.at(CORRIENDO)->crear_texturas(render);
+    std::cout << "textura 7" << std::endl;
     this->animaciones.at(QUIETO_CLIENTE)->crear_texturas(render);
+    std::cout << "textura 8" << std::endl;
     this->animaciones.at(SALTANDO)->crear_texturas(render);
+    std::cout << "textura 9" << std::endl;
     this->animaciones.at(DISPARO_QUIETO)->crear_texturas(render);
+    std::cout << "textura 10" << std::endl;
     this->animaciones.at(DEJA_DISPARO_QUIETO)->crear_texturas(render);
+    std::cout << "textura 11" << std::endl;
     this->animaciones.at(INTOXICADO_QUIETO)->crear_texturas(render);
+    std::cout << "textura 12" << std::endl;
     this->animaciones.at(INTOXICADO_CAMINANDO)->crear_texturas(render);
+    std::cout << "textura 1" << std::endl;
     this->animaciones.at(HERIDO)->crear_texturas(render);
+    std::cout << "textura 2" << std::endl;
     this->animaciones.at(MUERTO)->crear_texturas(render);
+    std::cout << "textura 3" << std::endl;
     this->animaciones.at(HABILIDAD)->crear_texturas(render);
-
-    
+    std::cout << "textura 4" << std::endl;
 
 
 }

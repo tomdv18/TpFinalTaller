@@ -53,14 +53,3 @@ uint8_t Bala::obtener_danio() const{
 bool Bala::obtener_impacto() const{
     return impacto;
 }
-
-void Bala::inflingir_danio(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido){
-    personaje->recibir_golpe(danio, tiempo_transcurrido); 
-    if(codigo_bala == COHETE_TOXICO){
-        personaje->intoxicarse(tiempo_transcurrido.count());
-    }
-}
-
-void Bala::inflingir_danio(Enemigo *enemigo, std::chrono::duration<double> tiempo_transcurrido){
-    enemigo->recibir_golpe(danio, tiempo_transcurrido); 
-}

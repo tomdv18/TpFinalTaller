@@ -31,6 +31,8 @@ class Animacion {
 
     virtual void reset_frame();
 
+    void set_size_frames_y_cantida_frames();
+
     virtual void animar(SDL2pp::Renderer &render, SDL2pp::Rect dest, SDL_RendererFlip &flipType);
 
 

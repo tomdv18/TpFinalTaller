@@ -20,6 +20,11 @@ SDL2pp::Texture Animacion::crear_surface_y_texturas(std::string const &path_spri
     return std::move(textures);
 }
 
+void Animacion::set_size_frames_y_cantida_frames() {
+    this->size_frame = texturas->GetHeight();
+    this->cantidad_frames = texturas->GetWidth() / this->size_frame;
+}
+
 void Animacion::acualizar(float dt) {
     this->elapsed += dt;
 

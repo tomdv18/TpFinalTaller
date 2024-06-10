@@ -44,9 +44,6 @@ private:
     double enfriamiento_habilidad_lori;
     int velocidad_x_habilidad_lori;
     int velocidad_y_habilidad_lori;
-    uint8_t danio_habilidad_jazz;
-    uint8_t danio_habilidad_spaz;
-    uint8_t danio_habilidad_lori;
 
     //Atributos de partida
 
@@ -77,14 +74,8 @@ private:
     int ancho_enemigo;
     int alto_enemigo;
     int vida_fencer;
-    uint32_t puntos_fencer;
-    int danio_fencer;
     int vida_lizzard;
-    uint32_t puntos_lizzard;
-    int danio_lizzard;
     int vida_rat;
-    uint32_t puntos_rat;
-    int danio_rat;
     double tiempo_reaparicion_enemigo;
     
     Configuracion(const YAML::Node& config);
@@ -112,11 +103,6 @@ public:
     double getTiempoIntoxicacion() const { return tiempo_intoxicacion; }
     int getAnchoPersonaje() const { return ancho_personaje; }
     int getAltoPersonaje() const { return alto_personaje; }
-
-    uint8_t getDanioHabilidadJazz() const { return danio_habilidad_jazz; }
-    uint8_t getDanioHabilidadSpaz() const { return danio_habilidad_spaz; }
-    uint8_t getDanioHabilidadLori() const { return danio_habilidad_lori; }
-
 
     //Getters para valores de partida
     int getDuracionPartida() const {return duracion_segundos;}
@@ -159,13 +145,6 @@ public:
     int obtenerVidaLizzard() const {return vida_lizzard;}
     int obtenerVidaRat() const {return vida_rat;}
     double obtenerTiempoReaparicionEnemigo() const {return tiempo_reaparicion_enemigo;}
-    uint32_t obtenerPuntosFencer() const {return puntos_fencer;}
-    uint32_t obtenerPuntosLizzard() const {return puntos_lizzard;}
-    uint32_t obtenerPuntosRat() const {return puntos_rat;}
-    int obtenerDanioFencer() const {return danio_fencer;}
-    int obtenerDanioLizzard() const {return danio_lizzard;}
-    int obtenerDanioRat() const {return danio_rat;}
-
 
 };
 

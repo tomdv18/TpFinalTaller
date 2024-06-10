@@ -1,5 +1,5 @@
 personaje:
-  vida: 10
+  vida: 1
   velocidad_x: 5
   velocidad_y: 30 
   gravedad: 3
@@ -9,17 +9,14 @@ personaje:
   alto: 50
 
 jazz:
-  danio_habilidad: 200
   enfriamiento_habilidad: 5.0
   velocidad_y_habilidad: 45 
 
 spaz:
-  danio_habilidad: 200
   enfriamiento_habilidad: 5.0
   velocidad_x_habilidad: 15
 
 lori:
-  danio_habilidad: 200
   enfriamiento_habilidad: 5.0
   velocidad_x_habilidad: 10
   velocidad_y_habilidad: 30
@@ -100,17 +97,11 @@ enemigo:
   ancho: 50
   alto: 50
   fencer:
-    danio: 5
-    puntos: 50
-    vida: 1
+    vida: 120
   lizzard: 
-    danio: 4
-    puntos: 20
-    vida: 1
+    vida: 100
   rat:
-    danio: 3
-    puntos: 10
-    vida: 1
+    vida: 50
 
 
 

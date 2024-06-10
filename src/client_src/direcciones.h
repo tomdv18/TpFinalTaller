@@ -25,6 +25,8 @@ char const PATH_LORI_DEJA_DISPARO_QUIETO[] = "../src/client_src/Images/Lori_deja
 char const PATH_LORI_MUERTE[] = "../src/client_src/Images/Lori_muerte.png";
 char const PATH_LORI_INTOXICADO_QUIETO[] = "../src/client_src/Images/Lori_intoxicado_quieto.png";
 char const PATH_LORI_INTOXICADO_CAMINANDO[] = "../src/client_src/Images/Lori_intoxicado_caminando.png";
+char const PATH_LORI_HERIDO[] = "../src/client_src/Images/Lori_herido.png";
+char const PATH_LORI_HABILIDAD[] = "../src/client_src/Images/Lori_habilidad.png";
 
 char const PATH_SPAZ_CAMINANDO[] = "../src/client_src/Images/Spaz_caminando.png";
 char const PATH_SPAZ_QUIETO[] = "../src/client_src/Images/Spaz_quieto.png";
@@ -35,6 +37,8 @@ char const PATH_SPAZ_DEJA_DISPARO_QUIETO[] = "../src/client_src/Images/Spaz_deja
 char const PATH_SPAZ_MUERTE[] = "../src/client_src/Images/Spaz_muerte.png";
 char const PATH_SPAZ_INTOXICADO_QUIETO[] = "../src/client_src/Images/Spaz_intoxicado_quieto.png";
 char const PATH_SPAZ_INTOXICADO_CAMINANDO[] = "../src/client_src/Images/Spaz_intoxicado_caminando.png";
+char const PATH_SPAZ_HERIDO[] = "../src/client_src/Images/Spaz_herido.png";
+char const PATH_SPAZ_HABILIDAD[] = "../src/client_src/Images/Spaz_habilidad.png";
 
 char const PATH_GEMA[] = "../src/client_src/Images/gema.png";
 char const PATH_ZANAHORIA[] = "../src/client_src/Images/zanahoria.png";

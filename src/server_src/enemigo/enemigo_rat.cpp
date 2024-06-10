@@ -5,8 +5,6 @@
 Rat::Rat(uint32_t id_enemigo): Enemigo(id_enemigo) {
     std::cout << "RAT CREADO" << std::endl;
     vida = CONFIG.obtenerVidaRat();
-    puntos = CONFIG.obtenerPuntosRat();
-    danio = CONFIG.obtenerDanioRat();
 }
 
 uint8_t Rat::obtener_personaje() {

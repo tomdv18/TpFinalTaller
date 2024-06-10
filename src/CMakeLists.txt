@@ -79,8 +79,6 @@ if(SERVER)
 		./server_src/estado/estado_muerto.h
 		./server_src/estado/estado_especial.cpp
 		./server_src/estado/estado_especial.h
-		
-		./server_src/mapa.h
 
 		
 		#./common_src/codigo_bala.h
@@ -244,6 +242,12 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_intoxicado_caminando.cpp
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_intoxicado_quieto.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_intoxicado_quieto.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_herido.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_herido.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_muerte.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_muerte.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_habilidad.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_habilidad.cpp
 
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.cpp
@@ -261,6 +265,12 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_intoxicado_caminando.cpp
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_intoxicado_quieto.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_intoxicado_quieto.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_herido.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_herido.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_muerte.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_muerte.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_habilidad.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_habilidad.cpp
 
         ./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
 		./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.cpp

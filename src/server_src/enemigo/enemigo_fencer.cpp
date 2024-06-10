@@ -5,8 +5,6 @@
 Fencer::Fencer(uint32_t id_enemigo): Enemigo(id_enemigo) {
     std::cout << "FENCER CREADO" << std::endl;
     vida = CONFIG.obtenerVidaFencer();
-    puntos = CONFIG.obtenerPuntosFencer();
-    danio = CONFIG.obtenerDanioFencer();
 }
 
 uint8_t Fencer::obtener_personaje() {

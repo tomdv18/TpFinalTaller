@@ -2,11 +2,7 @@
 
 #define CONFIG Configuracion::config()
 
-Jazz::Jazz(uint32_t id_jugador): Personaje(id_jugador) { 
-    tiempo_especial = - CONFIG.getEnfriamientoHabilidadJazz(); 
-    danio_habilidad = CONFIG.getDanioHabilidadJazz();
-    
-}
+Jazz::Jazz(uint32_t id_jugador): Personaje(id_jugador) { tiempo_especial = - CONFIG.getEnfriamientoHabilidadJazz(); }
 
 uint8_t Jazz::obtener_personaje() { return JAZZ; }
 

@@ -9,6 +9,9 @@
 #include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_deja_disparo_quieto.h"
 #include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_intoxicado_quieto.h"
 #include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_intoxicado_caminando.h"
+#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_herido.h"
+#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_muerte.h"
+#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_habilidad.h"
 #include "personajeView.h"
 
 class PersonajeLoriView : public PersonajeView {

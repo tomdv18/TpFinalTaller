@@ -55,6 +55,7 @@ bool Renderizado::renderizar(Evento evento) {
                 case LORI:
                     personaje = std::unique_ptr<PersonajeView>(new PersonajeLoriView(evento));    
             }
+            std::cout << "MUERE ACA" << std::endl;
             personaje->crear_texturas(render.get());
             personaje->definir_vida(evento.vida);
             personaje->definir_puntos(evento.puntos);

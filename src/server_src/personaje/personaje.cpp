@@ -4,7 +4,7 @@
 #define CONFIG Configuracion::config()
 
 Personaje::Personaje(uint32_t id_jugador):
-        id_jugador(id_jugador), posicion_x(150), posicion_y(100), vida(CONFIG.getVidaPersonaje()), velocidad_x(0), velocidad_y(0), estado(nullptr){
+        id_jugador(id_jugador), posicion_x(150), posicion_y(100), vida(CONFIG.getVidaPersonaje()), arma(), velocidad_x(0), velocidad_y(0), estado(nullptr){
     corriendo = false;
     usando_especial = false;
     saltando = false;
@@ -25,7 +25,6 @@ Personaje::Personaje(uint32_t id_jugador):
     direccion_mirando = DERECHA;
     ancho = CONFIG.getAnchoPersonaje();
     alto = CONFIG.getAltoPersonaje();
-
 
 
     this->cambiarEstado(new EstadoQuieto());
@@ -91,6 +90,16 @@ void Personaje::mover_abajo() {
 }
 
 uint8_t Personaje::disparar(std::chrono::duration<double> tiempo_transcurrido) {
+    /*
+    if(!usando_especial && !intoxicado){
+        if (arma.disparar(tiempo_transcurrido)) {
+            std::cout << "DISPARAR" << std::endl;
+            esta_disparando = true;
+            return arma.obtener_bala();
+        }
+    }
+    return NINGUNO;
+    */
    double tiempo = tiempo_transcurrido.count();
    if(!usando_especial && !intoxicado ){
         esta_disparando = true;
@@ -130,19 +139,8 @@ void Personaje::correr() {
     }
 }
 
-void Personaje::recibir_golpe(Bala bala, std::chrono::duration<double> tiempo_transcurrido) {
-    if(invulnerable) return;
-    bala.inflingir_danio(this, tiempo_transcurrido);
-}
-
-
-void Personaje::recibir_golpe(Enemigo *enemigo, std::chrono::duration<double> tiempo_transcurrido){
-    if(invulnerable) return;
-    enemigo->inflingir_danio(this, tiempo_transcurrido);
-}
-
-
 void Personaje::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido) {
+    if(invulnerable) return;
     this->vida -= golpe; 
     if(vida <= 0){
         std::cout << "MUERTO" << std::endl;
@@ -156,26 +154,6 @@ void Personaje::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiemp
         volverse_invulnerable(tiempo_transcurrido.count());
     }
 }
-
-void Personaje::inflingir_danio_bala(Enemigo *enemigo, std::chrono::duration<double> tiempo_transcurrido){
-    enemigo->recibir_golpe(CONFIG.obtenerBala(bala_actual).danio, tiempo_transcurrido);
-}
-
-void Personaje::inflingir_danio_bala(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido){
-    personaje->recibir_golpe(CONFIG.obtenerBala(bala_actual).danio, tiempo_transcurrido);
-}
-
-void Personaje::inflingir_danio_habilidad(Enemigo *enemigo, std::chrono::duration<double> tiempo_transcurrido){
-    enemigo->recibir_golpe(obtener_danio_habilidad(), tiempo_transcurrido);
-    if(!enemigo->esta_vivo()){
-        puntos += enemigo->obtener_puntos();
-    }
-}
-
-void Personaje::inflingir_danio_habilidad(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido){
-    personaje->recibir_golpe(obtener_danio_habilidad(), tiempo_transcurrido);
-}
-
 
 void Personaje::intoxicarse(double tiempo){
     tiempo_intoxicado = tiempo;
@@ -249,8 +227,6 @@ uint8_t Personaje::obtener_saltando() { return saltando; }
 
 uint8_t Personaje::obtener_disparando() { return esta_disparando; }
 
-uint8_t Personaje::obtener_danio_habilidad(){ return danio_habilidad; }
-
 uint8_t Personaje::obtener_estado(){
     return estado->obtener_estado();
 }
@@ -318,6 +294,7 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
         velocidad_y = 0;
     }
 
+    //std::cout << "PUNTUACION:" << puntos << std::endl;
     //std::cout << "ESTA INVULNERABLE: " << (int) invulnerable << std::endl;
 
     //std::cout << "ESTA INTOXICADO: " << (int) intoxicado << std::endl;
