@@ -10,7 +10,8 @@ Objeto::Objeto(uint32_t id_objeto, uint32_t posicion_x, uint32_t posicion_y,
         tiempo_interaccion(-tiempo_reaparicion),
         mostrar(true),
         ancho(ancho),
-        alto(alto), envenenado(envenenado) {}
+        alto(alto),
+        envenenado(envenenado) {}
 
 uint32_t Objeto::obtener_id() { return id_objeto; }
 
@@ -32,8 +33,8 @@ void Objeto::reaparecer(std::chrono::duration<double> tiempo_transcurrido) {
 }
 
 void Objeto::interactuar_personaje(Personaje* personaje,
-                                       std::chrono::duration<double> tiempo_transcurrido){
-    if(this->envenenado){
+                                   std::chrono::duration<double> tiempo_transcurrido) {
+    if (this->envenenado) {
         personaje->intoxicarse(tiempo_transcurrido.count());
     }
 }

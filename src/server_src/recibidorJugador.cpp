@@ -35,7 +35,6 @@ MapaEntidades importFromYAML(const std::string& filename) {
             // Manejar el caso en el que el valor asociado no sea una secuencia
             throw std::runtime_error("Error: La entrada '" + entity_name +
                                      "' no es una secuencia de posiciones válida.");
-            continue;  // Pasar a la siguiente entrada en el mapa
         }
 
         // Itero sobre las posiciones de la entidad
@@ -141,11 +140,9 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>& partida_encontrada, bool& w
         case SALIR: {
             conectado = false;
             throw std::runtime_error("Jugador desconectado");
-            break;
         }
         default: {
             throw std::runtime_error("Se perdió la conexion con el cliente");
-            break;
         }
     }
 

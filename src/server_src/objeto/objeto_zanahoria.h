@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "../common_src/accion.h"
+
 #include "objeto.h"
 
 #define ANCHO_ZANAHORIA 25

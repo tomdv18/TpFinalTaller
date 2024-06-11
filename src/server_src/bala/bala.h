@@ -2,11 +2,11 @@
 #define COMMON_BALA_H_
 
 #include <iostream>
+
 #include "../common_src/codigo_objeto.h"
 
-class Bala{
+class Bala {
 private:
-
     uint8_t codigo_bala;
     uint32_t id_jugador;
     uint32_t id_bala;
@@ -24,7 +24,9 @@ private:
 
 
 public:
-    Bala(uint8_t codigo_bala,uint32_t pos_x, uint32_t pos_y, uint32_t id_jugador, uint32_t id_bala, int velocidad, uint8_t danio, double tiempo_entre_disparo, uint32_t rango_explosion, int municion, uint32_t ancho, uint32_t largo);
+    Bala(uint8_t codigo_bala, uint32_t pos_x, uint32_t pos_y, uint32_t id_jugador, uint32_t id_bala,
+         int velocidad, uint8_t danio, double tiempo_entre_disparo, uint32_t rango_explosion,
+         int municion, uint32_t ancho, uint32_t largo);
 
     void actualizar_posicion();
 
@@ -50,10 +52,7 @@ public:
     uint8_t obtener_danio() const;
 
     bool obtener_impacto() const;
-
 };
 
 
-
 #endif
-

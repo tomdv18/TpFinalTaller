@@ -5,14 +5,16 @@
 #include <cmath>
 #include <iostream>
 #include <map>
-#include "../common_src/accion.h"
-#include "../common_src/evento.h"
-#include "../common_src/codigo_estado.h"
-#include "../estado/estado.h"
+#include <memory>
+
 #include "../arma.h"
+#include "../common_src/accion.h"
+#include "../common_src/codigo_estado.h"
+#include "../common_src/evento.h"
+#include "../configuracion.h"
+#include "../estado/estado.h"
 #include "../objeto/objeto.h"
 #include "../rectangulo.h"
-#include "../configuracion.h"
 
 
 class Objeto;
@@ -23,7 +25,7 @@ protected:
     uint32_t id_jugador;
     uint32_t posicion_x;
     uint32_t posicion_y;
-    int8_t vida; //DEBE SER INT PARA PODER SER NEGATIVO
+    int8_t vida;  // DEBE SER INT PARA PODER SER NEGATIVO
     bool esta_quieto;
     uint32_t ancho;
     uint32_t alto;
@@ -55,7 +57,7 @@ protected:
 
     Arma arma;
 
-    Estado *estado;
+    Estado* estado;
 
     bool en_superficie;
 
@@ -63,15 +65,13 @@ protected:
 
     uint8_t bala_actual;
     double tiempo_disparo;
-    std::map<uint8_t,int> municiones;
+    std::map<uint8_t, int> municiones;
 
 public:
     explicit Personaje(uint32_t id_jugador);
 
 
-    int obtener_velocidad(){
-        return velocidad_x;
-    }
+    int obtener_velocidad() { return velocidad_x; }
     // Acciones
 
     virtual void mover_derecha(std::chrono::duration<double> tiempo_transcurrido);
@@ -156,8 +156,10 @@ public:
     virtual uint32_t obtener_municion_actual();
     // Getters Snapshot
 
-    virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,
-                                     std::map<uint32_t, Objeto*>& map_objetos, std::map<uint32_t, std::unique_ptr<Objeto>>& map_objetos_comunes);
+    virtual void actualizar_posicion(
+            std::chrono::duration<double> tiempo_transcurrido,
+            std::map<uint32_t, Objeto*>& map_objetos,
+            std::map<uint32_t, std::unique_ptr<Objeto>>& map_objetos_comunes);
 
     virtual ~Personaje();
 
@@ -169,7 +171,7 @@ public:
 
 public:
     // Logica de Estados
-    void cambiarEstado(Estado *estado);
+    void cambiarEstado(Estado* estado);
 
     void manejarEstado(uint8_t codigo_estado, std::chrono::duration<double> tiempo_transcurrido);
 

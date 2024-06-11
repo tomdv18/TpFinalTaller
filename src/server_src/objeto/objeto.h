@@ -7,9 +7,7 @@
 
 #include "../common_src/accion.h"
 #include "../common_src/codigo_objeto.h"
-
 #include "../personaje/personaje.h"
-
 
 
 class Personaje;

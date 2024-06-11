@@ -4,9 +4,11 @@
 #include <algorithm>
 #include <unordered_set>
 #include <vector>
-#include "../personaje/personaje.h"
-#include "bala.h"
+
 #include "../configuracion.h"
+#include "../personaje/personaje.h"
+
+#include "bala.h"
 
 #define CONFIG Configuracion::config()
 
@@ -20,23 +22,15 @@ public:
     ControladorBalas(): proximo_id(-1) {}
 
 
-    void agregar_bala(uint8_t codigo_bala, uint32_t id_jugador, uint32_t pos_x, uint32_t offset,uint32_t pos_y,
-                      int velocidad) {
+    void agregar_bala(uint8_t codigo_bala, uint32_t id_jugador, uint32_t pos_x, uint32_t offset,
+                      uint32_t pos_y, int velocidad) {
         uint32_t id_bala = obtener_id();
         std::cout << "ID BALA: " << id_bala << std::endl;
         const ConfigBala& config_bala = CONFIG.obtenerBala(codigo_bala);
-        balas.push_back(Bala(codigo_bala,
-                         pos_x + offset,
-                         pos_y,
-                         id_jugador,
-                         id_bala,
-                         velocidad *  config_bala.velocidad_del_proyectil,
-                         config_bala.danio,
-                         config_bala.tiempo_entre_disparo,
-                         config_bala.rango_explosion,
-                         config_bala.municion,
-                         config_bala.ancho,
-                         config_bala.largo));
+        balas.push_back(Bala(codigo_bala, pos_x + offset, pos_y, id_jugador, id_bala,
+                             velocidad * config_bala.velocidad_del_proyectil, config_bala.danio,
+                             config_bala.tiempo_entre_disparo, config_bala.rango_explosion,
+                             config_bala.municion, config_bala.ancho, config_bala.largo));
     }
 
     void remover_bala(uint32_t id_bala) {
@@ -63,10 +57,9 @@ private:
             return id;
         }
         */
-       proximo_id += 1;
-        return proximo_id ;
+        proximo_id += 1;
+        return proximo_id;
     }
-
 };
 
 #endif

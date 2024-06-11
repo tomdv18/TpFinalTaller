@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-enum CodigoObjeto : uint8_t { 
+enum CodigoObjeto : uint8_t {
     ZANAHORIA,
     GEMA,
     MONEDA,
@@ -11,9 +11,8 @@ enum CodigoObjeto : uint8_t {
     BALA_VELOZ,
     COHETE_RAPIDO,
     COHETE_TOXICO,
-    SOLIDO 
+    SOLIDO
 };
-
 
 
 #endif

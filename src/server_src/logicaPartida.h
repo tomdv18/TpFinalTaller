@@ -5,19 +5,20 @@
 #include <chrono>
 #include <iostream>
 #include <map>
+#include <memory>
 
 #include "../common_src/accion.h"
 #include "../common_src/evento.h"
-
 #include "./bala/controlador_balas.h"
+#include "./enemigo/enemigo_fencer.h"
 #include "./enemigo/enemigo_lizzard.h"
 #include "./enemigo/enemigo_rat.h"
-#include "./enemigo/enemigo_fencer.h"
 #include "./objeto/fabrica_objetos.h"
 #include "./objeto/objeto_solido.h"
 #include "./personaje/personaje_jazz.h"
 #include "./personaje/personaje_lori.h"
 #include "./personaje/personaje_spaz.h"
+
 #include "rectangulo.h"
 
 class LogicaPartida {
@@ -35,9 +36,11 @@ public:
     void ejecutar(Accion accion,
                   std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
-    void mover_derecha(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
+    void mover_derecha(uint32_t id_jugador,
+                       std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
-    void mover_izquierda(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
+    void mover_izquierda(uint32_t id_jugador,
+                         std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     void mover_arriba(uint32_t id_jugador,
                       std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
@@ -46,7 +49,8 @@ public:
 
     void mover_quieto(uint32_t id_jugador);
 
-    void mover_correr_rapido(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
+    void mover_correr_rapido(uint32_t id_jugador,
+                             std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     void mover_correr(uint32_t id_jugador);
 

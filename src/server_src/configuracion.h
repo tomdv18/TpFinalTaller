@@ -1,8 +1,9 @@
 #ifndef CONFIGURACION_H_
 #define CONFIGURACION_H_
 
-#include <yaml-cpp/yaml.h>
+#include <map>
 
+#include <yaml-cpp/yaml.h>
 
 
 struct ConfigObjeto {
@@ -14,20 +15,20 @@ struct ConfigObjeto {
 };
 
 struct ConfigBala {
-        uint16_t municion;
-        double tiempo_entre_disparo;
-        int velocidad_del_proyectil;
-        uint8_t danio;
-        uint32_t rango_explosion;
-        uint32_t ancho;
-        uint32_t largo;
-        double tiempo_reaparicion;
+    uint16_t municion;
+    double tiempo_entre_disparo;
+    int velocidad_del_proyectil;
+    uint8_t danio;
+    uint32_t rango_explosion;
+    uint32_t ancho;
+    uint32_t largo;
+    double tiempo_reaparicion;
 };
 
 
 class Configuracion {
 private:
-   uint8_t vida_personaje;
+    uint8_t vida_personaje;
     int velocidad_x_personaje;
     int velocidad_y_personaje;
     int gravedad;
@@ -45,7 +46,7 @@ private:
     int velocidad_x_habilidad_lori;
     int velocidad_y_habilidad_lori;
 
-    //Atributos de partida
+    // Atributos de partida
 
     int duracion_segundos;
 
@@ -66,7 +67,7 @@ private:
 
     std::map<uint8_t, ConfigObjeto> config_objetos;
 
-    //Atributos de enemigos
+    // Atributos de enemigos
 
     int vida_default_enemigo;
     int danio_default_enemigo;
@@ -77,8 +78,8 @@ private:
     int vida_lizzard;
     int vida_rat;
     double tiempo_reaparicion_enemigo;
-    
-    Configuracion(const YAML::Node& config);
+
+    explicit Configuracion(const YAML::Node& config);
 
 public:
     static Configuracion& config();
@@ -104,16 +105,16 @@ public:
     int getAnchoPersonaje() const { return ancho_personaje; }
     int getAltoPersonaje() const { return alto_personaje; }
 
-    //Getters para valores de partida
-    int getDuracionPartida() const {return duracion_segundos;}
+    // Getters para valores de partida
+    int getDuracionPartida() const { return duracion_segundos; }
 
     // Getters para los valores de la pantalla
     int getAnchoPantalla() const { return ancho_pantalla; }
     int getAltoPantalla() const { return alto_pantalla; }
 
     // Getters para Estado
-    double getTiempoEstadoMuerto() const {return tiempo_estado_muerto;}
-    double getTiempoEstadoHerido() const {return tiempo_estado_herido;}
+    double getTiempoEstadoMuerto() const { return tiempo_estado_muerto; }
+    double getTiempoEstadoHerido() const { return tiempo_estado_herido; }
 
     // Getters para Municion
     const ConfigBala& obtenerBala(uint8_t codigo_bala) const {
@@ -135,19 +136,17 @@ public:
         }
     }
 
-    //Getters para enemigos
-    int obtenerVidaDefaultEnemigo() const {return vida_default_enemigo;}
-    int obtener_danio_default_enemigo() const {return danio_default_enemigo;}
-    int obtenerVelocidadEnemigos() const {return velocidad_enemigo;}
-    int obtenerAnchoEnemigo() const {return ancho_enemigo;}
-    int obtenerAltoEnemigo() const {return alto_enemigo;}
-    int obtenerVidaFencer() const {return vida_fencer;}
-    int obtenerVidaLizzard() const {return vida_lizzard;}
-    int obtenerVidaRat() const {return vida_rat;}
-    double obtenerTiempoReaparicionEnemigo() const {return tiempo_reaparicion_enemigo;}
-
+    // Getters para enemigos
+    int obtenerVidaDefaultEnemigo() const { return vida_default_enemigo; }
+    int obtener_danio_default_enemigo() const { return danio_default_enemigo; }
+    int obtenerVelocidadEnemigos() const { return velocidad_enemigo; }
+    int obtenerAnchoEnemigo() const { return ancho_enemigo; }
+    int obtenerAltoEnemigo() const { return alto_enemigo; }
+    int obtenerVidaFencer() const { return vida_fencer; }
+    int obtenerVidaLizzard() const { return vida_lizzard; }
+    int obtenerVidaRat() const { return vida_rat; }
+    double obtenerTiempoReaparicionEnemigo() const { return tiempo_reaparicion_enemigo; }
 };
-
 
 
 #endif

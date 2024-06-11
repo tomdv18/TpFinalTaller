@@ -1,10 +1,20 @@
 #include "personaje.h"
+
+#include <memory>
+
 #include "../estado/estado_quieto.h"
 
 #define CONFIG Configuracion::config()
 
 Personaje::Personaje(uint32_t id_jugador):
-        id_jugador(id_jugador), posicion_x(150), posicion_y(100), vida(CONFIG.getVidaPersonaje()), arma(), velocidad_x(0), velocidad_y(0), estado(nullptr){
+        id_jugador(id_jugador),
+        posicion_x(150),
+        posicion_y(100),
+        vida(CONFIG.getVidaPersonaje()),
+        arma(),
+        velocidad_x(0),
+        velocidad_y(0),
+        estado(nullptr) {
     corriendo = false;
     usando_especial = false;
     saltando = false;
@@ -20,7 +30,7 @@ Personaje::Personaje(uint32_t id_jugador):
     tiempo_especial = 0;
     puntos = 0;
     bala_actual = BALA_NORMAL;
-    municiones[BALA_NORMAL] = -1; // -1 para que sea infinita
+    municiones[BALA_NORMAL] = -1;  // -1 para que sea infinita
     tiempo_disparo = -CONFIG.obtenerBala(BALA_NORMAL).tiempo_entre_disparo;
     direccion_mirando = DERECHA;
     ancho = CONFIG.getAnchoPersonaje();
@@ -36,13 +46,14 @@ void Personaje::posicion_Y(uint32_t y) { this->posicion_y = y; }
 
 
 void Personaje::mover_derecha(std::chrono::duration<double> tiempo_transcurrido) {
-    if(usando_especial)return;
+    if (usando_especial)
+        return;
 
     velocidad_x = corriendo ? CONFIG.getVelocidadXPersonaje() * 2 : CONFIG.getVelocidadXPersonaje();
     esta_quieto = false;
-    if(!corriendo){
+    if (!corriendo) {
         this->manejarEstado(ESTADO_CAMINANDO, tiempo_transcurrido);
-    }else{
+    } else {
         this->manejarEstado(ESTADO_CORRIENDO, tiempo_transcurrido);
     }
 
@@ -51,13 +62,15 @@ void Personaje::mover_derecha(std::chrono::duration<double> tiempo_transcurrido)
 }
 
 void Personaje::mover_izquierda(std::chrono::duration<double> tiempo_transcurrido) {
-    if(usando_especial)return;
+    if (usando_especial)
+        return;
 
-    velocidad_x = corriendo ? -CONFIG.getVelocidadXPersonaje() * 2 : -CONFIG.getVelocidadXPersonaje();
+    velocidad_x =
+            corriendo ? -CONFIG.getVelocidadXPersonaje() * 2 : -CONFIG.getVelocidadXPersonaje();
     esta_quieto = false;
-    if(!corriendo){
+    if (!corriendo) {
         this->manejarEstado(ESTADO_CAMINANDO, tiempo_transcurrido);
-    }else{
+    } else {
         this->manejarEstado(ESTADO_CORRIENDO, tiempo_transcurrido);
     }
     direccion_mirando = IZQUIERDA;
@@ -65,7 +78,7 @@ void Personaje::mover_izquierda(std::chrono::duration<double> tiempo_transcurrid
 }
 
 void Personaje::mover_arriba(std::chrono::duration<double> tiempo_transcurrido) {
-    
+
     if (!saltando && !corriendo) {
         velocidad_y = -CONFIG.getVelocidadYPersonaje();
         esta_quieto = false;
@@ -85,7 +98,7 @@ void Personaje::mover_abajo() {
         esta_quieto = false;
     }
     */
-    
+
     std::cout << "POSICION DEL PERSONAJE (" << posicion_x << ", " << posicion_y << ")" << std::endl;
 }
 
@@ -100,11 +113,12 @@ uint8_t Personaje::disparar(std::chrono::duration<double> tiempo_transcurrido) {
     }
     return NINGUNO;
     */
-   double tiempo = tiempo_transcurrido.count();
-   if(!usando_especial && !intoxicado ){
+    double tiempo = tiempo_transcurrido.count();
+    if (!usando_especial && !intoxicado) {
         esta_disparando = true;
-        if((tiempo - tiempo_disparo) < CONFIG.obtenerBala(bala_actual).tiempo_entre_disparo) return NINGUNO;
-        if(municiones[bala_actual] == -1 ){
+        if ((tiempo - tiempo_disparo) < CONFIG.obtenerBala(bala_actual).tiempo_entre_disparo)
+            return NINGUNO;
+        if (municiones[bala_actual] == -1) {
             tiempo_disparo = tiempo;
             return bala_actual;
         } else if (municiones[bala_actual] > 0) {
@@ -116,97 +130,97 @@ uint8_t Personaje::disparar(std::chrono::duration<double> tiempo_transcurrido) {
     return NINGUNO;
 }
 
-void Personaje::dejar_disparar() { 
+void Personaje::dejar_disparar() {
     std::cout << "DEJANDO DE DISPARAR" << std::endl;
-    esta_disparando = false; }
+    esta_disparando = false;
+}
 
 void Personaje::quedarse_quieto() {
     velocidad_x = 0;
     corriendo = false;
 }
 
-void Personaje::correr_rapido(std::chrono::duration<double> tiempo_transcurrido) { 
-    corriendo = saltando ? false : true; 
-    if(corriendo){
+void Personaje::correr_rapido(std::chrono::duration<double> tiempo_transcurrido) {
+    corriendo = saltando ? false : true;
+    if (corriendo) {
         this->manejarEstado(ESTADO_CORRIENDO, tiempo_transcurrido);
     }
 }
 
-void Personaje::correr() { 
-    if(corriendo){
-        corriendo = false; 
-        velocidad_x = velocidad_x/2;
+void Personaje::correr() {
+    if (corriendo) {
+        corriendo = false;
+        velocidad_x = velocidad_x / 2;
     }
 }
 
 void Personaje::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido) {
-    if(invulnerable) return;
-    this->vida -= golpe; 
-    if(vida <= 0){
+    if (invulnerable)
+        return;
+    this->vida -= golpe;
+    if (vida <= 0) {
         std::cout << "MUERTO" << std::endl;
         muerto = true;
         vida = 0;
         velocidad_x = 0;
         velocidad_y = 0;
-        this->estado->manejarEstado(ESTADO_MUERTO,tiempo_transcurrido.count());
+        this->estado->manejarEstado(ESTADO_MUERTO, tiempo_transcurrido.count());
     } else {
         this->estado->manejarEstado(ESTADO_HERIDO, tiempo_transcurrido.count());
         volverse_invulnerable(tiempo_transcurrido.count());
     }
 }
 
-void Personaje::intoxicarse(double tiempo){
+void Personaje::intoxicarse(double tiempo) {
     tiempo_intoxicado = tiempo;
     intoxicado = true;
 }
 
-void Personaje::asignar_puntos(uint32_t puntos){
-    this->puntos += puntos;
-}
+void Personaje::asignar_puntos(uint32_t puntos) { this->puntos += puntos; }
 
-void Personaje::curarse(int vida_restaurada){
+void Personaje::curarse(int vida_restaurada) {
     vida += vida_restaurada;
-    if(vida > CONFIG.getVidaPersonaje()){
+    if (vida > CONFIG.getVidaPersonaje()) {
         vida = CONFIG.getVidaPersonaje();
     }
 }
 
- void Personaje::cambiar_bala_siguiente() {
+void Personaje::cambiar_bala_siguiente() {
     auto it = municiones.find(bala_actual);
-        // Buscar el siguiente arma con municiones
+    // Buscar el siguiente arma con municiones
     while (true) {
         it++;
         if (it == municiones.end()) {
-            it = municiones.begin(); // Volver al principio si llegamos al final
+            it = municiones.begin();  // Volver al principio si llegamos al final
         }
         if (it->second > 0 || it->second == -1) {
             bala_actual = it->first;
             break;
         }
     }
-    std::cout << "ARMA CAMBIADA A: " << (int) bala_actual << std::endl;
-    std::cout << "CON BALAS: " << (int) it->second << std::endl;
+    std::cout << "ARMA CAMBIADA A: " << (int)bala_actual << std::endl;
+    std::cout << "CON BALAS: " << (int)it->second << std::endl;
 }
 
-void Personaje::agarrar_municion(uint8_t codigo_municion, int municion){
-    std::cout << "MUNICION AGARRADA: " << (int) codigo_municion << std::endl;
+void Personaje::agarrar_municion(uint8_t codigo_municion, int municion) {
+    std::cout << "MUNICION AGARRADA: " << (int)codigo_municion << std::endl;
     municiones[codigo_municion] += municion;
 }
 
-void Personaje::revivir(){
+void Personaje::revivir() {
     // Aca deberia setearse alguna nueva posicion de spawn
     this->vida = CONFIG.getVidaPersonaje();
     this->muerto = false;
 }
 
-void Personaje::volverse_invulnerable(double tiempo){
-    if(!invulnerable){
+void Personaje::volverse_invulnerable(double tiempo) {
+    if (!invulnerable) {
         tiempo_invulnerable = tiempo;
         invulnerable = true;
     }
 }
-void Personaje::volverse_vulnerable(){ //METODO PARA TESTING
-    if(invulnerable){
+void Personaje::volverse_vulnerable() {  // METODO PARA TESTING
+    if (invulnerable) {
         invulnerable = false;
     }
 }
@@ -227,98 +241,82 @@ uint8_t Personaje::obtener_saltando() { return saltando; }
 
 uint8_t Personaje::obtener_disparando() { return esta_disparando; }
 
-uint8_t Personaje::obtener_estado(){
-    return estado->obtener_estado();
-}
+uint8_t Personaje::obtener_estado() { return estado->obtener_estado(); }
 
-uint32_t Personaje::obtener_ancho(){
-    return ancho;
-}
+uint32_t Personaje::obtener_ancho() { return ancho; }
 
-uint32_t Personaje::obtener_alto(){
-    return alto;
-}
+uint32_t Personaje::obtener_alto() { return alto; }
 
-uint8_t Personaje::obtener_intoxicado(){
-    return intoxicado;
-}
+uint8_t Personaje::obtener_intoxicado() { return intoxicado; }
 
-bool Personaje::esta_muerto(){
-    return muerto;
-}
+bool Personaje::esta_muerto() { return muerto; }
 
-bool Personaje::es_invulnerable(){
-    return invulnerable;
-}
+bool Personaje::es_invulnerable() { return invulnerable; }
 
-uint32_t Personaje::obtener_puntos(){
-    return puntos;
-}
+uint32_t Personaje::obtener_puntos() { return puntos; }
 
-uint8_t Personaje::obtener_bala_actual(){
-    return bala_actual;
-}
+uint8_t Personaje::obtener_bala_actual() { return bala_actual; }
 
-uint32_t Personaje::obtener_municion_actual(){
-    return municiones[bala_actual];
-}
+uint32_t Personaje::obtener_municion_actual() { return municiones[bala_actual]; }
 
 bool Personaje::hay_colision(uint32_t pos_x, uint32_t pos_y, uint32_t ancho, uint32_t largo) {
-    return (this->posicion_x<pos_x + ancho&& this->posicion_x + this->ancho > pos_x &&
-            this->posicion_y<pos_y + largo&& this->posicion_y + this->alto > pos_y);
+    return (this->posicion_x<pos_x + ancho&& this->posicion_x + this->ancho> pos_x &&
+            this->posicion_y<pos_y + largo&& this->posicion_y + this->alto> pos_y);
 }
 
 bool Personaje::mirando_izquierda() { return direccion_mirando == IZQUIERDA; }
 
 
-void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,
-                                    std::map<uint32_t, Objeto*>& map_objetos_solidos, std::map<uint32_t, std::unique_ptr<Objeto>>& map_objetos_comunes) {
+void Personaje::actualizar_posicion(
+        std::chrono::duration<double> tiempo_transcurrido,
+        std::map<uint32_t, Objeto*>& map_objetos_solidos,
+        std::map<uint32_t, std::unique_ptr<Objeto>>& map_objetos_comunes) {
     double tiempo_segundos = tiempo_transcurrido.count();
     double delta_tiempo = tiempo_segundos - tiempo_salto;
 
-    if(invulnerable && tiempo_segundos - tiempo_invulnerable >= CONFIG.getTiempoInvulnerabilidad()){
+    if (invulnerable &&
+        tiempo_segundos - tiempo_invulnerable >= CONFIG.getTiempoInvulnerabilidad()) {
         invulnerable = false;
     }
 
-    if(tiempo_segundos - tiempo_intoxicado >= CONFIG.getTiempoIntoxicacion()){
+    if (tiempo_segundos - tiempo_intoxicado >= CONFIG.getTiempoIntoxicacion()) {
         intoxicado = false;
     }
 
     if (tiempo_salto == 0) {
         tiempo_salto = tiempo_segundos;
     }
-    
+
     if (!en_superficie) {
         velocidad_y += CONFIG.getGravedad() * delta_tiempo;
     } else {
         velocidad_y = 0;
     }
 
-    //std::cout << "PUNTUACION:" << puntos << std::endl;
-    //std::cout << "ESTA INVULNERABLE: " << (int) invulnerable << std::endl;
+    // std::cout << "PUNTUACION:" << puntos << std::endl;
+    // std::cout << "ESTA INVULNERABLE: " << (int) invulnerable << std::endl;
 
-    //std::cout << "ESTA INTOXICADO: " << (int) intoxicado << std::endl;
+    // std::cout << "ESTA INTOXICADO: " << (int) intoxicado << std::endl;
 
     uint32_t nueva_posicion_x = posicion_x + velocidad_x;
     uint32_t nueva_posicion_y = posicion_y + velocidad_y;
 
-    Rectangulo rect_personaje = {nueva_posicion_x, posicion_y,this->ancho, this->alto};
+    Rectangulo rect_personaje = {nueva_posicion_x, posicion_y, this->ancho, this->alto};
     Rectangulo rect_personaje_arriba = {posicion_x, nueva_posicion_y, this->ancho, this->alto};
 
     bool colision_suelo = false;
 
-    for (const auto& par_objeto : map_objetos_solidos) {
+    for (const auto& par_objeto: map_objetos_solidos) {
         Rectangulo rect_objeto = {
-            par_objeto.second->obtener_posicionX(), par_objeto.second->obtener_posicionY(),
-            par_objeto.second->obtener_ancho(), par_objeto.second->obtener_alto()
-        };
+                par_objeto.second->obtener_posicionX(), par_objeto.second->obtener_posicionY(),
+                par_objeto.second->obtener_ancho(), par_objeto.second->obtener_alto()};
 
         if (par_objeto.second->obtener_mostrar()) {
             if (par_objeto.second->obtener_objeto() == SOLIDO) {
                 if (rect_personaje.hay_colision(rect_objeto)) {
                     corriendo = false;
                     if (velocidad_x > 0) {  // Moviéndose a la derecha
-                        nueva_posicion_x = rect_objeto.x - this-> ancho;
+                        nueva_posicion_x = rect_objeto.x - this->ancho;
                     } else if (velocidad_x < 0) {  // Moviéndose a la izquierda
                         nueva_posicion_x = rect_objeto.x + rect_objeto.ancho;
                     }
@@ -341,16 +339,16 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
     }
 
     // Verificar colisiones con objetos comunes
-    for (const auto& par_objeto : map_objetos_comunes) {
+    for (const auto& par_objeto: map_objetos_comunes) {
         par_objeto.second->reaparecer(tiempo_transcurrido);
 
         Rectangulo rect_objeto = {
-            par_objeto.second->obtener_posicionX(), par_objeto.second->obtener_posicionY(),
-            par_objeto.second->obtener_ancho(), par_objeto.second->obtener_alto()
-        };
+                par_objeto.second->obtener_posicionX(), par_objeto.second->obtener_posicionY(),
+                par_objeto.second->obtener_ancho(), par_objeto.second->obtener_alto()};
 
         if (par_objeto.second->obtener_mostrar()) {
-            if (rect_personaje.hay_colision(rect_objeto) || rect_personaje_arriba.hay_colision(rect_objeto)) {
+            if (rect_personaje.hay_colision(rect_objeto) ||
+                rect_personaje_arriba.hay_colision(rect_objeto)) {
                 par_objeto.second->interactuar_personaje(this, tiempo_transcurrido);
             }
         }
@@ -361,7 +359,8 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
     }
 
     if (velocidad_x != 0 && !saltando) {
-        if (!corriendo) this->manejarEstado(ESTADO_CAMINANDO, tiempo_transcurrido);
+        if (!corriendo)
+            this->manejarEstado(ESTADO_CAMINANDO, tiempo_transcurrido);
     }
 
     posicion_x = nueva_posicion_x;
@@ -369,7 +368,8 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
 
     this->actualizar(tiempo_transcurrido.count());
 
-    if (posicion_y > CONFIG.getAltoPantalla() - CONFIG.getAltoPersonaje()) {  // Si hay colision abajo
+    if (posicion_y >
+        CONFIG.getAltoPantalla() - CONFIG.getAltoPersonaje()) {  // Si hay colision abajo
         posicion_y = CONFIG.getAltoPantalla() - CONFIG.getAltoPersonaje();
         saltando = false;
         colision_suelo = true;
@@ -381,24 +381,20 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
 }
 
 
-
-void Personaje::cambiarEstado(Estado *estado){
-    if (this->estado != nullptr){
+void Personaje::cambiarEstado(Estado* estado) {
+    if (this->estado != nullptr) {
         delete this->estado;
     }
     this->estado = estado;
     this->estado->asignarPersonaje(this);
 }
 
-void Personaje::manejarEstado(uint8_t codigo_estado, std::chrono::duration<double> tiempo_transcurrido){
+void Personaje::manejarEstado(uint8_t codigo_estado,
+                              std::chrono::duration<double> tiempo_transcurrido) {
     this->estado->manejarEstado(codigo_estado, tiempo_transcurrido.count());
 }
 
-void Personaje::actualizar(double tiempo){
-    this->estado->actualizar(tiempo);
-}
+void Personaje::actualizar(double tiempo) { this->estado->actualizar(tiempo); }
 
 
-Personaje::~Personaje() {
-    delete estado;
-}
+Personaje::~Personaje() { delete estado; }

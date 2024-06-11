@@ -38,10 +38,8 @@ Queue<Accion>* Partida::unir_jugador(uint32_t id_jugador, Queue<Evento>* queue_j
 }
 
 bool Partida::borrar_jugador(uint32_t id_jugador) {
-    if (map_jugadores.find(id_jugador) != map_jugadores.end()) {
-        map_jugadores.erase(id_jugador);
-        logica_partida.abandonar_partida(id_jugador);
-    }
+    map_jugadores.erase(id_jugador);  // Usar Erase hace que no sea necesario el IF
+    logica_partida.abandonar_partida(id_jugador);
 
     if (map_jugadores.empty()) {
         return true;
@@ -70,7 +68,7 @@ void Partida::run() {
         auto inicio = std::chrono::high_resolution_clock::now();
         while (queue_acciones.try_pop(accion) && cantidad_eventos < 100) {
             logica_partida.ejecutar(accion, start);
-            //std::cout << "ACCION " << (int)accion.codigo << std::endl;
+            // std::cout << "ACCION " << (int)accion.codigo << std::endl;
             cantidad_eventos++;
         }
 
@@ -79,10 +77,11 @@ void Partida::run() {
 
         Evento snapshot = logica_partida.obtener_snapshot(start);
 
-        for (auto it = map_jugadores.begin(); it != map_jugadores.end(); ++it) {
+        for (auto it = map_jugadores.begin(); it != map_jugadores.end();) {
             Queue<Evento>* queue = it->second;
             try {
                 queue->push(snapshot);
+                it++;
             } catch (const ClosedQueue& err) {
                 map_jugadores.erase(it);
             }
@@ -102,7 +101,7 @@ void Partida::run() {
         }
 
 
-        if (snapshot.tiempo_restante <= 0) {
+        if (snapshot.tiempo_restante == 0) {
             _tiempo_corriendo = false;
             std::cout << "Tiempo terminado" << std::endl;
         }

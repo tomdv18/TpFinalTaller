@@ -4,7 +4,7 @@
 #include <iostream>
 
 
-enum CodigoEstado: uint8_t{
+enum CodigoEstado : uint8_t {
     ESTADO_QUIETO,
     ESTADO_CAMINANDO,
     ESTADO_CORRIENDO,
@@ -15,7 +15,6 @@ enum CodigoEstado: uint8_t{
     ESTADO_ESPECIAL
 
 };
-
 
 
 #endif
