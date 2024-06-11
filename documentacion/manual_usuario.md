@@ -142,39 +142,28 @@ Una vez que hayas ejecutado tanto el servidor como el cliente, sigue estos pasos
     - `q`: Salir de la partida
     - `shift + a/d`: Corres
 
-    <video width="320" height="240" controls>
-      <source src="imagenes_documentacion/movimiento.mp4" type="video/mp4">
-      Tu navegador no soporta la reproducción de video.
-    </video>
+    ![movimiento](imagenes_documentacion/movimiento.gif)
 
 5. **Dañar enemigo/personaje**:
     - A los enemigos/personaje se les puede dañar usando un arma.
 
-    <video width="320" height="240" controls>
-      <source src="imagenes_documentacion/danar_enemigo.mp4" type="video/mp4">
-      Tu navegador no soporta la reproducción de video.
-    </video>
+    ![danar_enemigo](imagenes_documentacion/danar_enemigo.gif)
 
-    <video width="320" height="240" controls>
-      <source src="imagenes_documentacion/danar_personaje.mp4" type="video/mp4">
-      Tu navegador no soporta la reproducción de video.
-    </video>
+
+    ![danar_personaje](imagenes_documentacion/danar_personaje.gif)
+
 
 6. **Obtener puntos**
     - Se puede obtener puntos a traves de la obtencion de gemas/monedas.
 
-    <video width="320" height="240" controls>
-      <source src="imagenes_documentacion/obtener_puntos.mp4" type="video/mp4">
-      Tu navegador no soporta la reproducción de video.
-    </video>
+    ![obtener_puntos](imagenes_documentacion/obtener_puntos.gif)
+
 
 7. **Cambiar arma**
     - Se puede obtener armas a traves del mapa.
 
-    <video width="320" height="240" controls>
-      <source src="imagenes_documentacion/cambiar_arma.mp4" type="video/mp4">
-      Tu navegador no soporta la reproducción de video.
-    </video>
+    ![cambiar_arma](imagenes_documentacion/cambiar_arma.gif)
+
 
 8. **Objetivo del Juego**:
     - El objetivo del juego es sumar la mayor cantidad de puntaje posible. Esto se logra dañando enemigos, jugadores (utilizando diversas armas y habilidades especiales) o agarrando gemas/monedas.
