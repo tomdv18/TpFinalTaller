@@ -8,7 +8,7 @@ ancho_ventana(ancho),
 alto_ventana(alto), 
 rect(),
 sdl_ttf(),
-font("../src/client_src/Images/Jazz-Jackrabbit-2.ttf", 24), 
+font("../src/client_src/Images/Jazz_Ball_Regular.ttf", 24), 
 id_jugador(id_jugador), 
 texto(),
 tiempo(0),
@@ -17,6 +17,9 @@ puntajes()
                 
         SDL2pp::Surface vida("../src/client_src/Images/vida.png");
         vida.SetColorKey(true, SDL_MapRGB(vida.Get()->format, 0, 128, 255));
+
+        SDL2pp::Surface tiempo("../src/client_src/Images/tiempo.png");
+        tiempo.SetColorKey(true, SDL_MapRGB(tiempo.Get()->format, 0, 128, 255));
 
         SDL2pp::Surface bala_tipo_3("../src/client_src/Images/bala_tipo_0.png");
         bala_tipo_3.SetColorKey(true, SDL_MapRGB(bala_tipo_3.Get()->format, 44, 102, 150));        
@@ -30,11 +33,17 @@ puntajes()
         SDL2pp::Surface bala_tipo_6("../src/client_src/Images/bala_tipo_3.png");
         bala_tipo_6.SetColorKey(true, SDL_MapRGB(bala_tipo_6.Get()->format, 0, 128, 255));
 
+        SDL2pp::Surface fondo_final("../src/client_src/Images/fondo_final.png");
+        fondo_final.SetColorKey(true, SDL_MapRGB(fondo_final.Get()->format, 0, 128, 255));
+
+        texturas["tiempo"] = new SDL2pp::Texture(render, tiempo);
         texturas["vida"] = new SDL2pp::Texture(render, vida);
         texturas["bala_tipo_3"] = new SDL2pp::Texture(render, bala_tipo_3);
         texturas["bala_tipo_4"] = new SDL2pp::Texture(render, bala_tipo_4);
         texturas["bala_tipo_5"] = new SDL2pp::Texture(render, bala_tipo_5);
         texturas["bala_tipo_6"] = new SDL2pp::Texture(render, bala_tipo_6);
+        texturas["fondo_final"] = new SDL2pp::Texture(render, fondo_final);
+
 }
 
 
@@ -60,16 +69,38 @@ void Interfaz::mostrar_tabla_final(SDL2pp::Renderer &render) {
         uint32_t puntaje = entry.second;
         std::cout << "ID: " << id << " - Puntaje: " << puntaje << std::endl;
 
+        if (id == id_jugador) {
+            if (id == puntajes[0].first) {
+                color = {0, 255, 0, 0};
+            } else {
+                color = {255, 0, 0, 0};
+            }
+        }
         // Muestro puntaje del jugador
         std::string texto = std::to_string(id) + ": " + std::to_string(puntaje);
         SDL2pp::Surface surface_texto = font.RenderText_Solid(texto, color);
         SDL2pp::Texture texto_textura(render, surface_texto);
         
         // Calcular posición de renderizado
-        int x = ancho_ventana/2.0; // Ajustar para que no se salga de la ventana
-        int y = i * 50;
-        render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(x, y, 100, 30));
+        int x = ancho_ventana/2.0 - 30; // Ajustar para que no se salga de la ventana
+        int y = i * 20;
+        render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(x, y, 50, 20));
         i++;
+        color = {255, 255, 255, 255};
+    }
+    if (id_jugador == puntajes[0].first) {
+        color = {0, 255, 0, 0};
+        texto = "FELICIDADES! HAS GANADO";
+        SDL2pp::Surface surface_texto = font.RenderText_Solid(texto, color);
+        SDL2pp::Texture texto_textura(render, surface_texto);
+        render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ancho_ventana/2.0 - 150, 320, 300, 30));
+    } else {
+        color = {255, 0, 0, 0};
+        texto = "LO SIENTO! HAS PERDIDO";
+        SDL2pp::Surface surface_texto = font.RenderText_Solid(texto, color);
+        SDL2pp::Texture texto_textura(render, surface_texto);
+        render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ancho_ventana/2.0 - 150, 320, 300, 30));
+
     }
 }
 
@@ -89,7 +120,7 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
     render.Copy(* texturas["vida"], SDL2pp::NullOpt, rect);
     SDL2pp::Surface surface_texto = font.RenderText_Solid(texto, SDL_Color{255, 255, 255, 255}); // Color negro
     SDL2pp::Texture texto_textura(render, surface_texto);
-    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ICONO_WIDHT+5, alto_ventana-surface_texto.GetHeight()-5, ICONO_WIDHT+10, ICONO_HEIGHT+10));
+    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ICONO_WIDHT+5, alto_ventana-surface_texto.GetHeight(), ICONO_WIDHT+10, ICONO_HEIGHT));
 
     // Muestro tiempo
 
@@ -99,9 +130,14 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
     if (this->tiempo <= 30) { // Ver como terminar el juego...
         color = {255, 0, 0, 0};
     }
+    rect.x = (ancho_ventana/2.0 - ICONO_WIDHT-10);
+    rect.y = (7);
+    rect.w = (ICONO_WIDHT+5);
+    rect.h = (ICONO_HEIGHT+5);
+    render.Copy(* texturas["tiempo"], SDL2pp::NullOpt, rect);
     surface_texto = font.RenderText_Solid(texto, color);
     texto_textura = SDL2pp::Texture(render, surface_texto);
-    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ancho_ventana/2.0, 0, 50, 50));
+    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ancho_ventana/2.0, 10, 40, 20));
 
     
     // Muestro puntaje del jugador
@@ -109,7 +145,7 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
     texto = "x" + std::to_string(personajeViewPtr.obtener_puntos());
     surface_texto = font.RenderText_Solid(texto, color);
     texto_textura = SDL2pp::Texture(render, surface_texto);
-    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(0, 0, 50, 50));
+    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(0, 0, 50, 20));
 
     // Muestro los mejores 3 puntajes de los jugadores
         // Vector para almacenar los puntajes
@@ -128,10 +164,15 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
     });
 
     // Mostrar los puntajes
+    texto = "ID: PTS";
+    surface_texto = font.RenderText_Solid(texto, color);
+    texto_textura = SDL2pp::Texture(render, surface_texto);
+    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ancho_ventana-70, 0, 50, 20));
+
     //std::cout << "-------------------------" << std::endl;
-    size_t i = 0;
+    size_t i = 1;
     for (const auto &entry : puntajes) {
-        if (i >= 3) {
+        if (i >= 4) {
             return; // Solo muestro el top 3...
         }
         uint32_t id = entry.first;
@@ -149,9 +190,9 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
         texto_textura = SDL2pp::Texture(render, surface_texto);
         
         // Calcular posición de renderizado
-        int x = ancho_ventana - 130; // Ajustar para que no se salga de la ventana
-        int y = i * 50;
-        render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(x, y, 100, 30));
+        int x = ancho_ventana - 70; // Ajustar para que no se salga de la ventana
+        int y = i * 20;
+        render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(x, y, 50, 20));
         
         i++;
     }
@@ -165,7 +206,7 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
     }
     surface_texto = font.RenderText_Solid(texto, color);
     texto_textura = SDL2pp::Texture(render, surface_texto);
-    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ancho_ventana-50, alto_ventana-20, 50, 20));
+    render.Copy(texto_textura, SDL2pp::NullOpt, SDL2pp::Rect(ancho_ventana-60, alto_ventana-surface_texto.GetHeight(), ICONO_WIDHT+10, ICONO_HEIGHT));
 
     // Muestro el tipo de bala
     // Ver como rellenar el texto de blanco, asi se ve mejor...
@@ -173,7 +214,7 @@ void Interfaz::mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::uni
     std::cout << "TIPO_ BALA: " << personajeViewPtr.obtener_tipo_bala() << std::endl;
 
     std::string tipo_bala = "bala_tipo_" + std::to_string(personajeViewPtr.obtener_tipo_bala());
-    rect.x = (ancho_ventana-ICONO_WIDHT-50);
+    rect.x = (ancho_ventana-ICONO_WIDHT-70);
     rect.y = (alto_ventana-ICONO_HEIGHT);
     rect.w = (ICONO_WIDHT);
     rect.h = (ICONO_HEIGHT);

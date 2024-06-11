@@ -17,10 +17,13 @@ mapa(std::move(map)), src(), dest(){
         SDL2pp::Surface fondo("../src/mapas/beach_fondo.png");
         SDL2pp::Surface piso("../src/mapas/beach_piso.png");
         SDL2pp::Surface pared("../src/mapas/beach_pared.png");
-
+        SDL2pp::Surface fondo_final("../src/client_src/Images/fondo_final.png");
+        
         texturas["fondo"] = new SDL2pp::Texture(render, fondo);
         texturas["piso"] = new SDL2pp::Texture(render, piso);
         texturas["pared"] = new SDL2pp::Texture(render, pared);
+        texturas["fondo_final"] = new SDL2pp::Texture(render, fondo_final);
+
 };
 
 void Mapa::dibujar_fondo(SDL2pp::Renderer &render) {
@@ -34,6 +37,19 @@ void Mapa::dibujar_fondo(SDL2pp::Renderer &render) {
     dest.w = SCREEN_WIDTH;
     dest.h = SCREEN_HEIGHT;
     render.Copy(*texturas["fondo"], src, dest);
+}
+
+void Mapa::dibujar_fondo_final(SDL2pp::Renderer &render) {
+    src.x = 0;
+    src.y = 0;
+    src.w = SCREEN_WIDTH;
+    src.h = SCREEN_HEIGHT;
+
+    dest.x = 0;
+    dest.y = 0;
+    dest.w = SCREEN_WIDTH;
+    dest.h = SCREEN_HEIGHT;
+    render.Copy(*texturas["fondo_final"], src, dest);
 }
 
 void Mapa::dibujar_entidades(SDL2pp::Renderer &render, Camara &camara) {
