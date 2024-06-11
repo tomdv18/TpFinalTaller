@@ -129,10 +129,48 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
     return true;
 }
 
+MapaEntidades leerSolidsDesdeYAML(const std::string& filename) {
+    MapaEntidades mapa;
+
+    try {
+        // Carga el archivo YAML
+        YAML::Node data = YAML::LoadFile(filename);
+
+        // Busca la sección 'solids' en el archivo YAML
+        YAML::Node solidsNode = data["solids"];
+
+        // Recorre las posiciones de los solids
+        std::vector<Position> solids;
+        for (const auto& solid : solidsNode) {
+            Position position;
+            position.x = solid["x"].as<uint32_t>();
+            position.y = solid["y"].as<uint32_t>();
+            solids.push_back(position);
+        }
+        
+        // Guarda el vector de solids en el mapa con la clave "solids"
+        mapa["solids"] = solids;
+
+    } catch (const YAML::Exception& e) {
+        std::cerr << "Error al cargar el archivo YAML: " << e.what() << std::endl;
+    }
+
+    return mapa;
+}
+
 void Cliente::comunicarse_con_el_servidor() {
     ProtocoloCliente protocolo_temporal(skt);
-    std::cout << "Hola" << std::endl;
-    MapaEntidades mapa = protocolo_temporal.recibir_mapa();
+    MapaEntidades mapa = leerSolidsDesdeYAML("../src/mapas/mapa2.yaml");
+
+    // Imprime las posiciones x e y de cada entidad en el mapa
+    for (const auto& entity : mapa) {
+        std::cout << "Entidad: " << entity.first << std::endl;
+        for (const auto& position : entity.second) {
+            std::cout << "x: " << position.x << ", y: " << position.y << std::endl;
+        }
+    }
+    
+    
     Camara camara(0, 0, WIDTH, HEIGHT);
     
     Queue<Evento> queue_eventos(MAX_EVENTOS);

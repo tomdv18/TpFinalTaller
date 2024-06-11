@@ -11,16 +11,23 @@
 #define PARED_WIDTH 16
 #define PARED_HEIGHT 160
 
+// Dimensiones bloques
+#define BLOQUE_WIDTH 50
+#define BLOQUE_HEIGHT 50
+
 Mapa::Mapa(SDL2pp::Renderer &render, MapaEntidades &&map): 
 mapa(std::move(map)), src(), dest(){
         // Cargo las texturas (deberia estar en una clase aparte?, ver con Santiago)
         SDL2pp::Surface fondo("../src/mapas/beach_fondo.png");
         SDL2pp::Surface piso("../src/mapas/beach_piso.png");
         SDL2pp::Surface pared("../src/mapas/beach_pared.png");
-
+        SDL2pp::Surface bloque("../src/mapas/castle_bloque.png");
+        
         texturas["fondo"] = new SDL2pp::Texture(render, fondo);
         texturas["piso"] = new SDL2pp::Texture(render, piso);
         texturas["pared"] = new SDL2pp::Texture(render, pared);
+        texturas["bloque"] = new SDL2pp::Texture(render, bloque);
+
 };
 
 void Mapa::dibujar_fondo(SDL2pp::Renderer &render) {
@@ -38,6 +45,7 @@ void Mapa::dibujar_fondo(SDL2pp::Renderer &render) {
 
 void Mapa::dibujar_entidades(SDL2pp::Renderer &render, Camara &camara) {
     for (const auto& pair : mapa) {
+        /*
         if (pair.first == "piso") {
             for (const auto& pos : pair.second) {
                 src.w = PISO_WIDTH;
@@ -58,6 +66,18 @@ void Mapa::dibujar_entidades(SDL2pp::Renderer &render, Camara &camara) {
                 dest.w = PARED_WIDTH;
                 dest.h = PARED_HEIGHT;
                 render.Copy(*texturas["pared"], src, dest);
+            }
+        }
+        */
+       if (pair.first == "solids") {
+            for (const auto& pos : pair.second) {
+                src.w = BLOQUE_WIDTH;
+                src.h = BLOQUE_HEIGHT;
+                dest.x = pos.x - camara.obtener_posicion_x();
+                dest.y = pos.y - camara.obtener_posicion_y();
+                dest.w = BLOQUE_WIDTH;
+                dest.h = BLOQUE_HEIGHT;
+                render.Copy(*texturas["bloque"], src, dest);
             }
         }
     }
