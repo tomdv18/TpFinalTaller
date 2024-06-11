@@ -1,4 +1,3 @@
-# Ni idea que version sea mejor aca
 cmake_minimum_required(VERSION 3.16)
 
 project(JazzJackRabbit2
@@ -15,8 +14,13 @@ if (DEBUG)
 endif()
 option(TESTING "Build internal testing suite" OFF)
 
+include_directories(${CMAKE_SOURCE_DIR})
+
 add_subdirectory(src)
 
+
 if (TESTING)
-    add_subdirectory(test)
+    include(cmakeupdate/UpdateSubmodules.cmake)
+    add_subdirectory(tests)
+    add_subdirectory(extern/googletest)
 endif()

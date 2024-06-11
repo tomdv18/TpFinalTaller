@@ -8,19 +8,17 @@
 
 class LobbyProtocolo{
 private:
-    Socket skt;
+    Socket *skt;
 public:
-    LobbyProtocolo(const std::string &hostname, const std::string &servname);
+    LobbyProtocolo(Socket *skt);
 
-    void enviar_accion(uint8_t accion, bool &was_closed);
+    uint8_t serializar_creacion_partida(uint8_t max_jugadores);
 
-    void enviar_jugadores(uint8_t jugadores, bool &was_closed);
+    uint8_t serializar_unirse_partida(uint32_t codigo_partida);
 
-    void enviar_id_partida(uint32_t id_partida, bool &was_closed);
+    void serializar_personaje(uint8_t personaje);
 
-    Evento recibir_evento(bool &was_closed);
-
-    void close();
+    std::vector<InfoPartida> obtener_partidas();
 
     ~LobbyProtocolo();
 };

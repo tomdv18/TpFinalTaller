@@ -1,4 +1,3 @@
-<<<<<<< HEAD:src/common_src/resolver.cpp
 
 #include "resolver.h"
 
@@ -17,28 +16,6 @@
 #include "resolvererror.h"
 
 Resolver::Resolver(const char* hostname, const char* servname, bool is_passive) {
-=======
-#include "resolver.h"
-#include "resolvererror.h"
-#include "liberror.h"
-
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
-
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <unistd.h>
-
-#include <stdexcept>
-
-Resolver::Resolver(
-        const char* hostname,
-        const char* servname,
-        bool is_passive) {
->>>>>>> main:common_src/resolver.cpp
     struct addrinfo hints;
     this->result = this->_next = nullptr;
 
@@ -92,16 +69,8 @@ Resolver::Resolver(
              *
              * En este caso, `LibError` lo hara por nosotros.
              */
-<<<<<<< HEAD:src/common_src/resolver.cpp
             throw LibError(errno, "Name resolution failed for hostname '%s' y servname '%s'",
                            (hostname ? hostname : ""), (servname ? servname : ""));
-=======
-            throw LibError(
-                    errno,
-                    "Name resolution failed for hostname '%s' y servname '%s'",
-                    (hostname ? hostname : ""),
-                    (servname ? servname : ""));
->>>>>>> main:common_src/resolver.cpp
 
         } else {
             /*
@@ -166,11 +135,7 @@ bool Resolver::has_next() {
 
 struct addrinfo* Resolver::next() {
     chk_addr_or_fail();
-<<<<<<< HEAD:src/common_src/resolver.cpp
     struct addrinfo* ret = this->_next;
-=======
-    struct addrinfo *ret = this->_next;
->>>>>>> main:common_src/resolver.cpp
     this->_next = ret->ai_next;
     return ret;
 }
@@ -191,15 +156,8 @@ Resolver::~Resolver() {
 
 void Resolver::chk_addr_or_fail() const {
     if (result == nullptr) {
-<<<<<<< HEAD:src/common_src/resolver.cpp
         throw std::runtime_error("addresses list is invalid (null), "
                                  "perhaps you are using a *previously moved* "
                                  "resolver (and therefore invalid).");
-=======
-        throw std::runtime_error(
-        "addresses list is invalid (null), "
-        "perhaps you are using a *previously moved* "
-        "resolver (and therefore invalid).");
->>>>>>> main:common_src/resolver.cpp
     }
 }
