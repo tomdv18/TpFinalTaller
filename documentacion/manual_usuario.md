@@ -72,8 +72,6 @@
     sudo apt update
     sudo apt install qt5-default
     ```
-- **Instalación del juego**
-
 
 ## 4. Uso del Software
 Primeramente, se necesita descargar/clonar el siguiente [repositorio](https://github.com/tomdv18/TpFinalTaller) en una carpeta.
@@ -86,11 +84,14 @@ Una vez dentro de la carpeta, debe ejecutar:
   cmake ..
   make
   ```
+
+Nos ubicamos dentro de la carpeta build para poder iniciar el servidor y cliente.
+
 ### 4.1 Abrir el Servidor
 Para iniciar el servidor del juego, debe ejecutar:
 
   ```sh
-  ./servidor <puerto>
+  ./jazzservidor <puerto>
   ```
 El servidor debería iniciarse y estar listo para aceptar conexiones de los clientes.
 
@@ -98,7 +99,7 @@ El servidor debería iniciarse y estar listo para aceptar conexiones de los clie
 Para iniciar el cliente del juego, debe ejecutar:
 
   ```sh
-  ./cliente <localhost> <puerto>
+  ./jazzcliente <localhost> <puerto>
   ```
 El cliente se iniciará y te permitirá conectarte al servidor ingresando la dirección IP y el puerto del servidor.
 
