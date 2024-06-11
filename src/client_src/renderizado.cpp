@@ -92,7 +92,7 @@ bool Renderizado::renderizar(Evento evento) {
     for(EventoEnemigo &evento : evento.eventos_enemigos) {
         if(enemigosViews.find(evento.id_enemigo) == enemigosViews.end()) {
             std::unique_ptr<EnemigoView> enemigo;
-            switch(evento.id_enemigo) {
+            switch(evento.id_personaje) {
                 case LIZZARD:
                     enemigo = std::unique_ptr<EnemigoView>(new EnemigoLizzardView());
                     break;
@@ -131,7 +131,7 @@ bool Renderizado::renderizar(Evento evento) {
                 case BALA_VELOZ:
                    objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_1View());
                    break;
-                case BALA_NORMAL:
+                case COHETE_RAPIDO:
                     objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_2View());
                     break; 
                 default:

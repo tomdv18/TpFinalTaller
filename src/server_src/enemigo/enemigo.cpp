@@ -4,10 +4,10 @@
 
 #define CONFIG Configuracion::config()
 
-Enemigo::Enemigo(uint32_t id_enemigo):
+Enemigo::Enemigo(uint32_t id_enemigo, uint32_t x, uint32_t y):
         id_enemigo(id_enemigo),
-        posicion_x(150),
-        posicion_y(250),
+        posicion_x(x),
+        posicion_y(y),
         vida(CONFIG.obtenerVidaDefaultEnemigo()),
         esta_quieto(true),
         vivo(true),

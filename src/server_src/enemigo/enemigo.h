@@ -48,7 +48,7 @@ protected:
     virtual void patrullar();
 
 public:
-    explicit Enemigo(uint32_t id_enemigo);
+    explicit Enemigo(uint32_t id_enemigo, uint32_t x, uint32_t y);
 
     // Acciones
     virtual void quedarse_quieto();

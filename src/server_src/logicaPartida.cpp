@@ -1,12 +1,16 @@
 #include "logicaPartida.h"
 
+#include <iostream>
+#include <fstream>
+#include <yaml-cpp/yaml.h>
 
 #define CONFIG Configuracion::config()
 
-LogicaPartida::LogicaPartida() : fabrica_objetos(), mapa("../src/mapas/mapa.yaml"){
+LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(), mapa("../src/mapas/mapa.yaml"){
 
-    //map_objetos_solidos[1] = new Solido(1, 0, 550, 1, 5000, 100); //Limite del mapa abajo
+    //map_objetos_solidos[1] = new Solido(1, 0, 750, 1, 5000, 100); //Limite del mapa abajo
     
+    /* MAPA 1
     map_objetos_solidos[2] = new Solido(2, 100, 300, 1, 5000, 25); //Piso grande
 
     map_objetos_solidos[3] = new Solido(3, 75, 0, 1, 25, 5000); //X pared izq
@@ -17,104 +21,89 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(), mapa("../src/mapas/mapa.yaml
 
     map_objetos_solidos[6] = new Solido(6, 590, 150, 1, 10, 5000); //X pared derecha
     
-
-   /*
-    map_objetos_solidos[2] = new Solido(2, 100, 300, 1, 5000, 25); //Piso grande
-
-
-    map_objetos_solidos[3] = new Solido(3, 0, 300, 1, 50, 50); //Piso grande
-    map_objetos_solidos[4] = new Solido(4, 0, 350, 1, 50, 50); //Piso grande
-    map_objetos_solidos[5] = new Solido(5, 0, 400, 1, 50, 50); //Piso grande
-
-    map_objetos_solidos[6] = new Solido(6, 590, 250, 1, 50, 50); //Piso grande
-    map_objetos_solidos[7] = new Solido(7, 50, 250, 1, 50, 50);
     */
-/*
 
-    piso:
-  - x: 100
-    y: 150
-  - x: 260
-    y: 150
-  - x: 420
-    y: 150
-  - x: 280
-    y: 70
-pared:
-  - x: 100
-    y: 150
-  - x: 596
-    y: 150
-*/
+   // MAPA 2
+    YAML::Node mapNode = YAML::LoadFile("../src/mapas/mapa2.yaml");
+        int i = 0;
+        for (const auto& objNode : mapNode["solids"]) {
+            map_objetos_solidos[i] = new Solido(i,objNode["x"].as<uint32_t>(),objNode["y"].as<uint32_t>(),1,objNode["width"].as<uint32_t>(),objNode["height"].as<uint32_t>());
+            i++;
+        }
 
-    //Enemigo necesita
+
+        i = 0;
+        for (const auto& monedaNode : mapNode["moneda"]) {
+            map_objetos_comunes[i] = fabrica_objetos.crear_objeto(MONEDA,monedaNode["x"].as<uint32_t>(),monedaNode["y"].as<uint32_t>(),monedaNode["veneno"].as<bool>());
+            i++;
+        }
+
+
+        for (const auto& gemaNode : mapNode["gema"]) {
+            map_objetos_comunes[i] = fabrica_objetos.crear_objeto(GEMA,gemaNode["x"].as<uint32_t>(),gemaNode["y"].as<uint32_t>(),gemaNode["veneno"].as<bool>());
+            i++;
+        }
+
+
+        for (const auto& zanahoriaNode : mapNode["zanahoria"]) {
+            map_objetos_comunes[i] = fabrica_objetos.crear_objeto(ZANAHORIA,zanahoriaNode["x"].as<uint32_t>(), zanahoriaNode["y"].as<uint32_t>(),zanahoriaNode["veneno"].as<bool>());
+            i++;
+        }
+
     /*
+        for (const auto& coheteRapidoNode : mapNode["bala_veloz"]) {
+            map_objetos_comunes[i] = fabrica_objetos.crear_objeto(BALA_VELOZ,coheteRapidoNode["x"].as<uint32_t>(), coheteRapidoNode["y"].as<uint32_t>(),coheteRapidoNode["veneno"].as<bool>());
+            i++;
+        }
+        */
 
-    posicion en X
-    posicion en Y
 
+        // Carga de enemigos
+        i = 0;
+        
+        for (const auto& lizzardNode : mapNode["lizzard"]) {
+            map_enemigos[i] = fabrica_enemigos.crear_enemigo(i,LIZZARD,lizzardNode["x"].as<uint32_t>(), lizzardNode["y"].as<uint32_t>());
+            i++;
+        }
+        
+
+        map_objetos_comunes[20] = fabrica_objetos.crear_objeto(BALA_VELOZ,700,600,false);
+        map_objetos_comunes[21] = fabrica_objetos.crear_objeto(BALA_VELOZ,700,500,false);
+
+        map_objetos_comunes[22] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,100,600,false);
+        map_objetos_comunes[23] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,100,500,false);
+
+        /*
+        }
+
+
+
+        // Carga de enemigos
+        i = 1;
+        for (const auto& lizzardNode : mapNode["lizzard"]) {
+            std::shared_ptr<Enemigo> lizzard = fabrica_enemigos.crear_enemigo(
+                i,
+                LIZZARD,
+                lizzardNode["x"].as<uint32_t>(),
+                lizzardNode["y"].as<uint32_t>()
+            );
+            entidades.push_back(lizzard);
+            map_enemigos[i] = lizzard;
+            i++;
+        }
+
+        */
     
-    */
-
-   /*
-
-    LEER YAML DEL MAPA INICIALIZAR TODAS ESTAS COSAS
-    SETEAR ZONAS DE RESPAWN PARA JUGADOR
-   
-   */
   
 
-    map_enemigos[0] = new Lizzard(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
+    //map_enemigos[0] = new Lizzard(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
 
-    map_objetos_comunes[0] = fabrica_objetos.crear_objeto(ZANAHORIA,400,275,true);
-    map_objetos_comunes[1] = fabrica_objetos.crear_objeto(GEMA,475,275,false);
-    map_objetos_comunes[2] = fabrica_objetos.crear_objeto(MONEDA,475,200,false);
-    map_objetos_comunes[3] = fabrica_objetos.crear_objeto(BALA_VELOZ,525,275,false);
+    //map_objetos_comunes[0] = fabrica_objetos.crear_objeto(ZANAHORIA,400,275,true);
+    //map_objetos_comunes[1] = fabrica_objetos.crear_objeto(GEMA,475,275,false);
+    //map_objetos_comunes[2] = fabrica_objetos.crear_objeto(MONEDA,475,200,false);
+    //map_objetos_comunes[3] = fabrica_objetos.crear_objeto(BALA_VELOZ,525,275,false);
 
-   //map_objetos_comunes[4] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,425,200,false);
-    /*
-    grid.clear();
-    cell_size = 50;
-
-    // Iterar sobre todos los objetos sólidos y añadirlos al grid
-    for (const auto& objeto : map_objetos_solidos) {
-        int32_t cell_x = objeto.second->obtener_posicionX()/ cell_size;
-        int32_t cell_y = objeto.second->obtener_posicionY() / cell_size;
-
-        // Añadir el objeto sólido a la celda correspondiente en el grid
-        grid[cell_x][cell_y].tiene_objeto_solido = true;
-    }
-
-    int32_t cell_x = 75 / cell_size;
-    int32_t cell_y = 0 / cell_size;
-
-    // Verificar colisión revisando la celda del grid
-    if (grid.count(cell_x) && grid[cell_x].count(cell_y)) {
-        std::cout << grid.at(cell_x).at(cell_y).tiene_objeto_solido << std::endl;
-    }
-
-    std::cout << "POSICION: " <<100/cell_size << std::endl;
-
-    uint32_t width = 1000;
-    uint32_t height = 1000;
-
-    uint32_t grid_width = (width + cell_size - 1) / cell_size;
-    uint32_t grid_height = (height + cell_size - 1) / cell_size;
-
-
-    
-    for (int32_t x = 0; x < grid_width; ++x) {
-        for (int32_t y = 0; y < grid_height; ++y) {
-            if (grid.count(x) && grid[x].count(y)) {
-                // Acción sobre la celda en (x, y)
-                GridCell& cell = grid[x][y];
-                if(cell.tiene_objeto_solido){
-                    std::cout << "POSICION: " << x << "   " << y <<std::endl;
-                }
-            }
-        }
-    }
-    */
+  
     
 }
 
@@ -388,7 +377,7 @@ void LogicaPartida::actualizar_partida(
                                 par.second->recibir_golpe(par_pj.second, tiempo_transcurrido);
                             } else{
                                 // El personaje recibe danio
-                                par_pj.second->recibir_golpe(par.second,tiempo_transcurrido); 
+                                par_pj.second->recibir_golpe(par.second.get(),tiempo_transcurrido); 
                             } 
                         }
                     }
@@ -450,7 +439,7 @@ void LogicaPartida::actualizar_partida(
             }
         }
 
-        if (it->obtener_impacto() || it->obtener_posicionX() >= WIDTH) {
+        if (it->obtener_impacto() || it->obtener_posicionX() >= CONFIG.getAnchoPantalla()) {
             controlador_balas.remover_bala(it->obtener_id_bala());
         } else {
             ++it;
@@ -544,12 +533,4 @@ LogicaPartida::~LogicaPartida() {
         delete par.second;
     }
 
-    /*
-    for (auto& par: map_objetos_comunes) {
-        delete par.second;
-    }
-    */
-    for (auto& par: map_enemigos) {
-        delete par.second;
-    }
 }

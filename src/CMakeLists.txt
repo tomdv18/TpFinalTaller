@@ -14,6 +14,7 @@ if(SERVER)
 		./server_src/enemigo/enemigo_rat.h
 		./server_src/enemigo/enemigo.cpp
 		./server_src/enemigo/enemigo.h
+		./server_src/enemigo/fabrica_enemigos.h
 		./server_src/enviadorJugador.cpp
 		./server_src/enviadorJugador.h
 		./server_src/jugador.cpp

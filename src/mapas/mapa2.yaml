@@ -247,10 +247,10 @@ zanahoria:
     y: 500
     veneno: false
 bala_veloz:
-  - x: 650
+  - x: 400
     y: 600
     municion: 60
-  - x: 650
+  - x: 400
     y: 500
     municion: 60
 lizzard:

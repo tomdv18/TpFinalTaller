@@ -4,7 +4,7 @@
 #define CONFIG Configuracion::config()
 
 Personaje::Personaje(uint32_t id_jugador):
-        id_jugador(id_jugador), posicion_x(150), posicion_y(100), vida(CONFIG.getVidaPersonaje()), velocidad_x(0), velocidad_y(0), estado(nullptr){
+        id_jugador(id_jugador), posicion_x(430), posicion_y(500), vida(CONFIG.getVidaPersonaje()), velocidad_x(0), velocidad_y(0), estado(nullptr){
     corriendo = false;
     usando_especial = false;
     saltando = false;

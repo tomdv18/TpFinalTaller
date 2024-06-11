@@ -10,7 +10,7 @@ private:
     void mover_izquierda() override;
 
 public:
-    explicit Fencer(uint32_t id_enemigo);
+    explicit Fencer(uint32_t id_enemigo, uint32_t x, uint32_t y);
 
     uint8_t obtener_personaje() override;
 

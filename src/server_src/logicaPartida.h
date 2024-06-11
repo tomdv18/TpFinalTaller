@@ -10,9 +10,7 @@
 #include "../common_src/evento.h"
 
 #include "./bala/controlador_balas.h"
-#include "./enemigo/enemigo_lizzard.h"
-#include "./enemigo/enemigo_rat.h"
-#include "./enemigo/enemigo_fencer.h"
+#include "./enemigo/fabrica_enemigos.h"
 #include "./objeto/fabrica_objetos.h"
 #include "./objeto/objeto_solido.h"
 #include "./personaje/personaje_jazz.h"
@@ -27,16 +25,14 @@
 class LogicaPartida {
 private:
     std::map<uint32_t, Personaje*> map_personajes;
-    std::map<uint32_t, Enemigo*> map_enemigos;
+    std::map<uint32_t, std::unique_ptr<Enemigo>> map_enemigos;
     std::map<uint32_t, Objeto*> map_objetos_solidos;
     std::map<uint32_t, std::unique_ptr<Objeto>> map_objetos_comunes;
     ControladorBalas controlador_balas;
     FabricaObjetos fabrica_objetos;
+    FabricaEnemigos fabrica_enemigos;
 
 
-    // GRidmap
-    //std::unordered_map<int32_t, std::unordered_map<int32_t, GridCell>> grid;
-    //uint32_t cell_size;
     Map mapa;
 
 public:

@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+4380552b8602886297c464487cea085d src/CMakeFiles/jazzcliente_autogen
+f1ae005db78d658f1962fccfd825510c src/jazzcliente_autogen/BVUQ2GWYKH/qrc_resources.cpp
+d2f9790c644b9caf721bdc000b911d4a src/ui_mainwindow.h

@@ -27,8 +27,8 @@ lori:
 tiempo_partida: 120
 
 pantalla:
-  lim_x: 1000
-  lim_y: 1000
+  lim_x: 2000
+  lim_y: 2000
 
 estado:
   tiempo_estado_muerto: 5

@@ -2,7 +2,7 @@
 #define CONFIG Configuracion::config()
 
 
-Rat::Rat(uint32_t id_enemigo): Enemigo(id_enemigo) {
+Rat::Rat(uint32_t id_enemigo, uint32_t x, uint32_t y): Enemigo(id_enemigo,x,y) {
     std::cout << "RAT CREADO" << std::endl;
     vida = CONFIG.obtenerVidaRat();
     puntos = CONFIG.obtenerPuntosRat();

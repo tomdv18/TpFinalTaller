@@ -1,7 +1,7 @@
 #include "enemigo_lizzard.h"
 #define CONFIG Configuracion::config()
 
-Lizzard::Lizzard(uint32_t id_enemigo): Enemigo(id_enemigo) {
+Lizzard::Lizzard(uint32_t id_enemigo, uint32_t x, uint32_t y): Enemigo(id_enemigo,x,y) {
     std::cout << "LIZZARD CREADO" << std::endl;
     vida = CONFIG.obtenerVidaLizzard();
     puntos = CONFIG.obtenerPuntosLizzard();
