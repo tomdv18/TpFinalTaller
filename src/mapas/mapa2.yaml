@@ -1,0 +1,263 @@
+solids:
+  - id_objeto: 1
+    x: 0
+    y: 450
+    width: 50
+    height: 50
+  - id_objeto: 2
+    x: 0
+    y: 500
+    width: 50
+    height: 50
+  - id_objeto: 3
+    x: 0
+    y: 550
+    width: 50
+    height: 50
+  - id_objeto: 4
+    x: 0
+    y: 600
+    width: 50
+    height: 50
+  - id_objeto: 5
+    x: 0
+    y: 650
+    width: 50
+    height: 50
+  - id_objeto: 6
+    x: 0
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 7
+    x: 50
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 8
+    x: 100
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 9
+    x: 150
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 10
+    x: 200
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 11
+    x: 250
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 12
+    x: 300
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 13
+    x: 350
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 14
+    x: 400
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 15
+    x: 450
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 16
+    x: 500
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 17
+    x: 550
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 18
+    x: 600
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 19
+    x: 650
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 20
+    x: 700
+    y: 700
+    width: 50
+    height: 50
+  - id_objeto: 21
+    x: 50
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 22
+    x: 100
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 23
+    x: 150
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 24
+    x: 200
+    y: 400
+    width: 50
+    height: 50   
+  - id_objeto: 25
+    x: 250
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 26
+    x: 300
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 27
+    x: 350
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 28
+    x: 400
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 29
+    x: 450
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 30
+    x: 500
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 0
+    x: 550
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 0
+    x: 600
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 0
+    x: 650
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 0
+    x: 700
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 30
+    x: 300
+    y: 600
+    width: 50
+    height: 50
+  - id_objeto: 31
+    x: 250
+    y: 600
+    width: 50
+    height: 50
+  - id_objeto: 32
+    x: 200
+    y: 600
+    width: 50
+    height: 50
+  - id_objeto: 33
+    x: 150
+    y: 600
+    width: 50
+    height: 50
+  - id_objeto: 0
+    x: 750
+    y: 400
+    width: 50
+    height: 50
+  - id_objeto: 0
+    x: 750
+    y: 450
+    width: 50
+    height: 50
+  - id_objeto: 0
+    x: 750
+    y: 500
+    width: 50
+    height: 50
+  - id_objeto: 0
+    x: 750
+    y: 550
+    width: 50
+    height: 50
+  - id_objeto: 0
+    x: 750
+    y: 600
+    width: 50
+    height: 50
+  - id_objeto: 0
+    x: 750
+    y: 650
+    width: 50
+    height: 50
+  - id_objeto: 0
+    x: 750
+    y: 700
+    width: 50
+    height: 50
+
+moneda:
+  - x: 400
+    y: 600
+    veneno: false
+  - x: 400
+    y: 500
+    veneno: true
+gema:
+  - x: 500
+    y: 600
+    veneno: true
+  - x: 500
+    y: 500
+    veneno: true
+zanahoria:
+  - x: 600
+    y: 600
+    veneno: false
+  - x: 600
+    y: 500
+    veneno: false
+bala_veloz:
+  - x: 400
+    y: 600
+    municion: 60
+  - x: 400
+    y: 500
+    municion: 60
+lizzard:
+  - x: 50
+    y: 650
+  - x: 235
+    y: 550
+
+
+
