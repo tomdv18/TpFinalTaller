@@ -26,7 +26,7 @@ protected:
     uint32_t id_jugador;
     uint32_t posicion_x;
     uint32_t posicion_y;
-    int8_t vida; //DEBE SER INT PARA PODER SER NEGATIVO
+    int vida; //DEBE SER INT PARA PODER SER NEGATIVO
     bool esta_quieto;
     uint32_t ancho;
     uint32_t alto;
@@ -38,6 +38,7 @@ protected:
     bool corriendo;
 
     bool saltando;
+    bool salto_horizontal;
     double tiempo_salto;
 
     bool usando_especial;
@@ -73,6 +74,10 @@ public:
 
     int obtener_velocidad(){
         return velocidad_x;
+    }
+
+    int obtener_velocidad_y(){
+        return velocidad_y;
     }
     // Acciones
 
@@ -170,6 +175,8 @@ public:
     virtual uint32_t obtener_municion_actual();
 
     virtual uint8_t obtener_danio_habilidad();
+    
+    virtual uint8_t obtener_salto_horizontal();
 
     // Getters Snapshot
 

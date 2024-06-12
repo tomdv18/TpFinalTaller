@@ -32,6 +32,7 @@ class PersonajeView {
     bool isShooting;
     bool stopShooting;
     bool isIntoxicated;
+    bool saltoHorizontal;
 
 
     uint8_t estado; // Almacena el estado actual del personaje

@@ -80,6 +80,8 @@ if(SERVER)
 		./server_src/estado/estado_muerto.h
 		./server_src/estado/estado_especial.cpp
 		./server_src/estado/estado_especial.h
+		./server_src/estado/estado_cayendo.cpp
+		./server_src/estado/estado_cayendo.h
 
         ./server_src/mapa.h
 
@@ -214,6 +216,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_quieto.cpp
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_saltando.h
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_saltando.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_saltando_horizontal.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_saltando_horizontal.cpp
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_quieto.h
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_quieto.cpp
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_deja_disparo_quieto.h
@@ -228,6 +232,13 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_muerte.cpp
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_habilidad.h
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_habilidad.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_cayendo.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_cayendo.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_cayendo_horizontal.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_cayendo_horizontal.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_saltando.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_saltando.cpp
+
 
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.cpp
@@ -237,6 +248,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_quieto.cpp
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando_horizontal.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando_horizontal.cpp
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_quieto.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_quieto.cpp
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_deja_disparo_quieto.h
@@ -251,6 +264,12 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_muerte.cpp
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_habilidad.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_habilidad.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo_horizontal.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo_horizontal.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_saltando.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_saltando.cpp
 
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.cpp
@@ -260,6 +279,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_quieto.cpp
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_saltando.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_saltando.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_saltando_horizontal.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_saltando_horizontal.cpp
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_quieto.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_quieto.cpp
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_deja_disparo_quieto.h
@@ -274,6 +295,12 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_muerte.cpp
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_habilidad.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_habilidad.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_cayendo.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_cayendo.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_cayendo_horizontal.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_cayendo_horizontal.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_saltando.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_saltando.cpp
 
         ./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
 		./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.cpp

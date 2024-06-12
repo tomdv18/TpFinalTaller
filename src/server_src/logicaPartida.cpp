@@ -8,22 +8,6 @@
 
 LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(), mapa("../src/mapas/mapa.yaml"){
 
-    //map_objetos_solidos[1] = new Solido(1, 0, 750, 1, 5000, 100); //Limite del mapa abajo
-    
-    /* MAPA 1
-    map_objetos_solidos[2] = new Solido(2, 100, 300, 1, 5000, 25); //Piso grande
-
-    map_objetos_solidos[3] = new Solido(3, 75, 0, 1, 25, 5000); //X pared izq
-
-    map_objetos_solidos[4] = new Solido(4, 280, 225, 1, 150, 25);  //Piso chiquito
-
-    map_objetos_solidos[5] = new Solido(5, 0, 0, 1, 5000, 50);   //Limite del mapa arriba
-
-    map_objetos_solidos[6] = new Solido(6, 590, 150, 1, 10, 5000); //X pared derecha
-    
-    */
-
-   // MAPA 2
     YAML::Node mapNode = YAML::LoadFile("../src/mapas/mapa2.yaml");
         int i = 0;
         for (const auto& objNode : mapNode["solids"]) {
@@ -73,37 +57,6 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(), mapa("..
         map_objetos_comunes[22] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,100,600,false);
         map_objetos_comunes[23] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,100,500,false);
 
-        /*
-        }
-
-
-
-        // Carga de enemigos
-        i = 1;
-        for (const auto& lizzardNode : mapNode["lizzard"]) {
-            std::shared_ptr<Enemigo> lizzard = fabrica_enemigos.crear_enemigo(
-                i,
-                LIZZARD,
-                lizzardNode["x"].as<uint32_t>(),
-                lizzardNode["y"].as<uint32_t>()
-            );
-            entidades.push_back(lizzard);
-            map_enemigos[i] = lizzard;
-            i++;
-        }
-
-        */
-    
-  
-
-    //map_enemigos[0] = new Lizzard(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
-
-    //map_objetos_comunes[0] = fabrica_objetos.crear_objeto(ZANAHORIA,400,275,true);
-    //map_objetos_comunes[1] = fabrica_objetos.crear_objeto(GEMA,475,275,false);
-    //map_objetos_comunes[2] = fabrica_objetos.crear_objeto(MONEDA,475,200,false);
-    //map_objetos_comunes[3] = fabrica_objetos.crear_objeto(BALA_VELOZ,525,275,false);
-
-  
     
 }
 
@@ -372,7 +325,7 @@ void LogicaPartida::actualizar_partida(
                     if(rect_personaje.hay_colision(rect_enemigo)){
                         if(!par_pj.second->esta_muerto()){
                                 // Si esta muerto lo ignoro
-                            if(par_pj.second->obtener_habilidad()){
+                            if(par_pj.second->obtener_estado() == ESTADO_ESPECIAL){
                                 // El personaje le hace daño a el
                                 par.second->recibir_golpe(par_pj.second, tiempo_transcurrido);
                             } else{
@@ -476,6 +429,7 @@ Evento LogicaPartida::obtener_snapshot(
         evento_personaje.puntos = par.second->obtener_puntos();
         evento_personaje.bala_actual = par.second->obtener_bala_actual();
         evento_personaje.municion = par.second->obtener_municion_actual();
+        evento_personaje.salto_horizontal = par.second->obtener_salto_horizontal();
 
         evento.eventos_personaje.emplace_back(evento_personaje);
     }

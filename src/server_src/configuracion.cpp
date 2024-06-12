@@ -35,9 +35,9 @@ Configuracion::Configuracion(const YAML::Node& config) {
         velocidad_x_habilidad_lori = config["lori"]["velocidad_x_habilidad"].as<int>();
         velocidad_y_habilidad_lori = config["lori"]["velocidad_y_habilidad"].as<int>();
 
-        //danio_habilidad_jazz = config["jazz"]["danio_habilidad"].as<uint8_t>();
-        //danio_habilidad_spaz = config["spaz"]["danio_habilidad"].as<uint8_t>();
-        //danio_habilidad_lori = config["lori"]["danio_habilidad"].as<uint8_t>();
+        danio_habilidad_jazz = config["jazz"]["danio_habilidad"].as<uint8_t>();
+        danio_habilidad_spaz = config["spaz"]["danio_habilidad"].as<uint8_t>();
+        danio_habilidad_lori = config["lori"]["danio_habilidad"].as<uint8_t>();
 
 
         //partida

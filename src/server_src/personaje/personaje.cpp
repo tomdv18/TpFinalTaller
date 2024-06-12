@@ -8,6 +8,7 @@ Personaje::Personaje(uint32_t id_jugador):
     corriendo = false;
     usando_especial = false;
     saltando = false;
+    salto_horizontal = false;
     esta_quieto = true;
     esta_disparando = false;
     en_superficie = false;
@@ -114,6 +115,7 @@ void Personaje::dejar_disparar() {
 void Personaje::quedarse_quieto() {
     velocidad_x = 0;
     corriendo = false;
+    esta_quieto = true; //Aca
 }
 
 void Personaje::correr_rapido(std::chrono::duration<double> tiempo_transcurrido) { 
@@ -126,7 +128,8 @@ void Personaje::correr_rapido(std::chrono::duration<double> tiempo_transcurrido)
 void Personaje::correr() { 
     if(corriendo){
         corriendo = false; 
-        velocidad_x = velocidad_x/2;
+        if(velocidad_x > 0) velocidad_x = CONFIG.getVelocidadXPersonaje();
+        else velocidad_x = -CONFIG.getVelocidadXPersonaje();
     }
 }
 
@@ -251,6 +254,8 @@ uint8_t Personaje::obtener_disparando() { return esta_disparando; }
 
 uint8_t Personaje::obtener_danio_habilidad(){ return danio_habilidad; }
 
+uint8_t Personaje::obtener_salto_horizontal(){ return velocidad_x != 0; }
+
 uint8_t Personaje::obtener_estado(){
     return estado->obtener_estado();
 }
@@ -299,6 +304,7 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                                     std::map<uint32_t, Objeto*>& map_objetos_solidos, std::map<uint32_t, std::unique_ptr<Objeto>>& map_objetos_comunes) {
     double tiempo_segundos = tiempo_transcurrido.count();
     double delta_tiempo = tiempo_segundos - tiempo_salto;
+    salto_horizontal = false;
 
     if(invulnerable && tiempo_segundos - tiempo_invulnerable >= CONFIG.getTiempoInvulnerabilidad()){
         invulnerable = false;
@@ -317,6 +323,9 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
     } else {
         velocidad_y = 0;
     }
+
+
+    
 
     //std::cout << "ESTA INVULNERABLE: " << (int) invulnerable << std::endl;
 
@@ -383,8 +392,16 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
         this->manejarEstado(ESTADO_QUIETO, tiempo_transcurrido);
     }
 
+    if(saltando and velocidad_x != 0){
+        salto_horizontal = true;
+    }
+
     if (velocidad_x != 0 && !saltando) {
         if (!corriendo) this->manejarEstado(ESTADO_CAMINANDO, tiempo_transcurrido);
+    }
+
+    if(velocidad_y > 0){
+        this->manejarEstado(ESTADO_CAYENDO, tiempo_transcurrido);
     }
 
     posicion_x = nueva_posicion_x;
@@ -399,7 +416,6 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
         tiempo_salto = tiempo_segundos;
     }
 
-    // Actualizar en_superficie basado en colision_suelo
     en_superficie = colision_suelo;
 }
 

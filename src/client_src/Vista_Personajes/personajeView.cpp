@@ -41,6 +41,10 @@ void PersonajeView::crear_texturas(SDL2pp::Renderer *render) {
     this->animaciones.at(HABILIDAD)->crear_texturas(render);
     std::cout << "textura 4" << std::endl;
 
+    this->animaciones.at(CAYENDO)->crear_texturas(render);
+    this->animaciones.at(DISPARO_SALTANDO)->crear_texturas(render);
+    this->animaciones.at(CAYENDO_HORIZONTAL)->crear_texturas(render);
+    this->animaciones.at(SALTANDO_HORIZONTAL)->crear_texturas(render);
 
 }
 
@@ -54,12 +58,23 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
     this->estado = evento.codigo_estado;
     this->posicion_x = evento.posicion_x;
     this->posicion_y = evento.posicion_y;
+    this->saltoHorizontal = evento.salto_horizontal;
 
     facingLeft = evento.mirando_izquierda;
 
     if(estado == ESTADO_SALTANDO) {
-        this->animaciones.at(SALTANDO)->en_loop(false);
-        this->animaciones.at(SALTANDO)->acualizar(dt);
+        if (this->isShooting) {
+            this->animaciones.at(DISPARO_SALTANDO)->en_loop(true);
+            this->animaciones.at(DISPARO_SALTANDO)->acualizar(dt);
+        } else{
+            if(saltoHorizontal){
+                this->animaciones.at(SALTANDO_HORIZONTAL)->en_loop(false);
+                this->animaciones.at(SALTANDO_HORIZONTAL)->acualizar(dt*1.5);
+            }else{
+                this->animaciones.at(SALTANDO)->en_loop(false);
+                this->animaciones.at(SALTANDO)->acualizar(dt);
+            }
+        }
     }  else if(estado == ESTADO_CAMINANDO) {
         if (this->isIntoxicated) {
             this->animaciones.at(INTOXICADO_CAMINANDO)->en_loop(true);
@@ -91,11 +106,20 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
     } else if ( estado == ESTADO_ESPECIAL){
         this->animaciones.at(HABILIDAD)->en_loop(false);
         this->animaciones.at(HABILIDAD)->acualizar(dt*0.8);
+    } else if ( estado == ESTADO_CAYENDO){
+        if(saltoHorizontal){
+            this->animaciones.at(CAYENDO_HORIZONTAL)->en_loop(true);
+            this->animaciones.at(CAYENDO_HORIZONTAL)->acualizar(dt);
+        }else{
+            this->animaciones.at(CAYENDO)->en_loop(true);
+            this->animaciones.at(CAYENDO)->acualizar(dt);
+        }
     }
 
     // Resetear las animaciones necesarias (No loop)
     if(estado != ESTADO_SALTANDO){
         this->animaciones.at(SALTANDO)->reset_frame();
+        this->animaciones.at(SALTANDO_HORIZONTAL)->reset_frame();
     }
 
     if(estado != ESTADO_ESPECIAL){
@@ -145,8 +169,16 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
         break;
     }
     case ESTADO_SALTANDO:{
-        SDL_RendererFlip flip = SDL_FLIP_NONE;
-        animaciones.at(SALTANDO)->animar(*render, personaje, flip);
+        SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+        if(isShooting){
+            animaciones.at(DISPARO_SALTANDO)->animar(*render, personaje, flip);
+        }else{
+            if(saltoHorizontal){
+                animaciones.at(SALTANDO_HORIZONTAL)->animar(*render, personaje, flip);
+            }else{
+                animaciones.at(SALTANDO)->animar(*render, personaje, flip);
+            }
+        }
         break;
     }
     case ESTADO_HERIDO:{
@@ -162,6 +194,20 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
     case ESTADO_ESPECIAL:{
         SDL_RendererFlip flip = SDL_FLIP_NONE;
         animaciones.at(HABILIDAD)->animar(*render, personaje, flip);
+        break;
+    }
+    case ESTADO_CAYENDO:{
+        SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+        if(isShooting){
+            animaciones.at(DISPARO_SALTANDO)->animar(*render, personaje, flip);
+        }else{
+            if(saltoHorizontal){
+                animaciones.at(CAYENDO_HORIZONTAL)->animar(*render, personaje, flip);
+            }else{
+                animaciones.at(CAYENDO)->animar(*render, personaje, flip);
+            }
+        }
+        break;
     }
     default:
         break;
