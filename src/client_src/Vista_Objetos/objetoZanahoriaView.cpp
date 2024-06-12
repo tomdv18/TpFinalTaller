@@ -1,13 +1,8 @@
 #include "objetoZanahoriaView.h"
 
-ObjetoZanahoriaView::ObjetoZanahoriaView() : ObjetoView() {
-    this->crear_animacion();
-}
-
-void ObjetoZanahoriaView::crear_animacion() {
-
-    this->animacion = std::unique_ptr<Animacion> (new Animacion_Zanahoria()); 
-
+ObjetoZanahoriaView::ObjetoZanahoriaView(SDL2pp::Renderer *render) : ObjetoView() {
+    this->animacion = this->factory.crear_animacion_objeto(ZANAHORIA_OBJETO);
+    this->factory.crear_texturas(render);
 }
 
 ObjetoZanahoriaView::~ObjetoZanahoriaView() {}

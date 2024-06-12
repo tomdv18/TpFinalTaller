@@ -47,16 +47,15 @@ bool Renderizado::renderizar(Evento evento) {
             std::unique_ptr<PersonajeView> personaje;
             switch(evento.id_personaje){
                 case JAZZ:
-                    personaje = std::unique_ptr<PersonajeView>(new PersonajeJazzView(evento));
+                    personaje = std::unique_ptr<PersonajeView>(new PersonajeJazzView(evento, render.get()));
                     break;
                 case SPAZ:
-                    personaje = std::unique_ptr<PersonajeView>(new PersonajeSpazView(evento));
+                    personaje = std::unique_ptr<PersonajeView>(new PersonajeSpazView(evento, render.get()));
                     break;
                 case LORI:
-                    personaje = std::unique_ptr<PersonajeView>(new PersonajeLoriView(evento));    
+                    personaje = std::unique_ptr<PersonajeView>(new PersonajeLoriView(evento, render.get()));    
             }
             std::cout << "MUERE ACA" << std::endl;
-            personaje->crear_texturas(render.get());
             personaje->definir_vida(evento.vida);
             personaje->definir_puntos(evento.puntos);
             personaje->definir_cantidad_municion(evento.municion);
@@ -94,18 +93,17 @@ bool Renderizado::renderizar(Evento evento) {
             std::unique_ptr<EnemigoView> enemigo;
             switch(evento.id_personaje) {
                 case LIZZARD:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoLizzardView());
+                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoLizzardView(render.get()));
                     break;
                 case FENCER:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoFencerView());
+                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoFencerView(render.get()));
                     break;
                 case RAT:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoRatView());
+                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoRatView(render.get()));
                     break;
                 default:
                     break;
             }
-            enemigo->crear_texturas(render.get());
             enemigosViews[evento.id_enemigo] = std::move(enemigo);
             std::cout << "CREANDO ENEMIGO" << std::endl;
         } else {
@@ -120,24 +118,23 @@ bool Renderizado::renderizar(Evento evento) {
             std::unique_ptr<ObjetoView> objeto;
             switch(evento.codigo_objeto) {
                 case GEMA:
-                    objeto = std::unique_ptr<ObjetoView>(new ObjetoGemaView());
+                    objeto = std::unique_ptr<ObjetoView>(new ObjetoGemaView(render.get()));
                     break;
                 case MONEDA:
-                    objeto = std::unique_ptr<ObjetoView>(new ObjetoMonedaView());
+                    objeto = std::unique_ptr<ObjetoView>(new ObjetoMonedaView(render.get()));
                     break;
                 case ZANAHORIA:
-                    objeto = std::unique_ptr<ObjetoView>(new ObjetoZanahoriaView());
+                    objeto = std::unique_ptr<ObjetoView>(new ObjetoZanahoriaView(render.get()));
                     break;
                 case BALA_VELOZ:
-                   objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_1View());
+                   objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_1View(render.get()));
                    break;
                 case COHETE_RAPIDO:
-                    objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_2View());
+                    objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_2View(render.get()));
                     break; 
                 default:
                     break;
             }
-            objeto->crear_texturas(render.get());
             objetosViews[evento.id_objeto] = std::move(objeto);
             std::cout << "Creando Objeto" << std::endl;
         } else {

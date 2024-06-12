@@ -170,6 +170,14 @@ if(CLIENT)
 		./client_src/Vista_Personajes/personajeLoriView.cpp
 		./client_src/Vista_Personajes/personajeSpazView.h
 		./client_src/Vista_Personajes/personajeSpazView.cpp
+		./client_src/Vista_Personajes/personajeViewFactory.h
+		./client_src/Vista_Personajes/personajeViewFactory.cpp
+		./client_src/Vista_Personajes/personajeJazzViewFactory.h
+		./client_src/Vista_Personajes/personajeJazzViewFactory.cpp
+		./client_src/Vista_Personajes/personajeLoriViewFactory.h
+		./client_src/Vista_Personajes/personajeLoriViewFactory.cpp
+		./client_src/Vista_Personajes/personajeSpazViewFactory.h
+		./client_src/Vista_Personajes/personajeSpazViewFactory.cpp
 		
 		
 		./client_src/Vista_Enemigos/enemigoView.cpp
@@ -180,6 +188,8 @@ if(CLIENT)
 		./client_src/Vista_Enemigos/enemigoLizzardView.h
 		./client_src/Vista_Enemigos/enemigoRatView.cpp
 		./client_src/Vista_Enemigos/enemigoRatView.h
+		./client_src/Vista_Enemigos/enemigoViewFactory.h
+		./client_src/Vista_Enemigos/enemigoViewFactory.cpp
 
 		./client_src/Vista_Objetos/objetoView.h
 		./client_src/Vista_Objetos/objetoView.cpp
@@ -195,6 +205,8 @@ if(CLIENT)
 		./client_src/Vista_Objetos/objetoMunicionTipo_2View.cpp
 		./client_src/Vista_Objetos/objetoMunicionTipo_3View.h
 		./client_src/Vista_Objetos/objetoMunicionTipo_3View.cpp
+		./client_src/Vista_Objetos/objetoViewFactory.h
+		./client_src/Vista_Objetos/objetoViewFactory.cpp
 		
 		./client_src/protocolo_cliente.cpp
 		./client_src/protocolo_cliente.h

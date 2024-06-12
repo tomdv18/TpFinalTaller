@@ -5,7 +5,7 @@ struct EnemigoRatTest : testing::Test{
     Enemigo * enemigo;
 
     EnemigoRatTest(){
-        enemigo = new Rat(001,00,00);
+        enemigo = new Rat(001);
     }
 
     ~EnemigoRatTest(){

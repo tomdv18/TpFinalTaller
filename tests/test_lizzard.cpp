@@ -5,7 +5,7 @@ struct EnemigoLizzardTest : testing::Test{
     Enemigo * enemigo;
 
     EnemigoLizzardTest(){
-        enemigo = new Lizzard(001,00,00);
+        enemigo = new Lizzard(001);
     }
 
     ~EnemigoLizzardTest(){

@@ -1,12 +1,8 @@
 #include "objetoMunicionTipo_3View.h"
 
-ObjetoMunicionTipo_3View::ObjetoMunicionTipo_3View() : ObjetoView() {
-    this->crear_animacion();
-}
-
-void ObjetoMunicionTipo_3View::crear_animacion() {
-
-    this->animacion = std::unique_ptr<Animacion>(new Animacion_municion_tipo_3());
+ObjetoMunicionTipo_3View::ObjetoMunicionTipo_3View(SDL2pp::Renderer *render) : ObjetoView() {
+    this->animacion = this->factory.crear_animacion_objeto(MUNICION_TIPO_3);
+    this->factory.crear_texturas(render);
 }
 
 ObjetoMunicionTipo_3View::~ObjetoMunicionTipo_3View() {}

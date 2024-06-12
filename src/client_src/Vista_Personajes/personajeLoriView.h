@@ -1,30 +1,18 @@
 #ifndef PERSONAJE_LORI_VIEW_H_
 #define PERSONAJE_LORI_VIEW_H_
 
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_corriendo.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_quieto.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando_horizontal.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_quieto.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_deja_disparo_quieto.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_intoxicado_quieto.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_intoxicado_caminando.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_herido.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_muerte.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_habilidad.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo_horizontal.h"
-#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_saltando.h"
 #include "personajeView.h"
+#include "personajeLoriViewFactory.h"
 
 class PersonajeLoriView : public PersonajeView {
 
-    public:
-    
-    PersonajeLoriView(EventoPersonaje &evento);
+   private:
 
-    void crear_animaciones() override;
+    PersonajeLoriViewFactory factory;
+
+   public:
+    
+    PersonajeLoriView(EventoPersonaje &evento, SDL2pp::Renderer *render);
 
     ~PersonajeLoriView();
 

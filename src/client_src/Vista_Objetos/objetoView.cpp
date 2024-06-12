@@ -1,11 +1,6 @@
 #include "objetoView.h"
 
-ObjetoView::ObjetoView() : posicion_x(0), posicion_y(0), animacion(nullptr), widht(25), height(25) {}
-
-void ObjetoView::crear_texturas(SDL2pp::Renderer *render)  {
-    
-    this->animacion->crear_texturas(render);
-}
+ObjetoView::ObjetoView() : posicion_x(0), posicion_y(0), animacion(nullptr), widht(25), height(25), factory(this->animacion) {}
 
 void ObjetoView::actualizar_vista_objeto(EventoObjeto &evento, float df) {
 

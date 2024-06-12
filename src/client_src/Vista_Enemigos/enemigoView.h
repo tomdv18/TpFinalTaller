@@ -5,6 +5,7 @@
 #include "../src/client_src/Animaciones/animacion.h"
 #include "../src/client_src/direcciones.h"
 #include "../src/common_src/evento.h"
+#include "enemigoViewFactory.h"
 
 
 class EnemigoView {
@@ -16,16 +17,13 @@ class EnemigoView {
     int width;
     int height;
     std::map<std::string, std::unique_ptr<Animacion>> animaciones;
+    EnemigoViewFactory factory;
     bool facingLeft;
     bool isMoving;
 
    public:
 
     explicit EnemigoView();
-
-    virtual void crear_texturas(SDL2pp::Renderer *render);
-
-    virtual void crear_animaciones() = 0;
 
     virtual void actualizar_vista_enemigo(EventoEnemigo &evento, float df);
 

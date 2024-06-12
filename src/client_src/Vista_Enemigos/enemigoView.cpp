@@ -1,13 +1,7 @@
 #include "enemigoView.h"
 
 EnemigoView::EnemigoView() : posicion_x(0), posicion_y(0), width(50), height(50), 
-facingLeft(false), isMoving(false) {}
-
-void EnemigoView::crear_texturas(SDL2pp::Renderer *render) {
-    
-    this->animaciones.at(CAMINANDO)->crear_texturas(render);
-
-}
+facingLeft(false), isMoving(false), factory(this->animaciones) {}
 
 void EnemigoView::actualizar_vista_enemigo(EventoEnemigo &evento, float df) {
 

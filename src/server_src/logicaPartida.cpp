@@ -260,20 +260,27 @@ void LogicaPartida::abandonar_partida(uint32_t id_jugador) {
 
 
 void LogicaPartida::agregar_personaje(Accion accion) {
+    // Personaje *personaje;
     switch (accion.codigo) {
         case JAZZ: {
+            std::cout << "CREAR PERSONAJE JAZZ" << std::endl;
+            // personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if (map_personajes[accion.id_jugador] == nullptr) {
                 map_personajes[accion.id_jugador] = new Jazz(accion.id_jugador);
             }
             break;
         }
         case SPAZ: {
+            std::cout << "CREAR PERSONAJE SPAZ" << std::endl;
+            // personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if (map_personajes[accion.id_jugador] == nullptr) {
                 map_personajes[accion.id_jugador] = new Spaz(accion.id_jugador);
             }
             break;
         }
         case LORI: {
+            std::cout << "CREAR PERSONAJE LORI" << std::endl;
+            // personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if (map_personajes[accion.id_jugador] == nullptr) {
                 map_personajes[accion.id_jugador] = new Lori(accion.id_jugador);
             }
@@ -495,21 +502,3 @@ LogicaPartida::~LogicaPartida() {
     }
 
 }
-//Metodos Para Testing
-
-int LogicaPartida::getPersonajesSize() {
-    return map_personajes.size();
-}
-
-int LogicaPartida::getEnemigosSize() {
-    return map_enemigos.size();
-}
-
-int LogicaPartida::getObjetosSolidosSize() {
-    return map_objetos_solidos.size();
-}
-
-int LogicaPartida::getObjetosComunesSize() {
-    return map_objetos_comunes.size();
-}
-

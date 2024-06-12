@@ -3,6 +3,7 @@
 
 #include "../src/client_src/Animaciones/animacion.h"
 #include "../src/common_src/evento.h"
+#include "objetoViewFactory.h"
 
 class ObjetoView {
 
@@ -13,6 +14,7 @@ class ObjetoView {
     int widht;
     int height;
     std::unique_ptr<Animacion> animacion;
+    ObjetoViewFactory factory;
     bool mostrarse;
 
    public:
@@ -20,10 +22,6 @@ class ObjetoView {
     explicit ObjetoView();
 
     virtual bool mostrandose();
-
-    virtual void crear_texturas(SDL2pp::Renderer *render);
-
-    virtual void crear_animacion() = 0;
 
     virtual void actualizar_vista_objeto(EventoObjeto &evento, float df);
 

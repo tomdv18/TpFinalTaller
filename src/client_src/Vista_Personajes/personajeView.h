@@ -44,10 +44,6 @@ class PersonajeView {
     PersonajeView(EventoPersonaje &evento);
 
     virtual ~PersonajeView();
-    
-    virtual void crear_texturas(SDL2pp::Renderer *render);
-
-    virtual void crear_animaciones() = 0;
 
     virtual void actualizar_vista_personaje(EventoPersonaje const &evento,float dt);
 

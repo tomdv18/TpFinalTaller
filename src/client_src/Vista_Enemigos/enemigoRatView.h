@@ -8,9 +8,7 @@ class EnemigoRatView : public EnemigoView {
 
    public:
 
-    explicit EnemigoRatView();
-
-    void crear_animaciones() override;
+    explicit EnemigoRatView(SDL2pp::Renderer *render);
 
     ~EnemigoRatView();
 

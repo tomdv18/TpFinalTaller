@@ -8,9 +8,7 @@ class EnemigoLizzardView : public EnemigoView {
 
    public:
 
-    explicit EnemigoLizzardView();
-
-    void crear_animaciones() override;
+    explicit EnemigoLizzardView(SDL2pp::Renderer *render);
 
     ~EnemigoLizzardView();
 

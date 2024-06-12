@@ -85,4 +85,16 @@ char const CAYENDO[] = "Cayendo";
 char const CAYENDO_HORIZONTAL[] = "Cayendo_horizontal";
 char const DISPARO_SALTANDO[] = "Disparo_Saltando";
 
+char const ENEMIGO_LIZZARD[] = "Lizzard";
+char const ENEMIGO_FENCER[] = "Fencer";
+char const ENEMIGO_RAT[] = "Rat";
+
+char const GEMA_OBJETO[] = "Gema";
+char const MONEDA_OBJETO[] = "Moneda";
+char const ZANAHORIA_OBJETO[] = "Zanahoria";
+char const MUNICION_TIPO_1[] = "Municion_tipo_1";
+char const MUNICION_TIPO_2[] = "Municion_tipo_2";
+char const MUNICION_TIPO_3[] = "Municion_tipo_3";
+
+
 #endif 

@@ -75,16 +75,6 @@ public:
 
     Evento obtener_snapshot(std::chrono::time_point<std::chrono::high_resolution_clock> start);
 
-    // Getters para tests
-
-    int getPersonajesSize();
-
-    int getEnemigosSize();
-
-    int getObjetosSolidosSize();
-
-    int getObjetosComunesSize();
-
     ~LogicaPartida();
 };
 

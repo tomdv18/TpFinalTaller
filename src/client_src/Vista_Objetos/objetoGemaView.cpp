@@ -1,13 +1,8 @@
 #include "objetoGemaView.h"
 
-ObjetoGemaView::ObjetoGemaView() : ObjetoView() {
-    this->crear_animacion();
-}
-
-void ObjetoGemaView::crear_animacion() {
-
-    this->animacion = std::unique_ptr<Animacion> (new Animacion_Gema()); 
-
+ObjetoGemaView::ObjetoGemaView(SDL2pp::Renderer *render) : ObjetoView() {
+    this->animacion = this->factory.crear_animacion_objeto(GEMA_OBJETO);
+    this->factory.crear_texturas(render);
 }
 
 ObjetoGemaView::~ObjetoGemaView() {}
