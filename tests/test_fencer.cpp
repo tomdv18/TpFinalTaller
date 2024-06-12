@@ -9,7 +9,7 @@ struct EnemigoFencerTest : testing::Test{
     Enemigo * enemigo;
 
     EnemigoFencerTest(){
-        enemigo = new Fencer(001);
+        enemigo = new Fencer(001,00,00);
     }
 
     ~EnemigoFencerTest(){
