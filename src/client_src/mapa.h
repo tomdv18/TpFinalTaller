@@ -7,15 +7,17 @@
 
 class Mapa {
     private:
-        MapaEntidades mapa;
+        MapaCompleto mapa;
         SDL2pp::Rect src;
         SDL2pp::Rect dest;
         std::map<std::string, SDL2pp::Texture*> texturas;
+        int ancho_ventana;
+        int alto_ventana;
 
     public:
-        explicit Mapa(SDL2pp::Renderer &render, MapaEntidades &&map);
+        explicit Mapa(SDL2pp::Renderer &render, MapaCompleto &&map);
 
-        void dibujar_fondo(SDL2pp::Renderer &render);
+        void dibujar_fondo(SDL2pp::Renderer &render, Camara &camara);
 
         void dibujar_entidades(SDL2pp::Renderer &render, Camara &camara);
 

@@ -77,13 +77,17 @@ enum Entidad: uint8_t {
     // GEMAS? ENEMIGOS? Ver cuando se haga el editor
 };
 
-// Representa una posicion x e y.
-struct __attribute__((packed)) Position {
-    uint32_t x;
-    uint32_t y;
-} ;
+struct Position {
+    uint32_t x, y, width, height;
+    std::string imagen;
+};
 
-// Mapa de entidades (piso, paredes, plataforma, diagonales, etc).
-using MapaEntidades = std::unordered_map<std::string, std::vector<Position>>;
+using MapaEntidades = std::map<std::string, std::vector<Position>>;
+using Fondo = std::string;
+
+struct MapaCompleto {
+    MapaEntidades entidades;
+    Fondo fondo;
+};
 
 #endif

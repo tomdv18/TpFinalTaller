@@ -129,46 +129,58 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
     return true;
 }
 
-MapaEntidades leerSolidsDesdeYAML(const std::string& filename) {
-    MapaEntidades mapa;
+MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
+    MapaCompleto mapaCompleto;
 
     try {
         // Carga el archivo YAML
         YAML::Node data = YAML::LoadFile(filename);
 
-        // Busca la sección 'solids' en el archivo YAML
+        // Lee la sección 'solids' del archivo YAML
         YAML::Node solidsNode = data["solids"];
-
-        // Recorre las posiciones de los solids
         std::vector<Position> solids;
+
         for (const auto& solid : solidsNode) {
             Position position;
             position.x = solid["x"].as<uint32_t>();
             position.y = solid["y"].as<uint32_t>();
+            position.width = solid["width"].as<uint32_t>();
+            position.height = solid["height"].as<uint32_t>();
+            position.imagen = solid["imagen"].as<std::string>();
             solids.push_back(position);
         }
-        
+
         // Guarda el vector de solids en el mapa con la clave "solids"
-        mapa["solids"] = solids;
+        mapaCompleto.entidades["solids"] = solids;
+
+        // Lee el fondo del archivo YAML
+        if (data["fondo"]) {
+            mapaCompleto.fondo = data["fondo"].as<std::string>();
+        } else {
+            std::cerr << "La clave 'fondo' no se encontró en el archivo YAML." << std::endl;
+        }
 
     } catch (const YAML::Exception& e) {
         std::cerr << "Error al cargar el archivo YAML: " << e.what() << std::endl;
     }
 
-    return mapa;
+    return mapaCompleto;
 }
 
 void Cliente::comunicarse_con_el_servidor() {
     ProtocoloCliente protocolo_temporal(skt);
-    MapaEntidades mapa = leerSolidsDesdeYAML("../src/mapas/mapa2.yaml");
+    MapaCompleto mapa = leerSolidsDesdeYAML("../src/mapas/mapa2.yaml");
 
-    // Imprime las posiciones x e y de cada entidad en el mapa
-    for (const auto& entity : mapa) {
-        std::cout << "Entidad: " << entity.first << std::endl;
-        for (const auto& position : entity.second) {
-            std::cout << "x: " << position.x << ", y: " << position.y << std::endl;
-        }
+    // Imprimir los solids
+    std::cout << "Solids:" << std::endl;
+    for (const auto& pos : mapa.entidades["solids"]) {
+        std::cout << "x: " << pos.x << ", y: " << pos.y
+                  << ", width: " << pos.width << ", height: " << pos.height
+                  << ", imagen: " << pos.imagen << std::endl;
     }
+
+    // Imprimir el fondo
+    std::cout << "Fondo: " << mapa.fondo << std::endl;
     
     
     Camara camara(0, 0, WIDTH, HEIGHT);

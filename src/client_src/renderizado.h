@@ -64,7 +64,7 @@ class Renderizado {
 
     bool renderizar(Evento evento);
 
-    void iniciar_mapa(MapaEntidades &&map);
+    void iniciar_mapa(MapaCompleto &&map);
 
     void iniciar_camara(Camara &&cam);
 

@@ -19,7 +19,7 @@ void Renderizado::recibir_id(uint32_t id_jugador){
     this->id_jugador = id_jugador;
 }
 
-void Renderizado::iniciar_mapa(MapaEntidades &&map) {
+void Renderizado::iniciar_mapa(MapaCompleto &&map) {
     this->mapa = std::make_unique<Mapa>(*render, std::move(map));
 }
 
@@ -196,7 +196,7 @@ bool Renderizado::renderizar(Evento evento) {
     // Renderizo el fondo y HUD
     {
         render->Clear();
-        mapa->dibujar_fondo(* render);
+        mapa->dibujar_fondo(*render, *camara);
         mapa->dibujar_entidades(*render, *camara);
     }
 
@@ -249,7 +249,7 @@ void Renderizado::crear_ventana_y_render(const std::string& title, int width, in
 
 void Renderizado::mostrar_tablero_final() {
     render->Clear();
-    mapa->dibujar_fondo(*render);
+    mapa->dibujar_fondo(*render, *camara);
     interfaz->mostrar_tabla_final(*render);
     render->Present();
     SDL_Delay(3000); // Muestro la tabla final por 3 segundos
