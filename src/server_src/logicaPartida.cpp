@@ -8,7 +8,7 @@
 
 LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(), mapa("../src/mapas/mapa.yaml"){
 
-    YAML::Node mapNode = YAML::LoadFile("../src/mapas/mapa2.yaml");
+    YAML::Node mapNode = YAML::LoadFile("../src/mapas/mapa_castle.yaml");
         int i = 0;
         for (const auto& objNode : mapNode["solids"]) {
             map_objetos_solidos[i] = new Solido(i,objNode["x"].as<uint32_t>(),objNode["y"].as<uint32_t>(),1,objNode["width"].as<uint32_t>(),objNode["height"].as<uint32_t>());
@@ -44,12 +44,26 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(), mapa("..
 
         // Carga de enemigos
         i = 0;
-        
-        for (const auto& lizzardNode : mapNode["lizzard"]) {
+        if(mapNode["lizzard"]) {
+            for (const auto& lizzardNode : mapNode["lizzard"]) {
             map_enemigos[i] = fabrica_enemigos.crear_enemigo(i,LIZZARD,lizzardNode["x"].as<uint32_t>(), lizzardNode["y"].as<uint32_t>());
             i++;
+            }
         }
         
+        if(mapNode["rat"]) {
+            for (const auto& RatNode : mapNode["rat"]) {
+                map_enemigos[i] = fabrica_enemigos.crear_enemigo(i,RAT,RatNode["x"].as<uint32_t>(), RatNode["y"].as<uint32_t>());
+                i++;
+            } 
+        }
+
+        if(mapNode["fencer"]) {
+            for (const auto& FencerNode : mapNode["fencer"]) {
+                map_enemigos[i] = fabrica_enemigos.crear_enemigo(i,FENCER,FencerNode["x"].as<uint32_t>(), FencerNode["y"].as<uint32_t>());
+                i++;
+            }
+        }
 
         map_objetos_comunes[20] = fabrica_objetos.crear_objeto(BALA_VELOZ,700,600,false);
         map_objetos_comunes[21] = fabrica_objetos.crear_objeto(BALA_VELOZ,700,500,false);

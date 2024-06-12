@@ -169,7 +169,7 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
 
 void Cliente::comunicarse_con_el_servidor() {
     ProtocoloCliente protocolo_temporal(skt);
-    MapaCompleto mapa = leerSolidsDesdeYAML("../src/mapas/mapa2.yaml");
+    MapaCompleto mapa = leerSolidsDesdeYAML("../src/mapas/mapa_castle.yaml");
 
     // Imprimir los solids
     std::cout << "Solids:" << std::endl;
