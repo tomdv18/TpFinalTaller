@@ -200,33 +200,18 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
 void Cliente::comunicarse_con_el_servidor() {
     ProtocoloCliente protocolo_temporal(skt);
     MapaCompleto mapa = leerSolidsDesdeYAML("../src/mapas/mapa_castle.yaml");
-
-    // Imprimir los solids
-    std::cout << "Solids:" << std::endl;
-    for (const auto& pos : mapa.entidades["solids"]) {
-        std::cout << "x: " << pos.x << ", y: " << pos.y
-                  << ", width: " << pos.width << ", height: " << pos.height
-                  << ", imagen: " << pos.imagen << std::endl;
-    }
-
-    // Imprimir el fondo
-    std::cout << "Fondo: " << mapa.fondo << std::endl;
-    
     
     Camara camara(0, 0, WIDTH, HEIGHT);
     
     Queue<Evento> queue_eventos(MAX_EVENTOS);
     Queue<CodigoAccion> queue_accion(MAX_ACCIONES);
     RecibidorCliente recibidor_cliente(skt, queue_eventos, estado);
-    std::cout << "Hola" << std::endl;
     recibidor_cliente.start();
     
     this->renderizado.recibir_id(id_jugador);
     this->renderizado.inicializar_SDL2pp();
     this->renderizado.crear_ventana_y_render("JazzJack Rabbit 2", WIDTH, HEIGHT);
-    std::cout << "Hola" << std::endl;
     this->renderizado.iniciar_mapa(std::move(mapa));
-    std::cout << "Hola2" << std::endl;
     this->renderizado.iniciar_camara(std::move(camara));
     this->renderizado.iniciar_interfaz(WIDTH, HEIGHT);
 
