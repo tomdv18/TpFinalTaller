@@ -32,11 +32,7 @@ std::unique_ptr<Animacion> PersonajeJazzViewFactory::crear_animacion(std::string
         return std::move(std::make_unique<Animacion_Jazz_Cayendo_Horizontal>());
     }
     
-
     return std::move(std::make_unique<Animacion_Jazz_Disparo_Saltando>());
-    
-
-    return std::move(std::make_unique<Animacion_Jazz_Habilidad>());
 }
 
 

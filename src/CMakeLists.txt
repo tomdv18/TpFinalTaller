@@ -217,6 +217,8 @@ if(CLIENT)
 		./client_src/Vista_Proyectiles/balaView.h
 		./client_src/Vista_Proyectiles/balasPersonajes.h
 		./client_src/Vista_Proyectiles/balasPersonajes.cpp
+		./client_src/Vista_Proyectiles/proyectilViewFactory.h
+		./client_src/Vista_Proyectiles/proyectilViewFactory.cpp
 		
 		./client_src/Animaciones/animacion.h
 		./client_src/Animaciones/animacion.cpp
@@ -316,6 +318,13 @@ if(CLIENT)
 
         ./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
 		./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.cpp
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_1.h
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_1.cpp
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_2.h
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_2.cpp
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_3.h
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_3.cpp
+		
 		
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Fencer_caminando.cpp
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Fencer_caminando.h

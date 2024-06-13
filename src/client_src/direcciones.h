@@ -63,6 +63,10 @@ char const PATH_MUNICION_TIPO_1[] = "../src/client_src/Images/municion_tipo_1.pn
 char const PATH_MUNICION_TIPO_2[] = "../src/client_src/Images/municion_tipo_2.png";
 char const PATH_MUNICION_TIPO_3[] = "../src/client_src/Images/municion_tipo_3.png";
 
+char const PATH_PROYECTIL_TIPO_1[] = "../src/client_src/Images/proyectil_tipo_1.png";
+char const PATH_PROYECTIL_TIPO_2[] = "../src/client_src/Images/proyectil_tipo_2.png";
+char const PATH_PROYECTIL_TIPO_3[] = "../src/client_src/Images/proyectil_tipo_3.png";
+
 char const PATH_PROYECTIL_PISTOLA[] = "../src/client_src/Images/proyectil_pistola.png";
 
 char const PATH_LIZZARD_CAMINANDO[] = "../src/client_src/Images/Liazzard_caminando.png";
@@ -95,6 +99,11 @@ char const ZANAHORIA_OBJETO[] = "Zanahoria";
 char const MUNICION_TIPO_1[] = "Municion_tipo_1";
 char const MUNICION_TIPO_2[] = "Municion_tipo_2";
 char const MUNICION_TIPO_3[] = "Municion_tipo_3";
+
+char const PROYECTIL_TIPO_1[] = "Proyectil_tipo_1";
+char const PROYECTIL_TIPO_2[] = "Proyectil_tipo_2";
+char const PROYECTIL_TIPO_3[] = "Proyectil_tipo_3";
+
 
 
 #endif 
