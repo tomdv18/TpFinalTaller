@@ -24,7 +24,9 @@ TEST_F(PersonajeLoriTest, obtenerPersonaje){
 }
 
 int main(int argc, char*argv[]){
+    std::cout << "-----------------------------------------" << std::endl;
     std::cout << "\nTests Personaje LORI\n" << std::endl;
+    std::cout << "-----------------------------------------" << std::endl;
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

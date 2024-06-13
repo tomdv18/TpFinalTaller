@@ -91,6 +91,13 @@ private:
     int danio_rat;
     int ancho_rat;
     int alto_rat;
+    int vida_bruja;
+    int ancho_bruja;
+    int alto_bruja;
+    uint32_t puntos_bruja;
+    int danio_bruja;
+
+    
     double tiempo_reaparicion_enemigo;
     
     Configuracion(const YAML::Node& config);
@@ -178,6 +185,13 @@ public:
     int obtenerAnchoFencer() const {return ancho_fencer;}
     int obtenerAnchoLizzard() const {return ancho_lizzard;}
     int obtenerAnchoRat() const {return ancho_rat;}
+
+    int obtenerVidaBruja() const {return vida_bruja;}
+    int obtenerDanioBruja() const {return danio_bruja;}
+    int obtenerAnchoBruja() const {return ancho_bruja;}
+    int obtenerAltoBruja() const {return alto_bruja;}
+    uint32_t obtenerPuntosBruja() const {return puntos_bruja;}
+
 
 
 };

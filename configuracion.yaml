@@ -117,6 +117,12 @@ enemigo:
     vida: 1
     ancho: 50
     alto: 50
+  bruja:
+    danio: 6
+    puntos: 75
+    vida: 1
+    ancho: 100
+    alto: 50
 
 
 

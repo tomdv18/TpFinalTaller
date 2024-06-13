@@ -91,6 +91,7 @@ configure_test(test_personaje_lori personaje lori)
 configure_test(test_enemigo_fencer enemigo fencer)
 configure_test(test_enemigo_rat enemigo rat)
 configure_test(test_enemigo_lizzard enemigo lizzard)
+configure_test(test_enemigo_bruja enemigo bruja)
 
 #Test de Bala
 configure_test(test_bala bala bala)
