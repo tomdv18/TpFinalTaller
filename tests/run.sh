@@ -29,14 +29,16 @@ for TEST_EXECUTABLE in $(ls $TEST_DIR/test_* | grep -v 'CMakeLists.txt'); do
     fi
 done
 
-echo "Todos los tests han sido ejecutados"
 echo ""
-echo "#--------------------------------------------------#"
-echo "Total de pruebas ejecutadas: $TOTAL_TESTS"
-echo "Total de pruebas fallidas: $FAILED_TESTS"
+echo ""
+echo "Total de archivos de pruebas ejecutados: $TOTAL_TESTS"
+echo ""
 echo ""
 
+
 if [ $FAILED_TESTS -ne 0 ]; then
+    echo "Archivos con pruebas fallidas: $FAILED_TESTS"
+    echo ""
     exit 1
 else
     echo "Todos los tests han sido ejecutados exitosamente"

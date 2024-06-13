@@ -127,6 +127,13 @@ Configuracion::Configuracion(const YAML::Node& config) {
         ancho_rat= config["enemigo"]["fencer"]["ancho"].as<int>();
         alto_rat = config["enemigo"]["fencer"]["alto"].as<int>();
 
+        danio_bruja = config["enemigo"]["bruja"]["danio"].as<int>();
+        vida_bruja = config["enemigo"]["bruja"]["vida"].as<int>();
+        puntos_bruja = config["enemigo"]["bruja"]["puntos"].as<uint32_t>();
+        ancho_bruja = config["enemigo"]["fencer"]["ancho"].as<int>();
+        alto_bruja = config["enemigo"]["fencer"]["alto"].as<int>();
+        
+
         tiempo_reaparicion_enemigo = config["enemigo"]["tiempo_reaparicion_enemigo"].as<double>();
 
 

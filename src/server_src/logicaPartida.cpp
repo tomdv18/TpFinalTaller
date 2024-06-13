@@ -516,6 +516,24 @@ Evento LogicaPartida::obtener_snapshot(
 }
 
 
+//Metodos Para Testing
+
+int LogicaPartida::getPersonajesSize() {
+    return map_personajes.size();
+}
+
+int LogicaPartida::getEnemigosSize() {
+    return map_enemigos.size();
+}
+
+int LogicaPartida::getObjetosSolidosSize() {
+    return map_objetos_solidos.size();
+}
+
+int LogicaPartida::getObjetosComunesSize() {
+    return map_objetos_comunes.size();
+}
+
 LogicaPartida::~LogicaPartida() {
     for (auto& par: map_personajes) {
         delete par.second;
