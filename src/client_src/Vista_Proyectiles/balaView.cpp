@@ -1,33 +1,12 @@
 #include "balaView.h"
-BalaView::BalaView(bool face, int x, int y, uint8_t tipo) : 
+BalaView::BalaView(bool face, int x, int y, uint8_t tipo, SDL2pp::Renderer *render) : 
 posicion_x(y), posicion_y(y), width(BALA_WIDTH), height(BALA_HEIGHT), 
 facingLeft(face),
-animacion_bala(nullptr) {
-    this->crear_animaciones(tipo);
+animacion_bala(nullptr), factory(this->animacion_bala) {
+    
+    this->factory.crear_animaciones(tipo);
+    this->factory.crear_texturas(render);
 }
-
-void BalaView::crear_animaciones(uint8_t tipo_bala) {
-    switch (tipo_bala)
-    {
-    case CodigoObjeto::BALA_VELOZ:
-        this->animacion_bala = std::unique_ptr<Animacion_municion_tipo_1>(new Animacion_municion_tipo_1());
-        break;
-    case CodigoObjeto::COHETE_RAPIDO:
-        this->animacion_bala = std::unique_ptr<Animacion_municion_tipo_2>(new Animacion_municion_tipo_2());
-        break;
-    case CodigoObjeto::COHETE_TOXICO:
-        this->animacion_bala = std::unique_ptr<Animacion_municion_tipo_3>(new Animacion_municion_tipo_3());
-        break;
-    default:
-        this->animacion_bala = std::unique_ptr<Animacion_Bala_Pistola>(new Animacion_Bala_Pistola());
-        break;
-    }
-}
-
-void BalaView::crear_texturas(SDL2pp::Renderer *render) {
-    this->animacion_bala->crear_texturas(render); 
-}
-
 
 void BalaView::actualizar(EventoBala const &evento,float dt){
 

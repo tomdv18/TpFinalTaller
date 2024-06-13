@@ -185,8 +185,7 @@ bool Renderizado::renderizar(Evento evento) {
         PersonajeView &personajeViewPtr = *(it->second);
 
         // Defino la face de la bala
-        std::unique_ptr<BalaView> bala_nueva = std::make_unique<BalaView>(personajeViewPtr.obtener_face(), e.posicion_x, e.posicion_y, e.tipo_bala);
-        bala_nueva->crear_texturas(render.get());
+        std::unique_ptr<BalaView> bala_nueva = std::make_unique<BalaView>(personajeViewPtr.obtener_face(), e.posicion_x, e.posicion_y, e.tipo_bala, render.get());
         mapa_balas_pj.agregarBala(e.id_jugador, e.id_bala, std::move(bala_nueva));
     }
 
