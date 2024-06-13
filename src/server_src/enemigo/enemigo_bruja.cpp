@@ -9,6 +9,7 @@ Bruja::Bruja(uint32_t id_enemigo, uint32_t x, uint32_t y): Enemigo(id_enemigo,x,
     ancho = CONFIG.obtenerAnchoFencer();
     alto = CONFIG.obtenerAltoFencer();
     volador = true;
+    velocidad_x = 10;
 }
 
 uint8_t Bruja::obtener_personaje() {

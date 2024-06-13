@@ -72,6 +72,7 @@ char const PATH_PROYECTIL_PISTOLA[] = "../src/client_src/Images/proyectil_pistol
 char const PATH_LIZZARD_CAMINANDO[] = "../src/client_src/Images/Liazzard_caminando.png";
 char const PATH_FENCER_CAMINANDO[] = "../src/client_src/Images/Fencer_caminando.png";
 char const PATH_RAT_CAMINANDO[] = "../src/client_src/Images/Rat_caminando.png";
+char const PATH_BRUJA_CAMINANDO[] = "../src/client_src/Images/Bruja_volando.png";
 
 char const CAMINANDO[] = "Caminando";
 char const CORRIENDO[] = "Corriendo";

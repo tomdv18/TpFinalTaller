@@ -17,6 +17,7 @@
 #include "../src/client_src/Vista_Enemigos/enemigoLizzardView.h"
 #include "../src/client_src/Vista_Enemigos/enemigoFencerView.h"
 #include "../src/client_src/Vista_Enemigos/enemigoRatView.h"
+#include "../src/client_src/Vista_Enemigos/enemigoBrujaView.h"
 #include "../src/client_src/Vista_Objetos/objetoView.h"
 #include "../src/client_src/Vista_Objetos/objetoGemaView.h"
 #include "../src/client_src/Vista_Objetos/objetoMonedaView.h"

@@ -425,7 +425,7 @@ fencer:
   - x: 850
     y: 650
 bruja:
-  - x: 850
-    y: 250
+  - x: 400
+    y: 450
     
 fondo: ../src/mapas/castle_fondo.png

@@ -337,6 +337,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Lizzard_caminando.h
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Rat_caminando.cpp
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Rat_caminando.h
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Bruja_caminando.cpp
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Bruja_caminando.h
 
 		./client_src/Animaciones/Animaciones_Objetos/animacion_gema.cpp
 		./client_src/Animaciones/Animaciones_Objetos/animacion_gema.h

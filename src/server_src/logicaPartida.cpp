@@ -76,14 +76,14 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(), mapa("..
         }
 
     
-        /*
+        
         if(mapNode["bruja"]) {
             for (const auto& BrujaNode : mapNode["bruja"]) {
                 map_enemigos[i] = fabrica_enemigos.crear_enemigo(i,BRUJA,BrujaNode["x"].as<uint32_t>(), BrujaNode["y"].as<uint32_t>());
                 i++;
             }
         }
-        */
+        
 
 
         map_objetos_comunes[20] = fabrica_objetos.crear_objeto(BALA_VELOZ,700,600,false);
@@ -91,6 +91,10 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(), mapa("..
 
         map_objetos_comunes[22] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,100,600,false);
         map_objetos_comunes[23] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,100,500,false);
+
+
+        map_objetos_comunes[24] = fabrica_objetos.crear_objeto(COHETE_TOXICO,200,600,false);
+        map_objetos_comunes[25] = fabrica_objetos.crear_objeto(COHETE_TOXICO,200,500,false);
 
 
     /*

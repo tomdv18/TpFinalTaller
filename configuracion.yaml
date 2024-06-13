@@ -55,7 +55,7 @@ municion:
     tiempo_reaparicion: 10
   cohete_rapido:
     municion: 4
-    tiempo_entre_disparo: 8
+    tiempo_entre_disparo: 1.5
     velocidad_del_proyectil: 25
     danio: 2
     rango_explosion: 50
@@ -64,7 +64,7 @@ municion:
     tiempo_reaparicion: 20
   cohete_toxico:
     municion: 2
-    tiempo_entre_disparo: 10
+    tiempo_entre_disparo: 2
     velocidad_del_proyectil: 15
     danio: 2
     rango_explosion: 50

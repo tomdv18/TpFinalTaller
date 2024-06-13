@@ -183,7 +183,7 @@ void Enemigo::actualizar_posicion(std::chrono::duration<double> tiempo_transcurr
     }
 
     // Si no hay colisión abajo o adelante abajo, cambia de dirección
-    if (!colision_abajo || !colision_adelante_abajo && !volador) {
+    if ((!colision_abajo || !colision_adelante_abajo) && !volador) {
         velocidad_x *= -1;
         direccion_mirando = (direccion_mirando == IZQUIERDA) ? DERECHA : IZQUIERDA;
     }

@@ -101,6 +101,9 @@ bool Renderizado::renderizar(Evento evento) {
                 case RAT:
                     enemigo = std::unique_ptr<EnemigoView>(new EnemigoRatView(render.get()));
                     break;
+                case BRUJA:
+                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoBrujaView(render.get()));
+                    break;
                 default:
                     break;
             }
@@ -131,6 +134,9 @@ bool Renderizado::renderizar(Evento evento) {
                    break;
                 case COHETE_RAPIDO:
                     objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_2View(render.get()));
+                    break; 
+                case COHETE_TOXICO:
+                    objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_3View(render.get()));
                     break; 
                 default:
                     break;
