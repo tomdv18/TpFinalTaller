@@ -13,7 +13,7 @@ class ObjetoView {
     int posicion_y;
     int widht;
     int height;
-    std::unique_ptr<Animacion> animacion;
+    std::map<std::string, std::unique_ptr<Animacion>> animaciones;
     ObjetoViewFactory factory;
     bool mostrarse;
 

@@ -20,6 +20,7 @@ class EnemigoView {
     EnemigoViewFactory factory;
     bool facingLeft;
     bool isMoving;
+    bool estaVivo;
 
    public:
 

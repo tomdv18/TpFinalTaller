@@ -339,6 +339,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Rat_caminando.h
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Bruja_caminando.cpp
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Bruja_caminando.h
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Enemigo_desaparecer.cpp
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Enemigo_desaparecer.h
 
 		./client_src/Animaciones/Animaciones_Objetos/animacion_gema.cpp
 		./client_src/Animaciones/Animaciones_Objetos/animacion_gema.h
@@ -352,6 +354,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_2.h
 		./client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_3.cpp
 		./client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_3.h
+		./client_src/Animaciones/Animaciones_Objetos/animacion_agarrar_objeto.cpp
+		./client_src/Animaciones/Animaciones_Objetos/animacion_agarrar_objeto.h
 		
 		./client_src/mapa.cpp
 		./client_src/mapa.h

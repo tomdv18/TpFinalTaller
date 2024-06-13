@@ -5,6 +5,7 @@
 #include "../src/client_src/Animaciones/Animaciones_Enemigos/animacion_Lizzard_caminando.h"
 #include "../src/client_src/Animaciones/Animaciones_Enemigos/animacion_Rat_caminando.h"
 #include "../src/client_src/Animaciones/Animaciones_Enemigos/animacion_Bruja_caminando.h"
+#include "../src/client_src/Animaciones/Animaciones_Enemigos/animacion_Enemigo_desaparecer.h"
 #include "../src/client_src/direcciones.h"
 #include <map>
 

@@ -7,23 +7,24 @@
 #include "../src/client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_2.h"
 #include "../src/client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_3.h"
 #include "../src/client_src/Animaciones/Animaciones_Objetos/animacion_zanahoria.h"
+#include "../src/client_src/Animaciones/Animaciones_Objetos/animacion_agarrar_objeto.h"
 #include "../src/client_src/direcciones.h"
 
 class ObjetoViewFactory {
 
    protected:
 
-    std::unique_ptr<Animacion> &animacion;
+    std::map<std::string, std::unique_ptr<Animacion>> &animaciones;
 
    public:
 
-   explicit ObjetoViewFactory(std::unique_ptr<Animacion> &animacion);
+    explicit ObjetoViewFactory(std::map<std::string, std::unique_ptr<Animacion>> &animaciones);
 
-   virtual void crear_texturas(SDL2pp::Renderer *render);
+    virtual void crear_texturas(SDL2pp::Renderer *render);
 
-   virtual std::unique_ptr<Animacion> crear_animacion_objeto(std::string const nombre_objeto);
+    virtual void crear_animacion_objeto(std::string const nombre_objeto);
 
-   virtual ~ObjetoViewFactory(); 
+    virtual ~ObjetoViewFactory(); 
 };
 
 #endif

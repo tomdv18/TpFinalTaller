@@ -63,6 +63,8 @@ char const PATH_MUNICION_TIPO_1[] = "../src/client_src/Images/municion_tipo_1.pn
 char const PATH_MUNICION_TIPO_2[] = "../src/client_src/Images/municion_tipo_2.png";
 char const PATH_MUNICION_TIPO_3[] = "../src/client_src/Images/municion_tipo_3.png";
 
+char const PATH_EFECTO_OBJETO_AGARRAR[] = "../src/client_src/Images/efecto_objeto_agarrar.png";
+
 char const PATH_PROYECTIL_TIPO_1[] = "../src/client_src/Images/proyectil_tipo_1.png";
 char const PATH_PROYECTIL_TIPO_2[] = "../src/client_src/Images/proyectil_tipo_2.png";
 char const PATH_PROYECTIL_TIPO_3[] = "../src/client_src/Images/proyectil_tipo_3.png";
@@ -73,6 +75,7 @@ char const PATH_LIZZARD_CAMINANDO[] = "../src/client_src/Images/Liazzard_caminan
 char const PATH_FENCER_CAMINANDO[] = "../src/client_src/Images/Fencer_caminando.png";
 char const PATH_RAT_CAMINANDO[] = "../src/client_src/Images/Rat_caminando.png";
 char const PATH_BRUJA_CAMINANDO[] = "../src/client_src/Images/Bruja_volando.png";
+char const PATH_DESAPARECER_ENEMIGO[] = "../src/client_src/Images/desaparecer_enemigo.png";
 
 char const CAMINANDO[] = "Caminando";
 char const CORRIENDO[] = "Corriendo";
@@ -94,6 +97,10 @@ char const ENEMIGO_LIZZARD[] = "Lizzard";
 char const ENEMIGO_FENCER[] = "Fencer";
 char const ENEMIGO_RAT[] = "Rat";
 char const ENEMIGO_BRUJA[] = "Bruja";
+
+char const Mostrar[] = "Mostrar";
+char const AGARRAR[] = "Agarrar";
+char const DESAPARECER[] = "Desaparecer";
 
 char const GEMA_OBJETO[] = "Gema";
 char const MONEDA_OBJETO[] = "Moneda";
