@@ -46,6 +46,7 @@ void Spaz::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido
         if (tiempo_transcurrido.count() - tiempo_especial > 0.75) { // Tiempo que dura el desplazamiento
             usando_especial = false;
             velocidad_x = 0;
+            esta_quieto = true;
         }
     }
 }

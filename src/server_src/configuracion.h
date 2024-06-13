@@ -80,11 +80,17 @@ private:
     uint32_t puntos_fencer;
     int danio_fencer;
     int vida_lizzard;
+    int ancho_fencer;
+    int alto_fencer;
     uint32_t puntos_lizzard;
     int danio_lizzard;
     int vida_rat;
+    int ancho_lizzard;
+    int alto_lizzard;
     uint32_t puntos_rat;
     int danio_rat;
+    int ancho_rat;
+    int alto_rat;
     double tiempo_reaparicion_enemigo;
     
     Configuracion(const YAML::Node& config);
@@ -165,6 +171,13 @@ public:
     int obtenerDanioFencer() const {return danio_fencer;}
     int obtenerDanioLizzard() const {return danio_lizzard;}
     int obtenerDanioRat() const {return danio_rat;}
+
+    int obtenerAltoFencer() const {return alto_fencer;}
+    int obtenerAltoLizzard() const {return alto_lizzard;}
+    int obtenerAltoRat() const {return alto_rat;}
+    int obtenerAnchoFencer() const {return ancho_fencer;}
+    int obtenerAnchoLizzard() const {return ancho_lizzard;}
+    int obtenerAnchoRat() const {return ancho_rat;}
 
 
 };

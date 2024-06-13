@@ -6,6 +6,8 @@ if(SERVER)
 	add_executable(jazzservidor
 		./server_src/aceptador.cpp
 		./server_src/aceptador.h
+		./server_src/enemigo/enemigo_bruja.cpp
+		./server_src/enemigo/enemigo_bruja.h
 		./server_src/enemigo/enemigo_fencer.cpp
 		./server_src/enemigo/enemigo_fencer.h
 		./server_src/enemigo/enemigo_lizzard.cpp
@@ -59,6 +61,7 @@ if(SERVER)
 		./server_src/objeto/objeto_municion.cpp
 		./server_src/objeto/objeto_municion.h
 		./server_src/rectangulo.h
+		./server_src/triangulo.h
 		./server_src/configuracion.cpp
 		./server_src/configuracion.h
 		
@@ -188,6 +191,8 @@ if(CLIENT)
 		./client_src/Vista_Enemigos/enemigoLizzardView.h
 		./client_src/Vista_Enemigos/enemigoRatView.cpp
 		./client_src/Vista_Enemigos/enemigoRatView.h
+		./client_src/Vista_Enemigos/enemigoBrujaView.cpp
+		./client_src/Vista_Enemigos/enemigoBrujaView.h
 		./client_src/Vista_Enemigos/enemigoViewFactory.h
 		./client_src/Vista_Enemigos/enemigoViewFactory.cpp
 

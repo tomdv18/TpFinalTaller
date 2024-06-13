@@ -21,10 +21,10 @@ void Rat::mover_derecha() { Enemigo::mover_derecha(); }
 
 void Rat::mover_izquierda() { Enemigo::mover_izquierda(); }
 
-void Rat::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido) {
+void Rat::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*>& map_objetos_solidos) {
     if(tiempo_transcurrido.count() - tiempo_muerte >= tiempo_reaparicion){
         vida = CONFIG.obtenerVidaRat();
         vivo = true;
     }
-    Enemigo::actualizar_posicion(tiempo_transcurrido);
+    Enemigo::actualizar_posicion(tiempo_transcurrido, map_objetos_solidos);
 }

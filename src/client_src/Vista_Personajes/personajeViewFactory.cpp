@@ -19,6 +19,8 @@ void PersonajeViewFactory::crear_animaciones_personaje() {
     this->animaciones.insert(std::make_pair(CAYENDO, crear_animacion(CAYENDO)));
     this->animaciones.insert(std::make_pair(CAYENDO_HORIZONTAL, crear_animacion(CAYENDO_HORIZONTAL)));
     this->animaciones.insert(std::make_pair(SALTANDO_HORIZONTAL, crear_animacion(SALTANDO_HORIZONTAL)));
+    this->animaciones.insert(std::make_pair(DISPARO_SALTANDO, crear_animacion(DISPARO_SALTANDO))); 
+
 }
 
 void PersonajeViewFactory::crear_texturas(SDL2pp::Renderer *render) {
@@ -38,6 +40,8 @@ void PersonajeViewFactory::crear_texturas(SDL2pp::Renderer *render) {
     this->animaciones.at(CAYENDO)->crear_texturas(render);
     this->animaciones.at(CAYENDO_HORIZONTAL)->crear_texturas(render);
     this->animaciones.at(SALTANDO_HORIZONTAL)->crear_texturas(render);
+    this->animaciones.at(DISPARO_SALTANDO)->crear_texturas(render);
+
     
 
 }

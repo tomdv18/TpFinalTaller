@@ -1,6 +1,5 @@
 solids:
-  - id_objeto: 1
-    x: 0
+  - x: 0
     y: 450
     width: 50
     height: 50
@@ -276,14 +275,14 @@ moneda:
     veneno: false
   - x: 400
     y: 500
-    veneno: true
+    veneno: false
 gema:
   - x: 500
     y: 600
-    veneno: true
+    veneno: false
   - x: 500
     y: 500
-    veneno: true
+    veneno: false
 zanahoria:
   - x: 600
     y: 600

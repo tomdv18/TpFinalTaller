@@ -1,16 +1,16 @@
-#ifndef SERVER_ENEMIGO_LIZZARD_H_
-#define SERVER_ENEMIGO_LIZZARD_H_
+#ifndef SERVER_ENEMIGO_BRUJA_H_
+#define SERVER_ENEMIGO_BRUJA_H_
 
 #include "enemigo.h"
 
-class Lizzard: public Enemigo {
+class Bruja: public Enemigo {
 private:
     void mover_derecha() override;
 
     void mover_izquierda() override;
 
 public:
-    explicit Lizzard(uint32_t id_enemigo, uint32_t x, uint32_t y);
+    explicit Bruja(uint32_t id_enemigo, uint32_t x, uint32_t y);
 
     uint8_t obtener_personaje() override;
 

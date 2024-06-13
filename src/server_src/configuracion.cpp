@@ -112,14 +112,20 @@ Configuracion::Configuracion(const YAML::Node& config) {
         danio_fencer = config["enemigo"]["fencer"]["danio"].as<int>();
         vida_fencer = config["enemigo"]["fencer"]["vida"].as<int>();
         puntos_fencer = config["enemigo"]["fencer"]["puntos"].as<uint32_t>();
+        ancho_fencer = config["enemigo"]["fencer"]["ancho"].as<int>();
+        alto_fencer = config["enemigo"]["fencer"]["alto"].as<int>();
 
         danio_lizzard = config["enemigo"]["lizzard"]["danio"].as<int>();
         vida_lizzard = config["enemigo"]["lizzard"]["vida"].as<int>();
         puntos_lizzard = config["enemigo"]["lizzard"]["puntos"].as<uint32_t>();
+        ancho_lizzard = config["enemigo"]["fencer"]["ancho"].as<int>();
+        alto_lizzard = config["enemigo"]["fencer"]["alto"].as<int>();
 
         danio_rat = config["enemigo"]["rat"]["danio"].as<int>();
         vida_rat = config["enemigo"]["rat"]["vida"].as<int>();
         puntos_rat = config["enemigo"]["rat"]["puntos"].as<uint32_t>();
+        ancho_rat= config["enemigo"]["fencer"]["ancho"].as<int>();
+        alto_rat = config["enemigo"]["fencer"]["alto"].as<int>();
 
         tiempo_reaparicion_enemigo = config["enemigo"]["tiempo_reaparicion_enemigo"].as<double>();
 

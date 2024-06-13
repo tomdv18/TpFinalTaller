@@ -22,10 +22,10 @@ void Lizzard::revivir(){
     vivo = true;
 }
 
-void Lizzard::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido) {
+void Lizzard::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*>& map_objetos_solidos) {
     if(tiempo_transcurrido.count() - tiempo_muerte >= tiempo_reaparicion){
         vida = CONFIG.obtenerVidaLizzard();
         vivo = true;
     }
-    Enemigo::actualizar_posicion(tiempo_transcurrido);
+    Enemigo::actualizar_posicion(tiempo_transcurrido, map_objetos_solidos);
 }

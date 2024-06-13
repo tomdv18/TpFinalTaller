@@ -306,35 +306,96 @@ solids:
     height: 50
     imagen: ../src/mapas/castle_bloque.png
   - id_objeto: 0
-    x: 235
+    x: 250
     y: 600
     width: 50
     height: 50
     imagen: ../src/mapas/castle_bloque.png
   - id_objeto: 0
-    x: 285
+    x: 300
     y: 600
     width: 50
     height: 50
     imagen: ../src/mapas/castle_bloque.png
   - id_objeto: 0
-    x: 435
+    x: 450
     y: 600
     width: 50
     height: 50
     imagen: ../src/mapas/castle_bloque.png
   - id_objeto: 0
-    x: 585
+    x: 700
     y: 600
     width: 50
     height: 50
     imagen: ../src/mapas/castle_bloque.png
   - id_objeto: 0
-    x: 635
+    x: 650
     y: 600
     width: 50
     height: 50
     imagen: ../src/mapas/castle_bloque.png
+  - id_objeto: 0
+    x: 450
+    y: 600
+    width: 50
+    height: 50
+    imagen: ../src/mapas/castle_bloque.png
+  - id_objeto: 0
+    x: 400
+    y: 600
+    width: 50
+    height: 50
+    imagen: ../src/mapas/castle_bloque.png
+  - id_objeto: 0
+    x: 350
+    y: 600
+    width: 50
+    height: 50
+    imagen: ../src/mapas/castle_bloque.png
+  - id_objeto: 0
+    x: 300
+    y: 600
+    width: 50
+    height: 50
+    imagen: ../src/mapas/castle_bloque.png
+ 
+ 
+ 
+ 
+triangulo_derecho:
+  - id_objeto: 1
+    x: 500
+    y: 600
+    width: 50
+    height: 50
+    imagen: ../src/mapas/triangulo.png
+  - id_objeto: 1
+    x: 550
+    y: 650
+    width: 50
+    height: 50
+    imagen: ../src/mapas/triangulo.png
+
+triangulo_izquierdo:
+  - id_objeto: 1
+    x: 200
+    y: 600
+    width: 50
+    height: 50
+    imagen: ../src/mapas/triangulo_izq.png
+  - id_objeto: 1
+    x: 150
+    y: 650
+    width: 50
+    height: 50
+    imagen: ../src/mapas/triangulo_izq.png
+  - id_objeto: 1
+    x: 50
+    y: 650
+    width: 50
+    height: 50
+    imagen: ../src/mapas/triangulo_izq.png
 
   
 moneda:
@@ -355,9 +416,7 @@ bala_veloz:
     municion: 60
 
 lizzard:
-  - x: 50
-    y: 650
-  - x: 235
+  - x: 400
     y: 550
 rat:
   - x: 850
@@ -365,5 +424,8 @@ rat:
 fencer:
   - x: 850
     y: 650
+bruja:
+  - x: 850
+    y: 250
     
 fondo: ../src/mapas/castle_fondo.png

@@ -88,6 +88,7 @@ char const DISPARO_SALTANDO[] = "Disparo_Saltando";
 char const ENEMIGO_LIZZARD[] = "Lizzard";
 char const ENEMIGO_FENCER[] = "Fencer";
 char const ENEMIGO_RAT[] = "Rat";
+char const ENEMIGO_BRUJA[] = "Bruja";
 
 char const GEMA_OBJETO[] = "Gema";
 char const MONEDA_OBJETO[] = "Moneda";

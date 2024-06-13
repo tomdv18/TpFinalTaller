@@ -9,12 +9,17 @@ Personaje::Personaje(uint32_t id_jugador):
     usando_especial = false;
     saltando = false;
     salto_horizontal = false;
+    en_diagonal = false;
+    inclinar = false;
+    rotacion = IZQUIERDA;
+    en_diagonal = false;
     esta_quieto = true;
     esta_disparando = false;
     en_superficie = false;
     muerto = false;
     invulnerable = true;
     intoxicado = false;
+    rotacion = 0;
     tiempo_intoxicado = 0;
     tiempo_invulnerable = 0;
     tiempo_salto = 0;
@@ -256,6 +261,10 @@ uint8_t Personaje::obtener_danio_habilidad(){ return danio_habilidad; }
 
 uint8_t Personaje::obtener_salto_horizontal(){ return velocidad_x != 0; }
 
+uint8_t Personaje::obtener_rotacion(){ return rotacion;}
+
+uint8_t Personaje::obtener_diagonal(){ return en_diagonal;}
+
 uint8_t Personaje::obtener_estado(){
     return estado->obtener_estado();
 }
@@ -324,13 +333,6 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
         velocidad_y = 0;
     }
 
-
-    
-
-    //std::cout << "ESTA INVULNERABLE: " << (int) invulnerable << std::endl;
-
-    //std::cout << "ESTA INTOXICADO: " << (int) intoxicado << std::endl;
-
     uint32_t nueva_posicion_x = posicion_x + velocidad_x;
     uint32_t nueva_posicion_y = posicion_y + velocidad_y;
 
@@ -346,17 +348,10 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
         };
 
         if (par_objeto.second->obtener_mostrar()) {
-            if (par_objeto.second->obtener_objeto() == SOLIDO) {
-                if (rect_personaje.hay_colision(rect_objeto)) {
-                    corriendo = false;
-                    if (velocidad_x > 0) {  // Moviéndose a la derecha
-                        nueva_posicion_x = rect_objeto.x - this-> ancho;
-                    } else if (velocidad_x < 0) {  // Moviéndose a la izquierda
-                        nueva_posicion_x = rect_objeto.x + rect_objeto.ancho;
-                    }
-                    velocidad_x = 0;
-                }
+            if (par_objeto.second->obtener_objeto() == BLOQUE) {
+                en_diagonal = false;
                 if (rect_personaje_arriba.hay_colision(rect_objeto)) {
+                    inclinar = false;
                     if (velocidad_y > 0) {  // Cayendo
                         nueva_posicion_y = rect_objeto.y - this->alto;
                         velocidad_y = 0;
@@ -368,9 +363,99 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                         velocidad_y = 0;
                     }
                 }
+                if (rect_personaje.hay_colision(rect_objeto)) {
+                    inclinar = false;
+                    corriendo = false;
+                    if (velocidad_x > 0) {  // Moviéndose a la derecha
+                        nueva_posicion_x = rect_objeto.x - this-> ancho;
+                    } else if (velocidad_x < 0) {  // Moviéndose a la izquierda
+                        nueva_posicion_x = rect_objeto.x + rect_objeto.ancho;
+                    }
+                    velocidad_x = 0;
+                }
+            }
+            else if(par_objeto.second->obtener_objeto() == TRIANGULO_DERECHO){
+                
+                uint32_t p1x = this->obtener_posicionX();
+                uint32_t p2x = this->obtener_posicionX() + this->obtener_ancho();
+                uint32_t x1 = par_objeto.second->obtener_posicionX();
+                uint32_t x2 = par_objeto.second->obtener_posicionX() + par_objeto.second->obtener_ancho();
+                uint32_t y1 = par_objeto.second->obtener_posicionY();
+                uint32_t y2 = par_objeto.second->obtener_posicionY() + par_objeto.second->obtener_alto();
+                // Coordenadas y del rectángulo (this)
+                uint32_t p1y = this->obtener_posicionY();
+                uint32_t p2y = this->obtener_posicionY() + this->obtener_alto();
+
+                uint32_t m = (y2 - y1) / (x2-x1);
+                uint32_t b = y1-m*x1;
+
+
+                // Verificar si el rectángulo está completamente dentro del triángulo derecho
+                if (p1x >= x1 && p1x <= x2 && p2y >= m*p1x + b ) {
+                    rotacion = IZQUIERDA;
+                    inclinar = true;
+                    if(velocidad_y >= 0){
+                        saltando = false;
+                        nueva_posicion_y = m * nueva_posicion_x + b - this->obtener_alto();
+                        colision_suelo = true; // Indica que el personaje está en el suelo después de subir la ramp
+                        if (nueva_posicion_x >= x2 && !en_diagonal) {
+                            nueva_posicion_y = y2 - this->obtener_alto();
+                            en_diagonal = false; // Indicar que se ha salido de la diagonal
+                        } else if (nueva_posicion_x <= x1 && !en_diagonal) {
+                            nueva_posicion_y = y1 - this->obtener_alto();
+                            en_diagonal = false; // Indicar que se ha salido de la diagonal
+                        } else {
+                            en_diagonal = true;
+                        }
+                    }
+                } else if(p1x <= x1 && x1 <= p2x && y1 <= p2y){
+                    if (velocidad_x > 0 && velocidad_y == 0) {
+                    // Verificar si el personaje está intentando avanzar hacia el triángulo
+                        if (nueva_posicion_y + this->ancho != y1) {
+                            nueva_posicion_x = x1 - this->obtener_ancho();
+                        }
+                    }
+                }
+            } else if(par_objeto.second->obtener_objeto() == TRIANGULO_IZQUIERDO){
+                uint32_t p1x = this->obtener_posicionX();
+                uint32_t p2x = this->obtener_posicionX() + this->obtener_ancho();
+                uint32_t p1y = this->obtener_posicionY();
+                uint32_t p2y = this->obtener_posicionY() + this->obtener_alto();
+                uint32_t x1 = par_objeto.second->obtener_posicionX();
+                uint32_t x2 = par_objeto.second->obtener_posicionX() + par_objeto.second->obtener_ancho();
+                uint32_t y1 = par_objeto.second->obtener_posicionY();
+                uint32_t y2 = par_objeto.second->obtener_posicionY() + par_objeto.second->obtener_alto();
+                
+            
+                    int b = y1-x1;
+                    if(p2x >= x1 && p1y <= p2x + b && p2x <= x2 && p2y >= y1){
+                        rotacion = DERECHA;
+                        inclinar = true;
+                        if(velocidad_y >= 0){
+                            saltando = false;
+                            nueva_posicion_y = y2 - (p2x - x1) - this->obtener_alto();
+                            colision_suelo = true;
+                        }
+                    } else if(p1x <= x2 && x2 <= p2x && y1 <= p2y){
+                        if (velocidad_x < 0) {
+                        // Verificar si el personaje está intentando avanzar hacia el triángulo
+                            if (nueva_posicion_y + this->ancho != y1) {
+                                nueva_posicion_x = x1 + this->obtener_ancho();
+                            }
+                        }
+                    }
             }
         }
     }
+    if(saltando){
+        en_diagonal = false;
+        inclinar = false;
+    }
+
+
+    //std::cout << "INCLINAR AL PERSONAJE: " << inclinar << std::endl;
+
+
 
     // Verificar colisiones con objetos comunes
     for (const auto& par_objeto : map_objetos_comunes) {
@@ -388,7 +473,7 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
         }
     }
 
-    if (!saltando && velocidad_x == 0) {
+    if (!saltando && velocidad_x == 0 && esta_quieto) {
         this->manejarEstado(ESTADO_QUIETO, tiempo_transcurrido);
     }
 
@@ -399,10 +484,11 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
     if (velocidad_x != 0 && !saltando) {
         if (!corriendo) this->manejarEstado(ESTADO_CAMINANDO, tiempo_transcurrido);
     }
-
+    
     if(velocidad_y > 0){
         this->manejarEstado(ESTADO_CAYENDO, tiempo_transcurrido);
     }
+    
 
     posicion_x = nueva_posicion_x;
     posicion_y = nueva_posicion_y;
@@ -441,3 +527,7 @@ void Personaje::actualizar(double tiempo){
 Personaje::~Personaje() {
     delete estado;
 }
+
+
+
+

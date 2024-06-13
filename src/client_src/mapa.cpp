@@ -33,6 +33,28 @@ mapa(std::move(map)), src(), dest(), ancho_ventana(render.GetOutputWidth()), alt
         }
     }
 
+    for(const auto& pos : mapa.entidades["triangulo_derecho"]) {
+        std::string nombre_entidad = extraerNombre(pos.imagen);
+        auto it = texturas.find(nombre_entidad);
+        if (it != texturas.end()) {
+            continue;
+        } else {
+            SDL2pp::Surface surface(pos.imagen);
+            texturas[nombre_entidad] = new SDL2pp::Texture(render, surface);
+        }
+    }
+
+    for(const auto& pos : mapa.entidades["triangulo_izquierdo"]) {
+        std::string nombre_entidad = extraerNombre(pos.imagen);
+        auto it = texturas.find(nombre_entidad);
+        if (it != texturas.end()) {
+            continue;
+        } else {
+            SDL2pp::Surface surface(pos.imagen);
+            texturas[nombre_entidad] = new SDL2pp::Texture(render, surface);
+        }
+    }
+
 };
 
 void Mapa::dibujar_fondo(SDL2pp::Renderer &render, Camara &camara) {
@@ -63,6 +85,28 @@ void Mapa::dibujar_fondo(SDL2pp::Renderer &render, Camara &camara) {
 
 void Mapa::dibujar_entidades(SDL2pp::Renderer &render, Camara &camara) {
     for (const auto& pos : mapa.entidades["solids"]) {
+        src.w = pos.width;
+        src.h = pos.height;
+        dest.x = pos.x - camara.obtener_posicion_x();
+        dest.y = pos.y - camara.obtener_posicion_y();
+        dest.w = pos.width;
+        dest.h = pos.height;
+        std::string nombre_entidad = extraerNombre(pos.imagen);
+        render.Copy(*texturas[nombre_entidad], src, dest);
+    }
+
+    for (const auto& pos : mapa.entidades["triangulo_derecho"]) {
+        src.w = pos.width;
+        src.h = pos.height;
+        dest.x = pos.x - camara.obtener_posicion_x();
+        dest.y = pos.y - camara.obtener_posicion_y();
+        dest.w = pos.width;
+        dest.h = pos.height;
+        std::string nombre_entidad = extraerNombre(pos.imagen);
+        render.Copy(*texturas[nombre_entidad], src, dest);
+    }
+
+    for (const auto& pos : mapa.entidades["triangulo_izquierdo"]) {
         src.w = pos.width;
         src.h = pos.height;
         dest.x = pos.x - camara.obtener_posicion_x();

@@ -20,11 +20,13 @@ Enemigo::Enemigo(uint32_t id_enemigo, uint32_t x, uint32_t y):
         alto(CONFIG.obtenerAltoEnemigo()){
     tiempo_muerte = 0;
     puntos = 0;
-    velocidad_x = 10;
+    velocidad_x = 3;
+    velocidad_y = 0;
+    volador = false;
 }
 
 void Enemigo::mover_derecha() {
-    if (posicion_x + ancho < WIDTH) {
+    if (posicion_x + ancho < CONFIG.getAnchoPantalla()) {
         velocidad_x = CONFIG.obtenerVelocidadEnemigos();
         esta_quieto = false;
     }
@@ -137,62 +139,56 @@ void Enemigo::patrullar() {
 }
 
 
-void Enemigo::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido) {
-    
+void Enemigo::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*>& map_objetos_solidos) {
     if(!vivo){
         return;
     }
+ 
+     uint32_t nueva_posicion_x = posicion_x + velocidad_x;
+    uint32_t nueva_posicion_y = posicion_y + velocidad_y;
 
-    patrullar();
-    int32_t nueva_posicion_x = posicion_x + static_cast<int32_t>(velocidad_x);
-    double tiempo_segundos = tiempo_transcurrido.count();
+    Rectangulo rect_enemigo = {nueva_posicion_x, this->posicion_y, this->ancho, this->alto};
 
-    if (velocidad_x == 0) {
-        esta_quieto = true;
+    // Verificar colisión justo debajo del enemigo
+    Rectangulo rect_enemigo_abajo = {nueva_posicion_x, this->posicion_y + this->alto, this->ancho, 1};
+    // Verificar colisión un poco adelante del enemigo en la dirección en la que se mueve
+    Rectangulo rect_enemigo_adelante_abajo;
+    if (velocidad_x > 0) {  // Moviéndose a la derecha
+        rect_enemigo_adelante_abajo = {nueva_posicion_x + this->ancho, this->posicion_y + this->alto, 1, 1};
+    } else {  // Moviéndose a la izquierda
+        rect_enemigo_adelante_abajo = {nueva_posicion_x - 1, this->posicion_y + this->alto, 1, 1};
     }
 
-    if (velocidad_x > 0) {
-         if (nueva_posicion_x >= WIDTH - ancho) {
-            posicion_x = WIDTH - ancho;
-        } else {
-            posicion_x = nueva_posicion_x;
+    bool colision_abajo = false;
+    bool colision_adelante_abajo = false;
+
+    for (const auto& par_objeto : map_objetos_solidos) {
+        Rectangulo rect_objeto = {
+            par_objeto.second->obtener_posicionX(), par_objeto.second->obtener_posicionY(),
+            par_objeto.second->obtener_ancho(), par_objeto.second->obtener_alto()
+        };
+
+        if (rect_enemigo.hay_colision(rect_objeto)) {
+            velocidad_x *= -1;
+            direccion_mirando = (direccion_mirando == IZQUIERDA) ? DERECHA : IZQUIERDA;
         }
-    } else if (velocidad_x < 0) {
-        if (nueva_posicion_x <= 0) {
-            posicion_x = 0;
-        } else {
-            posicion_x = nueva_posicion_x;
+
+        if (rect_enemigo_abajo.hay_colision(rect_objeto)) {
+            colision_abajo = true;
         }
-    }
-    
 
-   /*
-   if (!vivo) {
-        return;
-    }
-
-    // Actualizar posición basada en la velocidad
-    int32_t nueva_posicion_x = posicion_x + velocidad_x;
-    int32_t nueva_posicion_y = posicion_y;
-
-
-    int32_t cell_x = nueva_posicion_x / 50;
-    int32_t cell_y = nueva_posicion_y / 50;
-
-    std::cout << "CELDA: " << cell_x << "   " << cell_y << std::endl;
-
-    // Verificar colisión revisando la celda del grid
-    if (grid.count(cell_x) && grid[cell_x].count(cell_y)) {
-        if(grid.at(cell_x).at(cell_y).tiene_objeto_solido){
-            std::cout << "COLISION" << std::endl;
-            velocidad_x = -velocidad_x;
+        if (rect_enemigo_adelante_abajo.hay_colision(rect_objeto)) {
+            colision_adelante_abajo = true;
         }
     }
-   
+
+    // Si no hay colisión abajo o adelante abajo, cambia de dirección
+    if (!colision_abajo || !colision_adelante_abajo && !volador) {
+        velocidad_x *= -1;
+        direccion_mirando = (direccion_mirando == IZQUIERDA) ? DERECHA : IZQUIERDA;
+    }
+
     posicion_x = nueva_posicion_x;
-    posicion_y = nueva_posicion_y;
-    */
-
 }
 
 

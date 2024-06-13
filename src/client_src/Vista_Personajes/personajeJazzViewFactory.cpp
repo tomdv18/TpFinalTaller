@@ -26,17 +26,20 @@ std::unique_ptr<Animacion> PersonajeJazzViewFactory::crear_animacion(std::string
         return std::move(std::make_unique<Animacion_Jazz_Herido>());
     } else if(nombre_animacion == MUERTO) {
         return std::move(std::make_unique<Animacion_Jazz_Muerte>());
+    } else if(nombre_animacion == HABILIDAD) {
+        return std::move(std::make_unique<Animacion_Jazz_Habilidad>());
     } else if(nombre_animacion == CAYENDO) {
         return std::move(std::make_unique<Animacion_Jazz_Cayendo>());
     } else if(nombre_animacion == CAYENDO_HORIZONTAL) {
         return std::move(std::make_unique<Animacion_Jazz_Cayendo_Horizontal>());
+    } else if(nombre_animacion == SALTANDO_HORIZONTAL){
+        return std::move(std::make_unique<Animacion_Jazz_Cayendo_Horizontal>());
+    } else if(nombre_animacion == DISPARO_SALTANDO){
+        return std::move(std::make_unique<Animacion_Jazz_Disparo_Saltando>());
     }
     
 
-    return std::move(std::make_unique<Animacion_Jazz_Disparo_Saltando>());
-    
-
-    return std::move(std::make_unique<Animacion_Jazz_Habilidad>());
+    return std::move(std::make_unique<Animacion_Jazz_Quieto>());
 }
 
 

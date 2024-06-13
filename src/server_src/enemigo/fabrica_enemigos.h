@@ -6,6 +6,7 @@
 #include "enemigo_fencer.h"
 #include "enemigo_lizzard.h"
 #include "enemigo_rat.h"
+#include "enemigo_bruja.h"
 
 #define CONFIG Configuracion::config()
 
@@ -24,6 +25,8 @@ public:
                 return std::make_unique<Lizzard>(id,posicion_x,posicion_y);
             case RAT:
                 return std::make_unique<Rat>(id,posicion_x,posicion_y);
+            case BRUJA:
+                return std::make_unique<Bruja>(id,posicion_x,posicion_y);
             default:
                 return nullptr;
         }

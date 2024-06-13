@@ -14,6 +14,7 @@
 
 class Personaje;
 class Bala;
+class Objeto;
 
 #define WIDTH 640
 #define HEIGHT 480
@@ -26,12 +27,14 @@ protected:
     int vida;
     uint32_t puntos;
     bool esta_quieto;
+    bool volador;
 
     uint32_t ancho;
     uint32_t alto;
 
 
     double velocidad_x;
+    double velocidad_y;
     double tiempo_muerte;
     double tiempo_reaparicion;
     uint8_t direccion_mirando;
@@ -92,7 +95,7 @@ public:
 
     // Getters Snapshot
 
-    virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido);
+    virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*>& map_objetos_solidos);
 
     virtual ~Enemigo();
 

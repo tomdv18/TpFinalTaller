@@ -7,8 +7,8 @@
 enum CodigoEnemigo: uint8_t{
     LIZZARD,
     FENCER,
-    RAT
-
+    RAT,
+    BRUJA
 };
 
 

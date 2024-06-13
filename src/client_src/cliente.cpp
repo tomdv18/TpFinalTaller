@@ -160,6 +160,36 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
             std::cerr << "La clave 'fondo' no se encontró en el archivo YAML." << std::endl;
         }
 
+
+        // Superficies diagonales
+        YAML::Node trianguloNode = data["triangulo_derecho"];
+        std::vector<Position> triangulos;
+        for (const auto& triangulo : trianguloNode) {
+            Position position;
+            position.x = triangulo["x"].as<uint32_t>();
+            position.y = triangulo["y"].as<uint32_t>();
+            position.width = triangulo["width"].as<uint32_t>();
+            position.height = triangulo["height"].as<uint32_t>();
+            position.imagen = triangulo["imagen"].as<std::string>();
+            triangulos.push_back(position);
+        }
+        mapaCompleto.entidades["triangulo_derecho"] = triangulos;
+
+
+        YAML::Node trianguloIzqNode = data["triangulo_izquierdo"];
+        std::vector<Position> triangulos_izquierdo;
+        for (const auto& triangulo : trianguloIzqNode) {
+            Position position;
+            position.x = triangulo["x"].as<uint32_t>();
+            position.y = triangulo["y"].as<uint32_t>();
+            position.width = triangulo["width"].as<uint32_t>();
+            position.height = triangulo["height"].as<uint32_t>();
+            position.imagen = triangulo["imagen"].as<std::string>();
+            triangulos_izquierdo.push_back(position);
+        }
+        mapaCompleto.entidades["triangulo_izquierdo"] = triangulos_izquierdo;
+
+
     } catch (const YAML::Exception& e) {
         std::cerr << "Error al cargar el archivo YAML: " << e.what() << std::endl;
     }

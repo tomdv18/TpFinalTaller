@@ -11,7 +11,10 @@ enum CodigoObjeto : uint8_t {
     BALA_VELOZ,
     COHETE_RAPIDO,
     COHETE_TOXICO,
-    SOLIDO 
+    SOLIDO,
+    TRIANGULO_DERECHO,
+    TRIANGULO_IZQUIERDO,
+    BLOQUE 
 };
 
 

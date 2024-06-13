@@ -12,10 +12,14 @@
 #include "../estado/estado.h"
 #include "../objeto/objeto.h"
 #include "../rectangulo.h"
+#include "../triangulo.h"
 #include "../configuracion.h"
 
 
 #include "../bala/bala.h"
+
+
+
 
 
 class Objeto;
@@ -39,6 +43,9 @@ protected:
 
     bool saltando;
     bool salto_horizontal;
+    bool en_diagonal;
+    bool inclinar;
+    uint8_t rotacion;
     double tiempo_salto;
 
     bool usando_especial;
@@ -178,6 +185,10 @@ public:
     
     virtual uint8_t obtener_salto_horizontal();
 
+    virtual uint8_t obtener_rotacion();
+
+    virtual uint8_t obtener_diagonal();
+
     // Getters Snapshot
 
     virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,
@@ -190,6 +201,7 @@ public:
     virtual uint8_t obtener_personaje() = 0;
 
     virtual void usar_habilidad(std::chrono::duration<double> tiempo_transcurrido) = 0;
+
 
 public:
     // Logica de Estados

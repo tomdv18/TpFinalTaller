@@ -103,14 +103,20 @@ enemigo:
     danio: 5
     puntos: 50
     vida: 1
+    ancho: 100
+    alto: 50
   lizzard: 
     danio: 4
     puntos: 20
     vida: 1
+    ancho: 50
+    alto: 50
   rat:
     danio: 3
     puntos: 10
     vida: 1
+    ancho: 50
+    alto: 50
 
 
 

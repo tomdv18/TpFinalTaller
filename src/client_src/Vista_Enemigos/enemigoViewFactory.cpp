@@ -14,6 +14,8 @@ std::unique_ptr<Animacion> EnemigoViewFactory::crear_animacion_enemigo(std::stri
         return std::move(std::make_unique<Animacion_Lizzard_Caminando>());
     } else if(nombre_enemigo == ENEMIGO_FENCER) {
         return std::move(std::make_unique<Animacion_Fencer_Caminando>());
+    } else if(nombre_enemigo == ENEMIGO_BRUJA){
+        
     }
     return std::move(std::make_unique<Animacion_Rat_Caminando>());
 

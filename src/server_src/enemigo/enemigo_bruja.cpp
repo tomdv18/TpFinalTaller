@@ -1,28 +1,28 @@
-#include "enemigo_fencer.h"
+#include "enemigo_bruja.h"
 
 #define CONFIG Configuracion::config()
 
-Fencer::Fencer(uint32_t id_enemigo, uint32_t x, uint32_t y): Enemigo(id_enemigo,x,y) {
-    std::cout << "FENCER CREADO" << std::endl;
+Bruja::Bruja(uint32_t id_enemigo, uint32_t x, uint32_t y): Enemigo(id_enemigo,x,y) {
     vida = CONFIG.obtenerVidaFencer();
     puntos = CONFIG.obtenerPuntosFencer();
     danio = CONFIG.obtenerDanioFencer();
     ancho = CONFIG.obtenerAnchoFencer();
     alto = CONFIG.obtenerAltoFencer();
+    volador = true;
 }
 
-uint8_t Fencer::obtener_personaje() {
-    return FENCER;
+uint8_t Bruja::obtener_personaje() {
+    return BRUJA;
 }
-void Fencer::revivir() { 
+void Bruja::revivir() { 
     vida = CONFIG.obtenerVidaFencer();
     vivo = true; }
 
-void Fencer::mover_derecha() { Enemigo::mover_derecha(); }
+void Bruja::mover_derecha() { Enemigo::mover_derecha(); }
 
-void Fencer::mover_izquierda() { Enemigo::mover_izquierda(); }
+void Bruja::mover_izquierda() { Enemigo::mover_izquierda(); }
 
-void Fencer::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*>& map_objetos_solidos) {
+void Bruja::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*>& map_objetos_solidos) {
     if(tiempo_transcurrido.count() - tiempo_muerte >= tiempo_reaparicion){
         vida = CONFIG.obtenerVidaFencer();
         vivo = true;

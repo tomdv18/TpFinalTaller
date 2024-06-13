@@ -11,7 +11,17 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(), mapa("..
     YAML::Node mapNode = YAML::LoadFile("../src/mapas/mapa_castle.yaml");
         int i = 0;
         for (const auto& objNode : mapNode["solids"]) {
-            map_objetos_solidos[i] = new Solido(i,objNode["x"].as<uint32_t>(),objNode["y"].as<uint32_t>(),1,objNode["width"].as<uint32_t>(),objNode["height"].as<uint32_t>());
+            map_objetos_solidos[i] = new Solido(i,objNode["x"].as<uint32_t>(),objNode["y"].as<uint32_t>(),1,objNode["width"].as<uint32_t>(),objNode["height"].as<uint32_t>(), BLOQUE);
+            i++;
+        }
+
+        for (const auto& objNode : mapNode["triangulo_derecho"]) {
+            map_objetos_solidos[i] = new Solido(i,objNode["x"].as<uint32_t>(),objNode["y"].as<uint32_t>(),1,objNode["width"].as<uint32_t>(),objNode["height"].as<uint32_t>(), TRIANGULO_DERECHO);
+            i++;
+        }
+
+        for (const auto& objNode : mapNode["triangulo_izquierdo"]) {
+            map_objetos_solidos[i] = new Solido(i,objNode["x"].as<uint32_t>(),objNode["y"].as<uint32_t>(),1,objNode["width"].as<uint32_t>(),objNode["height"].as<uint32_t>(), TRIANGULO_IZQUIERDO);
             i++;
         }
 
@@ -65,12 +75,29 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(), mapa("..
             }
         }
 
+    
+        /*
+        if(mapNode["bruja"]) {
+            for (const auto& BrujaNode : mapNode["bruja"]) {
+                map_enemigos[i] = fabrica_enemigos.crear_enemigo(i,BRUJA,BrujaNode["x"].as<uint32_t>(), BrujaNode["y"].as<uint32_t>());
+                i++;
+            }
+        }
+        */
+
+
         map_objetos_comunes[20] = fabrica_objetos.crear_objeto(BALA_VELOZ,700,600,false);
         map_objetos_comunes[21] = fabrica_objetos.crear_objeto(BALA_VELOZ,700,500,false);
 
         map_objetos_comunes[22] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,100,600,false);
         map_objetos_comunes[23] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,100,500,false);
 
+
+    /*
+        for(int k = 200;k <= 10000 ;k++){
+            map_objetos_solidos[i] = new Solido(k,50*k,1000,1,50,50, BLOQUE);
+        }
+    */
     
 }
 
@@ -303,13 +330,8 @@ void LogicaPartida::actualizar_partida(
         par_personaje.second->actualizar_posicion(tiempo_transcurrido, map_objetos_solidos, map_objetos_comunes);
         Rectangulo rect_personaje = {par_personaje.second->obtener_posicionX(), par_personaje.second->obtener_posicionY(),
                                     par_personaje.second->obtener_ancho(), par_personaje.second->obtener_alto()};
-        // Ver colision con otros personajes
-
-        //ASDASD
-        //std::cout << "CELDA ACTUAL X: " << par_personaje.second->obtener_posicionX()/ cell_size << std::endl;
-        //std::cout << "CELDA ACTUAL Y: " << par_personaje.second->obtener_posicionY()/ cell_size << std::endl;
-
-        
+ 
+    
         for (const auto& par_otro: map_personajes) {
             Rectangulo rect_otro = {par_otro.second->obtener_posicionX(), par_otro.second->obtener_posicionY(),
                                     par_otro.second->obtener_ancho(), par_otro.second->obtener_alto()};
@@ -324,11 +346,7 @@ void LogicaPartida::actualizar_partida(
     
     
     for (const auto& par: map_enemigos) {
-        par.second->actualizar_posicion(tiempo_transcurrido);
-
-        //ASD
-        //std::cout << "CELDA ACTUAL X: " << par.second->obtener_posicionX()/ cell_size << std::endl;
-        //std::cout << "CELDA ACTUAL Y: " << par.second->obtener_posicionY()/ cell_size << std::endl;
+        par.second->actualizar_posicion(tiempo_transcurrido, map_objetos_solidos);
 
         Rectangulo rect_enemigo = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
                     par.second->obtener_ancho(), par.second->obtener_alto()};
@@ -444,6 +462,8 @@ Evento LogicaPartida::obtener_snapshot(
         evento_personaje.bala_actual = par.second->obtener_bala_actual();
         evento_personaje.municion = par.second->obtener_municion_actual();
         evento_personaje.salto_horizontal = par.second->obtener_salto_horizontal();
+        evento_personaje.rotacion = par.second->obtener_rotacion();
+        evento_personaje.en_diagonal = par.second->obtener_diagonal();
 
         evento.eventos_personaje.emplace_back(evento_personaje);
     }
