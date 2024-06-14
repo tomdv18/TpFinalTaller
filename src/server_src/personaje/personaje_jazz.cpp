@@ -32,5 +32,9 @@ void Jazz::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido
     if(!saltando){
         usando_especial = false;
     }
+    if(usando_especial && velocidad_y > 0){
+        usando_especial = false;
+        this->estado->manejarEstado(ESTADO_CAYENDO,tiempo_transcurrido.count());
+    }
     Personaje::actualizar_posicion(tiempo_transcurrido, map_objetos, map_objetos_comunes);
 }

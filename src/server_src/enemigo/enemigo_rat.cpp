@@ -7,6 +7,8 @@ Rat::Rat(uint32_t id_enemigo, uint32_t x, uint32_t y): Enemigo(id_enemigo,x,y) {
     vida = CONFIG.obtenerVidaRat();
     puntos = CONFIG.obtenerPuntosRat();
     danio = CONFIG.obtenerDanioRat();
+    ancho = CONFIG.obtenerAnchoRat();
+    alto = CONFIG.obtenerAltoRat();
 }
 
 uint8_t Rat::obtener_personaje() {

@@ -6,6 +6,8 @@ Lizzard::Lizzard(uint32_t id_enemigo, uint32_t x, uint32_t y): Enemigo(id_enemig
     vida = CONFIG.obtenerVidaLizzard();
     puntos = CONFIG.obtenerPuntosLizzard();
     danio = CONFIG.obtenerDanioLizzard();
+    ancho = CONFIG.obtenerAnchoLizzard();
+    alto = CONFIG.obtenerAltoLizzard();
 }
 
 uint8_t Lizzard::obtener_personaje() {

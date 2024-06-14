@@ -103,7 +103,7 @@ enemigo:
     danio: 5
     puntos: 50
     vida: 1
-    ancho: 100
+    ancho: 70
     alto: 50
   lizzard: 
     danio: 4
@@ -115,13 +115,13 @@ enemigo:
     danio: 3
     puntos: 10
     vida: 1
-    ancho: 50
-    alto: 50
+    ancho: 70
+    alto: 30
   bruja:
     danio: 6
     puntos: 75
     vida: 1
-    ancho: 100
+    ancho: 50
     alto: 50
 
 

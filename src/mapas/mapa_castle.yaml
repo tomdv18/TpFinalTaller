@@ -431,7 +431,7 @@ lizzard:
     y: 550
 rat:
   - x: 850
-    y: 550
+    y: 570
 fencer:
   - x: 850
     y: 650
