@@ -89,7 +89,15 @@ char const PATH_SONIDO_PROYECTIL_4[] = "../src/client_src/Sonidos/proyectil_4.wa
 char const PATH_SONIDO_PROYECTIL_5[] = "../src/client_src/Sonidos/proyectil_5.wav";
 char const PATH_SONIDO_PROYECTIL_6[] = "../src/client_src/Sonidos/proyectil_6.wav";
 
+char const PATH_SONIDO_GOLPE_1[] = "../src/client_src/Sonidos/golpe_1.mp3";
+char const PATH_SONIDO_GOLPE_2[] = "../src/client_src/Sonidos/golpe_2.mp3";
+char const PATH_SONIDO_GOLPE_3[] = "../src/client_src/Sonidos/golpe_3.mp3";
+char const PATH_SONIDO_GOLPE_4[] = "../src/client_src/Sonidos/golpe_4.mp3";
+char const PATH_SONIDO_GOLPE_5[] = "../src/client_src/Sonidos/golpe_5.mp3";
+char const PATH_SONIDO_GOLPE_6[] = "../src/client_src/Sonidos/golpe_6.mp3";
+
 char const PATH_SONIDO_ENEMIGO_DESAPARECER[] = "../src/client_src/Sonidos/sonido_desaparecer_enemigo.wav";
+char const PATH_SONIDO_SALTO[] = "../src/client_src/Sonidos/sonido_salto.mp3";
 
 char const CAMINANDO[] = "Caminando";
 char const CORRIENDO[] = "Corriendo";
@@ -106,6 +114,7 @@ char const HABILIDAD[] = "Habilidad";
 char const CAYENDO[] = "Cayendo";
 char const CAYENDO_HORIZONTAL[] = "Cayendo_horizontal";
 char const DISPARO_SALTANDO[] = "Disparo_Saltando";
+char const GOLPE[] = "Golpe";
 
 char const ENEMIGO_LIZZARD[] = "Lizzard";
 char const ENEMIGO_FENCER[] = "Fencer";

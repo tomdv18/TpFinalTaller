@@ -241,7 +241,7 @@ bool Renderizado::renderizar(Evento evento) {
 
         PersonajeView &p = *(personaje.second);
         p.renderizar_personaje(render, camara->obtener_posicion_x(), camara->obtener_posicion_y(), this->reproductor_audio);
-        
+        p.crear_sonido(*this->reproductor_audio.get());
 		
 	}
 

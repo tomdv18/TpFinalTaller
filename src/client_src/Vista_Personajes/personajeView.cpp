@@ -10,7 +10,9 @@
 
 PersonajeView::PersonajeView(EventoPersonaje &evento) : id_jugador(evento.id_jugador), posicion_x(evento.posicion_x), posicion_y(evento.posicion_y), width(PERSONAJE_WIDTH), height(PERSONAJE_HEIGHT), 
 facingLeft(false), isMoving(false), isRunning(false), isJumping(false), isShooting(false), stopShooting(false),
-vida(0), puntaje(0) {}
+vida(0), puntaje(0), contador_golpes(0), contador_saltos(0) {
+    this->sonidos.insert(std::make_pair(SALTANDO, std::make_unique<SDL2pp::Chunk>(PATH_SONIDO_SALTO)));
+}
 
 bool PersonajeView::obtener_face() {
     return facingLeft;
@@ -112,6 +114,7 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
     // Aca un ejemplo del switch con el patron de estados
     switch (this->estado) {
     case ESTADO_QUIETO:{
+        this->contador_saltos = 0;
         SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
         if(isShooting){
             animaciones.at(DISPARO_QUIETO)->animar(*render, personaje, flip);
@@ -123,6 +126,8 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
         break;
     }
     case ESTADO_CAMINANDO:{
+        this->contador_golpes = 0;
+        this->contador_saltos = 0;
         SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
         if(isIntoxicated){
             animaciones.at(INTOXICADO_CAMINANDO)->animar(*render, personaje, flip);
@@ -181,6 +186,19 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
         break;
     }
     
+    
+}
+
+void PersonajeView::crear_sonido(SDL2pp::Mixer &reproductor_audio) {
+
+    if(estado == ESTADO_SALTANDO && contador_saltos == 0) {
+        reproductor_audio.PlayChannel(-1, *this->sonidos.at(SALTANDO));
+        contador_saltos ++;
+    } else if(estado == ESTADO_HERIDO && contador_golpes == 0) {
+        reproductor_audio.PlayChannel(-1, *this->sonidos.at(GOLPE));
+        contador_golpes ++;
+    }
+
 }
 
 PersonajeView::~PersonajeView() {}
