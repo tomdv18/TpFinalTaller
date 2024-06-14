@@ -10,8 +10,13 @@ void ObjetoView::actualizar_vista_objeto(EventoObjeto &evento, float df) {
     if(this->mostrarse) {
         this->animaciones.at(Mostrar)->acualizar(df);
     } else {
-        this->animaciones.at(AGARRAR)->acualizar(0.1 *df);
+        this->animaciones.at(AGARRAR)->en_loop(false);
+        this->animaciones.at(AGARRAR)->acualizar(0.4 *df);
         mostrarse = false;
+    }
+
+    if(this->mostrarse){
+        this->animaciones.at(AGARRAR)->reset_frame();
     }
 }
 

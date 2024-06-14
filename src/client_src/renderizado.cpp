@@ -226,9 +226,11 @@ bool Renderizado::renderizar(Evento evento) {
     // Renderizo objetos
     for(auto &objeto : this->objetosViews) {
         ObjetoView &o = *(objeto.second);
+        /*
         if(!o.mostrandose()){
             continue;
         }
+        */
         o.renderizar_objeto(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
     }
  
