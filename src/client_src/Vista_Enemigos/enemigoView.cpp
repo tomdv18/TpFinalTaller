@@ -15,7 +15,12 @@ void EnemigoView::actualizar_vista_enemigo(EventoEnemigo &evento, float df) {
     if(this->isMoving && this->estaVivo) {
         this->animaciones.at(CAMINANDO)->acualizar(df);
     } else if(!this->estaVivo) {
-        this->animaciones.at(DESAPARECER)->acualizar(0.2 * df);
+        this->animaciones.at(DESAPARECER)->en_loop(false);
+        this->animaciones.at(DESAPARECER)->acualizar(0.4 * df);
+    }
+
+    if(this->estaVivo){
+        this->animaciones.at(DESAPARECER)->reset_frame();
     }
 }
 
