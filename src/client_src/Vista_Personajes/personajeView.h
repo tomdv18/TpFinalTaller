@@ -10,6 +10,7 @@
 #include "../src/common_src/evento.h"
 #include <map>
 #include "../src/client_src/direcciones.h"
+#include <SDL2/SDL_mixer.h>
 
 class PersonajeView {
 
@@ -25,6 +26,7 @@ class PersonajeView {
     int width;
     int height;
     std::map<std::string, std::unique_ptr<Animacion>> animaciones;
+
     bool facingLeft;
     bool isMoving;
     bool isRunning;
@@ -47,7 +49,7 @@ class PersonajeView {
 
     virtual void actualizar_vista_personaje(EventoPersonaje const &evento,float dt);
 
-    virtual void renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y);
+    virtual void renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y, std::unique_ptr<SDL2pp::Mixer> &reproductor_audio);
 
     virtual void definir_tipo_bala(uint8_t tipo_bala) {
         this->tipo_bala = int(tipo_bala);

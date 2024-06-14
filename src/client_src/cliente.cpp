@@ -211,6 +211,7 @@ void Cliente::comunicarse_con_el_servidor() {
     this->renderizado.recibir_id(id_jugador);
     this->renderizado.inicializar_SDL2pp();
     this->renderizado.crear_ventana_y_render("JazzJack Rabbit 2", WIDTH, HEIGHT);
+    this->renderizado.crear_reproductor_audio();
     this->renderizado.iniciar_mapa(std::move(mapa));
     this->renderizado.iniciar_camara(std::move(camara));
     this->renderizado.iniciar_interfaz(WIDTH, HEIGHT);

@@ -14,8 +14,10 @@ class ObjetoView {
     int widht;
     int height;
     std::map<std::string, std::unique_ptr<Animacion>> animaciones;
+    std::unique_ptr<SDL2pp::Chunk> sonido;
     ObjetoViewFactory factory;
     bool mostrarse;
+    int contador_agarres;
 
    public:
 
@@ -26,6 +28,8 @@ class ObjetoView {
     virtual void actualizar_vista_objeto(EventoObjeto &evento, float df);
 
     virtual void renderizar_objeto(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y);
+    
+    virtual void reproducir_audio_objeto(std::unique_ptr<SDL2pp::Mixer> &reproductor_audio);
 
     virtual ~ObjetoView();
 };

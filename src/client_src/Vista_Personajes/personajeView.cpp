@@ -105,7 +105,7 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
 
 }
 
-void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y) {
+void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y, std::unique_ptr<SDL2pp::Mixer> &reproductor_audio) {
     
     SDL2pp::Rect personaje(posicion_x-cam_x, posicion_y-cam_y, width, height);
     

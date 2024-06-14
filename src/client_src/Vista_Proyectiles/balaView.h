@@ -25,7 +25,9 @@ class BalaView {
     int width;
     int height;
     std::unique_ptr<Animacion> animacion_bala;
+    std::unique_ptr<SDL2pp::Chunk> sonido;
     ProyectilViewFactory factory;
+    int contador_disparos;
 
     bool facingLeft;
 
@@ -38,6 +40,8 @@ class BalaView {
     void actualizar(EventoBala const &evento,float dt);
 
     void renderizar(SDL2pp::Renderer &render, int cam_x, int cam_y);
+
+    void crear_sonido(SDL2pp::Mixer &reproductor_sonido);
     
 };
 

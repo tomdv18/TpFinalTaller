@@ -19,12 +19,13 @@ class ProyectilViewFactory {
    private:
 
     std::unique_ptr<Animacion> &animacion;
+    std::unique_ptr<SDL2pp::Chunk> &sonido;
 
    public:
 
-    ProyectilViewFactory(std::unique_ptr<Animacion> &animacion);
+    ProyectilViewFactory(std::unique_ptr<Animacion> &animacion, std::unique_ptr<SDL2pp::Chunk> &sonido);
 
-    void crear_animaciones(uint8_t tipo);
+    void crear_animaciones_sonidos(uint8_t tipo);
 
     void crear_texturas(SDL2pp::Renderer *render);
 

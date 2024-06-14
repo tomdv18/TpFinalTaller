@@ -30,6 +30,7 @@
 #include "camara.h"
 #include "../src/client_src/Vista_Proyectiles/balasPersonajes.h"
 #include "interfaz.h"
+#include <SDL2/SDL_mixer.h>
 
 
 #include "protocolo_cliente.h"
@@ -43,6 +44,7 @@ class Renderizado {
     std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews;
     std::map<uint32_t, std::unique_ptr<EnemigoView>> enemigosViews;
     std::map<uint32_t, std::unique_ptr<ObjetoView>> objetosViews;
+    std::unique_ptr<SDL2pp::Mixer> reproductor_audio;
     BalasPersonajes mapa_balas_pj;
     uint32_t id_jugador;
     std::unique_ptr<Mapa> mapa;
@@ -62,6 +64,8 @@ class Renderizado {
     void recibir_id(uint32_t id_jugador);
 
     void crear_ventana_y_render(const std::string& title, int width, int height);
+
+    void crear_reproductor_audio();
 
     bool renderizar(Evento evento);
 

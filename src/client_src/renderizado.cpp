@@ -11,7 +11,7 @@ personajesViews(personajesViews), mapa_balas_pj() {}
 
 void Renderizado::inicializar_SDL2pp() {
 
-    this->sdl = std::make_unique<SDL2pp::SDL>(SDL_INIT_VIDEO);
+    this->sdl = std::make_unique<SDL2pp::SDL>(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
 }
 
@@ -207,6 +207,7 @@ bool Renderizado::renderizar(Evento evento) {
         BalaView* bala = mapa_balas_pj.obtenerBala(e.id_jugador, e.id_bala);
         bala->actualizar(e, FRAME_RATE);
         bala->renderizar(*render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
+        bala->crear_sonido(*reproductor_audio.get());
 
         if( (bool)e.impacto) {
             // Nunca impacta...
@@ -220,6 +221,7 @@ bool Renderizado::renderizar(Evento evento) {
 
         EnemigoView &e = *(enemigo.second);
         e.renderizar_enemigo(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
+        e.crear_sonido(*this->reproductor_audio);
     }
     
     
@@ -232,12 +234,14 @@ bool Renderizado::renderizar(Evento evento) {
         }
         */
         o.renderizar_objeto(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
+        o.reproducir_audio_objeto(reproductor_audio);
     }
  
     for (auto &personaje : this->personajesViews) {
 
         PersonajeView &p = *(personaje.second);
-        p.renderizar_personaje(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
+        p.renderizar_personaje(render, camara->obtener_posicion_x(), camara->obtener_posicion_y(), this->reproductor_audio);
+        
 		
 	}
 
@@ -249,6 +253,10 @@ bool Renderizado::renderizar(Evento evento) {
 void Renderizado::crear_ventana_y_render(const std::string& title, int width, int height) {
     this->window = std::make_unique<SDL2pp::Window>(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
     this->render = std::make_unique<SDL2pp::Renderer>(*window, -1, SDL_RENDERER_ACCELERATED);
+}
+
+void Renderizado::crear_reproductor_audio() {
+    this->reproductor_audio = std::make_unique<SDL2pp::Mixer>(44100, MIX_DEFAULT_FORMAT, 2, 4096);
 }
 
 void Renderizado::mostrar_tablero_final() {

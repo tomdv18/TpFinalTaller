@@ -1,23 +1,28 @@
 #include "proyectilViewFactory.h"
 
-ProyectilViewFactory::ProyectilViewFactory(std::unique_ptr<Animacion> &animacion) : animacion(animacion) {}
+ProyectilViewFactory::ProyectilViewFactory(std::unique_ptr<Animacion> &animacion, std::unique_ptr<SDL2pp::Chunk> &sonido) 
+: animacion(animacion), sonido(sonido) {}
 
-void ProyectilViewFactory::crear_animaciones(uint8_t tipo_bala) {
+void ProyectilViewFactory::crear_animaciones_sonidos(uint8_t tipo_bala) {
     
     
     switch (tipo_bala)
     {
     case CodigoObjeto::BALA_VELOZ:
         this->animacion = std::unique_ptr<Animacion_Proyectil_Tipo_1>(new Animacion_Proyectil_Tipo_1());
+        this->sonido = std::make_unique<SDL2pp::Chunk>(PATH_SONIDO_PROYECTIL_2);
         break;
     case CodigoObjeto::COHETE_RAPIDO:
         this->animacion = std::unique_ptr<Animacion_Proyectil_Tipo_2>(new Animacion_Proyectil_Tipo_2());
+        this->sonido = std::make_unique<SDL2pp::Chunk>(PATH_SONIDO_PROYECTIL_3);
         break;
     case CodigoObjeto::COHETE_TOXICO:
         this->animacion = std::unique_ptr<Animacion_Proyectil_Tipo_3>(new Animacion_Proyectil_Tipo_3());
+        this->sonido = std::make_unique<SDL2pp::Chunk>(PATH_SONIDO_PROYECTIL_6);
         break;
     default:
         this->animacion = std::unique_ptr<Animacion_Bala_Pistola>(new Animacion_Bala_Pistola());
+        this->sonido = std::make_unique<SDL2pp::Chunk>(PATH_SONIDO_PROYECTIL_1);
         break;
     }
 }

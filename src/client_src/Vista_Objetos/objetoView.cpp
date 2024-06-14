@@ -1,6 +1,7 @@
 #include "objetoView.h"
 
-ObjetoView::ObjetoView() : posicion_x(0), posicion_y(0), widht(25), height(25), factory(this->animaciones) {}
+ObjetoView::ObjetoView() : posicion_x(0), posicion_y(0), widht(25), height(25),
+contador_agarres(0), factory(this->animaciones) {}
 
 void ObjetoView::actualizar_vista_objeto(EventoObjeto &evento, float df) {
 
@@ -9,9 +10,11 @@ void ObjetoView::actualizar_vista_objeto(EventoObjeto &evento, float df) {
     this->mostrarse = evento.mostrandose;
     if(this->mostrarse) {
         this->animaciones.at(Mostrar)->acualizar(df);
+        contador_agarres = 0;
     } else {
         this->animaciones.at(AGARRAR)->en_loop(false);
         this->animaciones.at(AGARRAR)->acualizar(0.4 *df);
+        contador_agarres++;
         mostrarse = false;
     }
 
@@ -32,6 +35,15 @@ void ObjetoView::renderizar_objeto(std::unique_ptr<SDL2pp::Renderer> &render, in
         this->animaciones.at(AGARRAR)->animar(*render, objeto, flip);
     }
 }
+
+void ObjetoView::reproducir_audio_objeto(std::unique_ptr<SDL2pp::Mixer> &reproductor_audio) {
+    
+    if(contador_agarres == 1) {
+        reproductor_audio->PlayChannel(-1, *sonido);
+    }
+    
+}
+
 
 bool ObjetoView::mostrandose(){
     return mostrarse;
