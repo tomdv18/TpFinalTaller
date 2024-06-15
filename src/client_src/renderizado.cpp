@@ -47,13 +47,13 @@ bool Renderizado::renderizar(Evento evento) {
             std::unique_ptr<PersonajeView> personaje;
             switch(evento.id_personaje){
                 case JAZZ:
-                    personaje = std::unique_ptr<PersonajeView>(new PersonajeJazzView(evento, render.get()));
+                    personaje = std::make_unique<PersonajeJazzView>(evento, render.get());
                     break;
                 case SPAZ:
-                    personaje = std::unique_ptr<PersonajeView>(new PersonajeSpazView(evento, render.get()));
+                    personaje = std::make_unique<PersonajeSpazView>(evento, render.get());
                     break;
                 case LORI:
-                    personaje = std::unique_ptr<PersonajeView>(new PersonajeLoriView(evento, render.get()));    
+                    personaje = std::make_unique<PersonajeLoriView>(evento, render.get());    
             }
             std::cout << "MUERE ACA" << std::endl;
             personaje->definir_vida(evento.vida);
@@ -93,16 +93,16 @@ bool Renderizado::renderizar(Evento evento) {
             std::unique_ptr<EnemigoView> enemigo;
             switch(evento.id_personaje) {
                 case LIZZARD:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoLizzardView(render.get()));
+                    enemigo = std::make_unique<EnemigoLizzardView>(render.get());
                     break;
                 case FENCER:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoFencerView(render.get()));
+                    enemigo = std::make_unique<EnemigoFencerView>(render.get());
                     break;
                 case RAT:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoRatView(render.get()));
+                    enemigo = std::make_unique<EnemigoRatView>(render.get());
                     break;
                 case BRUJA:
-                    enemigo = std::unique_ptr<EnemigoView>(new EnemigoBrujaView(render.get()));
+                    enemigo = std::make_unique<EnemigoBrujaView>(render.get());
                     break;
                 default:
                     break;
@@ -121,22 +121,22 @@ bool Renderizado::renderizar(Evento evento) {
             std::unique_ptr<ObjetoView> objeto;
             switch(evento.codigo_objeto) {
                 case GEMA:
-                    objeto = std::unique_ptr<ObjetoView>(new ObjetoGemaView(render.get()));
+                    objeto = std::make_unique<ObjetoGemaView>(render.get());
                     break;
                 case MONEDA:
-                    objeto = std::unique_ptr<ObjetoView>(new ObjetoMonedaView(render.get()));
+                    objeto = std::make_unique<ObjetoMonedaView>(render.get());
                     break;
                 case ZANAHORIA:
-                    objeto = std::unique_ptr<ObjetoView>(new ObjetoZanahoriaView(render.get()));
+                    objeto = std::make_unique<ObjetoZanahoriaView>(render.get());
                     break;
                 case BALA_VELOZ:
-                   objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_1View(render.get()));
+                   objeto = std::make_unique<ObjetoMunicionTipo_1View>(render.get());
                    break;
                 case COHETE_RAPIDO:
-                    objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_2View(render.get()));
+                    objeto = std::make_unique<ObjetoMunicionTipo_2View>(render.get());
                     break; 
                 case COHETE_TOXICO:
-                    objeto = std::unique_ptr<ObjetoView>(new ObjetoMunicionTipo_3View(render.get()));
+                    objeto = std::make_unique<ObjetoMunicionTipo_3View>(render.get());
                     break; 
                 default:
                     break;
@@ -155,23 +155,6 @@ bool Renderizado::renderizar(Evento evento) {
     // Creacion del mapa de balas que tendra los jugadores
     for (const EventoBala &e : evento.eventos_bala) {
         mapa_balas_pj.agregarNuevoMapaBalas(e.id_jugador);
-        /*
-        if (balasViews.find(e.id_jugador) == balasViews.end()) {
-            // Crear una nueva lista de balas para este jugador
-            std::cout << "SAASASASSA\n";
-                balasViews[e.id_jugador] = std::map<uint32_t, std::unique_ptr<BalaView>>();
-        }else{
-                
-            if (balasViews[e.id_jugador].find(e.id_bala) == balasViews[e.id_jugador].end()){
-            // Crear la bala
-                std::unique_ptr<BalaView> b = std::make_unique<BalaView>();
-                balasViews[e.id_jugador][e.id_bala] = std::move(b);
-                balasViews[e.id_jugador][e.id_bala]->crear_animaciones();
-                balasViews[e.id_jugador][e.id_bala]->crear_texturas(render.get());
-                std::cout << "CREANDO BALA PARA JUGADOR: " << e.id_jugador << std::endl;
-            }
-        }
-        */
     }
     // Actualiza la camara
     {

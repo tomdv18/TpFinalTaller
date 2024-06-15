@@ -11,14 +11,10 @@ uint8_t LobbyProtocolo::serializar_creacion_partida(uint8_t max_jugadores){
     bool was_closed = false;
     uint8_t accion = CREAR;
     uint8_t confirmacion;
-    std::cout << "Hola4" << std::endl;
     skt->sendall(&accion,sizeof(accion),&was_closed);
-    std::cout << "Hola5" << std::endl;
     skt->sendall(&max_jugadores,sizeof(max_jugadores),&was_closed);
-    std::cout << "Hola6" << std::endl;
     skt->recvall(&confirmacion,sizeof(confirmacion), &was_closed);
-    std::cout << "Hola7" << std::endl;
-    
+
     return confirmacion;
 }
 
