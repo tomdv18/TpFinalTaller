@@ -6,6 +6,8 @@
 #include "../src/client_src/direcciones.h"
 #include "../src/common_src/evento.h"
 #include "enemigoViewFactory.h"
+#include <SDL2pp/Chunk.hh>
+#include <SDL2pp/Mixer.hh>
 
 
 class EnemigoView {

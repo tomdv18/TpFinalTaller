@@ -11,8 +11,10 @@
 #include "../src/client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_1.h"
 #include "../src/client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_2.h"
 #include "../src/client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_3.h"
-
 #include "../src/client_src/direcciones.h"
+#include <SDL2pp/Chunk.hh>
+#include <SDL2pp/Mixer.hh>
+
 
 class ProyectilViewFactory {
 

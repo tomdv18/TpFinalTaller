@@ -38,7 +38,6 @@ bool Renderizado::renderizar(Evento evento) {
     }
     // Defino tiempo
     this->interfaz->definir_tiempo(evento.tiempo_restante);
-    
     render->Clear();
     std::vector<uint32_t> jugadoresJugando = {}; // Vector de jugadores jugando actualmente
     for(EventoPersonaje evento : evento.eventos_personaje){

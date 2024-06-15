@@ -9,7 +9,6 @@
 #include "../src/common_src/evento.h"
 #include "../src/common_src/codigo_objeto.h"
 #include "../src/client_src/direcciones.h"
-
 #include "../src/client_src/Animaciones/animacion.h"
 #include "proyectilViewFactory.h"
 

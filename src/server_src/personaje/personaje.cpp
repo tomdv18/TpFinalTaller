@@ -27,12 +27,11 @@ Personaje::Personaje(uint32_t id_jugador):
     puntos = 0;
     bala_actual = BALA_NORMAL;
     municiones[BALA_NORMAL] = -1; // -1 para que sea infinita
-    tiempo_disparo = -CONFIG.obtenerBala(BALA_NORMAL).tiempo_entre_disparo;
     direccion_mirando = DERECHA;
     ancho = CONFIG.getAnchoPersonaje();
     alto = CONFIG.getAltoPersonaje();
-
-
+    tiempos_recarga[BALA_NORMAL] = -CONFIG.obtenerBala(BALA_NORMAL).tiempo_entre_disparo;
+    tiempo_disparo = tiempos_recarga[BALA_NORMAL];
 
     this->cambiarEstado(new EstadoQuieto());
 }
@@ -202,6 +201,7 @@ void Personaje::curarse(int vida_restaurada){
 }
 
  void Personaje::cambiar_bala_siguiente() {
+    tiempos_recarga[bala_actual] = tiempo_disparo;
     auto it = municiones.find(bala_actual);
         // Buscar el siguiente arma con municiones
     while (true) {
@@ -214,8 +214,15 @@ void Personaje::curarse(int vida_restaurada){
             break;
         }
     }
+
+    if (tiempos_recarga.find(bala_actual) != tiempos_recarga.end()) {
+        tiempo_disparo = tiempos_recarga[bala_actual];
+    } else {
+        tiempo_disparo = -CONFIG.obtenerBala(bala_actual).tiempo_entre_disparo;
+    }
     std::cout << "ARMA CAMBIADA A: " << (int) bala_actual << std::endl;
     std::cout << "CON BALAS: " << (int) it->second << std::endl;
+    std::cout << "TIEMPO RECARGA: " << (int) tiempo_disparo << std::endl;
 }
 
 void Personaje::agarrar_municion(uint8_t codigo_municion, int municion){
@@ -315,6 +322,12 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
     double delta_tiempo = tiempo_segundos - tiempo_salto;
     salto_horizontal = false;
 
+
+    if(CONFIG.obtenerBala(bala_actual).tiempo_entre_disparo < (tiempo_segundos - tiempo_disparo)){
+        std::cout << "TIEMPO RECARGA 0" << std::endl;
+    }else{
+        std::cout << "TIEMPO DISPARO" << CONFIG.obtenerBala(bala_actual).tiempo_entre_disparo - (tiempo_segundos - tiempo_disparo) << std::endl;
+    }
     if(invulnerable && tiempo_segundos - tiempo_invulnerable >= CONFIG.getTiempoInvulnerabilidad()){
         invulnerable = false;
     }

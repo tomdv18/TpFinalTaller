@@ -72,6 +72,7 @@ protected:
     uint8_t bala_actual;
     double tiempo_disparo;
     std::map<uint8_t,int> municiones;
+    std::map<uint8_t,double> tiempos_recarga; 
 
     uint8_t danio_habilidad;
 

@@ -4,6 +4,9 @@
 #include "../src/client_src/Animaciones/animacion.h"
 #include "../src/common_src/evento.h"
 #include "objetoViewFactory.h"
+#include <SDL2pp/Chunk.hh>
+#include <SDL2pp/Mixer.hh>
+
 
 class ObjetoView {
 

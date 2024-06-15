@@ -493,7 +493,6 @@ Evento LogicaPartida::obtener_snapshot(
         evento_bala.impacto = bala.obtener_impacto();
         evento_bala.tipo_bala = bala.obtener_codigo();
 
-        std::cout << "IMPACTO " << (int)evento_bala.impacto << std::endl;
 
         evento.eventos_bala.emplace_back(evento_bala);
     }
