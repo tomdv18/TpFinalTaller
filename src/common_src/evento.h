@@ -60,6 +60,7 @@ struct __attribute__((packed)) EventoEnemigo{
     uint8_t id_personaje;
     bool esta_vivo;
     bool mirando_izquierda;
+    bool esta_atacando;
 
 };
 

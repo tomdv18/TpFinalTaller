@@ -97,7 +97,7 @@ void Personaje::mover_abajo() {
 
 uint8_t Personaje::disparar(std::chrono::duration<double> tiempo_transcurrido) {
    double tiempo = tiempo_transcurrido.count();
-   if(!usando_especial && !intoxicado ){
+   if(!usando_especial && !intoxicado && estado->obtener_estado() != ESTADO_HERIDO){
         esta_disparando = true;
         if((tiempo - tiempo_disparo) < CONFIG.obtenerBala(bala_actual).tiempo_entre_disparo) return NINGUNO;
         if(municiones[bala_actual] == -1 ){
@@ -124,9 +124,6 @@ void Personaje::quedarse_quieto() {
 
 void Personaje::correr_rapido(std::chrono::duration<double> tiempo_transcurrido) { 
     corriendo = saltando ? false : true; 
-    if(corriendo){
-        this->manejarEstado(ESTADO_CORRIENDO, tiempo_transcurrido);
-    }
 }
 
 void Personaje::correr() { 
@@ -248,6 +245,10 @@ void Personaje::volverse_vulnerable(){ //METODO PARA TESTING
     }
 }
 
+uint8_t Personaje::obtener_puntos_muerte(){
+    return CONFIG.getPuntosPersonaje();
+}
+
 uint32_t Personaje::obtener_posicionX() { return posicion_x; }
 
 uint32_t Personaje::obtener_posicionY() { return posicion_y; }
@@ -324,9 +325,9 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
 
 
     if(CONFIG.obtenerBala(bala_actual).tiempo_entre_disparo < (tiempo_segundos - tiempo_disparo)){
-        std::cout << "TIEMPO RECARGA 0" << std::endl;
+        //std::cout << "TIEMPO RECARGA 0" << std::endl;
     }else{
-        std::cout << "TIEMPO DISPARO" << CONFIG.obtenerBala(bala_actual).tiempo_entre_disparo - (tiempo_segundos - tiempo_disparo) << std::endl;
+        //std::cout << "TIEMPO DISPARO" << CONFIG.obtenerBala(bala_actual).tiempo_entre_disparo - (tiempo_segundos - tiempo_disparo) << std::endl;
     }
     if(invulnerable && tiempo_segundos - tiempo_invulnerable >= CONFIG.getTiempoInvulnerabilidad()){
         invulnerable = false;

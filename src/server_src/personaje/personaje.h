@@ -145,6 +145,8 @@ public:
 
     virtual void agarrar_municion(uint8_t codigo_municion, int municion);
 
+    virtual uint8_t obtener_puntos_muerte();
+
     // Acciones
 
     // Getters Snapshot

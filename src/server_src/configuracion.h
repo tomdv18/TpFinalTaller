@@ -2,7 +2,7 @@
 #define CONFIGURACION_H_
 
 #include <yaml-cpp/yaml.h>
-
+#include "../common_src/codigo_objeto.h"
 
 
 struct ConfigObjeto {
@@ -35,6 +35,7 @@ private:
     double tiempo_intoxicacion;
     int ancho_personaje;
     int alto_personaje;
+    uint8_t puntos_personaje;
 
     // Atributos de habilidades por personaje
     double enfriamiento_habilidad_jazz;
@@ -76,26 +77,59 @@ private:
     int velocidad_enemigo;
     int ancho_enemigo;
     int alto_enemigo;
-    int vida_fencer;
+
     uint32_t puntos_fencer;
     int danio_fencer;
-    int vida_lizzard;
+    int vida_fencer;
     int ancho_fencer;
     int alto_fencer;
+    std::vector<int> probabilidad_vida_fencer;
+    std::vector<int> probabilidad_municion_fencer;
+    double tiempo_reaparicion_fencer;
+    int velocidad_x_fencer;
+
     uint32_t puntos_lizzard;
     int danio_lizzard;
-    int vida_rat;
+    int vida_lizzard;
     int ancho_lizzard;
     int alto_lizzard;
+    std::vector<int> probabilidad_vida_lizzard;
+    std::vector<int> probabilidad_municion_lizzard;
+    double tiempo_reaparicion_lizzard;
+    int velocidad_x_lizzard;
+
     uint32_t puntos_rat;
     int danio_rat;
     int ancho_rat;
     int alto_rat;
+    int vida_rat;
+    std::vector<int> probabilidad_vida_rat;
+    std::vector<int> probabilidad_municion_rat;
+    double tiempo_reaparicion_rat;
+    int velocidad_x_rat;
+
     int vida_bruja;
     int ancho_bruja;
     int alto_bruja;
     uint32_t puntos_bruja;
     int danio_bruja;
+    std::vector<int> probabilidad_vida_bruja;
+    std::vector<int> probabilidad_municion_bruja;
+    double tiempo_reaparicion_bruja;
+    int velocidad_x_bruja;
+
+    std::map<std::string, uint8_t> codigo_balas = {
+            {"bala_normal", BALA_NORMAL},
+            {"bala_veloz", BALA_VELOZ},
+            {"cohete_rapido", COHETE_RAPIDO},
+            {"cohete_toxico", COHETE_TOXICO}
+    };
+
+    std::map<std::string, uint8_t> codigo_objetos = {
+            {"zanahoria", ZANAHORIA},
+            {"gema", GEMA},
+            {"moneda", MONEDA}
+    };
 
     
     double tiempo_reaparicion_enemigo;
@@ -125,6 +159,7 @@ public:
     double getTiempoIntoxicacion() const { return tiempo_intoxicacion; }
     int getAnchoPersonaje() const { return ancho_personaje; }
     int getAltoPersonaje() const { return alto_personaje; }
+    uint8_t getPuntosPersonaje() const { return puntos_personaje;}
 
     uint8_t getDanioHabilidadJazz() const { return danio_habilidad_jazz; }
     uint8_t getDanioHabilidadSpaz() const { return danio_habilidad_spaz; }
@@ -162,6 +197,7 @@ public:
         }
     }
 
+    std::map<std::string, uint8_t> obtenerBalas() const {return codigo_balas;}
     //Getters para enemigos
     int obtenerVidaDefaultEnemigo() const {return vida_default_enemigo;}
     int obtener_danio_default_enemigo() const {return danio_default_enemigo;}
@@ -192,7 +228,25 @@ public:
     int obtenerAltoBruja() const {return alto_bruja;}
     uint32_t obtenerPuntosBruja() const {return puntos_bruja;}
 
+    std::vector<int> obtenerProbabilidadVidaFencer() const {return probabilidad_vida_fencer;}
+    std::vector<int> obtenerProbabilidadVidaLizzard() const {return probabilidad_vida_lizzard;}
+    std::vector<int> obtenerProbabilidadVidaRat() const {return probabilidad_vida_rat;}
+    std::vector<int> obtenerProbabilidadVidaBruja() const {return probabilidad_vida_bruja;}
 
+    std::vector<int> obtenerProbabilidadMunicionFencer() const {return probabilidad_municion_fencer;}
+    std::vector<int> obtenerProbabilidadMunicionLizzard() const {return probabilidad_municion_lizzard;}
+    std::vector<int> obtenerProbabilidadMunicionRat() const {return probabilidad_municion_rat;}
+    std::vector<int> obtenerProbabilidadMunicionBruja() const {return probabilidad_municion_bruja;}
+
+    double obtenerReaparicionFencer() const {return tiempo_reaparicion_fencer;}
+    double obtenerReaparicionLizzard() const {return tiempo_reaparicion_lizzard;}
+    double obtenerReaparicionRat() const {return tiempo_reaparicion_rat;}
+    double obtenerReaparicionBruja() const {return tiempo_reaparicion_bruja;}
+
+    int obtenerVelocidadXFencer() const {return velocidad_x_fencer;}
+    int obtenerVelocidadXLizzard() const {return velocidad_x_lizzard;}
+    int obtenerVelocidadXRat() const {return velocidad_x_rat;}
+    int obtenerVelocidadXBruja() const {return velocidad_x_bruja;}
 
 };
 

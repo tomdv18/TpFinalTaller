@@ -28,9 +28,15 @@ protected:
     uint32_t puntos;
     bool esta_quieto;
     bool volador;
-
+    bool esta_atacando;
+    double tiempo_ataque;
+    double tiempo_entre_ataque;
     uint32_t ancho;
     uint32_t alto;
+    uint32_t pos_x_respawn;
+    uint32_t pos_y_respawn;
+    std::vector<int> proba_vida;
+    std::vector<int> proba_municion;
 
 
     double velocidad_x;
@@ -44,21 +50,10 @@ protected:
     int pasos_patrullando;
     int danio;
 
-    virtual void mover_derecha();
-
-    virtual void mover_izquierda();
-
-    virtual void patrullar();
-
 public:
     explicit Enemigo(uint32_t id_enemigo, uint32_t x, uint32_t y);
 
     // Acciones
-    virtual void quedarse_quieto();
-
-    virtual void matar();
-
-    virtual void revivir();
 
     virtual bool esta_vivo();
 
@@ -92,6 +87,12 @@ public:
     virtual bool mirando_izquierda();
 
     virtual uint32_t obtener_puntos();
+    
+    virtual uint8_t obtener_atacando(){
+        return esta_atacando;
+    }
+
+    virtual uint8_t obtener_item() = 0;
 
     // Getters Snapshot
 

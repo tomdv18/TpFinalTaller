@@ -1,5 +1,4 @@
 #include "configuracion.h"
-#include "../common_src/codigo_objeto.h"
 #include <fstream>
 #include <iostream>
 
@@ -23,6 +22,7 @@ Configuracion::Configuracion(const YAML::Node& config) {
         tiempo_intoxicacion = config["personaje"]["tiempo_intoxicacion"].as<double>();
         ancho_personaje = config["personaje"]["ancho"].as<int>();
         alto_personaje = config["personaje"]["alto"].as<int>();
+        puntos_personaje = config["personaje"]["puntos"].as<uint8_t>();
 
         // Habilidades por personaje
         enfriamiento_habilidad_jazz = config["jazz"]["enfriamiento_habilidad"].as<double>();
@@ -54,13 +54,6 @@ Configuracion::Configuracion(const YAML::Node& config) {
         
         // Municion
 
-        std::map<std::string, uint8_t> codigo_balas = {
-            {"bala_normal", BALA_NORMAL},
-            {"bala_veloz", BALA_VELOZ},
-            {"cohete_rapido", COHETE_RAPIDO},
-            {"cohete_toxico", COHETE_TOXICO}
-        };
-
         for (const auto& entry : config["municion"]) {
             std::string codigo_bala_str = entry.first.as<std::string>();
             if (codigo_balas.find(codigo_bala_str) != codigo_balas.end()) {
@@ -78,11 +71,6 @@ Configuracion::Configuracion(const YAML::Node& config) {
             }
         }
 
-        std::map<std::string, uint8_t> codigo_objetos = {
-            {"zanahoria", ZANAHORIA},
-            {"gema", GEMA},
-            {"moneda", MONEDA}
-        };
 
         for (const auto& entry : config["objeto"]) {
             std::string codigo_objeto_str = entry.first.as<std::string>();
@@ -114,24 +102,41 @@ Configuracion::Configuracion(const YAML::Node& config) {
         puntos_fencer = config["enemigo"]["fencer"]["puntos"].as<uint32_t>();
         ancho_fencer = config["enemigo"]["fencer"]["ancho"].as<int>();
         alto_fencer = config["enemigo"]["fencer"]["alto"].as<int>();
+        probabilidad_vida_fencer = config["enemigo"]["fencer"]["probabilidad_drop_vida"].as<std::vector<int>>();    
+        probabilidad_municion_fencer = config["enemigo"]["fencer"]["probabilidad_drop_municion"].as<std::vector<int>>();    
+        tiempo_reaparicion_fencer = config["enemigo"]["fencer"]["tiempo_reaparicion"].as<double>();
+        velocidad_x_fencer = config["enemigo"]["fencer"]["velocidad_x"].as<int>();    
+
 
         danio_lizzard = config["enemigo"]["lizzard"]["danio"].as<int>();
         vida_lizzard = config["enemigo"]["lizzard"]["vida"].as<int>();
         puntos_lizzard = config["enemigo"]["lizzard"]["puntos"].as<uint32_t>();
-        ancho_lizzard = config["enemigo"]["fencer"]["ancho"].as<int>();
-        alto_lizzard = config["enemigo"]["fencer"]["alto"].as<int>();
+        ancho_lizzard = config["enemigo"]["lizzard"]["ancho"].as<int>();
+        alto_lizzard = config["enemigo"]["lizzard"]["alto"].as<int>();
+        probabilidad_vida_lizzard = config["enemigo"]["lizzard"]["probabilidad_drop_vida"].as<std::vector<int>>();    
+        probabilidad_municion_lizzard = config["enemigo"]["lizzard"]["probabilidad_drop_municion"].as<std::vector<int>>();    
+        tiempo_reaparicion_lizzard = config["enemigo"]["lizzard"]["tiempo_reaparicion"].as<double>();
+        velocidad_x_lizzard = config["enemigo"]["lizzard"]["velocidad_x"].as<int>();  
 
         danio_rat = config["enemigo"]["rat"]["danio"].as<int>();
         vida_rat = config["enemigo"]["rat"]["vida"].as<int>();
         puntos_rat = config["enemigo"]["rat"]["puntos"].as<uint32_t>();
-        ancho_rat= config["enemigo"]["fencer"]["ancho"].as<int>();
-        alto_rat = config["enemigo"]["fencer"]["alto"].as<int>();
+        ancho_rat= config["enemigo"]["rat"]["ancho"].as<int>();
+        alto_rat = config["enemigo"]["rat"]["alto"].as<int>();
+        probabilidad_vida_rat = config["enemigo"]["rat"]["probabilidad_drop_vida"].as<std::vector<int>>();    
+        probabilidad_municion_rat= config["enemigo"]["rat"]["probabilidad_drop_municion"].as<std::vector<int>>();    
+        tiempo_reaparicion_rat = config["enemigo"]["rat"]["tiempo_reaparicion"].as<double>();
+        velocidad_x_rat = config["enemigo"]["rat"]["velocidad_x"].as<int>();  
 
         danio_bruja = config["enemigo"]["bruja"]["danio"].as<int>();
         vida_bruja = config["enemigo"]["bruja"]["vida"].as<int>();
         puntos_bruja = config["enemigo"]["bruja"]["puntos"].as<uint32_t>();
-        ancho_bruja = config["enemigo"]["fencer"]["ancho"].as<int>();
-        alto_bruja = config["enemigo"]["fencer"]["alto"].as<int>();
+        ancho_bruja = config["enemigo"]["bruja"]["ancho"].as<int>();
+        alto_bruja = config["enemigo"]["bruja"]["alto"].as<int>();
+        probabilidad_vida_bruja = config["enemigo"]["bruja"]["probabilidad_drop_vida"].as<std::vector<int>>();    
+        probabilidad_municion_bruja = config["enemigo"]["bruja"]["probabilidad_drop_municion"].as<std::vector<int>>();    
+        tiempo_reaparicion_bruja = config["enemigo"]["bruja"]["tiempo_reaparicion"].as<double>();
+        velocidad_x_bruja = config["enemigo"]["bruja"]["velocidad_x"].as<int>();  
         
 
         tiempo_reaparicion_enemigo = config["enemigo"]["tiempo_reaparicion_enemigo"].as<double>();

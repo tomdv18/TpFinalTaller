@@ -19,8 +19,6 @@
 #include "rectangulo.h"
 
 
-#include "mapa.h"
-
 
 class LogicaPartida {
 private:
@@ -28,12 +26,13 @@ private:
     std::map<uint32_t, std::unique_ptr<Enemigo>> map_enemigos;
     std::map<uint32_t, Objeto*> map_objetos_solidos;
     std::map<uint32_t, std::unique_ptr<Objeto>> map_objetos_comunes;
+    uint32_t id_objetos;
     ControladorBalas controlador_balas;
     FabricaObjetos fabrica_objetos;
     FabricaEnemigos fabrica_enemigos;
 
 
-    Map mapa;
+    void crear_drop(uint8_t codigo_objeto, uint32_t x, uint32_t y);
 
 public:
     LogicaPartida();
@@ -74,6 +73,7 @@ public:
     void actualizar_partida(std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);
 
     Evento obtener_snapshot(std::chrono::time_point<std::chrono::high_resolution_clock> start);
+
 
     // Getters para tests
 

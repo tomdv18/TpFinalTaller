@@ -29,6 +29,8 @@ protected:
 
     double tiempo_interaccion;
 
+    bool puede_reaparecer;
+
     bool mostrar;
 
     bool envenenado;
@@ -61,6 +63,8 @@ public:
 
     virtual void interactuar_personaje(Personaje* personaje,
                                        std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void no_reaparecer();
 };
 
 

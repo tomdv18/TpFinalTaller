@@ -6,8 +6,8 @@
 
 #define CONFIG Configuracion::config()
 
-LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(), mapa("../src/mapas/mapa.yaml"){
-
+LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(){
+    id_objetos = 0;
     YAML::Node mapNode = YAML::LoadFile("../src/mapas/mapa_castle.yaml");
         int i = 0;
         for (const auto& objNode : mapNode["solids"]) {
@@ -26,30 +26,35 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(), mapa("..
         }
 
 
-        i = 0;
+        
         for (const auto& monedaNode : mapNode["moneda"]) {
-            map_objetos_comunes[i] = fabrica_objetos.crear_objeto(MONEDA,monedaNode["x"].as<uint32_t>(),monedaNode["y"].as<uint32_t>(),monedaNode["veneno"].as<bool>());
-            i++;
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(MONEDA,monedaNode["x"].as<uint32_t>(),monedaNode["y"].as<uint32_t>(),monedaNode["veneno"].as<bool>());
+            id_objetos++;
         }
 
 
         for (const auto& gemaNode : mapNode["gema"]) {
-            map_objetos_comunes[i] = fabrica_objetos.crear_objeto(GEMA,gemaNode["x"].as<uint32_t>(),gemaNode["y"].as<uint32_t>(),gemaNode["veneno"].as<bool>());
-            i++;
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(GEMA,gemaNode["x"].as<uint32_t>(),gemaNode["y"].as<uint32_t>(),gemaNode["veneno"].as<bool>());
+            id_objetos++;
         }
 
 
         for (const auto& zanahoriaNode : mapNode["zanahoria"]) {
-            map_objetos_comunes[i] = fabrica_objetos.crear_objeto(ZANAHORIA,zanahoriaNode["x"].as<uint32_t>(), zanahoriaNode["y"].as<uint32_t>(),zanahoriaNode["veneno"].as<bool>());
-            i++;
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(ZANAHORIA,zanahoriaNode["x"].as<uint32_t>(), zanahoriaNode["y"].as<uint32_t>(),zanahoriaNode["veneno"].as<bool>());
+            id_objetos++;
         }
 
-    /*
-        for (const auto& coheteRapidoNode : mapNode["bala_veloz"]) {
-            map_objetos_comunes[i] = fabrica_objetos.crear_objeto(BALA_VELOZ,coheteRapidoNode["x"].as<uint32_t>(), coheteRapidoNode["y"].as<uint32_t>(),coheteRapidoNode["veneno"].as<bool>());
-            i++;
+    
+        for (const auto& BalaVelozNode : mapNode["bala_veloz"]) {
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(BALA_VELOZ,BalaVelozNode["x"].as<uint32_t>(), BalaVelozNode["y"].as<uint32_t>(), false);
+            id_objetos++;
         }
-        */
+
+        for (const auto& CoheteRapidoNode : mapNode["cohete_rapido"]) {
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,CoheteRapidoNode["x"].as<uint32_t>(), CoheteRapidoNode["y"].as<uint32_t>(), false);
+            id_objetos++;
+        }
+        
 
 
         // Carga de enemigos
@@ -83,25 +88,6 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(), mapa("..
                 i++;
             }
         }
-        
-
-
-        map_objetos_comunes[20] = fabrica_objetos.crear_objeto(BALA_VELOZ,700,600,false);
-        map_objetos_comunes[21] = fabrica_objetos.crear_objeto(BALA_VELOZ,700,500,false);
-
-        map_objetos_comunes[22] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,100,600,false);
-        map_objetos_comunes[23] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,100,500,false);
-
-
-        map_objetos_comunes[24] = fabrica_objetos.crear_objeto(COHETE_TOXICO,200,600,false);
-        map_objetos_comunes[25] = fabrica_objetos.crear_objeto(COHETE_TOXICO,200,500,false);
-
-
-    /*
-        for(int k = 200;k <= 10000 ;k++){
-            map_objetos_solidos[i] = new Solido(k,50*k,1000,1,50,50, BLOQUE);
-        }
-    */
     
 }
 
@@ -364,6 +350,9 @@ void LogicaPartida::actualizar_partida(
                             if(par_pj.second->obtener_estado() == ESTADO_ESPECIAL){
                                 // El personaje le hace daño a el
                                 par.second->recibir_golpe(par_pj.second, tiempo_transcurrido);
+                                if(!par.second->esta_vivo()){
+                                    //Drop item
+                                }
                             } else{
                                 // El personaje recibe danio
                                 par_pj.second->recibir_golpe(par.second.get(),tiempo_transcurrido); 
@@ -394,6 +383,13 @@ void LogicaPartida::actualizar_partida(
                     par.second->recibir_golpe(*it,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
                     if(!par.second->esta_vivo()){
                         map_personajes[it->obtener_id_jugador()]->asignar_puntos(par.second->obtener_puntos());
+                        //Dropear item
+                        //map_objetos_comunes[id_objetos] = par.second->obtener_item();
+                        //map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(ZANAHORIA, par.second->obtener_posicionX(), par.second->obtener_posicionY(), false);
+                        //id_objetos++;
+                        //Hacer funcion CREAR DROP RANDOM(RECINBE UINT8_T)
+                        //HACER METODO NO_REAPARECER PARA ITEM, NO PUEDE REAPARECER
+                        crear_drop(par.second->obtener_item(), par.second->obtener_posicionX(), par.second->obtener_posicionY());
                     }
                     it->impactar();
                     break;
@@ -409,6 +405,9 @@ void LogicaPartida::actualizar_partida(
                 if(rect_personaje.hay_colision(rect_bala) && it->obtener_id_jugador() != par.first){  // No se puede hacer daño solo
                     if(!par.second->esta_muerto()){
                         par.second->recibir_golpe(*it,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+                        if(par.second->esta_muerto()){
+                            map_personajes[it->obtener_id_jugador()]->asignar_puntos(par.second->obtener_puntos_muerte());
+                        }
                         it->impactar();
                         break;
                     }
@@ -506,6 +505,9 @@ Evento LogicaPartida::obtener_snapshot(
         eventos_enem.vida = par.second->obtener_vida();
         eventos_enem.esta_vivo = par.second->esta_vivo();
         eventos_enem.mirando_izquierda = par.second->mirando_izquierda();
+        eventos_enem.esta_atacando = par.second->obtener_atacando();
+
+        //std::cout << "ENEMIGO ATACANDO: " << (int) eventos_enem.esta_atacando << std::endl;
 
         evento.eventos_enemigos.emplace_back(eventos_enem);
     }
@@ -531,6 +533,17 @@ int LogicaPartida::getObjetosSolidosSize() {
 
 int LogicaPartida::getObjetosComunesSize() {
     return map_objetos_comunes.size();
+}
+
+void LogicaPartida::crear_drop(uint8_t codigo_objeto, uint32_t x, uint32_t y){
+    if(codigo_objeto == ZANAHORIA){
+        map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(ZANAHORIA, x, y, false);      
+    }else{
+        map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(controlador_balas.obtener_bala_aleatoria(), x, y , false);
+    }
+
+    map_objetos_comunes[id_objetos]->no_reaparecer();
+    id_objetos++;
 }
 
 LogicaPartida::~LogicaPartida() {

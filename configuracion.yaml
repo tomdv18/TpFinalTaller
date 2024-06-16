@@ -7,6 +7,7 @@ personaje:
   tiempo_intoxicacion: 5.0
   ancho: 50
   alto: 50
+  puntos: 100
 
 jazz:
   danio_habilidad: 200
@@ -100,29 +101,45 @@ enemigo:
   ancho: 50
   alto: 50
   fencer:
-    danio: 5
+    danio: 0
     puntos: 50
     vida: 1
     ancho: 70
     alto: 50
+    probabilidad_drop_vida: [0,20]
+    probabilidad_drop_municion: [20,100]
+    tiempo_reaparicion: 5
+    velocidad_x: 5
   lizzard: 
-    danio: 4
+    danio: 0
     puntos: 20
     vida: 1
     ancho: 50
     alto: 50
+    probabilidad_drop_vida: [0,20]
+    probabilidad_drop_municion: [20,100]
+    tiempo_reaparicion: 5
+    velocidad_x: 5
   rat:
-    danio: 3
+    danio: 0
     puntos: 10
     vida: 1
     ancho: 70
     alto: 30
+    probabilidad_drop_vida: [0,20]
+    probabilidad_drop_municion: [20,100]
+    tiempo_reaparicion: 5
+    velocidad_x: 5
   bruja:
-    danio: 6
+    danio: 0
     puntos: 75
     vida: 1
     ancho: 50
     alto: 50
+    probabilidad_drop_vida: [0,20]
+    probabilidad_drop_municion: [20,100]
+    tiempo_reaparicion: 5
+    velocidad_x: 5
 
 
 

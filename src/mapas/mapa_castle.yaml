@@ -422,9 +422,20 @@ zanahoria:
     y: 500
     veneno: false
 bala_veloz:
-  - x: 400
+  - x: 700
     y: 600
-    municion: 60
+  - x: 700
+    y: 500
+cohete_rapido:
+  - x: 100
+    y: 600
+  - x: 100
+    y: 500
+cohete_toxico:
+  - x: 200
+    y: 600
+  - x: 200
+    y: 500
 
 lizzard:
   - x: 400

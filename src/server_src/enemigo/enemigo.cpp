@@ -23,23 +23,15 @@ Enemigo::Enemigo(uint32_t id_enemigo, uint32_t x, uint32_t y):
     velocidad_x = 3;
     velocidad_y = 0;
     volador = false;
+    pos_x_respawn = x;
+    pos_y_respawn = y;
+
+
+    esta_atacando = false;
+    tiempo_ataque = -3;
+    tiempo_entre_ataque = 3;
 }
 
-void Enemigo::mover_derecha() {
-    if (posicion_x + ancho < CONFIG.getAnchoPantalla()) {
-        velocidad_x = CONFIG.obtenerVelocidadEnemigos();
-        esta_quieto = false;
-    }
-    direccion_mirando = DERECHA;
-}
-
-void Enemigo::mover_izquierda() {
-    if (posicion_x > 0) {
-        velocidad_x = -CONFIG.obtenerVelocidadEnemigos();;
-        esta_quieto = false;
-    }
-    direccion_mirando = IZQUIERDA;
-}
 
 void Enemigo::recibir_golpe(Bala bala, std::chrono::duration<double> tiempo_transcurrido){
     bala.inflingir_danio(this, tiempo_transcurrido);
@@ -61,28 +53,21 @@ void Enemigo::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_
 }
 
 void Enemigo::inflingir_danio(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido){
+    if(!esta_atacando){
+        std::cout << "ATACANDO" << std::endl;
+        esta_atacando = true;
+        tiempo_ataque = tiempo_transcurrido.count();
+    }
+     std::cout << "ATACANDO" << std::endl;
     personaje->recibir_golpe(this->danio,tiempo_transcurrido);
 }
 
-
-void Enemigo::matar() { 
-    vida = 0;
-    vivo = false; }
-
-void Enemigo::revivir() { 
-    vivo = true; }
 
 bool Enemigo::esta_vivo() { return vivo; }
 
 int Enemigo::obtener_danio() { return danio; }
 
 uint32_t Enemigo::obtener_puntos(){ return puntos; }
-
-
-void Enemigo::quedarse_quieto() {
-    //velocidad_x = 0;
-    esta_quieto = true;
-}
 
 
 uint32_t Enemigo::obtener_posicionX() { return posicion_x; }
@@ -106,45 +91,18 @@ bool Enemigo::mirando_izquierda(){
     return direccion_mirando == IZQUIERDA;
 }
 
-void Enemigo::patrullar() {
-    switch (direccion_mirando) {
-        case DERECHA:
-            if (pasos_patrullando >= PASOS_POR_DIRECCION) {
-                pasos_patrullando = 0;
-                direccion_mirando = IZQUIERDA;
-                //std::cout << "POSICION DEL ENEMIGO (" << posicion_x << ", " << posicion_y << ")"
-                          //<< std::endl;
-                //std::cout << "CAMBIO DE DIRECCION PATRULLAJE DE DERECHA A IZQUIERDA" << std::endl;
-            } else {
-                mover_derecha();
-                pasos_patrullando++;
-            }
-            break;
-        case IZQUIERDA:
-            if (pasos_patrullando >= PASOS_POR_DIRECCION) {
-                pasos_patrullando = 0;
-                direccion_mirando = DERECHA;
-                //std::cout << "POSICION DEL ENEMIGO (" << posicion_x << ", " << posicion_y << ")"
-                   //       << std::endl;
-                //std::cout << "CAMBIO DE DIRECCION PATRULLAJE DE IZQUIERDA A DERECHA" << std::endl;
-            } else {
-                mover_izquierda();
-                pasos_patrullando++;
-            }
-            break;
-
-        default:
-            break;
-    }
-}
-
 
 void Enemigo::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido, std::map<uint32_t, Objeto*>& map_objetos_solidos) {
     if(!vivo){
         return;
     }
+
+    if(tiempo_transcurrido.count() - tiempo_ataque >= tiempo_entre_ataque){
+        //std::cout << "DEJAR DE ATACAR" << std::endl;
+        esta_atacando = false;
+    }
  
-     uint32_t nueva_posicion_x = posicion_x + velocidad_x;
+    uint32_t nueva_posicion_x = posicion_x + velocidad_x;
     uint32_t nueva_posicion_y = posicion_y + velocidad_y;
 
     Rectangulo rect_enemigo = {nueva_posicion_x, this->posicion_y, this->ancho, this->alto};

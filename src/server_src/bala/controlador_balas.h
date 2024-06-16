@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <unordered_set>
 #include <vector>
+#include <random>
 #include "../personaje/personaje.h"
 #include "bala.h"
 #include "../configuracion.h"
@@ -15,9 +16,16 @@ private:
     std::vector<Bala> balas;
     std::unordered_set<uint32_t> ids_disponibles;
     uint32_t proximo_id;
+    std::vector<uint8_t> codigo_balas;
 
 public:
-    ControladorBalas(): proximo_id(-1) {}
+    ControladorBalas(): proximo_id(-1) {
+        std::map<std::string, uint8_t> codigos = CONFIG.obtenerBalas();
+        for (const auto& par : codigos) {
+            if(par.second == BALA_NORMAL) continue;
+            codigo_balas.push_back(par.second);
+        }
+    }
 
 
     void agregar_bala(uint8_t codigo_bala, uint32_t id_jugador, uint32_t pos_x, uint32_t offset,uint32_t pos_y,
@@ -52,19 +60,18 @@ public:
 
     std::vector<Bala>& obtener_balas() { return balas; }
 
+
+    uint8_t obtener_bala_aleatoria(){
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> distribucion(0, codigo_balas.size() - 1);
+        return codigo_balas[distribucion(gen)];
+    }
+
 private:
     uint32_t obtener_id() {
-        /*
-        if (ids_disponibles.empty()) {
-            return proximo_id++;
-        } else {
-            uint32_t id = *ids_disponibles.begin();
-            ids_disponibles.erase(id);
-            return id;
-        }
-        */
        proximo_id += 1;
-        return proximo_id ;
+    return proximo_id ;
     }
 
 };
