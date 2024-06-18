@@ -77,10 +77,10 @@ char const PATH_RAT_CAMINANDO[] = "../src/client_src/Images/Rat_caminando.png";
 char const PATH_BRUJA_CAMINANDO[] = "../src/client_src/Images/Bruja_volando.png";
 char const PATH_DESAPARECER_ENEMIGO[] = "../src/client_src/Images/desaparecer_enemigo.png";
 
-char const PATH_SONIDO_AGARRAR_MONEDA[] = "../src/client_src/Sonidos/agarrar_moneda.mp3";
-char const PATH_SONIDO_AGARRAR_GEMA[] = "../src/client_src/Sonidos/agarrar_gema.mp3";
-char const PATH_SONIDO_AGARRAR_ZANAHORIA[] = "../src/client_src/Sonidos/agarrar_zanahoria.mp3";
-char const PATH_SONIDO_AGARRAR_MUNICION[] = "../src/client_src/Sonidos/agarrar_municion.mp3";
+char const PATH_SONIDO_AGARRAR_MONEDA[] = "../src/client_src/Sonidos/agarrar_moneda.wav";
+char const PATH_SONIDO_AGARRAR_GEMA[] = "../src/client_src/Sonidos/agarrar_gema.wav";
+char const PATH_SONIDO_AGARRAR_ZANAHORIA[] = "../src/client_src/Sonidos/agarrar_zanahoria.wav";
+char const PATH_SONIDO_AGARRAR_MUNICION[] = "../src/client_src/Sonidos/agarrar_municion.wav";
 
 char const PATH_SONIDO_PROYECTIL_1[] = "../src/client_src/Sonidos/proyectil_1.wav";
 char const PATH_SONIDO_PROYECTIL_2[] = "../src/client_src/Sonidos/proyectil_2.wav";
@@ -89,15 +89,15 @@ char const PATH_SONIDO_PROYECTIL_4[] = "../src/client_src/Sonidos/proyectil_4.wa
 char const PATH_SONIDO_PROYECTIL_5[] = "../src/client_src/Sonidos/proyectil_5.wav";
 char const PATH_SONIDO_PROYECTIL_6[] = "../src/client_src/Sonidos/proyectil_6.wav";
 
-char const PATH_SONIDO_GOLPE_1[] = "../src/client_src/Sonidos/golpe_1.mp3";
-char const PATH_SONIDO_GOLPE_2[] = "../src/client_src/Sonidos/golpe_2.mp3";
-char const PATH_SONIDO_GOLPE_3[] = "../src/client_src/Sonidos/golpe_3.mp3";
-char const PATH_SONIDO_GOLPE_4[] = "../src/client_src/Sonidos/golpe_4.mp3";
-char const PATH_SONIDO_GOLPE_5[] = "../src/client_src/Sonidos/golpe_5.mp3";
-char const PATH_SONIDO_GOLPE_6[] = "../src/client_src/Sonidos/golpe_6.mp3";
+char const PATH_SONIDO_GOLPE_1[] = "../src/client_src/Sonidos/golpe_1.wav";
+char const PATH_SONIDO_GOLPE_2[] = "../src/client_src/Sonidos/golpe_2.wav";
+char const PATH_SONIDO_GOLPE_3[] = "../src/client_src/Sonidos/golpe_3.wav";
+char const PATH_SONIDO_GOLPE_4[] = "../src/client_src/Sonidos/golpe_4.wav";
+char const PATH_SONIDO_GOLPE_5[] = "../src/client_src/Sonidos/golpe_5.wav";
+char const PATH_SONIDO_GOLPE_6[] = "../src/client_src/Sonidos/golpe_6.wav";
 
 char const PATH_SONIDO_ENEMIGO_DESAPARECER[] = "../src/client_src/Sonidos/sonido_desaparecer_enemigo.wav";
-char const PATH_SONIDO_SALTO[] = "../src/client_src/Sonidos/sonido_salto.mp3";
+char const PATH_SONIDO_SALTO[] = "../src/client_src/Sonidos/sonido_salto.wav";
 
 char const CAMINANDO[] = "Caminando";
 char const CORRIENDO[] = "Corriendo";
