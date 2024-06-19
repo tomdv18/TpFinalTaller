@@ -135,9 +135,13 @@ private:
     double tiempo_reaparicion_enemigo;
     
     Configuracion(const YAML::Node& config);
+    static Configuracion* instance;
+    static bool isLoaded;
 
 public:
     static Configuracion& config();
+    static void loadConfig(const bool cheats);
+    static void destroyConfig();
 
     Configuracion(const Configuracion&) = delete;
 

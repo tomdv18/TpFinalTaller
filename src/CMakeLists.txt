@@ -1,5 +1,6 @@
 option(SERVER "Build server" ON)
 set(CONFIG_FILE "${CMAKE_SOURCE_DIR}/configuracion.yaml")
+set(CONFIG_CHEAT_FILE "${CMAKE_SOURCE_DIR}/configuracionCheats.yaml")
 if(SERVER)
 	SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread")
 
@@ -107,6 +108,7 @@ if(SERVER)
 	find_package(yaml-cpp REQUIRED)
 	target_link_libraries(jazzservidor PRIVATE yaml-cpp)
 	target_compile_definitions(jazzservidor PUBLIC CONFIG_PATH="${CONFIG_FILE}")
+	target_compile_definitions(jazzservidor PUBLIC CONFIG_CHEAT_PATH="${CONFIG_CHEAT_FILE}")
 	
 	target_include_directories(jazzservidor PUBLIC ${PROJECT_SOURCE_DIR}/server_src/estado)
 	target_include_directories(jazzservidor PUBLIC ${PROJECT_SOURCE_DIR}/server_src/objeto)

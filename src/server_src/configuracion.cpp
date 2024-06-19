@@ -3,13 +3,36 @@
 #include <iostream>
 
 static const std::string configPath = CONFIG_PATH;
+static const std::string configCheatsPath = CONFIG_CHEAT_PATH;
+
+Configuracion* Configuracion::instance = nullptr;
+bool Configuracion::isLoaded = false;
 
 Configuracion& Configuracion::config() {
-    static Configuracion instance(YAML::LoadFile(configPath));
-    return instance;
+    if (!isLoaded) {
+        throw std::runtime_error("Configuration file not loaded. Call loadConfig() first.");
+    }
+    return *instance;
 }
 
+void Configuracion::loadConfig(bool cheats) {
+    if (!isLoaded) {
+        if (cheats) {
+            instance = new Configuracion(YAML::LoadFile(configCheatsPath));
+        } else {
+        instance = new Configuracion(YAML::LoadFile(configPath));
+        }
+        isLoaded = true;
+    }
+}
 
+void Configuracion::destroyConfig() {
+    if (isLoaded) {
+        delete instance;
+        instance = nullptr;
+        isLoaded = false;
+    }
+}
 
 Configuracion::Configuracion(const YAML::Node& config) {
          // Personaje

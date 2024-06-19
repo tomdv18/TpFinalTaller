@@ -3,12 +3,21 @@
 #include "../common_src/socket.h"
 
 #include "servidor.h"
+#include "configuracion.h"
 
 int main(int argc, char* argv[]) {
     try {
-        if (argc == 2) {
+        if (argc >= 2) {
+            if (argc == 3){
+                Configuracion::loadConfig(true);
+                std::cout << "Cheats enabled" << std::endl;
+            }
+            else{
+                Configuracion::loadConfig(false);
+            }
             Servidor servidor(argv[1]);
             servidor.run();
+            Configuracion::destroyConfig();
             return 0;
         } else {
             std::cerr << "Bad program call. Expected " << argv[0] << " <servername>" << std::endl;
