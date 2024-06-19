@@ -19,12 +19,16 @@ class Interfaz {
         uint32_t puntos;
         std::vector<std::pair<uint32_t, uint32_t>> puntajes;
 
-        void mostrar_vida();
+        void mostrar_vida(SDL2pp::Renderer &render, PersonajeView &personajeViewPtr);
+        void mostrar_tiempo(SDL2pp::Renderer &render);
+        void mostrar_puntaje_jugador(SDL2pp::Renderer &render, PersonajeView &personajeViewPtr);
+        void mostrar_top_puntajes(SDL2pp::Renderer &render, std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews);
+        void mostrar_municiones(SDL2pp::Renderer &render, PersonajeView &personajeViewPtr);
+        void mostrar_tipo_bala(SDL2pp::Renderer &render, PersonajeView &personajeViewPtr);
 
-        void mostrar_municiones();
-
-        void mostrar_arma_seleccionada();
-
+        void mostrar_texto(SDL2pp::Renderer &render, const std::string &texto, SDL_Color color, int x, int y, int w, int h);
+        void mostrar_tabla_puntajes(SDL2pp::Renderer &render);
+        void mostrar_mensaje_final(SDL2pp::Renderer &render);
     public:
         explicit Interfaz(SDL2pp::Renderer &render, int ancho, int alto, uint32_t id_jugador);
 
@@ -35,7 +39,6 @@ class Interfaz {
         void mostrar_hud(SDL2pp::Renderer &render, std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews);
 
         void mostrar_tabla_final(SDL2pp::Renderer &render);
-
 
         ~Interfaz();
 };

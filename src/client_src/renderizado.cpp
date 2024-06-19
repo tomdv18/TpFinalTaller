@@ -262,7 +262,7 @@ void Renderizado::crear_reproductor_audio() {
 
 void Renderizado::mostrar_tablero_final() {
     render->Clear();
-    mapa->dibujar_fondo(*render, *camara);
+    mapa->dibujar_fondo_final(*render);    
     interfaz->mostrar_tabla_final(*render);
     render->Present();
     SDL_Delay(3000); // Muestro la tabla final por 3 segundos

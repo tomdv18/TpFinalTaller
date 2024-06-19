@@ -19,6 +19,8 @@ class Mapa {
 
         void dibujar_fondo(SDL2pp::Renderer &render, Camara &camara);
 
+        void dibujar_fondo_final(SDL2pp::Renderer &render);
+
         void dibujar_entidades(SDL2pp::Renderer &render, Camara &camara);
 
         ~Mapa();
