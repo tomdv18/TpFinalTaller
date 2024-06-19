@@ -37,9 +37,10 @@ std::unique_ptr<Animacion> PersonajeJazzViewFactory::crear_animacion(std::string
     } else if(nombre_animacion == DISPARO_SALTANDO){
         return std::move(std::make_unique<Animacion_Jazz_Disparo_Saltando>());
     }
+    else {
+        return std::move(std::make_unique<Animacion_Jazz_Quieto>());
+    }
     
-
-    return std::move(std::make_unique<Animacion_Jazz_Quieto>());
 }
 
 

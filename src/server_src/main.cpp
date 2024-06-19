@@ -8,12 +8,12 @@
 int main(int argc, char* argv[]) {
     try {
         if (argc >= 2) {
-            if (argc == 3){
-                Configuracion::loadConfig(true);
-                std::cout << "Cheats enabled" << std::endl;
+            if (argc == 2){
+                Configuracion::loadConfig(false);
             }
             else{
-                Configuracion::loadConfig(false);
+                Configuracion::loadConfig(true);
+                std::cout << "Cheats enabled" << std::endl;
             }
             Servidor servidor(argv[1]);
             servidor.run();

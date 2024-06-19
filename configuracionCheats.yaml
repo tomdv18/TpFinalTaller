@@ -1,6 +1,6 @@
 personaje:
   vida: 25
-  velocidad_x: 10
+  velocidad_x: 7
   velocidad_y: 30 
   gravedad: 3
   tiempo_invulnerabilidad: 3.0
@@ -46,7 +46,7 @@ municion:
     largo: 10
     tiempo_reaparicion: 0
   bala_veloz:
-    municion: 250
+    municion: 200
     tiempo_entre_disparo: 0.1
     velocidad_del_proyectil: 30
     danio: 1
@@ -55,7 +55,7 @@ municion:
     largo: 10
     tiempo_reaparicion: 10
   cohete_rapido:
-    municion: 250
+    municion: 100
     tiempo_entre_disparo: 1.5
     velocidad_del_proyectil: 25
     danio: 2
@@ -64,7 +64,7 @@ municion:
     largo: 20
     tiempo_reaparicion: 20
   cohete_toxico:
-    municion: 250
+    municion: 100
     tiempo_entre_disparo: 2
     velocidad_del_proyectil: 15
     danio: 2
@@ -94,7 +94,7 @@ objeto:
     alto: 25
 
 enemigo:
-  tiempo_reaparicion_enemigo: 5
+  tiempo_reaparicion_enemigo: 3.5
   vida_default: 1
   velocidad_default: 3
   danio_default: 1
@@ -108,7 +108,7 @@ enemigo:
     alto: 50
     probabilidad_drop_vida: [10,20]
     probabilidad_drop_municion: [20,100]
-    tiempo_reaparicion: 5
+    tiempo_reaparicion: 3.5
     velocidad_x: 5
   lizzard: 
     danio: 0

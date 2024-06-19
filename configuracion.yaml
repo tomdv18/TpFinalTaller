@@ -101,7 +101,7 @@ enemigo:
   ancho: 50
   alto: 50
   fencer:
-    danio: 0
+    danio: 3
     puntos: 50
     vida: 1
     ancho: 70
@@ -111,7 +111,7 @@ enemigo:
     tiempo_reaparicion: 5
     velocidad_x: 5
   lizzard: 
-    danio: 0
+    danio: 2
     puntos: 20
     vida: 1
     ancho: 50
@@ -121,7 +121,7 @@ enemigo:
     tiempo_reaparicion: 5
     velocidad_x: 5
   rat:
-    danio: 0
+    danio: 1
     puntos: 10
     vida: 1
     ancho: 70
@@ -131,7 +131,7 @@ enemigo:
     tiempo_reaparicion: 5
     velocidad_x: 5
   bruja:
-    danio: 0
+    danio: 2
     puntos: 75
     vida: 1
     ancho: 50
