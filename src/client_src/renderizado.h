@@ -47,6 +47,8 @@ class Renderizado {
     std::unique_ptr<SDL2pp::Mixer> reproductor_audio;
     BalasPersonajes mapa_balas_pj;
     uint32_t id_jugador;
+    std::unique_ptr<SDL2pp::Music> musica;
+    int contador_musica;
     std::unique_ptr<Mapa> mapa;
     std::unique_ptr<Camara> camara;
     std::unique_ptr<Interfaz> interfaz;

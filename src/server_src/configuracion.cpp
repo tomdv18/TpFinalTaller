@@ -13,6 +13,7 @@ Configuracion& Configuracion::config() {
 
 Configuracion::Configuracion(const YAML::Node& config) {
          // Personaje
+
         
         vida_personaje = config["personaje"]["vida"].as<int>();
         velocidad_x_personaje = config["personaje"]["velocidad_x"].as<int>();
@@ -22,7 +23,7 @@ Configuracion::Configuracion(const YAML::Node& config) {
         tiempo_intoxicacion = config["personaje"]["tiempo_intoxicacion"].as<double>();
         ancho_personaje = config["personaje"]["ancho"].as<int>();
         alto_personaje = config["personaje"]["alto"].as<int>();
-        puntos_personaje = config["personaje"]["puntos"].as<uint8_t>();
+        //puntos_personaje = config["personaje"]["puntos"].as<uint8_t>();
 
         // Habilidades por personaje
         enfriamiento_habilidad_jazz = config["jazz"]["enfriamiento_habilidad"].as<double>();
@@ -35,10 +36,9 @@ Configuracion::Configuracion(const YAML::Node& config) {
         velocidad_x_habilidad_lori = config["lori"]["velocidad_x_habilidad"].as<int>();
         velocidad_y_habilidad_lori = config["lori"]["velocidad_y_habilidad"].as<int>();
 
-        danio_habilidad_jazz = config["jazz"]["danio_habilidad"].as<uint8_t>();
-        danio_habilidad_spaz = config["spaz"]["danio_habilidad"].as<uint8_t>();
-        danio_habilidad_lori = config["lori"]["danio_habilidad"].as<uint8_t>();
-
+        //danio_habilidad_jazz = config["jazz"]["danio_habilidad"].as<uint8_t>();
+        //danio_habilidad_spaz = config["spaz"]["danio_habilidad"].as<uint8_t>();
+        //anio_habilidad_lori = config["lori"]["danio_habilidad"].as<uint8_t>();
 
         //partida
         duracion_segundos = config["tiempo_partida"].as<int>();
@@ -140,7 +140,7 @@ Configuracion::Configuracion(const YAML::Node& config) {
         
 
         tiempo_reaparicion_enemigo = config["enemigo"]["tiempo_reaparicion_enemigo"].as<double>();
-
-
+    
+    std::cout << "asdasdasdsadasdasdsadsadasd" << std::endl;
 
 }

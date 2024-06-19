@@ -98,6 +98,8 @@ char const PATH_SONIDO_GOLPE_6[] = "../src/client_src/Sonidos/golpe_6.wav";
 
 char const PATH_SONIDO_ENEMIGO_DESAPARECER[] = "../src/client_src/Sonidos/sonido_desaparecer_enemigo.wav";
 char const PATH_SONIDO_SALTO[] = "../src/client_src/Sonidos/sonido_salto.wav";
+char const PATH_MUSICA_MENU[] = "../src/client_src/Sonidos/Menu.mp3";
+char const PATH_MUSICA_CASTILLO[] = "../src/client_src/Sonidos/Castle.mp3";
 
 char const CAMINANDO[] = "Caminando";
 char const CORRIENDO[] = "Corriendo";

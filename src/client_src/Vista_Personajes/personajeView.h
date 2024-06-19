@@ -39,8 +39,7 @@ class PersonajeView {
     bool saltoHorizontal;
     int contador_golpes;
     int contador_saltos;
-
-
+    
     uint8_t estado; // Almacena el estado actual del personaje
 
     public:
@@ -79,6 +78,10 @@ class PersonajeView {
 
     virtual int obtener_puntos() {
         return this->puntaje;
+    }
+
+    virtual uint32_t obtener_id_jugador() {
+        return id_jugador;
     }
 
     virtual void definir_vida(uint8_t vida) {

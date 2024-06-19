@@ -7,7 +7,7 @@
 #include "../src/client_src/Animaciones/animacion.h"
 
 Renderizado::Renderizado(std::map<uint32_t, std::unique_ptr<PersonajeView>> &personajesViews) : 
-personajesViews(personajesViews), mapa_balas_pj() {}
+personajesViews(personajesViews), mapa_balas_pj(), musica(nullptr), contador_musica(0) {}
 
 void Renderizado::inicializar_SDL2pp() {
 
@@ -29,12 +29,18 @@ void Renderizado::iniciar_camara(Camara &&cam) {
 
 void Renderizado::iniciar_interfaz(int w, int h) {
     this->interfaz = std::make_unique<Interfaz>(*render, w, h, id_jugador);
-    std::cout << "sdrfgdsfdsfdsf"<< std::endl;
 }
 
 bool Renderizado::renderizar(Evento evento) {
     if(evento.tiempo_restante == 0) {
         return false;
+    }
+
+    if(contador_musica == 0) {
+        musica = std::make_unique<SDL2pp::Music>(PATH_MUSICA_CASTILLO);
+        Mix_VolumeMusic(90);
+        this->reproductor_audio->PlayMusic(*musica, -1);
+        contador_musica ++;
     }
     // Defino tiempo
     this->interfaz->definir_tiempo(evento.tiempo_restante);
@@ -54,13 +60,11 @@ bool Renderizado::renderizar(Evento evento) {
                 case LORI:
                     personaje = std::make_unique<PersonajeLoriView>(evento, render.get());    
             }
-            std::cout << "MUERE ACA" << std::endl;
             personaje->definir_vida(evento.vida);
             personaje->definir_puntos(evento.puntos);
             personaje->definir_cantidad_municion(evento.municion);
             personaje->definir_tipo_bala(evento.bala_actual);
             personajesViews[evento.id_jugador] = std::move(personaje);
-            std::cout << "CREANDO JUGADOR" << std::endl;
                 
         }else{
             PersonajeView &personaje = *(personajesViews.at(evento.id_jugador));
@@ -197,14 +201,26 @@ bool Renderizado::renderizar(Evento evento) {
             mapa_balas_pj.eliminarBala(e.id_jugador, e.id_bala);
         }
     }
+
+    std::cout<<"ID: " << static_cast<int> (id_jugador)<< std::endl;
+
     
     // Renderizo enemigos
     for(auto &enemigo : this->enemigosViews) {
 
         EnemigoView &e = *(enemigo.second);
         e.renderizar_enemigo(render, camara->obtener_posicion_x(), camara->obtener_posicion_y());
-        e.crear_sonido(*this->reproductor_audio);
-    }
+
+        for (auto &personaje : this->personajesViews) {
+
+            PersonajeView &p = *(personaje.second);
+            if(p.obtener_id_jugador() == this->id_jugador){
+                std::cout << p.obtener_id_jugador() << " y " << id_jugador << std::endl;
+                e.crear_sonido(*this->reproductor_audio);
+            }
+        }
+	}    
+
     
     
     // Renderizo objetos
@@ -223,7 +239,10 @@ bool Renderizado::renderizar(Evento evento) {
 
         PersonajeView &p = *(personaje.second);
         p.renderizar_personaje(render, camara->obtener_posicion_x(), camara->obtener_posicion_y(), this->reproductor_audio);
-        p.crear_sonido(*this->reproductor_audio.get());
+        if(p.obtener_id_jugador() == this->id_jugador) {
+            p.crear_sonido(*this->reproductor_audio.get());
+        }
+        
 		
 	}
 

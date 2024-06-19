@@ -43,6 +43,7 @@ void EnemigoView::renderizar_enemigo(std::unique_ptr<SDL2pp::Renderer> &render, 
 void EnemigoView::crear_sonido(SDL2pp::Mixer &reproductor_audio) {
     
     if(!this->estaVivo && this->contador_desapariciones == 0){
+        this->sonido->SetVolume(30);
         reproductor_audio.PlayChannel(-1, *sonido);
         contador_desapariciones ++;
     }

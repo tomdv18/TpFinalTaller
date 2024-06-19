@@ -113,7 +113,7 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
     
     // Aca un ejemplo del switch con el patron de estados
     switch (this->estado) {
-    case ESTADO_QUIETO:{
+    case ESTADO_QUIETO:{  
         this->contador_saltos = 0;
         SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
         if(isShooting){

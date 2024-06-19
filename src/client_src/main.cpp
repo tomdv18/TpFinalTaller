@@ -2,16 +2,26 @@
 #include <string>
 #include "lobby.h"
 #include "cliente.h"
-
+#include <SDL2pp/SDL.hh>
+#include <SDL2/SDL.h>
 #include <QApplication>
+#include <QWidget>
 #include "../ventana_lobby/mainwindow.h"
 
 
 int main(int argc, char* argv[]) {
     try {
         if (argc == 3) {
+            
+            SDL2pp::SDL(SDL_INIT_AUDIO);
+            SDL2pp::Mixer reproductor(44100, MIX_DEFAULT_FORMAT, 2, 4096);
+            SDL2pp::Music musica_menu(PATH_MUSICA_MENU);
+            reproductor.PlayMusic(musica_menu, -1);
+
             // Inicio app
             QApplication app(argc,argv);
+            
+            
 
             // Creo el lobby
             const std::string hostname = std::string(argv[1]);
@@ -19,6 +29,7 @@ int main(int argc, char* argv[]) {
             Lobby lobby(hostname,servname);
 
             // Creo el mainwindow
+
             MainWindow mainWindow(&lobby);
             mainWindow.show();
             
@@ -28,7 +39,8 @@ int main(int argc, char* argv[]) {
                 lobby.close();
                 throw std::runtime_error("ERROR");
             }
-            
+            Mix_CloseAudio();
+            SDL_Quit();            
             Cliente cliente(lobby.obtener_socket());
             cliente.comunicarse_con_el_servidor();
             //lobby.close();
