@@ -31,6 +31,7 @@
 #include "../src/client_src/Vista_Proyectiles/balasPersonajes.h"
 #include "interfaz.h"
 #include <SDL2/SDL_mixer.h>
+#include <SDL2pp/Music.hh>
 
 
 #include "protocolo_cliente.h"

@@ -10,7 +10,6 @@
 #include "../src/common_src/evento.h"
 #include <map>
 #include "../src/client_src/direcciones.h"
-#include <SDL2/SDL_mixer.h>
 #include <SDL2pp/Mixer.hh>
 #include <SDL2pp/Chunk.hh> 
 

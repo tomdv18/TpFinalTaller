@@ -9,8 +9,9 @@
 LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(){
     id_objetos = 0;
     YAML::Node mapNode = YAML::LoadFile("../src/mapas/mapa_castle.yaml");
+    //YAML::Node mapNode = YAML::LoadFile("../src/mapas/mapa_prueba.yaml");
         int i = 0;
-        for (const auto& objNode : mapNode["solids"]) {
+        for (const auto& objNode : mapNode["solid"]) {
             map_objetos_solidos[i] = new Solido(i,objNode["x"].as<uint32_t>(),objNode["y"].as<uint32_t>(),1,objNode["width"].as<uint32_t>(),objNode["height"].as<uint32_t>(), BLOQUE);
             i++;
         }
@@ -28,19 +29,19 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(){
 
         
         for (const auto& monedaNode : mapNode["moneda"]) {
-            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(MONEDA,monedaNode["x"].as<uint32_t>(),monedaNode["y"].as<uint32_t>(),monedaNode["veneno"].as<bool>());
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(MONEDA,monedaNode["x"].as<uint32_t>(),monedaNode["y"].as<uint32_t>(),false);
             id_objetos++;
         }
 
 
         for (const auto& gemaNode : mapNode["gema"]) {
-            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(GEMA,gemaNode["x"].as<uint32_t>(),gemaNode["y"].as<uint32_t>(),gemaNode["veneno"].as<bool>());
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(GEMA,gemaNode["x"].as<uint32_t>(),gemaNode["y"].as<uint32_t>(),false);
             id_objetos++;
         }
 
 
         for (const auto& zanahoriaNode : mapNode["zanahoria"]) {
-            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(ZANAHORIA,zanahoriaNode["x"].as<uint32_t>(), zanahoriaNode["y"].as<uint32_t>(),zanahoriaNode["veneno"].as<bool>());
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(ZANAHORIA,zanahoriaNode["x"].as<uint32_t>(), zanahoriaNode["y"].as<uint32_t>(),false);
             id_objetos++;
         }
 
@@ -52,6 +53,11 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(){
 
         for (const auto& CoheteRapidoNode : mapNode["cohete_rapido"]) {
             map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,CoheteRapidoNode["x"].as<uint32_t>(), CoheteRapidoNode["y"].as<uint32_t>(), false);
+            id_objetos++;
+        }
+
+        for (const auto& CoheteToxicoNode : mapNode["cohete_toxico"]) {
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(COHETE_TOXICO,CoheteToxicoNode["x"].as<uint32_t>(), CoheteToxicoNode["y"].as<uint32_t>(), false);
             id_objetos++;
         }
         

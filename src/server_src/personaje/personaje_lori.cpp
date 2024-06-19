@@ -38,5 +38,6 @@ void Lori::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido
     if (en_superficie && usando_especial) {
         velocidad_x = 0;
         usando_especial = false;
+        this->estado->manejarEstado(ESTADO_QUIETO, tiempo_transcurrido.count());
     }
 }

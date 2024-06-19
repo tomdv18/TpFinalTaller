@@ -3,6 +3,9 @@
 #include "lobby.h"
 #include "cliente.h"
 #include <SDL2pp/SDL.hh>
+#include <SDL2pp/SDL2pp.hh>
+#include <SDL2pp/Mixer.hh>
+#include <SDL2pp/Music.hh>
 #include <SDL2/SDL.h>
 #include <QApplication>
 #include <QWidget>

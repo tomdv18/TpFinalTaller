@@ -137,7 +137,7 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
         YAML::Node data = YAML::LoadFile(filename);
 
         // Lee la sección 'solids' del archivo YAML
-        YAML::Node solidsNode = data["solids"];
+        YAML::Node solidsNode = data["solid"];
         std::vector<Position> solids;
 
         for (const auto& solid : solidsNode) {
@@ -153,6 +153,8 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
         // Guarda el vector de solids en el mapa con la clave "solids"
         mapaCompleto.entidades["solids"] = solids;
 
+        std::cout << "SOLIDOS CARGADO" << std::endl;
+
         // Lee el fondo del archivo YAML
         if (data["fondo"]) {
             mapaCompleto.fondo = data["fondo"].as<std::string>();
@@ -160,6 +162,7 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
             std::cerr << "La clave 'fondo' no se encontró en el archivo YAML." << std::endl;
         }
 
+        std::cout << "FONDO CARGADO" << std::endl;
 
         // Superficies diagonales
         YAML::Node trianguloNode = data["triangulo_derecho"];
@@ -189,6 +192,7 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
         }
         mapaCompleto.entidades["triangulo_izquierdo"] = triangulos_izquierdo;
 
+        std::cout << "TRIANGULOS CARGADOS" << std::endl;
 
     } catch (const YAML::Exception& e) {
         std::cerr << "Error al cargar el archivo YAML: " << e.what() << std::endl;
@@ -200,6 +204,7 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
 void Cliente::comunicarse_con_el_servidor() {
     ProtocoloCliente protocolo_temporal(skt);
     MapaCompleto mapa = leerSolidsDesdeYAML("../src/mapas/mapa_castle.yaml");
+    //MapaCompleto mapa = leerSolidsDesdeYAML("../src/mapas/mapa_prueba.yaml");
     
     Camara camara(0, 0, WIDTH, HEIGHT);
     

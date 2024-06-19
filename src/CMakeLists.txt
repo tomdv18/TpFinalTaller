@@ -140,8 +140,7 @@ if(CLIENT)
 	include_directories(${PROJECT_SOURCE_DIR}/src/ventana_lobby)
 	qt5_wrap_ui(UIS_HEADERS
 				./ventana_lobby/mainwindow.ui
-				#./ventana_lobby/joinpopup.ui
-				#./ventana_lobby/createpopup.ui
+
 				)
 	set(CMAKE_AUTOMOC ON)
     	set(CMAKE_AUTOUIC ON)
@@ -406,4 +405,44 @@ if(CLIENT)
 			PROPERTIES
 			RUNTIME_OUTPUT_DIRECTORY ${CLIENT_OUTPUT_DIR})
 	
+endif()
+
+
+option(EDITOR "Build editor" ON)
+
+if(EDITOR)
+
+    	# Find the QtWidgets library
+	
+	find_package(Qt5Widgets CONFIG REQUIRED)
+	include_directories(${PROJECT_SOURCE_DIR}/src)
+	qt5_wrap_ui(UIS_HEADERS
+				./mainwindow.ui
+
+				)
+	set(CMAKE_AUTOMOC ON)
+	set(CMAKE_AUTOUIC ON)
+	set(CMAKE_AUTORCC ON)
+
+    add_executable(jazzeditor
+        ./editor_src/main.cpp
+        ./editor_src/mainwindow.cpp
+	./editor_src/level_render.cpp
+        
+        ${UIS_HEADERS}
+		
+    )
+
+     target_link_libraries(jazzeditor
+        PRIVATE
+        Qt5::Widgets
+        yaml-cpp
+    )
+
+    set(EDITOR_OUTPUT_DIR ${CMAKE_BINARY_DIR})
+
+    set_target_properties(jazzeditor
+        PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${EDITOR_OUTPUT_DIR}
+    )
 endif()
