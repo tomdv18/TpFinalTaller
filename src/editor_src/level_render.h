@@ -14,6 +14,7 @@
 #include <QFile>
 #include <fstream>
 #include <QTextStream>
+#include <QDebug>
 
 struct Tile {
     QPixmap pixmap;

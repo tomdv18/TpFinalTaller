@@ -43,6 +43,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(guardarMapaAction, &QAction::triggered, this, &MainWindow::guardarMapa);
     toolbar->addAction(guardarMapaAction);
 
+    leerMapaAction = new QAction(tr("Cargar Mapa"), this);
+    connect(leerMapaAction, &QAction::triggered, this, &MainWindow::leerMapa);
+    toolbar->addAction(leerMapaAction);
+
 }
 
 MainWindow::~MainWindow()
@@ -208,6 +212,9 @@ void MainWindow::onItemSelectionChanged(const QItemSelection &selected, const QI
                 } else if (itemText.contains("fondo")){
                     blockSize = 50;
                     blockType = "fondo";
+                } else if(itemText.contains("spawn")){
+                    blockSize = 50;
+                    blockType = "spawn";
                 }
 
 
@@ -233,4 +240,23 @@ void MainWindow::guardarMapa()
         }
         levelRenderer->saveToFile(fileName);
     }
+}
+
+
+void MainWindow::leerMapa()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Abrir Mapa"), "",
+        tr("Archivos YAML (*.yaml);;Todos los archivos (*)"));
+
+    if (fileName.isEmpty())
+        return;
+
+    // Asegurar que el archivo tenga la extensión .yaml
+    if (!fileName.endsWith(".yaml", Qt::CaseInsensitive)) {
+        QMessageBox::warning(this, tr("Error"), tr("El archivo seleccionado no es un archivo YAML (.yaml)."));
+        return;
+    }
+
+    levelRenderer->loadFromFile(fileName);
 }

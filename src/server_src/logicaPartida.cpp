@@ -94,6 +94,12 @@ LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(){
                 i++;
             }
         }
+        SpawnPoint spawn;
+        for (const auto& spawnNode : mapNode["spawn"]) {
+            spawn.x = spawnNode["x"].as<uint32_t>();
+            spawn.y = spawnNode["y"].as<uint32_t>();
+            spawns.emplace_back(spawn);
+        }
     
 }
 
@@ -289,7 +295,7 @@ void LogicaPartida::agregar_personaje(Accion accion) {
             std::cout << "CREAR PERSONAJE JAZZ" << std::endl;
             // personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if (map_personajes[accion.id_jugador] == nullptr) {
-                map_personajes[accion.id_jugador] = new Jazz(accion.id_jugador);
+                map_personajes[accion.id_jugador] = new Jazz(accion.id_jugador, spawns);
             }
             break;
         }
@@ -297,7 +303,7 @@ void LogicaPartida::agregar_personaje(Accion accion) {
             std::cout << "CREAR PERSONAJE SPAZ" << std::endl;
             // personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if (map_personajes[accion.id_jugador] == nullptr) {
-                map_personajes[accion.id_jugador] = new Spaz(accion.id_jugador);
+                map_personajes[accion.id_jugador] = new Spaz(accion.id_jugador, spawns);
             }
             break;
         }
@@ -305,7 +311,7 @@ void LogicaPartida::agregar_personaje(Accion accion) {
             std::cout << "CREAR PERSONAJE LORI" << std::endl;
             // personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if (map_personajes[accion.id_jugador] == nullptr) {
-                map_personajes[accion.id_jugador] = new Lori(accion.id_jugador);
+                map_personajes[accion.id_jugador] = new Lori(accion.id_jugador, spawns);
             }
             break;
         }

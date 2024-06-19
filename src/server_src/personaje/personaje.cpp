@@ -1,10 +1,11 @@
 #include "personaje.h"
 #include "../estado/estado_quieto.h"
+#include <random>
 
 #define CONFIG Configuracion::config()
 
-Personaje::Personaje(uint32_t id_jugador):
-        id_jugador(id_jugador), posicion_x(430), posicion_y(500), vida(CONFIG.getVidaPersonaje()), velocidad_x(0), velocidad_y(0), estado(nullptr){
+Personaje::Personaje(uint32_t id_jugador, std::vector<SpawnPoint> spawns):
+        id_jugador(id_jugador), spawns(spawns), posicion_x(0), posicion_y(0), vida(CONFIG.getVidaPersonaje()), velocidad_x(0), velocidad_y(0), estado(nullptr){
     corriendo = false;
     usando_especial = false;
     saltando = false;
@@ -33,6 +34,7 @@ Personaje::Personaje(uint32_t id_jugador):
     tiempos_recarga[BALA_NORMAL] = -CONFIG.obtenerBala(BALA_NORMAL).tiempo_entre_disparo;
     tiempo_disparo = tiempos_recarga[BALA_NORMAL];
 
+    revivir();
     this->cambiarEstado(new EstadoQuieto());
 }
 
@@ -231,6 +233,17 @@ void Personaje::revivir(){
     // Aca deberia setearse alguna nueva posicion de spawn
     this->vida = CONFIG.getVidaPersonaje();
     this->muerto = false;
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, spawns.size() - 1);
+
+    // Seleccionar un spawn point al azar
+    int randomIndex = dis(gen);
+    SpawnPoint randomSpawn = spawns[randomIndex];
+
+    posicion_x = randomSpawn.x;
+    posicion_y = randomSpawn.y;
 }
 
 void Personaje::volverse_invulnerable(double tiempo){

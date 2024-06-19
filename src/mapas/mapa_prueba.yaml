@@ -460,6 +460,11 @@ solid:
     height: 50
     imagen: ../src/mapas/tiles/castle/bloque.png
   - x: 1000
+    y: 1700
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/bloque.png
+  - x: 1000
     y: 1850
     width: 50
     height: 50
@@ -540,12 +545,22 @@ solid:
     height: 50
     imagen: ../src/mapas/tiles/castle/bloque.png
   - x: 1350
+    y: 1700
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/bloque.png
+  - x: 1350
     y: 1950
     width: 50
     height: 50
     imagen: ../src/mapas/tiles/castle/bloque.png
   - x: 1400
     y: 0
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/bloque.png
+  - x: 1400
+    y: 1700
     width: 50
     height: 50
     imagen: ../src/mapas/tiles/castle/bloque.png
@@ -556,6 +571,11 @@ solid:
     imagen: ../src/mapas/tiles/castle/bloque.png
   - x: 1450
     y: 0
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/bloque.png
+  - x: 1450
+    y: 1700
     width: 50
     height: 50
     imagen: ../src/mapas/tiles/castle/bloque.png
@@ -566,6 +586,11 @@ solid:
     imagen: ../src/mapas/tiles/castle/bloque.png
   - x: 1500
     y: 0
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/bloque.png
+  - x: 1500
+    y: 1700
     width: 50
     height: 50
     imagen: ../src/mapas/tiles/castle/bloque.png
@@ -576,6 +601,11 @@ solid:
     imagen: ../src/mapas/tiles/castle/bloque.png
   - x: 1550
     y: 0
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/bloque.png
+  - x: 1550
+    y: 1700
     width: 50
     height: 50
     imagen: ../src/mapas/tiles/castle/bloque.png
@@ -586,6 +616,11 @@ solid:
     imagen: ../src/mapas/tiles/castle/bloque.png
   - x: 1600
     y: 0
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/bloque.png
+  - x: 1600
+    y: 1700
     width: 50
     height: 50
     imagen: ../src/mapas/tiles/castle/bloque.png
@@ -596,6 +631,11 @@ solid:
     imagen: ../src/mapas/tiles/castle/bloque.png
   - x: 1650
     y: 0
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/bloque.png
+  - x: 1650
+    y: 1700
     width: 50
     height: 50
     imagen: ../src/mapas/tiles/castle/bloque.png
@@ -606,6 +646,11 @@ solid:
     imagen: ../src/mapas/tiles/castle/bloque.png
   - x: 1700
     y: 0
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/bloque.png
+  - x: 1700
+    y: 1700
     width: 50
     height: 50
     imagen: ../src/mapas/tiles/castle/bloque.png
@@ -854,27 +899,6 @@ solid:
     width: 50
     height: 50
     imagen: ../src/mapas/tiles/castle/bloque.png
-triangulo_derecho:
-  - x: 350
-    y: 1850
-    width: 50
-    height: 50
-    imagen: ../src/mapas/tiles/castle/triangulo_derecho.png
-  - x: 400
-    y: 1900
-    width: 50
-    height: 50
-    imagen: ../src/mapas/tiles/castle/triangulo_derecho.png
-  - x: 600
-    y: 1850
-    width: 50
-    height: 50
-    imagen: ../src/mapas/tiles/castle/triangulo_derecho.png
-  - x: 650
-    y: 1900
-    width: 50
-    height: 50
-    imagen: ../src/mapas/tiles/castle/triangulo_derecho.png
 triangulo_izquierdo:
   - x: 250
     y: 1900
@@ -896,91 +920,50 @@ triangulo_izquierdo:
     width: 50
     height: 50
     imagen: ../src/mapas/tiles/castle/triangulo_izquierdo.png
+triangulo_derecho:
+  - x: 350
+    y: 1850
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/triangulo_derecho.png
+  - x: 400
+    y: 1900
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/triangulo_derecho.png
+  - x: 600
+    y: 1850
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/triangulo_derecho.png
+  - x: 650
+    y: 1900
+    width: 50
+    height: 50
+    imagen: ../src/mapas/tiles/castle/triangulo_derecho.png
 zanahoria:
-  - x: 150
-    y: 1825
-  - x: 475
-    y: 1825
-  - x: 725
-    y: 1825
+  []
 gema:
-  - x: 900
-    y: 1650
-  - x: 900
-    y: 1675
-  - x: 925
-    y: 1650
-  - x: 925
-    y: 1675
-  - x: 950
-    y: 1650
-  - x: 950
-    y: 1675
-  - x: 975
-    y: 1650
-  - x: 975
-    y: 1675
+  []
 moneda:
-  - x: 300
-    y: 1800
-  - x: 300
-    y: 1825
-  - x: 325
-    y: 1800
-  - x: 325
-    y: 1825
-  - x: 350
-    y: 1800
-  - x: 350
-    y: 1825
-  - x: 375
-    y: 1800
-  - x: 375
-    y: 1825
+  []
 bala_veloz:
-  - x: 575
-    y: 1800
-  - x: 575
-    y: 1825
-  - x: 600
-    y: 1800
-  - x: 600
-    y: 1825
+  []
 cohete_rapido:
-  - x: 800
-    y: 1825
-  - x: 825
-    y: 1825
-  - x: 850
-    y: 1825
-  - x: 875
-    y: 1825
-  - x: 900
-    y: 1825
-  - x: 925
-    y: 1825
-  - x: 950
-    y: 1825
-  - x: 975
-    y: 1825
-  - x: 1000
-    y: 1825
-  - x: 1025
-    y: 1825
-  - x: 1050
-    y: 1825
+  []
 bruja:
-  - x: 300
-    y: 1700
+  []
 lizzard:
-  - x: 450
-    y: 1900
+  []
 fencer:
-  - x: 100
-    y: 1900
-  - x: 1100
-    y: 1900
+  []
 rat:
-  - x: 700
-    y: 1920
-fondo: ../src/mapas/castle_fondo.png
+  []
+spawn:
+  - x: 950
+    y: 1650
+  - x: 950
+    y: 1800
+  - x: 1550
+    y: 1650
+fondo: ../src/mapas/tiles/background/beach_fondo.png

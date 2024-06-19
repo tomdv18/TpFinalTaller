@@ -76,8 +76,10 @@ protected:
 
     uint8_t danio_habilidad;
 
+    std::vector<SpawnPoint> spawns;
+
 public:
-    explicit Personaje(uint32_t id_jugador);
+    explicit Personaje(uint32_t id_jugador, std::vector<SpawnPoint> spawns);
 
 
     int obtener_velocidad(){

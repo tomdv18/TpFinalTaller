@@ -3,7 +3,7 @@
 
 #define CONFIG Configuracion::config()
 
-Lori::Lori(uint32_t id_jugador): Personaje(id_jugador) { 
+Lori::Lori(uint32_t id_jugador, std::vector<SpawnPoint> spawns): Personaje(id_jugador, spawns) { 
     tiempo_especial = -CONFIG.getEnfriamientoHabilidadLori(); 
     danio_habilidad = CONFIG.getDanioHabilidadLori();
     

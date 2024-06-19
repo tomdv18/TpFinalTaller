@@ -8,7 +8,7 @@
 class Spaz: public Personaje {
 private:
 public:
-    explicit Spaz(uint32_t id_jugador);
+    explicit Spaz(uint32_t id_jugador, std::vector<SpawnPoint> spawns);
 
     uint8_t obtener_personaje() override;
 

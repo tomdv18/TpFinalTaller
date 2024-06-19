@@ -8,7 +8,7 @@
 class Jazz: public Personaje {
 private:
 public:
-    explicit Jazz(uint32_t id_jugador);
+    explicit Jazz(uint32_t id_jugador, std::vector<SpawnPoint> spawns);
 
     uint8_t obtener_personaje() override;
 

@@ -85,6 +85,11 @@ struct Position {
     std::string imagen;
 };
 
+struct SpawnPoint{
+    uint32_t x;
+    uint32_t y;
+};
+
 using MapaEntidades = std::map<std::string, std::vector<Position>>;
 using Fondo = std::string;
 

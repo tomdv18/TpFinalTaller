@@ -2,7 +2,7 @@
 
 #define CONFIG Configuracion::config()
 
-Spaz::Spaz(uint32_t id_jugador): Personaje(id_jugador) { 
+Spaz::Spaz(uint32_t id_jugador, std::vector<SpawnPoint> spawns): Personaje(id_jugador, spawns) { 
     tiempo_especial = - CONFIG.getEnfriamientoHabilidadSpaz(); 
     danio_habilidad = CONFIG.getDanioHabilidadSpaz();
     

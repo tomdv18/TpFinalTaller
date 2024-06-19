@@ -2,7 +2,7 @@
 
 #define CONFIG Configuracion::config()
 
-Jazz::Jazz(uint32_t id_jugador): Personaje(id_jugador) { 
+Jazz::Jazz(uint32_t id_jugador, std::vector<SpawnPoint> spawns): Personaje(id_jugador, spawns) { 
     tiempo_especial = - CONFIG.getEnfriamientoHabilidadJazz(); 
     danio_habilidad = CONFIG.getDanioHabilidadJazz();
     

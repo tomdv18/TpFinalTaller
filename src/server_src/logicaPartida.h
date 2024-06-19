@@ -26,6 +26,7 @@ private:
     std::map<uint32_t, std::unique_ptr<Enemigo>> map_enemigos;
     std::map<uint32_t, Objeto*> map_objetos_solidos;
     std::map<uint32_t, std::unique_ptr<Objeto>> map_objetos_comunes;
+    std::vector<SpawnPoint> spawns;
     uint32_t id_objetos;
     ControladorBalas controlador_balas;
     FabricaObjetos fabrica_objetos;

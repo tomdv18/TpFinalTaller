@@ -7,7 +7,7 @@
 class Lori: public Personaje {
 private:
 public:
-    explicit Lori(uint32_t id_jugador);
+    explicit Lori(uint32_t id_jugador, std::vector<SpawnPoint> spawns);
 
     uint8_t obtener_personaje() override;
 

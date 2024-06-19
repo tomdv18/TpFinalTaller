@@ -20,6 +20,7 @@
 #include <QFileDialog>
 #include "level_render.h"
 #include <fstream>
+#include <QMessageBox>
 
 
 QT_BEGIN_NAMESPACE
@@ -51,12 +52,14 @@ private:
 
     QAction *limpiarMapaAction;
     QAction *guardarMapaAction;
+    QAction *leerMapaAction;
 
     void cargarTiles(const QString &directoryPath);
     void cargarTilesSubdir(const QString &subfolderPath);
 
     void limpiarMapa();
     void guardarMapa();
+    void leerMapa();
 };
 
 #endif // MAINWINDOW_H

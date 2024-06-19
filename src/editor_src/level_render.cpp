@@ -328,6 +328,25 @@ void LevelRenderer::saveToFile(const QString &fileName) const
     }
     emitter << YAML::EndSeq;
 
+    emitter << YAML::Key << "cohete_toxico" << YAML::Value << YAML::BeginSeq;
+    for (auto it = tileMap.begin(); it != tileMap.end(); ++it)
+    {
+        BlockCoordinates coords = it.key();
+        QList<Tile> tiles = it.value(); 
+
+        for (const Tile &tile : tiles)
+        {
+            if (tile.type == "cohete_toxico")
+            {
+                emitter << YAML::BeginMap;
+                emitter << YAML::Key << "x" << YAML::Value << coords.x*25;
+                emitter << YAML::Key << "y" << YAML::Value << coords.y*25;
+                emitter << YAML::EndMap;
+            }
+        }
+    }
+    emitter << YAML::EndSeq;
+
     emitter << YAML::Key << "bruja" << YAML::Value << YAML::BeginSeq;
     for (auto it = tileMap.begin(); it != tileMap.end(); ++it)
     {
@@ -404,6 +423,25 @@ void LevelRenderer::saveToFile(const QString &fileName) const
     }
     emitter << YAML::EndSeq;
 
+    emitter << YAML::Key << "spawn" << YAML::Value << YAML::BeginSeq;
+    for (auto it = tileMap.begin(); it != tileMap.end(); ++it)
+    {
+        BlockCoordinates coords = it.key();
+        QList<Tile> tiles = it.value(); 
+
+        for (const Tile &tile : tiles)
+        {
+            if (tile.type == "spawn")
+            {
+                emitter << YAML::BeginMap;
+                emitter << YAML::Key << "x" << YAML::Value << coords.x*50;
+                emitter << YAML::Key << "y" << YAML::Value << coords.y*50;
+                emitter << YAML::EndMap;
+            }
+        }
+    }
+    emitter << YAML::EndSeq;
+
     emitter << YAML::Key << "fondo" << YAML::Value << backgroundText.toStdString();
 
     emitter << YAML::EndMap;
@@ -417,6 +455,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
+        qDebug() << "Failed to open file for reading:" << filename;
         return;
     }
 
@@ -427,20 +466,232 @@ void LevelRenderer::loadFromFile(const QString &filename)
     YAML::Node node = YAML::Load(yamlContent.toStdString());
     tileMap.clear();
 
-    for (const auto &tileNode : node["tiles"])
+    // Cargar bloques 'solid'
+    const auto& solidBlocks = node["solid"];
+    if (solidBlocks.IsSequence())
     {
-        int x = tileNode["x"].as<int>();
-        int y = tileNode["y"].as<int>();
-        int blockSize = tileNode["blockSize"].as<int>();
-        QString pixmapData = QString::fromStdString(tileNode["pixmap"].as<std::string>());
+        for (const auto& blockNode : solidBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString(blockNode["imagen"].as<std::string>());
 
-        QPixmap pixmap;
-        pixmap.loadFromData(QByteArray::fromBase64(pixmapData.toUtf8()), "PNG");
+            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
+            Tile tile = { QPixmap(imagen), 50, "solid", imagen };
 
-        BlockCoordinates coords = { x, y };
-        Tile tile = { pixmap, blockSize };
+            tileMap[coords].append(tile);
+        }
+    }
 
-        tileMap[coords].append(tile);
+    // Cargar bloques 'triangulo_izquierdo'
+    const auto& triangleLeftBlocks = node["triangulo_izquierdo"];
+    if (triangleLeftBlocks.IsSequence())
+    {
+        for (const auto& blockNode : triangleLeftBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString(blockNode["imagen"].as<std::string>());
+
+            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
+            Tile tile = { QPixmap(imagen), 50, "triangulo_izquierdo", imagen };
+
+            tileMap[coords].append(tile);
+        }
+    }
+
+    // Cargar bloques 'triangulo_derecho'
+    const auto& triangleRightBlocks = node["triangulo_derecho"];
+    if (triangleRightBlocks.IsSequence())
+    {
+        for (const auto& blockNode : triangleRightBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString(blockNode["imagen"].as<std::string>());
+
+            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
+            Tile tile = { QPixmap(imagen), 50, "triangulo_derecho", imagen };
+
+            tileMap[coords].append(tile);
+        }
+    }
+
+    // Cargar bloques 'zanahoria'
+    const auto& carrotBlocks = node["zanahoria"];
+    if (carrotBlocks.IsSequence())
+    {
+        for (const auto& blockNode : carrotBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString("../src/mapas/tiles/items/zanahoria.png");
+            BlockCoordinates coords = { x / 25, y / 25 };  // Divide por el tamaño del bloque
+            Tile tile = { QPixmap(imagen), 25, "zanahoria", imagen };
+            tileMap[coords].append(tile);
+        }
+    }
+
+    // Cargar bloques 'gema'
+    const auto& gemBlocks = node["gema"];
+    if (gemBlocks.IsSequence())
+    {
+        for (const auto& blockNode : gemBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString("../src/mapas/tiles/items/gema.png");
+            BlockCoordinates coords = { x / 25, y / 25 };  // Divide por el tamaño del bloque
+            Tile tile = { QPixmap(imagen), 25, "gema", imagen };
+            tileMap[coords].append(tile);
+        }
+    }
+
+    // Cargar bloques 'moneda'
+    const auto& coinBlocks = node["moneda"];
+    if (coinBlocks.IsSequence())
+    {
+        for (const auto& blockNode : coinBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString("../src/mapas/tiles/items/moneda.png");
+            BlockCoordinates coords = { x / 25, y / 25 };  // Divide por el tamaño del bloque
+            Tile tile = { QPixmap(imagen), 25, "moneda", imagen };
+            tileMap[coords].append(tile);
+        }
+    }
+
+    // Cargar bloques 'bala_veloz'
+    const auto& fastBulletBlocks = node["bala_veloz"];
+    if (fastBulletBlocks.IsSequence())
+    {
+        for (const auto& blockNode : fastBulletBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString("../src/mapas/tiles/items/municion_1.png");
+            BlockCoordinates coords = { x / 25, y / 25 };  // Divide por el tamaño del bloque
+            Tile tile = { QPixmap(imagen), 25, "bala_veloz", imagen };
+            tileMap[coords].append(tile);
+        }
+    }
+
+    // Cargar bloques 'cohete_rapido'
+    const auto& fastRocketBlocks = node["cohete_rapido"];
+    if (fastRocketBlocks.IsSequence())
+    {
+        for (const auto& blockNode : fastRocketBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString("../src/mapas/tiles/items/municion_2.png");
+            BlockCoordinates coords = { x / 25, y / 25 };  // Divide por el tamaño del bloque
+            Tile tile = { QPixmap(imagen), 25, "cohete_rapido", imagen };
+            tileMap[coords].append(tile);
+        }
+    }
+
+    const auto& coheteToxicoNode = node["cohete_toxico"];
+    if (coheteToxicoNode.IsSequence())
+    {
+        for (const auto& blockNode : coheteToxicoNode)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString("../src/mapas/tiles/items/municion_3.png");
+            BlockCoordinates coords = { x / 25, y / 25 };  // Divide por el tamaño del bloque
+            Tile tile = { QPixmap(imagen), 25, "cohete_toxico", imagen };
+            tileMap[coords].append(tile);
+        }
+    }
+
+    // Cargar bloques 'bruja'
+    const auto& witchBlocks = node["bruja"];
+    if (witchBlocks.IsSequence())
+    {
+        for (const auto& blockNode : witchBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString("../src/mapas/tiles/enemigos/enemigo_bruja.png");
+            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
+            // Maneja la carga de la bruja aquí
+            Tile tile = { QPixmap(imagen), 50, "bruja", imagen };
+            tileMap[coords].append(tile);
+        }
+    }
+
+    // Cargar bloques 'lizzard'
+    const auto& lizardBlocks = node["lizzard"];
+    if (lizardBlocks.IsSequence())
+    {
+        for (const auto& blockNode : lizardBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString("../src/mapas/tiles/enemigos/enemigo_lizzard.png");
+            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
+            Tile tile = { QPixmap(imagen), 50, "lizzard", imagen };
+            tileMap[coords].append(tile);
+        }
+    }
+
+    // Cargar bloques 'fencer'
+    const auto& fencerBlocks = node["fencer"];
+    if (fencerBlocks.IsSequence())
+    {
+        for (const auto& blockNode : fencerBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString("../src/mapas/tiles/enemigos/enemigo_fencer.png");
+            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
+            // Maneja la carga del espadachín aquí
+            Tile tile = { QPixmap(imagen), 50, "fencer", imagen };
+            tileMap[coords].append(tile);
+        }
+    }
+
+    // Cargar bloques 'rat'
+    const auto& ratBlocks = node["rat"];
+    if (ratBlocks.IsSequence())
+    {
+        for (const auto& blockNode : ratBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>() - 20;  // Ajuste específico para 'rat'
+            QString imagen = QString::fromStdString("../src/mapas/tiles/enemigos/enemigo_rat.png");
+            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
+            // Maneja la carga de la rata aquí
+            Tile tile = { QPixmap(imagen), 50, "rat", imagen };
+            tileMap[coords].append(tile);
+        }
+    }
+
+    // Cargar bloques 'spawn'
+    const auto& spawnBlocks = node["spawn"];
+    if (spawnBlocks.IsSequence())
+    {
+        for (const auto& blockNode : spawnBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString("../src/mapas/tiles/spawn/spawn_jugador.png");
+            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
+            // Maneja la carga del spawn aquí
+            Tile tile = { QPixmap(imagen), 50, "spawn", imagen };
+
+            tileMap[coords].append(tile);
+        }
+    }
+
+    // Cargar fondo
+    if (node["fondo"])
+    {
+        backgroundText = QString::fromStdString(node["fondo"].as<std::string>());
+        // Maneja la carga del fondo aquí si es necesario
+        m_backgroundPixmap = QPixmap(backgroundText);
     }
 
     update();
