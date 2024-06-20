@@ -29,8 +29,6 @@ public:
 
     uint32_t leer_id_partida(bool& was_closed);
 
-    std::string leer_mapa(bool& was_closed);
-
     void enviar_mapa(std::string nombre_mapa, bool& was_closed);
 
     void enviar_confirmacion(uint8_t codigo, bool& was_closed);
