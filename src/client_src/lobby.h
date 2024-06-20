@@ -17,14 +17,20 @@ private:
 
     RecibidorLobby recibidor_lobby;
 
+    std::string nombre_mapa;
+
 public:
     Lobby(const std::string &hostname, const std::string &servname);
 
-    bool crear_partida(uint8_t max_jugadores, const std::string mapa_seleccionado);
+    bool crear_partida(uint8_t max_jugadores, std::string mapa);
 
-    bool unirse_partida(uint32_t codigo_partida);
+    bool unirse_partida(uint32_t codigo_partida, std::string &mapa);
 
     void elegir_personaje(uint8_t personaje);
+
+    std::string devolver_mapa();
+    
+    void definir_mapa(std::string mapa);
 
     void close();
 

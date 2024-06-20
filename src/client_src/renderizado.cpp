@@ -35,13 +35,14 @@ bool Renderizado::renderizar(Evento evento) {
     if(evento.tiempo_restante == 0) {
         return false;
     }
-
+    /*
     if(contador_musica == 0) {
         musica = std::make_unique<SDL2pp::Music>(PATH_MUSICA_CASTILLO);
         Mix_VolumeMusic(90);
         this->reproductor_audio->PlayMusic(*musica, -1);
         contador_musica ++;
     }
+    */
     // Defino tiempo
     this->interfaz->definir_tiempo(evento.tiempo_restante);
     render->Clear();

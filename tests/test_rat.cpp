@@ -5,6 +5,7 @@ struct EnemigoRatTest : testing::Test{
     Enemigo * enemigo;
 
     EnemigoRatTest(){
+        Configuracion::loadConfig(false);
         enemigo = new Rat(001,00,00);
     }
 

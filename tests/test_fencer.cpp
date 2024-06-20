@@ -9,6 +9,7 @@ struct EnemigoFencerTest : testing::Test{
     Enemigo * enemigo;
 
     EnemigoFencerTest(){
+        Configuracion::loadConfig(false);
         enemigo = new Fencer(001,00,00);
     }
 

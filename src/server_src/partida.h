@@ -30,10 +30,15 @@ private:
 
     LogicaPartida logica_partida;
 
+    std::string nombre_mapa;
+
+
 public:
-    Partida(uint32_t id_creador, uint8_t max_jugadores, uint32_t id, Queue<Evento>* queue_jugador);
+    Partida(uint32_t id_creador, uint8_t max_jugadores, uint32_t id, Queue<Evento>* queue_jugador, std::string mapa);
 
     Queue<Accion>* obtener_queue();
+
+    std::string obtener_mapa();
 
     void listar_jugadores();
 

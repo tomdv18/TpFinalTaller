@@ -35,3 +35,8 @@ uint8_t Bruja::obtener_item() {
     }
     return BALA_NORMAL;
 }
+
+void Bruja::revivir() {
+    vida = CONFIG.obtenerVidaBruja();
+    vivo = true;
+}

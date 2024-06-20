@@ -36,7 +36,7 @@ private:
     void crear_drop(uint8_t codigo_objeto, uint32_t x, uint32_t y);
 
 public:
-    LogicaPartida();
+    LogicaPartida(std::string mapa);
 
     void ejecutar(Accion accion,
                   std::chrono::time_point<std::chrono::high_resolution_clock> tiempo);

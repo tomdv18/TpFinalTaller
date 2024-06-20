@@ -5,6 +5,7 @@
 
 #include "sys/socket.h"
 
+static const int MAX_NAME = 256;
 
 ProtocoloServidor::ProtocoloServidor(Socket skt): skt_jugador(std::move(skt)) {}
 
@@ -14,18 +15,23 @@ uint8_t ProtocoloServidor::leer_jugadores(bool& was_closed) {
     return max_jugadores;
 }
 
-std::string ProtocoloServidor::leer_mapa(bool& was_closed){
-    uint8_t size_mapa;
-    char byte;
-    skt_jugador.recvall(&size_mapa, sizeof(size_mapa), &was_closed);
-    std::string nombre_mapa;
-    for(int i = 0; i < size_mapa; i++){
-        skt_jugador.recvall(&byte, sizeof(char), &was_closed);
-        nombre_mapa += byte;
+static std::vector<uint8_t> stringToUint8Vector(const std::string& str)
+{
+    std::vector<uint8_t> result;
+
+    for (char ch : str) {
+        result.push_back(static_cast<uint8_t>(ch));
     }
-    nombre_mapa += ".yaml";
-    return nombre_mapa;
+
+    return result;
 }
+
+void ProtocoloServidor::enviar_mapa(std::string nombre_mapa, bool& was_closed) {
+    std::vector<uint8_t> bytes = stringToUint8Vector(nombre_mapa);
+    bytes.push_back(0x00); // Final del nombre
+    skt_jugador.sendall(bytes.data(), bytes.size() * sizeof(uint8_t), &was_closed);
+}
+
 
 uint32_t ProtocoloServidor::leer_id_partida(bool& was_closed) {
     uint32_t id_partida;
@@ -33,6 +39,28 @@ uint32_t ProtocoloServidor::leer_id_partida(bool& was_closed) {
     id_partida = ntohl(id_partida);
     return id_partida;
 }
+
+static std::string uint8VectorToString(const std::vector<uint8_t>& bytes)
+{
+    // Utilizar el constructor del string que toma iteradores
+    return std::string(bytes.begin(), bytes.end());
+}
+
+std::string ProtocoloServidor::leer_mapa(bool& was_closed) {
+    std::vector<uint8_t> bytes_nombre;
+    for(size_t i = 0; i < MAX_NAME; i++) {
+        uint8_t byte;
+        skt_jugador.recvall(&byte, sizeof(uint8_t), &was_closed);
+        if (was_closed) {
+            throw std::runtime_error("Se perdió la conexion con el cliente");
+        }
+        if (byte == 0x00) {
+            break;
+        }
+        bytes_nombre.push_back(byte);
+    }
+    return uint8VectorToString(bytes_nombre);
+};
 
 
 uint8_t ProtocoloServidor::obtener_accion(bool& was_closed) {
@@ -143,21 +171,6 @@ void ProtocoloServidor::enviar_posiciones_entidad(const std::vector<Position>& p
 
     for (const auto& pos: positions) {
         skt_jugador.sendall(&pos, sizeof(pos), &was_closed);
-    }
-}
-
-void ProtocoloServidor::enviar_mapa(const MapaEntidades& map) {
-    bool was_closed;
-    uint32_t cantidad_entidades = map.size() - 1;  // Excluye posiciones_jugadores
-    cantidad_entidades = htonl(cantidad_entidades);
-    skt_jugador.sendall(&cantidad_entidades, sizeof(cantidad_entidades), &was_closed);
-
-    for (auto pair: map) {
-        if (pair.first == "posicion_personaje")
-            continue;  // Excluye posiciones_jugadores
-
-        enviar_tipo_entidad(pair.first, was_closed);
-        enviar_posiciones_entidad(pair.second, was_closed);
     }
 }
 

@@ -29,6 +29,10 @@ public:
 
     uint32_t leer_id_partida(bool& was_closed);
 
+    std::string leer_mapa(bool& was_closed);
+
+    void enviar_mapa(std::string nombre_mapa, bool& was_closed);
+
     void enviar_confirmacion(uint8_t codigo, bool& was_closed);
 
     void enviar_id_jugador(uint32_t id, bool& was_closed);
@@ -36,8 +40,6 @@ public:
     void enviar_lista_partidas(MonitorPartidas& monitor_partidas, bool& was_closed);
 
     void close();
-
-    void enviar_mapa(const MapaEntidades& map);
 
     ~ProtocoloServidor();
 

@@ -5,6 +5,7 @@ struct EnemigoBrujaTest : testing::Test{
     Enemigo * enemigo;
 
     EnemigoBrujaTest(){
+        Configuracion::loadConfig(false);
         enemigo = new Bruja(001,00,00);
     }
 
