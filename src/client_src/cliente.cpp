@@ -12,7 +12,7 @@
 #define WIDTH 640
 #define HEIGHT 480
 
-Cliente::Cliente(Socket& skt): skt(skt), estado(true), personajes(), renderizado(personajes) {
+Cliente::Cliente(Socket& skt, std::string mapa): skt(skt), estado(true), personajes(), renderizado(personajes), nombre_mapa(mapa){
     bool was_closed = false;
     skt.recvall(&id_jugador,sizeof(id_jugador), &was_closed);
     id_jugador = ntohl(id_jugador);
@@ -202,8 +202,8 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
 }
 
 void Cliente::comunicarse_con_el_servidor() {
-    ProtocoloCliente protocolo_temporal(skt);
-    MapaCompleto mapa = leerSolidsDesdeYAML("../src/mapas/mapa_castle.yaml");
+    std::string path = "../src/mapas/" + nombre_mapa + ".yaml";
+    MapaCompleto mapa = leerSolidsDesdeYAML(path);
     //MapaCompleto mapa = leerSolidsDesdeYAML("../src/mapas/mapa_prueba.yaml");
     
     Camara camara(0, 0, WIDTH, HEIGHT);

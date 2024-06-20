@@ -6,9 +6,10 @@
 
 #define CONFIG Configuracion::config()
 
-LogicaPartida::LogicaPartida() : fabrica_objetos(), fabrica_enemigos(){
+LogicaPartida::LogicaPartida(std::string mapa) : fabrica_objetos(), fabrica_enemigos(){
     id_objetos = 0;
-    YAML::Node mapNode = YAML::LoadFile("../src/mapas/mapa_castle.yaml");
+    std::string ruta = "../src/mapas/" + mapa + ".yaml";
+    YAML::Node mapNode = YAML::LoadFile(ruta);
     //YAML::Node mapNode = YAML::LoadFile("../src/mapas/mapa_prueba.yaml");
         int i = 0;
         for (const auto& objNode : mapNode["solid"]) {

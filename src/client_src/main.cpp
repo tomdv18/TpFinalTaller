@@ -44,7 +44,8 @@ int main(int argc, char* argv[]) {
             }
             Mix_CloseAudio();
             SDL_Quit();            
-            Cliente cliente(lobby.obtener_socket());
+            std::string mapa = lobby.devolver_mapa();
+            Cliente cliente(lobby.obtener_socket(), mapa);
             cliente.comunicarse_con_el_servidor();
             //lobby.close();
             //cliente.comunicarse_con_el_servidor();

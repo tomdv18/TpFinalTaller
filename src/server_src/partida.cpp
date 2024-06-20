@@ -5,16 +5,20 @@
 #include <arpa/inet.h>
 
 Partida::Partida(uint32_t id_creador, uint8_t max_jugadores, uint32_t id,
-                 Queue<Evento>* queue_creador):
+                 Queue<Evento>* queue_creador, std::string mapa):
         id(id),
         id_creador(id_creador),
         max_jugadores(max_jugadores),
         queue_acciones(1000),
-        logica_partida() {
+        logica_partida(mapa),
+        nombre_mapa(mapa) {
 
     map_jugadores[id_creador] = queue_creador;
 }
 
+std::string Partida::obtener_mapa() {
+    return nombre_mapa;
+}
 
 Queue<Accion>* Partida::obtener_queue() { return &queue_acciones; }
 

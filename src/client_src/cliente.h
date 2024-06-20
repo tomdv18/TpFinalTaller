@@ -11,15 +11,6 @@
 #include "../common_src/evento.h"
 #include <arpa/inet.h>
 
-
-
-
-/**
- * TDA Cliente.
- * Su función principal es comunicarse con el servidor enviando
- * acciones.
- */
-
 class Cliente {
 private:
     Socket &skt;        
@@ -27,45 +18,20 @@ private:
     Renderizado renderizado;
     std::map<uint32_t, std::unique_ptr<PersonajeView>> personajes;
     uint32_t id_jugador;
+    std::string nombre_mapa;
     
 public:
-    /**
-     * Constructor de la clase Cliente.
-     *
-     * @param skt El socket con el que se comunicara con el cliente.
-     */
-    explicit Cliente(Socket &skt);
+    explicit Cliente(Socket &skt, std::string mapa);
 
-    /**
-     * Verifica si se proporcionan los argumentos esperados.
-     * Registra un mensaje de error utilizando syslog si los
-     * argumentos no son los esperados.
-     *
-     * @param argc El número de argumentos en la línea de comandos.
-     * @param args Un arreglo de cadenas que contiene los argumentos de la línea de comandos.
-     * @return Retorna false si los argumentos no son los esperados, caso contrario, verdadero.
-     */
     static bool verificar_argumentos(int argc, char* args[]);
 
-    /**
-     * Inicia la comunicación con el servidor enviando/recibiendo acciones/eventos.
-     */
     void comunicarse_con_el_servidor();
 
-    /**
-     * Termina la comunicacion con el servidor.
-    */
     void terminar_comunicacion();
 
-    /**
-     * Deshabilita la construcción y asignación por copia de objetos.
-     */
     Cliente(const Cliente&) = delete;
     Cliente& operator=(const Cliente&) = delete;
 
-    /**
-     * Permite la construcción y asignación por movimiento de objetos.
-     */
     Cliente(Cliente&&) = default;
     Cliente& operator=(Cliente&&) = default;
 };
