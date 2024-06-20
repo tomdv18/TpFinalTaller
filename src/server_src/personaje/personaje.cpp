@@ -416,6 +416,10 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                 uint32_t m = (y2 - y1) / (x2-x1);
                 uint32_t b = y1-m*x1;
 
+                if(p1y > y1 && p1y > y2){ //Estoy por debajo del triangulo
+                    continue;
+                }
+                
 
                 // Verificar si el rectángulo está completamente dentro del triángulo derecho
                 if (p1x >= x1 && p1x <= x2 && p2y >= m*p1x + b ) {
@@ -435,7 +439,7 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                             en_diagonal = true;
                         }
                     }
-                } else if(p1x <= x1 && x1 <= p2x && y1 <= p2y){
+                } else if(p1x <= x1 && x1 <= p2x && y1 <= p2y && p2y <= y2){
                     if (velocidad_x > 0 && velocidad_y == 0) {
                     // Verificar si el personaje está intentando avanzar hacia el triángulo
                         if (nueva_posicion_y + this->ancho != y1) {
@@ -453,9 +457,13 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                 uint32_t y1 = par_objeto.second->obtener_posicionY();
                 uint32_t y2 = par_objeto.second->obtener_posicionY() + par_objeto.second->obtener_alto();
                 
-            
+
+                
+
+
                     int b = y1-x1;
                     if(p2x >= x1 && p1y <= p2x + b && p2x <= x2 && p2y >= y1){
+                        //std::cout << "COLISION ARRIBA" << std::endl;
                         rotacion = DERECHA;
                         inclinar = true;
                         if(velocidad_y >= 0){
@@ -463,9 +471,8 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                             nueva_posicion_y = y2 - (p2x - x1) - this->obtener_alto();
                             colision_suelo = true;
                         }
-                    } else if(p1x <= x2 && x2 <= p2x && y1 <= p2y){
+                    } else if(p1x <= x2 && x2 <= p2x && y1 <= p2y && y2>=p2y){
                         if (velocidad_x < 0) {
-                        // Verificar si el personaje está intentando avanzar hacia el triángulo
                             if (nueva_posicion_y + this->ancho != y1) {
                                 nueva_posicion_x = x1 + this->obtener_ancho();
                             }

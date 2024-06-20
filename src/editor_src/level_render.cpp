@@ -446,8 +446,14 @@ void LevelRenderer::saveToFile(const QString &fileName) const
 
     emitter << YAML::EndMap;
 
-    std::ofstream fout(fileName.toStdString());
-    fout << emitter.c_str();  
+    std::ofstream fout(fileName.toStdString(), std::ios::out | std::ios::trunc);
+    if (!fout.is_open()) {
+        qDebug() << "No se puede abrir el archivo para escritura:" << fileName;
+        return;
+    }
+    fout << emitter.c_str();
+    fout.close();
+
 }
 
 void LevelRenderer::loadFromFile(const QString &filename)
@@ -493,7 +499,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString(blockNode["imagen"].as<std::string>());
 
-            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
+            BlockCoordinates coords = { x / 50, y / 50 };  
             Tile tile = { QPixmap(imagen), 50, "triangulo_izquierdo", imagen };
 
             tileMap[coords].append(tile);
@@ -510,7 +516,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString(blockNode["imagen"].as<std::string>());
 
-            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
+            BlockCoordinates coords = { x / 50, y / 50 };  
             Tile tile = { QPixmap(imagen), 50, "triangulo_derecho", imagen };
 
             tileMap[coords].append(tile);
@@ -526,7 +532,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString("../src/mapas/tiles/items/zanahoria.png");
-            BlockCoordinates coords = { x / 25, y / 25 };  // Divide por el tamaño del bloque
+            BlockCoordinates coords = { x / 25, y / 25 };  
             Tile tile = { QPixmap(imagen), 25, "zanahoria", imagen };
             tileMap[coords].append(tile);
         }
@@ -541,7 +547,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString("../src/mapas/tiles/items/gema.png");
-            BlockCoordinates coords = { x / 25, y / 25 };  // Divide por el tamaño del bloque
+            BlockCoordinates coords = { x / 25, y / 25 };  
             Tile tile = { QPixmap(imagen), 25, "gema", imagen };
             tileMap[coords].append(tile);
         }
@@ -556,7 +562,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString("../src/mapas/tiles/items/moneda.png");
-            BlockCoordinates coords = { x / 25, y / 25 };  // Divide por el tamaño del bloque
+            BlockCoordinates coords = { x / 25, y / 25 };  
             Tile tile = { QPixmap(imagen), 25, "moneda", imagen };
             tileMap[coords].append(tile);
         }
@@ -571,7 +577,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString("../src/mapas/tiles/items/municion_1.png");
-            BlockCoordinates coords = { x / 25, y / 25 };  // Divide por el tamaño del bloque
+            BlockCoordinates coords = { x / 25, y / 25 };  
             Tile tile = { QPixmap(imagen), 25, "bala_veloz", imagen };
             tileMap[coords].append(tile);
         }
@@ -586,7 +592,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString("../src/mapas/tiles/items/municion_2.png");
-            BlockCoordinates coords = { x / 25, y / 25 };  // Divide por el tamaño del bloque
+            BlockCoordinates coords = { x / 25, y / 25 };  
             Tile tile = { QPixmap(imagen), 25, "cohete_rapido", imagen };
             tileMap[coords].append(tile);
         }
@@ -600,7 +606,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString("../src/mapas/tiles/items/municion_3.png");
-            BlockCoordinates coords = { x / 25, y / 25 };  // Divide por el tamaño del bloque
+            BlockCoordinates coords = { x / 25, y / 25 };  
             Tile tile = { QPixmap(imagen), 25, "cohete_toxico", imagen };
             tileMap[coords].append(tile);
         }
@@ -615,8 +621,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString("../src/mapas/tiles/enemigos/enemigo_bruja.png");
-            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
-            // Maneja la carga de la bruja aquí
+            BlockCoordinates coords = { x / 50, y / 50 };  
             Tile tile = { QPixmap(imagen), 50, "bruja", imagen };
             tileMap[coords].append(tile);
         }
@@ -631,7 +636,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString("../src/mapas/tiles/enemigos/enemigo_lizzard.png");
-            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
+            BlockCoordinates coords = { x / 50, y / 50 };  
             Tile tile = { QPixmap(imagen), 50, "lizzard", imagen };
             tileMap[coords].append(tile);
         }
@@ -646,8 +651,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString("../src/mapas/tiles/enemigos/enemigo_fencer.png");
-            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
-            // Maneja la carga del espadachín aquí
+            BlockCoordinates coords = { x / 50, y / 50 };  
             Tile tile = { QPixmap(imagen), 50, "fencer", imagen };
             tileMap[coords].append(tile);
         }
@@ -660,10 +664,9 @@ void LevelRenderer::loadFromFile(const QString &filename)
         for (const auto& blockNode : ratBlocks)
         {
             int x = blockNode["x"].as<int>();
-            int y = blockNode["y"].as<int>() - 20;  // Ajuste específico para 'rat'
+            int y = blockNode["y"].as<int>() - 20;  
             QString imagen = QString::fromStdString("../src/mapas/tiles/enemigos/enemigo_rat.png");
-            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
-            // Maneja la carga de la rata aquí
+            BlockCoordinates coords = { x / 50, y / 50 };  
             Tile tile = { QPixmap(imagen), 50, "rat", imagen };
             tileMap[coords].append(tile);
         }
@@ -678,8 +681,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString("../src/mapas/tiles/spawn/spawn_jugador.png");
-            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
-            // Maneja la carga del spawn aquí
+            BlockCoordinates coords = { x / 50, y / 50 }; 
             Tile tile = { QPixmap(imagen), 50, "spawn", imagen };
 
             tileMap[coords].append(tile);
@@ -690,7 +692,6 @@ void LevelRenderer::loadFromFile(const QString &filename)
     if (node["fondo"])
     {
         backgroundText = QString::fromStdString(node["fondo"].as<std::string>());
-        // Maneja la carga del fondo aquí si es necesario
         m_backgroundPixmap = QPixmap(backgroundText);
     }
 

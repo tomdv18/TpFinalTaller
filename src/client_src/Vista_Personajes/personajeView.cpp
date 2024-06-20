@@ -1,8 +1,8 @@
 #include "personajeView.h"
 #include <iostream>
 
-#define WIDTH 640
-#define HEIGHT 480
+#define WIDTH 2000
+#define HEIGHT 2000
 #define PERSONAJE_HEIGHT 50
 #define PERSONAJE_WIDTH 50
 
@@ -65,7 +65,7 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
             this->animaciones.at(INTOXICADO_QUIETO)->acualizar(dt);
         } else {
             this->animaciones.at(QUIETO_CLIENTE)->en_loop(true);
-            this->animaciones.at(QUIETO_CLIENTE)->acualizar(dt);
+            this->animaciones.at(QUIETO_CLIENTE)->acualizar(0.5*dt);
         }
     } else if( estado == ESTADO_HERIDO){
         this->animaciones.at(HERIDO)->en_loop(false);
