@@ -8,8 +8,8 @@ Lobby::Lobby(const std::string &hostname, const std::string &servname) :
                         
 }
 
-bool Lobby::crear_partida(uint8_t max_jugadores){
-    return (lobby_protocolo.serializar_creacion_partida(max_jugadores) == EXITO);
+bool Lobby::crear_partida(uint8_t max_jugadores, const std::string mapa_seleccionado){
+    return (lobby_protocolo.serializar_creacion_partida(max_jugadores, mapa_seleccionado) == EXITO);
 }
 
 bool Lobby::unirse_partida(uint32_t codigo_partida){

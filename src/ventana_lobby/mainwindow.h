@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include <QDir>
+#include <QComboBox>
 #include "../client_src/lobby.h"
 
 QT_BEGIN_NAMESPACE
@@ -46,8 +47,6 @@ private slots:
 
     void on_botonUnirseEmpezar_clicked();
 
-    void on_ComboBoxMapas_activated(const QString& text);
-
 private:
     Ui::MainWindow *ui;
 
@@ -58,6 +57,8 @@ private:
     }
 
     void actualizarEstiloBotones();
+
+    void on_ComboBoxMapas_activated(const QString& text);
 
     Lobby *lobby;
 

@@ -12,7 +12,7 @@ private:
 public:
     LobbyProtocolo(Socket *skt);
 
-    uint8_t serializar_creacion_partida(uint8_t max_jugadores);
+    uint8_t serializar_creacion_partida(uint8_t max_jugadores, std::string mapa_seleccionado);
 
     uint8_t serializar_unirse_partida(uint32_t codigo_partida);
 

@@ -7,14 +7,22 @@ LobbyProtocolo::LobbyProtocolo(Socket *skt)
 
 }
 
-uint8_t LobbyProtocolo::serializar_creacion_partida(uint8_t max_jugadores){
+uint8_t LobbyProtocolo::serializar_creacion_partida(uint8_t max_jugadores, std::string mapa_seleccionado){
+    if(mapa_seleccionado.size() > 255) return false;
     bool was_closed = false;
     uint8_t accion = CREAR;
     uint8_t confirmacion;
     skt->sendall(&accion,sizeof(accion),&was_closed);
     skt->sendall(&max_jugadores,sizeof(max_jugadores),&was_closed);
-    skt->recvall(&confirmacion,sizeof(confirmacion), &was_closed);
 
+    uint8_t size_mapa = mapa_seleccionado.size();
+    skt->sendall(&size_mapa,sizeof(uint8_t),&was_closed);
+    for(int i= 0; i < size_mapa; i++){
+        std::cout << "ENVIANDO: " << mapa_seleccionado[i] << std::endl;
+        skt->sendall(&mapa_seleccionado[i],sizeof(uint8_t),&was_closed);
+    }
+
+    skt->recvall(&confirmacion,sizeof(confirmacion), &was_closed);
     return confirmacion;
 }
 

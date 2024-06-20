@@ -14,6 +14,18 @@ uint8_t ProtocoloServidor::leer_jugadores(bool& was_closed) {
     return max_jugadores;
 }
 
+std::string ProtocoloServidor::leer_mapa(bool& was_closed){
+    uint8_t size_mapa;
+    char byte;
+    skt_jugador.recvall(&size_mapa, sizeof(size_mapa), &was_closed);
+    std::string nombre_mapa;
+    for(int i = 0; i < size_mapa; i++){
+        skt_jugador.recvall(&byte, sizeof(char), &was_closed);
+        nombre_mapa += byte;
+    }
+    nombre_mapa += ".yaml";
+    return nombre_mapa;
+}
 
 uint32_t ProtocoloServidor::leer_id_partida(bool& was_closed) {
     uint32_t id_partida;

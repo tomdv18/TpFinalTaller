@@ -229,7 +229,7 @@ void MainWindow::on_botonEmpezar_clicked()
     
     uint8_t max_jugadores = (uint8_t)ui->cantidadJugadores->text().toInt();
     std::cout << "CREANDO PARTIDA PARA " << (int) max_jugadores<< std::endl; 
-    if(lobby->crear_partida(max_jugadores)){
+    if(lobby->crear_partida(max_jugadores, mapa_seleccionado.toStdString())){
         lobby->elegir_personaje(personaje_elegido);
         close();
     }else{

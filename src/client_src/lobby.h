@@ -20,7 +20,7 @@ private:
 public:
     Lobby(const std::string &hostname, const std::string &servname);
 
-    bool crear_partida(uint8_t max_jugadores);
+    bool crear_partida(uint8_t max_jugadores, const std::string mapa_seleccionado);
 
     bool unirse_partida(uint32_t codigo_partida);
 

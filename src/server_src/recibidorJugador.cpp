@@ -121,6 +121,8 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>& partida_encontrada, bool& w
             if (was_closed) {
                 throw std::runtime_error("Se perdió la conexion con el cliente");
             }
+            std::string nombre_mapa = protocolo_servidor->leer_mapa(was_closed);
+            std::cout << "NOMBRE MAPA: " << nombre_mapa << std::endl;
             this->queue_acciones =
                     monitor_partidas->crear_partida(id, max_jugadores, queue_jugador);
             break;

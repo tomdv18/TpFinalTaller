@@ -24,6 +24,8 @@ public:
     void enviar_evento(bool& was_closed, Evento evento);
 
     uint8_t leer_jugadores(bool& was_closed);
+    
+    std::string leer_mapa(bool& was_closed);
 
     uint32_t leer_id_partida(bool& was_closed);
 
