@@ -66,6 +66,12 @@ public:
 
     virtual void inflingir_danio(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido);
 
+    //Metodo para testing;
+
+    virtual void matar();
+
+    virtual void revivir();
+
     
     // Acciones
 

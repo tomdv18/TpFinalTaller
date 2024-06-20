@@ -3,6 +3,7 @@ project(JazzJackRabbit2)
 
 
 set(CONFIG_FILE "${CMAKE_SOURCE_DIR}/configuracion.yaml")
+set(CONFIG_CHEAT_FILE "${CMAKE_SOURCE_DIR}/configuracionCheats.yaml")
 # Rutas comunes
 set(COMMON_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/src/common_src" "${CMAKE_SOURCE_DIR}/src/server_src")
 set(COMMON_SOURCES
@@ -80,6 +81,7 @@ function(configure_test TEST_NAME TEST_TYPE NAME)
         target_sources(${TEST_NAME} PRIVATE ${SERVER_SOURCES} ${COMMON_SOURCES} )
     endif()
     target_compile_definitions(${TEST_NAME} PUBLIC CONFIG_PATH="${CONFIG_FILE}")
+    target_compile_definitions(${TEST_NAME} PUBLIC CONFIG_CHEAT_PATH="${CONFIG_CHEAT_FILE}")
 endfunction()
 
 # Configura las pruebas para los diferentes personajes

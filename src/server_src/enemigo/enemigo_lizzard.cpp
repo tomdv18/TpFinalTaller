@@ -35,3 +35,8 @@ uint8_t Lizzard::obtener_item() {
     }
     return BALA_NORMAL;
 }
+
+void Lizzard::revivir() {
+    vida = CONFIG.obtenerVidaLizzard();
+    vivo = true;
+}

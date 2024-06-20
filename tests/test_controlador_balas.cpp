@@ -9,6 +9,7 @@ struct ControladorBalasTest : testing::Test{
     ControladorBalas * controlador; 
 
     ControladorBalasTest(){
+        Configuracion::loadConfig(false);
         controlador = new ControladorBalas();
     }
 

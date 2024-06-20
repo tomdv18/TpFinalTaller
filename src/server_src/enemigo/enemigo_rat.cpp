@@ -36,3 +36,9 @@ uint8_t Rat::obtener_item() {
     }
     return BALA_NORMAL;
 }
+
+void Rat::revivir() {
+    vida = CONFIG.obtenerVidaRat();
+    vivo = true;
+
+}

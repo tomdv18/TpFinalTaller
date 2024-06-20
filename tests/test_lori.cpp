@@ -4,10 +4,17 @@
 
 
 struct PersonajeLoriTest : testing::Test{
+    
     Personaje * personaje;
 
     PersonajeLoriTest(){
-        personaje = new Lori(001);
+        Configuracion::loadConfig(false);
+        std::vector<SpawnPoint> spawns;
+        SpawnPoint spawn;
+        spawn.x = 10;
+        spawn.y = 10;
+        spawns.push_back(spawn);
+        personaje = new Lori(001, spawns);
     }
 
     ~PersonajeLoriTest(){
@@ -15,7 +22,7 @@ struct PersonajeLoriTest : testing::Test{
     }
 };
 
-//TEST PARTICULAR DE JAZZ
+//TEST PARTICULAR DE LORI
 
 
 TEST_F(PersonajeLoriTest, obtenerPersonaje){

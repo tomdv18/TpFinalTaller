@@ -62,6 +62,17 @@ void Enemigo::inflingir_danio(Personaje *personaje, std::chrono::duration<double
     personaje->recibir_golpe(this->danio,tiempo_transcurrido);
 }
 
+//METODO PARA TESTING
+void Enemigo::matar(){
+    vida = 0;
+    vivo = false;
+}
+
+void Enemigo::revivir(){
+    vida = CONFIG.obtenerVidaDefaultEnemigo();
+    vivo = true;
+}
+
 
 bool Enemigo::esta_vivo() { return vivo; }
 

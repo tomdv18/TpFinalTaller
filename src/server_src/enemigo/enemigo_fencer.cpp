@@ -36,3 +36,8 @@ uint8_t Fencer::obtener_item() {
     }
     return BALA_NORMAL;
 }
+
+void Fencer::revivir() {
+    vida = CONFIG.obtenerVidaFencer();
+    vivo = true;
+}

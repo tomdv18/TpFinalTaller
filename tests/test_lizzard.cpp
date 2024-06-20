@@ -5,6 +5,7 @@ struct EnemigoLizzardTest : testing::Test{
     Enemigo * enemigo;
 
     EnemigoLizzardTest(){
+        Configuracion::loadConfig(false);
         enemigo = new Lizzard(001,00,00);
     }
 

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "../src/server_src/personaje/personaje_jazz.h"
+#include "../src/common_src/evento.h"
 
 
 /*PERSONAJE JAZZ HEREDA DE LA CLASE PERSONAJE. AL PERSONAJE SER UNA CLASE ABSTRACTA
@@ -9,7 +10,13 @@ struct PersonajeJazzTest : testing::Test{
     Personaje * personaje;
 
     PersonajeJazzTest(){
-        personaje = new Jazz(001);
+        Configuracion::loadConfig(false);
+        std::vector<SpawnPoint> spawns;
+        SpawnPoint spawn;
+        spawn.x = 10;
+        spawn.y = 10;
+        spawns.push_back(spawn);
+        personaje = new Jazz(001,spawns);
     }
 
     ~PersonajeJazzTest(){

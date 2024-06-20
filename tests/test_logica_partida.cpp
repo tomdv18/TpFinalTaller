@@ -13,7 +13,8 @@ struct LogicaPartidaTest : testing::Test{
 
 
     LogicaPartidaTest(){
-        logica = new LogicaPartida();
+        Configuracion::loadConfig(false);
+        logica = new LogicaPartida("mapa_beach");
     }
 
     ~LogicaPartidaTest(){

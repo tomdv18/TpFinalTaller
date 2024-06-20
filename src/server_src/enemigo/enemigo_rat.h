@@ -12,6 +12,8 @@ public:
     void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,std::map<uint32_t, Objeto*>& map_objetos_solidos) override;
 
     uint8_t obtener_item() override;
+
+    void revivir() override;
 };
 
 
