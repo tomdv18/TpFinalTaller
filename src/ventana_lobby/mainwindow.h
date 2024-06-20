@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QDir>
 #include "../client_src/lobby.h"
 
 QT_BEGIN_NAMESPACE
@@ -45,6 +46,8 @@ private slots:
 
     void on_botonUnirseEmpezar_clicked();
 
+    void on_ComboBoxMapas_activated(const QString& text);
+
 private:
     Ui::MainWindow *ui;
 
@@ -59,6 +62,8 @@ private:
     Lobby *lobby;
 
     CodigoAccion personaje_elegido;
+
+    QString mapa_seleccionado;
 
     uint32_t id_partida;
 
