@@ -1,6 +1,6 @@
 personaje:
   vida: 25
-  velocidad_x: 7
+  velocidad_x: 6
   velocidad_y: 30 
   gravedad: 3
   tiempo_invulnerabilidad: 3.0
@@ -39,7 +39,7 @@ municion:
   bala_normal:
     municion: 0
     tiempo_entre_disparo: 0.75
-    velocidad_del_proyectil: 10
+    velocidad_del_proyectil: 14
     danio: 2
     rango_explosion: 0
     ancho: 10
