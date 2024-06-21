@@ -6,6 +6,7 @@
 #include "estado_muerto.h"
 #include "estado_especial.h"
 #include "estado_cayendo.h"
+#include "estado_tambalear.h"
 
 #define CONFIG Configuracion::config()
 
@@ -55,8 +56,10 @@ void EstadoHerido::manejarEstado(uint8_t codigo_estado, double tiempo){
         std::cout << "ESTADO CAYENDO" << std::endl;
         this->personaje->cambiarEstado(new EstadoCayendo());
         break;
-    
-    
+    case ESTADO_TAMBALEAR:
+        std::cout << "ESTADO TAMBALEAR" << std::endl;
+        this->personaje->cambiarEstado(new EstadoTambalear());
+        break;
     default:
         break;
     }

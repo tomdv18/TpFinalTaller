@@ -8,11 +8,11 @@
 #include "estado_cayendo.h"
 #include "estado_tambalear.h"
 
-EstadoQuieto::EstadoQuieto() : Estado(ESTADO_QUIETO){}
+EstadoTambalear::EstadoTambalear() : Estado(ESTADO_TAMBALEAR){}
 
 
 
-void EstadoQuieto::manejarEstado(uint8_t codigo_estado, double tiempo){
+void EstadoTambalear::manejarEstado(uint8_t codigo_estado, double tiempo){
     switch (codigo_estado)
     {
     case ESTADO_CAMINANDO:
@@ -43,15 +43,15 @@ void EstadoQuieto::manejarEstado(uint8_t codigo_estado, double tiempo){
         std::cout << "ESTADO CAYENDO" << std::endl;
         this->personaje->cambiarEstado(new EstadoCayendo());
         break;
-    case ESTADO_TAMBALEAR:
-        std::cout << "ESTADO TAMBALEAR" << std::endl;
-        this->personaje->cambiarEstado(new EstadoTambalear());
+    case ESTADO_QUIETO:
+        std::cout << "ESTADO QUIETO" << std::endl;
+        this->personaje->cambiarEstado(new EstadoQuieto());
         break;
     default:
         break;
     }
 }
 
-void EstadoQuieto::actualizar(double tiempo){
+void EstadoTambalear::actualizar(double tiempo){
     
 }

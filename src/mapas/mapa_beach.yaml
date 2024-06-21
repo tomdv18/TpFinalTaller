@@ -899,46 +899,66 @@ triangulo_derecho:
 zanahoria:
   - x: 425
     y: 775
+    veneno: false
   - x: 600
     y: 775
+    veneno: false
   - x: 1475
     y: 425
+    veneno: false
 gema:
   - x: 50
     y: 1075
+    veneno: false
   - x: 450
     y: 1075
+    veneno: false
   - x: 875
     y: 200
+    veneno: false
   - x: 950
     y: 1075
+    veneno: false
   - x: 1200
     y: 50
+    veneno: false
   - x: 1325
     y: 50
+    veneno: false
   - x: 1575
     y: 600
+    veneno: false
   - x: 1575
     y: 625
+    veneno: false
 moneda:
   - x: 50
     y: 200
+    veneno: false
   - x: 225
     y: 1075
+    veneno: false
   - x: 500
     y: 875
+    veneno: false
   - x: 525
     y: 875
+    veneno: false
   - x: 625
     y: 1075
+    veneno: false
   - x: 1025
     y: 600
+    veneno: false
   - x: 1025
     y: 625
+    veneno: false
   - x: 1100
     y: 1075
+    veneno: false
   - x: 1400
     y: 1075
+    veneno: false
 bala_veloz:
   - x: 1100
     y: 425

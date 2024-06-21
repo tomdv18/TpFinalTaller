@@ -30,19 +30,19 @@ LogicaPartida::LogicaPartida(std::string mapa) : fabrica_objetos(), fabrica_enem
 
         
         for (const auto& monedaNode : mapNode["moneda"]) {
-            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(MONEDA,monedaNode["x"].as<uint32_t>(),monedaNode["y"].as<uint32_t>(),false);
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(MONEDA,monedaNode["x"].as<uint32_t>(),monedaNode["y"].as<uint32_t>(),monedaNode["veneno"].as<bool>());
             id_objetos++;
         }
 
 
         for (const auto& gemaNode : mapNode["gema"]) {
-            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(GEMA,gemaNode["x"].as<uint32_t>(),gemaNode["y"].as<uint32_t>(),false);
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(GEMA,gemaNode["x"].as<uint32_t>(),gemaNode["y"].as<uint32_t>(),gemaNode["veneno"].as<bool>());
             id_objetos++;
         }
 
 
         for (const auto& zanahoriaNode : mapNode["zanahoria"]) {
-            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(ZANAHORIA,zanahoriaNode["x"].as<uint32_t>(), zanahoriaNode["y"].as<uint32_t>(),false);
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(ZANAHORIA,zanahoriaNode["x"].as<uint32_t>(), zanahoriaNode["y"].as<uint32_t>(),zanahoriaNode["veneno"].as<bool>());
             id_objetos++;
         }
 

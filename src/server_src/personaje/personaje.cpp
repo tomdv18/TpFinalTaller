@@ -366,6 +366,16 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
     Rectangulo rect_personaje = {nueva_posicion_x, posicion_y,this->ancho, this->alto};
     Rectangulo rect_personaje_arriba = {posicion_x, nueva_posicion_y, this->ancho, this->alto};
 
+    Rectangulo rect_personaje_abajo = {nueva_posicion_x, this->posicion_y + this->alto, this->ancho, 1};
+    Rectangulo rect_personaje_adelante_abajo;
+    if (velocidad_x >= 0) {  // Moviéndose a la derecha
+        rect_personaje_adelante_abajo = {nueva_posicion_x + this->ancho/2, this->posicion_y + this->alto, 1, 1};
+    } else if(velocidad_x <= 0){  // Moviéndose a la izquierda
+        rect_personaje_adelante_abajo = {nueva_posicion_x - 1, this->posicion_y + this->alto, this->ancho, 1};
+    }
+
+    bool colision_abajo = false;
+    bool colision_adelante_abajo = false;
     bool colision_suelo = false;
 
     for (const auto& par_objeto : map_objetos_solidos) {
@@ -399,6 +409,13 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                         nueva_posicion_x = rect_objeto.x + rect_objeto.ancho;
                     }
                     velocidad_x = 0;
+                }
+                if (rect_personaje_abajo.hay_colision(rect_objeto)) {
+                    colision_abajo = true;
+                }
+
+                if (rect_personaje_adelante_abajo.hay_colision(rect_objeto)) {
+                    colision_adelante_abajo = true;
                 }
             }
             else if(par_objeto.second->obtener_objeto() == TRIANGULO_DERECHO){
@@ -463,7 +480,6 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
 
                     int b = y1-x1;
                     if(p2x >= x1 && p1y <= p2x + b && p2x <= x2 && p2y >= y1){
-                        //std::cout << "COLISION ARRIBA" << std::endl;
                         rotacion = DERECHA;
                         inclinar = true;
                         if(velocidad_y >= 0){
@@ -480,15 +496,12 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                     }
             }
         }
+
     }
     if(saltando){
         en_diagonal = false;
         inclinar = false;
     }
-
-
-    //std::cout << "INCLINAR AL PERSONAJE: " << inclinar << std::endl;
-
 
 
     // Verificar colisiones con objetos comunes
@@ -510,6 +523,11 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
     if (!saltando && velocidad_x == 0 && esta_quieto) {
         this->manejarEstado(ESTADO_QUIETO, tiempo_transcurrido);
     }
+
+    if ((!colision_abajo || !colision_adelante_abajo) && !saltando && !esta_disparando && esta_quieto && !inclinar) {
+        this->manejarEstado(ESTADO_TAMBALEAR, tiempo_transcurrido);
+    }
+
 
     if(saltando and velocidad_x != 0){
         salto_horizontal = true;

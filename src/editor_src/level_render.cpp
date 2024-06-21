@@ -243,9 +243,11 @@ void LevelRenderer::saveToFile(const QString &fileName) const
         {
             if (tile.type == "zanahoria")
             {
+                bool veneno = tile.text.contains("envenenada") ? true : false;
                 emitter << YAML::BeginMap;
                 emitter << YAML::Key << "x" << YAML::Value << coords.x*25;
                 emitter << YAML::Key << "y" << YAML::Value << coords.y*25;
+                emitter << YAML::Key << "veneno" << YAML::Value << veneno;
                 emitter << YAML::EndMap;
             }
         }
@@ -262,9 +264,11 @@ void LevelRenderer::saveToFile(const QString &fileName) const
         {
             if (tile.type == "gema")
             {
+               bool veneno = tile.text.contains("envenenada") ? true : false;
                 emitter << YAML::BeginMap;
                 emitter << YAML::Key << "x" << YAML::Value << coords.x*25;
                 emitter << YAML::Key << "y" << YAML::Value << coords.y*25;
+                emitter << YAML::Key << "veneno" << YAML::Value << veneno;
                 emitter << YAML::EndMap;
             }
         }
@@ -281,9 +285,11 @@ void LevelRenderer::saveToFile(const QString &fileName) const
         {
             if (tile.type == "moneda")
             {
+                bool veneno = tile.text.contains("envenenada") ? true : false;
                 emitter << YAML::BeginMap;
                 emitter << YAML::Key << "x" << YAML::Value << coords.x*25;
                 emitter << YAML::Key << "y" << YAML::Value << coords.y*25;
+                emitter << YAML::Key << "veneno" << YAML::Value << veneno;
                 emitter << YAML::EndMap;
             }
         }
@@ -482,7 +488,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             int y = blockNode["y"].as<int>();
             QString imagen = QString::fromStdString(blockNode["imagen"].as<std::string>());
 
-            BlockCoordinates coords = { x / 50, y / 50 };  // Divide por el tamaño del bloque
+            BlockCoordinates coords = { x / 50, y / 50 }; 
             Tile tile = { QPixmap(imagen), 50, "solid", imagen };
 
             tileMap[coords].append(tile);
@@ -531,7 +537,12 @@ void LevelRenderer::loadFromFile(const QString &filename)
         {
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
-            QString imagen = QString::fromStdString("../src/mapas/tiles/items/zanahoria.png");
+            bool veneno = blockNode["veneno"].as<bool>();
+            QString imagen;
+            imagen = QString::fromStdString("../src/mapas/tiles/items/zanahoria.png");
+            if(veneno){
+                imagen = QString::fromStdString("../src/mapas/tiles/items/zanahoria_envenenada.png");
+            }
             BlockCoordinates coords = { x / 25, y / 25 };  
             Tile tile = { QPixmap(imagen), 25, "zanahoria", imagen };
             tileMap[coords].append(tile);
@@ -546,7 +557,12 @@ void LevelRenderer::loadFromFile(const QString &filename)
         {
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
-            QString imagen = QString::fromStdString("../src/mapas/tiles/items/gema.png");
+            bool veneno = blockNode["veneno"].as<bool>();
+            QString imagen;
+            imagen = QString::fromStdString("../src/mapas/tiles/items/gema.png");
+            if(veneno){
+                imagen = QString::fromStdString("../src/mapas/tiles/items/gema_envenenada.png");
+            }
             BlockCoordinates coords = { x / 25, y / 25 };  
             Tile tile = { QPixmap(imagen), 25, "gema", imagen };
             tileMap[coords].append(tile);
@@ -561,7 +577,12 @@ void LevelRenderer::loadFromFile(const QString &filename)
         {
             int x = blockNode["x"].as<int>();
             int y = blockNode["y"].as<int>();
-            QString imagen = QString::fromStdString("../src/mapas/tiles/items/moneda.png");
+            bool veneno = blockNode["veneno"].as<bool>();
+            QString imagen;
+            imagen = QString::fromStdString("../src/mapas/tiles/items/moneda.png");
+            if(veneno){
+                imagen = QString::fromStdString("../src/mapas/tiles/items/moneda_envenenada.png");
+            }
             BlockCoordinates coords = { x / 25, y / 25 };  
             Tile tile = { QPixmap(imagen), 25, "moneda", imagen };
             tileMap[coords].append(tile);

@@ -17,6 +17,8 @@
 #include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo.h"
 #include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo_horizontal.h"
 #include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_saltando.h"
+#include "../src/client_src/Animaciones/Animaciones_Lori/animacion_Lori_tambalear.h"
+
 
 class PersonajeLoriViewFactory : public PersonajeViewFactory {
 

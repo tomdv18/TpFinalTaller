@@ -18,6 +18,7 @@ char const PATH_JAZZ_HABILIDAD[] = "../src/client_src/Images/Jazz_habilidad.png"
 char const PATH_JAZZ_CAYENDO[] = "../src/client_src/Images/Jazz_cayendo.png";
 char const PATH_JAZZ_CAYENDO_HORIZONTAL[] = "../src/client_src/Images/Jazz_cayendo_horizontal.png";
 char const PATH_JAZZ_DISPARO_SALTANDO[] = "../src/client_src/Images/Jazz_disparo_saltando.png";
+char const PATH_JAZZ_TAMBALEAR[] = "../src/client_src/Images/Jazz_tambalear.png";
 
 
 char const PATH_LORI_CAMINANDO[] = "../src/client_src/Images/Lori_caminando.png";
@@ -35,6 +36,7 @@ char const PATH_LORI_HABILIDAD[] = "../src/client_src/Images/Lori_habilidad.png"
 char const PATH_LORI_CAYENDO[] = "../src/client_src/Images/Lori_cayendo.png";
 char const PATH_LORI_CAYENDO_HORIZONTAL[] = "../src/client_src/Images/Lori_cayendo_horizontal.png";
 char const PATH_LORI_DISPARO_SALTANDO[] = "../src/client_src/Images/Lori_disparo_saltando.png";
+char const PATH_LORI_TAMBALEAR[] = "../src/client_src/Images/Lori_tambalear.png";
 
 
 
@@ -53,6 +55,7 @@ char const PATH_SPAZ_HABILIDAD[] = "../src/client_src/Images/Spaz_habilidad.png"
 char const PATH_SPAZ_CAYENDO[] = "../src/client_src/Images/Spaz_cayendo.png";
 char const PATH_SPAZ_CAYENDO_HORIZONTAL[] = "../src/client_src/Images/Spaz_cayendo_horizontal.png";
 char const PATH_SPAZ_DISPARO_SALTANDO[] = "../src/client_src/Images/Spaz_disparo_saltando.png";
+char const PATH_SPAZ_TAMBALEAR[] = "../src/client_src/Images/Spaz_tambalear.png";
 
 
 
@@ -117,6 +120,7 @@ char const CAYENDO[] = "Cayendo";
 char const CAYENDO_HORIZONTAL[] = "Cayendo_horizontal";
 char const DISPARO_SALTANDO[] = "Disparo_Saltando";
 char const GOLPE[] = "Golpe";
+char const TAMBALEAR[] = "Tambalear";
 
 char const ENEMIGO_LIZZARD[] = "Lizzard";
 char const ENEMIGO_FENCER[] = "Fencer";
