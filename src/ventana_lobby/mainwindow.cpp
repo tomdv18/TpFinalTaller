@@ -41,7 +41,7 @@ MainWindow::MainWindow(Lobby *lobby, QWidget *parent)
         nombreSinExtension.chop(5); // Quitar los últimos 5 caracteres (.yaml)
         ui->seleccionMapas->addItem(nombreSinExtension);
     }
-    connect(ui->seleccionMapas, QOverload<const QString&>::of(&QComboBox::textActivated),
+    connect(ui->seleccionMapas, QOverload<const QString&>::of(&QComboBox::activated),
         this, &MainWindow::on_ComboBoxMapas_activated);
 
     mapa_seleccionado = ui->seleccionMapas->currentText();

@@ -7,3 +7,4 @@ src/cmake_install.cmake
 src/Makefile
 src/tests
 src/extern/googletest
+.vagrant/
