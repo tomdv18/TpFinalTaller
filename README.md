@@ -1,18 +1,25 @@
-# Tp Final Taller 1c 2024
+# Jazz JackRabbit 2 - TP Final 1C2024
 
+Trabajo practico para la materia **Taller de Programación, Catédra Veiga, de la Facultad de Ingeniería, Universidad de Buenos Aires (UBA)**.
 
-Para testear simplemente hay que
+Jazz JackRabbit 2 es un shooter de plataformas 2D de los años 90, originalmente desarrollado por Epic MegaGames. En esta versión, hemos hecho una remake multijugador que permite disfrutar de la acción clásica con tus amigos en línea localmente.
 
-Primero Correr el comando de CMake
+## Integrantes - Grupo 10
 
-```bash
-cmake -DTESTING=ON ..
-```
+- Toma’s Della Vecchia - 106368
+- Santiago Janon - 106079
+- Patricio Silva - 106422
+- Kevin Emir Carbajal Robles - 108304
 
-Para luego correr el script de pruebas
+## Imagenes del juego
 
-```bash
-cd build
-../tests/run.sh
-```
-
+![partida_1](documentacion/imagenes_documentacion/partida_1.png) 
+![partida_10](documentacion/imagenes_documentacion/partida_10.png) 
+![partida_11](documentacion/imagenes_documentacion/partida_11.png) 
+![partida_14](documentacion/imagenes_documentacion/partida_14.png) 
+![partida_12](documentacion/imagenes_documentacion/partida_12.png) 
+![partida_8](documentacion/imagenes_documentacion/partida_8.png) 
+![partida_6](documentacion/imagenes_documentacion/partida_6.png) 
+![partida_13](documentacion/imagenes_documentacion/partida_13.png)
+![editor_1](documentacion/imagenes_documentacion/editor_1.png) 
+![editor_2](documentacion/imagenes_documentacion/editor_2.png) 
