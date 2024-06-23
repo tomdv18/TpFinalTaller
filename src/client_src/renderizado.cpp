@@ -259,6 +259,8 @@ void Renderizado::crear_ventana_y_render(const std::string& title, int width, in
 
 void Renderizado::crear_reproductor_audio() {
     this->reproductor_audio = std::make_unique<SDL2pp::Mixer>(44100, MIX_DEFAULT_FORMAT, 2, 4096);
+    int numChannels = 16; 
+    Mix_AllocateChannels(numChannels);
 }
 
 void Renderizado::mostrar_tablero_final() {

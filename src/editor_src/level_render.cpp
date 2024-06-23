@@ -113,10 +113,14 @@ void LevelRenderer::placeTile(const QPoint &position)
     bool yaExiste = false;
     for (const Tile &tile : tileMap[coords])
     {
-        if (tile.blockSize == currentBlockSize)
+        if (tile.blockSize == currentBlockSize && tile.type != "miscelaneo")
         {
             yaExiste = true;
             break;
+        }
+
+        if(tile.type == "miscelaneo" && currentBlockType == "miscelaneo" && currentBlockText == tile.text){
+            yaExiste = true;
         }
     }
 
@@ -164,6 +168,28 @@ void LevelRenderer::saveToFile(const QString &fileName) const
 {
     YAML::Emitter emitter;
     emitter << YAML::BeginMap;
+
+    emitter << YAML::Key << "miscelaneo" << YAML::Value << YAML::BeginSeq;
+    for (auto it = tileMap.begin(); it != tileMap.end(); ++it)
+    {
+        BlockCoordinates coords = it.key();
+        QList<Tile> tiles = it.value(); 
+
+        for (const Tile &tile : tiles)
+        {
+            if (tile.type == "miscelaneo")
+            {
+                emitter << YAML::BeginMap;
+                emitter << YAML::Key << "x" << YAML::Value << coords.x*50;
+                emitter << YAML::Key << "y" << YAML::Value << coords.y*50;
+                emitter << YAML::Key << "width" << YAML::Value << 50;
+                emitter << YAML::Key << "height" << YAML::Value << 50;
+                emitter << YAML::Key << "imagen" << YAML::Value << tile.text.toStdString();
+                emitter << YAML::EndMap;
+            }
+        }
+    }
+    emitter << YAML::EndSeq;
 
     // Sección para bloques 'solid'
     emitter << YAML::Key << "solid" << YAML::Value << YAML::BeginSeq;
@@ -478,6 +504,23 @@ void LevelRenderer::loadFromFile(const QString &filename)
     YAML::Node node = YAML::Load(yamlContent.toStdString());
     tileMap.clear();
 
+
+    // Cargar bloques 'miscelaneo'
+    const auto& miscelaneoBlocks = node["miscelaneo"];
+    if (miscelaneoBlocks.IsSequence())
+    {
+        for (const auto& blockNode : miscelaneoBlocks)
+        {
+            int x = blockNode["x"].as<int>();
+            int y = blockNode["y"].as<int>();
+            QString imagen = QString::fromStdString(blockNode["imagen"].as<std::string>());
+            BlockCoordinates coords = { x / 50, y / 50 }; 
+            Tile tile = { QPixmap(imagen), 50, "miscelaneo", imagen };
+
+            tileMap[coords].append(tile);
+        }
+    }
+
     // Cargar bloques 'solid'
     const auto& solidBlocks = node["solid"];
     if (solidBlocks.IsSequence())
@@ -708,6 +751,7 @@ void LevelRenderer::loadFromFile(const QString &filename)
             tileMap[coords].append(tile);
         }
     }
+
 
     // Cargar fondo
     if (node["fondo"])

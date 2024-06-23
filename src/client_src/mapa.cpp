@@ -23,6 +23,18 @@ mapa(std::move(map)), src(), dest(), ancho_ventana(render.GetOutputWidth()), alt
     texturas[tematica_fondo] = new SDL2pp::Texture(render, fondo); // El mapa si o si debe tener un fondo?
     SDL2pp::Surface fondo_final("../src/client_src/Images/fondo_final.png");
     texturas["fondo_final"] = new SDL2pp::Texture(render, fondo_final);
+
+    for(const auto& pos : mapa.entidades["miscelaneo"]) {
+        std::string nombre_entidad = extraerNombre(pos.imagen);
+        auto it = texturas.find(nombre_entidad);
+        if (it != texturas.end()) {
+            continue;
+        } else {
+            SDL2pp::Surface surface(pos.imagen);
+            texturas[nombre_entidad] = new SDL2pp::Texture(render, surface);
+        }
+    }
+
     for(const auto& pos : mapa.entidades["solids"]) {
         std::string nombre_entidad = extraerNombre(pos.imagen);
         auto it = texturas.find(nombre_entidad);
@@ -85,6 +97,17 @@ void Mapa::dibujar_fondo_final(SDL2pp::Renderer &render) {
 }
 
 void Mapa::dibujar_entidades(SDL2pp::Renderer &render, Camara &camara) {
+    for (const auto& pos : mapa.entidades["miscelaneo"]) {
+        src.w = pos.width;
+        src.h = pos.height;
+        dest.x = pos.x - camara.obtener_posicion_x();
+        dest.y = pos.y - camara.obtener_posicion_y();
+        dest.w = pos.width;
+        dest.h = pos.height;
+        std::string nombre_entidad = extraerNombre(pos.imagen);
+        render.Copy(*texturas[nombre_entidad], src, dest);
+    }
+    
     for (const auto& pos : mapa.entidades["solids"]) {
         src.w = pos.width;
         src.h = pos.height;
@@ -117,6 +140,7 @@ void Mapa::dibujar_entidades(SDL2pp::Renderer &render, Camara &camara) {
         std::string nombre_entidad = extraerNombre(pos.imagen);
         render.Copy(*texturas[nombre_entidad], src, dest);
     }
+
 }
 
 Mapa::~Mapa() {

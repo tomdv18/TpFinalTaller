@@ -215,7 +215,11 @@ void MainWindow::onItemSelectionChanged(const QItemSelection &selected, const QI
                 } else if(itemText.contains("spawn")){
                     blockSize = 50;
                     blockType = "spawn";
+                } else if(itemText.contains("miscelaneo")){
+                    blockSize = 50;
+                    blockType = "miscelaneo";
                 }
+
 
 
                 levelRenderer->setTilePixmap(selectedTilePixmap, blockSize, blockType, itemPath);

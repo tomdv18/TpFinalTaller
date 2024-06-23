@@ -433,7 +433,7 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                 uint32_t m = (y2 - y1) / (x2-x1);
                 uint32_t b = y1-m*x1;
 
-                if(p1y > y1 && p1y > y2){ //Estoy por debajo del triangulo
+                if(p1y > y1 && p1y >= y2){ //Estoy por debajo del triangulo
                     continue;
                 }
                 
@@ -475,7 +475,9 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
                 uint32_t y2 = par_objeto.second->obtener_posicionY() + par_objeto.second->obtener_alto();
                 
 
-                
+                if(p1y > y1 && p1y >= y2){ //Estoy por debajo del triangulo
+                    continue;
+                }
 
 
                     int b = y1-x1;
@@ -552,6 +554,8 @@ void Personaje::actualizar_posicion(std::chrono::duration<double> tiempo_transcu
         saltando = false;
         colision_suelo = true;
         tiempo_salto = tiempo_segundos;
+    } else if(posicion_y <= 0){
+        posicion_y = 1;
     }
 
     en_superficie = colision_suelo;
