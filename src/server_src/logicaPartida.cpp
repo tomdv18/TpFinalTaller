@@ -340,7 +340,10 @@ void LogicaPartida::actualizar_partida(
                                     par_otro.second->obtener_ancho(), par_otro.second->obtener_alto()};
             if(!par_otro.second->esta_muerto() && par_otro.first != par_personaje.first){
                 if(rect_personaje.hay_colision(rect_otro) && par_personaje.second->obtener_habilidad()){
-                   par_personaje.second->inflingir_danio_habilidad(par_otro.second, tiempo_transcurrido);
+                    par_personaje.second->inflingir_danio_habilidad(par_otro.second, tiempo_transcurrido);
+                    if(par_otro.second->esta_muerto()){
+                        par_personaje.second->asignar_puntos(par_otro.second->obtener_puntos_muerte());
+                    }
                 }
             }                       
         }
