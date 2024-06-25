@@ -4,18 +4,20 @@
 
 #include "estado.h"
 
-class EstadoMuerto: public Estado {
+class EstadoMuerto : public Estado {
 private:
-    double tiempo_muerte;
+   double tiempo_muerte;
 
-    bool cambiar_estado;
+   bool cambiar_estado;
 
 public:
-    explicit EstadoMuerto(double tiempo_muerte);
+
+    EstadoMuerto(double tiempo_muerte);
 
     void manejarEstado(uint8_t codigo_estado, double tiempo) override;
 
     void actualizar(double tiempo) override;
+
 };
 
 

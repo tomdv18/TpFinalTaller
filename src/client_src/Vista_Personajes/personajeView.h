@@ -10,6 +10,8 @@
 #include "../src/common_src/evento.h"
 #include <map>
 #include "../src/client_src/direcciones.h"
+#include <SDL2pp/Mixer.hh>
+#include <SDL2pp/Chunk.hh> 
 
 class PersonajeView {
 
@@ -25,6 +27,7 @@ class PersonajeView {
     int width;
     int height;
     std::map<std::string, std::unique_ptr<Animacion>> animaciones;
+    std::map<std::string, std::unique_ptr<SDL2pp::Chunk>> sonidos; 
     bool facingLeft;
     bool isMoving;
     bool isRunning;
@@ -32,8 +35,10 @@ class PersonajeView {
     bool isShooting;
     bool stopShooting;
     bool isIntoxicated;
-
-
+    bool saltoHorizontal;
+    int contador_golpes;
+    int contador_saltos;
+    
     uint8_t estado; // Almacena el estado actual del personaje
 
     public:
@@ -43,14 +48,12 @@ class PersonajeView {
     PersonajeView(EventoPersonaje &evento);
 
     virtual ~PersonajeView();
-    
-    virtual void crear_texturas(SDL2pp::Renderer *render);
-
-    virtual void crear_animaciones() = 0;
 
     virtual void actualizar_vista_personaje(EventoPersonaje const &evento,float dt);
 
-    virtual void renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y);
+    virtual void renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &render, int cam_x, int cam_y, std::unique_ptr<SDL2pp::Mixer> &reproductor_audio);
+    
+    virtual void crear_sonido(SDL2pp::Mixer &reproductor_audio);
 
     virtual void definir_tipo_bala(uint8_t tipo_bala) {
         this->tipo_bala = int(tipo_bala);
@@ -74,6 +77,10 @@ class PersonajeView {
 
     virtual int obtener_puntos() {
         return this->puntaje;
+    }
+
+    virtual uint32_t obtener_id_jugador() {
+        return id_jugador;
     }
 
     virtual void definir_vida(uint8_t vida) {

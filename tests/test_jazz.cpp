@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "../src/server_src/personaje/personaje_jazz.h"
+#include "../src/common_src/evento.h"
 
 
 /*PERSONAJE JAZZ HEREDA DE LA CLASE PERSONAJE. AL PERSONAJE SER UNA CLASE ABSTRACTA
@@ -9,7 +10,13 @@ struct PersonajeJazzTest : testing::Test{
     Personaje * personaje;
 
     PersonajeJazzTest(){
-        personaje = new Jazz(001);
+        Configuracion::loadConfig(false);
+        std::vector<SpawnPoint> spawns;
+        SpawnPoint spawn;
+        spawn.x = 10;
+        spawn.y = 10;
+        spawns.push_back(spawn);
+        personaje = new Jazz(001,spawns);
     }
 
     ~PersonajeJazzTest(){
@@ -43,6 +50,7 @@ TEST_F(PersonajeJazzTest, IniciaSinUsarHabilidad){
 
 TEST_F(PersonajeJazzTest, IniciaSinVelocidad){
     EXPECT_EQ(personaje->obtener_velocidad(), 0);
+    EXPECT_EQ(personaje->obtener_velocidad_y(), 0);
 }
 
 TEST_F(PersonajeJazzTest, IniciaInvulnerable){
@@ -58,6 +66,33 @@ TEST_F(PersonajeJazzTest, AlMoverseNoEstaQuieto){
     std::chrono::duration<double> tiempo_transcurrido(0.5);
     personaje->mover_derecha(tiempo_transcurrido); //Hago un movimiento
     EXPECT_EQ(personaje->obtener_movimiento(), false);
+}
+
+TEST_F(PersonajeJazzTest, AlMoverseActualizaSuPosicion){
+    std::map<uint32_t, Objeto*> map_objetos;
+    std::map<uint32_t, std::unique_ptr<Objeto>> map_objetos_comunes; // Maps necesarios para la llamada a actualizar posicion
+
+    uint32_t pos_x_inicial = personaje->obtener_posicionX();
+    uint32_t pos_y_inicial = personaje->obtener_posicionY();
+
+    std::chrono::duration<double> tiempo_transcurrido(1.0);
+    personaje->mover_derecha(tiempo_transcurrido); 
+    personaje->actualizar_posicion(tiempo_transcurrido,map_objetos,map_objetos_comunes);
+    EXPECT_LT(pos_x_inicial, personaje->obtener_posicionX());
+
+}
+
+TEST_F(PersonajeJazzTest, AlMoverseActualizaSuVelocidad){
+    uint32_t velocidad_inicial = personaje->obtener_velocidad();
+    std::chrono::duration
+    <double> tiempo_transcurrido(1.5);
+    personaje->mover_derecha(tiempo_transcurrido); //Hago un movimiento
+    EXPECT_LT(velocidad_inicial, personaje->obtener_velocidad());
+}
+
+TEST_F (PersonajeJazzTest, ComienzaConBalaNormal){
+    EXPECT_EQ(personaje->obtener_bala_actual(), BALA_NORMAL);
+
 }
 
 TEST_F(PersonajeJazzTest, DispararActualizaSuEstado){
@@ -97,6 +132,24 @@ TEST_F(PersonajeJazzTest, Revivir){
     EXPECT_EQ(personaje->obtener_vida(), vida_incial); // VEO QUE SU VIDA SEA IGUAL A LA INICIAL
 }
 
+
+TEST_F(PersonajeJazzTest, Curarse){
+    uint8_t vida_inicial = personaje->obtener_vida();
+    personaje->volverse_vulnerable();
+    personaje->recibir_golpe(vida_inicial - 10, std::chrono::duration<double>(0.5));
+    personaje->curarse(10);
+    EXPECT_EQ(personaje->obtener_vida(), vida_inicial);
+}
+
+TEST_F(PersonajeJazzTest, ComienzaSinPuntos){
+    EXPECT_EQ(personaje->obtener_puntos(), 0);
+}
+
+TEST_F(PersonajeJazzTest, AsignarPuntos){
+    uint32_t puntos_iniciales = personaje->obtener_puntos();
+    personaje->asignar_puntos(10);
+    EXPECT_EQ(personaje->obtener_puntos(), puntos_iniciales + 10);
+}
 //TEST PARTICULAR DE JAZZ
 
 
@@ -108,8 +161,11 @@ TEST_F(PersonajeJazzTest, obtenerPersonaje){
 
 
 
+
 int main(int argc, char*argv[]){
+    std::cout << "-----------------------------------------" << std::endl;
     std::cout << "\nTests Personaje JAZZ\n" << std::endl;
+    std::cout << "-----------------------------------------" << std::endl;
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

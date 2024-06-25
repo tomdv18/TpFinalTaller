@@ -8,16 +8,24 @@ Lobby::Lobby(const std::string &hostname, const std::string &servname) :
                         
 }
 
-bool Lobby::crear_partida(uint8_t max_jugadores){
-    return (lobby_protocolo.serializar_creacion_partida(max_jugadores) == EXITO);
+bool Lobby::crear_partida(uint8_t max_jugadores, std::string mapa){
+    return (lobby_protocolo.serializar_creacion_partida(max_jugadores, mapa) == EXITO);
 }
 
-bool Lobby::unirse_partida(uint32_t codigo_partida){
-    return (lobby_protocolo.serializar_unirse_partida(codigo_partida) == EXITO);
+bool Lobby::unirse_partida(uint32_t codigo_partida, std::string &mapa){
+    return (lobby_protocolo.serializar_unirse_partida(codigo_partida, mapa) == EXITO);
 }
 
 void Lobby::elegir_personaje(uint8_t personaje){
     lobby_protocolo.serializar_personaje(personaje);
+}
+
+std::string Lobby::devolver_mapa() {
+    return nombre_mapa;
+};
+
+void Lobby::definir_mapa(std::string mapa) {
+    nombre_mapa = mapa;
 }
 
 Socket& Lobby::obtener_socket(){

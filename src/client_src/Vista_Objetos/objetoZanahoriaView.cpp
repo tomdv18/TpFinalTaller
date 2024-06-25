@@ -1,13 +1,9 @@
 #include "objetoZanahoriaView.h"
 
-ObjetoZanahoriaView::ObjetoZanahoriaView() : ObjetoView() {
-    this->crear_animacion();
-}
-
-void ObjetoZanahoriaView::crear_animacion() {
-
-    this->animacion = std::unique_ptr<Animacion> (new Animacion_Zanahoria()); 
-
+ObjetoZanahoriaView::ObjetoZanahoriaView(SDL2pp::Renderer *render) : ObjetoView() {
+    this->sonido = std::make_unique<SDL2pp::Chunk>(PATH_SONIDO_AGARRAR_ZANAHORIA);
+    this->factory.crear_animacion_objeto(ZANAHORIA_OBJETO);
+    this->factory.crear_texturas(render);
 }
 
 ObjetoZanahoriaView::~ObjetoZanahoriaView() {}

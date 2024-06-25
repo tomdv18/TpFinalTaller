@@ -1,22 +1,10 @@
 #include "personajeLoriView.h"
 
-PersonajeLoriView::PersonajeLoriView(EventoPersonaje &evento) : PersonajeView(evento) {
-    this->crear_animaciones();
+PersonajeLoriView::PersonajeLoriView(EventoPersonaje &evento, SDL2pp::Renderer *render) : PersonajeView(evento), factory(this->animaciones) {
+    this->sonidos.insert(std::make_pair(GOLPE, std::make_unique<SDL2pp::Chunk>(PATH_SONIDO_GOLPE_2)));
+    factory.crear_animaciones_personaje();
+    factory.crear_texturas(render);
 }
 
-void PersonajeLoriView::crear_animaciones() {
-    
-    this->animaciones.insert(std::make_pair(CAMINANDO, new Animacion_Lori_Caminando()));
-    this->animaciones.insert(std::make_pair(CORRIENDO, new Animacion_Lori_Corriendo())); 
-    this->animaciones.insert(std::make_pair(QUIETO_CLIENTE, new Animacion_Lori_Quieto())); 
-    this->animaciones.insert(std::make_pair(SALTANDO, new Animacion_Lori_Saltando()));  
-    this->animaciones.insert(std::make_pair(DISPARO_QUIETO, new Animacion_Lori_Disparo_Quieto())); 
-    this->animaciones.insert(std::make_pair(DEJA_DISPARO_QUIETO, new Animacion_Lori_Deja_Disparo_Quieto()));
-    this->animaciones.insert(std::make_pair(INTOXICADO_QUIETO, new Animacion_Lori_Intoxicado_Quieto())); 
-    this->animaciones.insert(std::make_pair(INTOXICADO_CAMINANDO, new Animacion_Lori_Intoxicado_Caminando()));
-    this->animaciones.insert(std::make_pair(HERIDO, new Animacion_Lori_Herido()));
-    this->animaciones.insert(std::make_pair(MUERTO, new Animacion_Lori_Muerte()));
-    this->animaciones.insert(std::make_pair(HABILIDAD, new Animacion_Lori_Habilidad()));
-}
 
 PersonajeLoriView::~PersonajeLoriView() {}

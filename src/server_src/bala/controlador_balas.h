@@ -4,11 +4,10 @@
 #include <algorithm>
 #include <unordered_set>
 #include <vector>
-
-#include "../configuracion.h"
+#include <random>
 #include "../personaje/personaje.h"
-
 #include "bala.h"
+#include "../configuracion.h"
 
 #define CONFIG Configuracion::config()
 
@@ -17,20 +16,35 @@ private:
     std::vector<Bala> balas;
     std::unordered_set<uint32_t> ids_disponibles;
     uint32_t proximo_id;
+    std::vector<uint8_t> codigo_balas;
 
 public:
-    ControladorBalas(): proximo_id(-1) {}
+    ControladorBalas(): proximo_id(-1) {
+        std::map<std::string, uint8_t> codigos = CONFIG.obtenerBalas();
+        for (const auto& par : codigos) {
+            if(par.second == BALA_NORMAL) continue;
+            codigo_balas.push_back(par.second);
+        }
+    }
 
 
-    void agregar_bala(uint8_t codigo_bala, uint32_t id_jugador, uint32_t pos_x, uint32_t offset,
-                      uint32_t pos_y, int velocidad) {
+    void agregar_bala(uint8_t codigo_bala, uint32_t id_jugador, uint32_t pos_x, uint32_t offset,uint32_t pos_y,
+                      int velocidad) {
         uint32_t id_bala = obtener_id();
         std::cout << "ID BALA: " << id_bala << std::endl;
         const ConfigBala& config_bala = CONFIG.obtenerBala(codigo_bala);
-        balas.push_back(Bala(codigo_bala, pos_x + offset, pos_y, id_jugador, id_bala,
-                             velocidad * config_bala.velocidad_del_proyectil, config_bala.danio,
-                             config_bala.tiempo_entre_disparo, config_bala.rango_explosion,
-                             config_bala.municion, config_bala.ancho, config_bala.largo));
+        balas.push_back(Bala(codigo_bala,
+                         pos_x + offset,
+                         pos_y,
+                         id_jugador,
+                         id_bala,
+                         velocidad *  config_bala.velocidad_del_proyectil,
+                         config_bala.danio,
+                         config_bala.tiempo_entre_disparo,
+                         config_bala.rango_explosion,
+                         config_bala.municion,
+                         config_bala.ancho,
+                         config_bala.largo));
     }
 
     void remover_bala(uint32_t id_bala) {
@@ -46,20 +60,20 @@ public:
 
     std::vector<Bala>& obtener_balas() { return balas; }
 
+
+    uint8_t obtener_bala_aleatoria(){
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> distribucion(0, codigo_balas.size() - 1);
+        return codigo_balas[distribucion(gen)];
+    }
+
 private:
     uint32_t obtener_id() {
-        /*
-        if (ids_disponibles.empty()) {
-            return proximo_id++;
-        } else {
-            uint32_t id = *ids_disponibles.begin();
-            ids_disponibles.erase(id);
-            return id;
-        }
-        */
-        proximo_id += 1;
-        return proximo_id;
+       proximo_id += 1;
+    return proximo_id ;
     }
+
 };
 
 #endif

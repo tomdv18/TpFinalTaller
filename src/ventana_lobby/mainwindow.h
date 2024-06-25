@@ -7,6 +7,8 @@
 #include <QDebug>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QDir>
+#include <QComboBox>
 #include "../client_src/lobby.h"
 
 QT_BEGIN_NAMESPACE
@@ -56,9 +58,13 @@ private:
 
     void actualizarEstiloBotones();
 
+    void on_ComboBoxMapas_activated(const QString& text);
+
     Lobby *lobby;
 
     CodigoAccion personaje_elegido;
+
+    QString mapa_seleccionado;
 
     uint32_t id_partida;
 

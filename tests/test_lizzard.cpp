@@ -5,7 +5,8 @@ struct EnemigoLizzardTest : testing::Test{
     Enemigo * enemigo;
 
     EnemigoLizzardTest(){
-        enemigo = new Lizzard(001);
+        Configuracion::loadConfig(false);
+        enemigo = new Lizzard(001,00,00);
     }
 
     ~EnemigoLizzardTest(){
@@ -23,7 +24,10 @@ TEST_F(EnemigoLizzardTest, obtenerPersonaje){
 }
 
 int main(int argc, char*argv[]){
+    
+    std::cout << "-----------------------------------------" << std::endl;
     std::cout << "\nTests Enemigo LIZZARD\n" << std::endl;
+    std::cout << "-----------------------------------------" << std::endl;
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

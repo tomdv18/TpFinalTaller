@@ -4,12 +4,13 @@
 #include <iostream>
 
 
-enum CodigoEnemigo : uint8_t {
+enum CodigoEnemigo: uint8_t{
     LIZZARD,
     FENCER,
-    RAT
-
+    RAT,
+    BRUJA
 };
+
 
 
 #endif

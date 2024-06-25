@@ -1,11 +1,14 @@
 option(SERVER "Build server" ON)
 set(CONFIG_FILE "${CMAKE_SOURCE_DIR}/configuracion.yaml")
+set(CONFIG_CHEAT_FILE "${CMAKE_SOURCE_DIR}/configuracionCheats.yaml")
 if(SERVER)
 	SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread")
 
 	add_executable(jazzservidor
 		./server_src/aceptador.cpp
 		./server_src/aceptador.h
+		./server_src/enemigo/enemigo_bruja.cpp
+		./server_src/enemigo/enemigo_bruja.h
 		./server_src/enemigo/enemigo_fencer.cpp
 		./server_src/enemigo/enemigo_fencer.h
 		./server_src/enemigo/enemigo_lizzard.cpp
@@ -14,6 +17,7 @@ if(SERVER)
 		./server_src/enemigo/enemigo_rat.h
 		./server_src/enemigo/enemigo.cpp
 		./server_src/enemigo/enemigo.h
+		./server_src/enemigo/fabrica_enemigos.h
 		./server_src/enviadorJugador.cpp
 		./server_src/enviadorJugador.h
 		./server_src/jugador.cpp
@@ -58,6 +62,7 @@ if(SERVER)
 		./server_src/objeto/objeto_municion.cpp
 		./server_src/objeto/objeto_municion.h
 		./server_src/rectangulo.h
+		./server_src/triangulo.h
 		./server_src/configuracion.cpp
 		./server_src/configuracion.h
 		
@@ -79,6 +84,12 @@ if(SERVER)
 		./server_src/estado/estado_muerto.h
 		./server_src/estado/estado_especial.cpp
 		./server_src/estado/estado_especial.h
+		./server_src/estado/estado_cayendo.cpp
+		./server_src/estado/estado_cayendo.h
+		./server_src/estado/estado_tambalear.cpp
+		./server_src/estado/estado_tambalear.h
+
+        ./server_src/mapa.h
 
 		
 		#./common_src/codigo_bala.h
@@ -99,6 +110,7 @@ if(SERVER)
 	find_package(yaml-cpp REQUIRED)
 	target_link_libraries(jazzservidor PRIVATE yaml-cpp)
 	target_compile_definitions(jazzservidor PUBLIC CONFIG_PATH="${CONFIG_FILE}")
+	target_compile_definitions(jazzservidor PUBLIC CONFIG_CHEAT_PATH="${CONFIG_CHEAT_FILE}")
 	
 	target_include_directories(jazzservidor PUBLIC ${PROJECT_SOURCE_DIR}/server_src/estado)
 	target_include_directories(jazzservidor PUBLIC ${PROJECT_SOURCE_DIR}/server_src/objeto)
@@ -124,6 +136,7 @@ if(CLIENT)
 	
 	find_package(SDL2 REQUIRED)
 	include_directories(${SDL2_INCLUDE_DIRS})
+
 	
 	# Find the QtWidgets library
 	
@@ -131,8 +144,7 @@ if(CLIENT)
 	include_directories(${PROJECT_SOURCE_DIR}/src/ventana_lobby)
 	qt5_wrap_ui(UIS_HEADERS
 				./ventana_lobby/mainwindow.ui
-				#./ventana_lobby/joinpopup.ui
-				#./ventana_lobby/createpopup.ui
+
 				)
 	set(CMAKE_AUTOMOC ON)
     	set(CMAKE_AUTOUIC ON)
@@ -165,6 +177,14 @@ if(CLIENT)
 		./client_src/Vista_Personajes/personajeLoriView.cpp
 		./client_src/Vista_Personajes/personajeSpazView.h
 		./client_src/Vista_Personajes/personajeSpazView.cpp
+		./client_src/Vista_Personajes/personajeViewFactory.h
+		./client_src/Vista_Personajes/personajeViewFactory.cpp
+		./client_src/Vista_Personajes/personajeJazzViewFactory.h
+		./client_src/Vista_Personajes/personajeJazzViewFactory.cpp
+		./client_src/Vista_Personajes/personajeLoriViewFactory.h
+		./client_src/Vista_Personajes/personajeLoriViewFactory.cpp
+		./client_src/Vista_Personajes/personajeSpazViewFactory.h
+		./client_src/Vista_Personajes/personajeSpazViewFactory.cpp
 		
 		
 		./client_src/Vista_Enemigos/enemigoView.cpp
@@ -175,6 +195,10 @@ if(CLIENT)
 		./client_src/Vista_Enemigos/enemigoLizzardView.h
 		./client_src/Vista_Enemigos/enemigoRatView.cpp
 		./client_src/Vista_Enemigos/enemigoRatView.h
+		./client_src/Vista_Enemigos/enemigoBrujaView.cpp
+		./client_src/Vista_Enemigos/enemigoBrujaView.h
+		./client_src/Vista_Enemigos/enemigoViewFactory.h
+		./client_src/Vista_Enemigos/enemigoViewFactory.cpp
 
 		./client_src/Vista_Objetos/objetoView.h
 		./client_src/Vista_Objetos/objetoView.cpp
@@ -190,6 +214,8 @@ if(CLIENT)
 		./client_src/Vista_Objetos/objetoMunicionTipo_2View.cpp
 		./client_src/Vista_Objetos/objetoMunicionTipo_3View.h
 		./client_src/Vista_Objetos/objetoMunicionTipo_3View.cpp
+		./client_src/Vista_Objetos/objetoViewFactory.h
+		./client_src/Vista_Objetos/objetoViewFactory.cpp
 		
 		./client_src/protocolo_cliente.cpp
 		./client_src/protocolo_cliente.h
@@ -200,6 +226,8 @@ if(CLIENT)
 		./client_src/Vista_Proyectiles/balaView.h
 		./client_src/Vista_Proyectiles/balasPersonajes.h
 		./client_src/Vista_Proyectiles/balasPersonajes.cpp
+		./client_src/Vista_Proyectiles/proyectilViewFactory.h
+		./client_src/Vista_Proyectiles/proyectilViewFactory.cpp
 		
 		./client_src/Animaciones/animacion.h
 		./client_src/Animaciones/animacion.cpp
@@ -211,6 +239,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_quieto.cpp
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_saltando.h
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_saltando.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_saltando_horizontal.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_saltando_horizontal.cpp
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_quieto.h
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_quieto.cpp
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_deja_disparo_quieto.h
@@ -225,6 +255,15 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_muerte.cpp
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_habilidad.h
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_habilidad.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_cayendo.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_cayendo.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_cayendo_horizontal.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_cayendo_horizontal.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_saltando.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_saltando.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_tambalear.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_tambalear.cpp
+
 
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.cpp
@@ -234,6 +273,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_quieto.cpp
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando_horizontal.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_saltando_horizontal.cpp
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_quieto.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_quieto.cpp
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_deja_disparo_quieto.h
@@ -248,6 +289,14 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_muerte.cpp
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_habilidad.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_habilidad.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo_horizontal.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo_horizontal.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_saltando.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_saltando.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_tambalear.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_tambalear.cpp
 
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.cpp
@@ -257,6 +306,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_quieto.cpp
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_saltando.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_saltando.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_saltando_horizontal.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_saltando_horizontal.cpp
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_quieto.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_quieto.cpp
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_deja_disparo_quieto.h
@@ -271,9 +322,24 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_muerte.cpp
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_habilidad.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_habilidad.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_cayendo.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_cayendo.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_cayendo_horizontal.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_cayendo_horizontal.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_saltando.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_saltando.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_tambalear.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_tambalear.cpp
 
         ./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
 		./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.cpp
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_1.h
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_1.cpp
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_2.h
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_2.cpp
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_3.h
+		./client_src/Animaciones/Animaciones_Proyectiles/animacion_proyectil_tipo_3.cpp
+		
 		
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Fencer_caminando.cpp
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Fencer_caminando.h
@@ -281,6 +347,10 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Lizzard_caminando.h
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Rat_caminando.cpp
 		./client_src/Animaciones/Animaciones_Enemigos/animacion_Rat_caminando.h
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Bruja_caminando.cpp
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Bruja_caminando.h
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Enemigo_desaparecer.cpp
+		./client_src/Animaciones/Animaciones_Enemigos/animacion_Enemigo_desaparecer.h
 
 		./client_src/Animaciones/Animaciones_Objetos/animacion_gema.cpp
 		./client_src/Animaciones/Animaciones_Objetos/animacion_gema.h
@@ -294,6 +364,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_2.h
 		./client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_3.cpp
 		./client_src/Animaciones/Animaciones_Objetos/animacion_municion_tipo_3.h
+		./client_src/Animaciones/Animaciones_Objetos/animacion_agarrar_objeto.cpp
+		./client_src/Animaciones/Animaciones_Objetos/animacion_agarrar_objeto.h
 		
 		./client_src/mapa.cpp
 		./client_src/mapa.h
@@ -343,4 +415,44 @@ if(CLIENT)
 			PROPERTIES
 			RUNTIME_OUTPUT_DIRECTORY ${CLIENT_OUTPUT_DIR})
 	
+endif()
+
+
+option(EDITOR "Build editor" ON)
+
+if(EDITOR)
+
+    	# Find the QtWidgets library
+	
+	find_package(Qt5Widgets CONFIG REQUIRED)
+	include_directories(${PROJECT_SOURCE_DIR}/src)
+	qt5_wrap_ui(UIS_HEADERS
+				./mainwindow.ui
+
+				)
+	set(CMAKE_AUTOMOC ON)
+	set(CMAKE_AUTOUIC ON)
+	set(CMAKE_AUTORCC ON)
+
+    add_executable(jazzeditor
+        ./editor_src/main.cpp
+        ./editor_src/mainwindow.cpp
+	./editor_src/level_render.cpp
+        
+        ${UIS_HEADERS}
+		
+    )
+
+     target_link_libraries(jazzeditor
+        PRIVATE
+        Qt5::Widgets
+        yaml-cpp
+    )
+
+    set(EDITOR_OUTPUT_DIR ${CMAKE_BINARY_DIR})
+
+    set_target_properties(jazzeditor
+        PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${EDITOR_OUTPUT_DIR}
+    )
 endif()

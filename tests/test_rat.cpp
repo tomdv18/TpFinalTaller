@@ -5,7 +5,8 @@ struct EnemigoRatTest : testing::Test{
     Enemigo * enemigo;
 
     EnemigoRatTest(){
-        enemigo = new Rat(001);
+        Configuracion::loadConfig(false);
+        enemigo = new Rat(001,00,00);
     }
 
     ~EnemigoRatTest(){
@@ -23,7 +24,9 @@ TEST_F(EnemigoRatTest, obtenerPersonaje){
 }
 
 int main(int argc, char*argv[]){
+    std::cout << "-----------------------------------------" << std::endl;
     std::cout << "\nTests Enemigo RAT\n" << std::endl;
+    std::cout << "-----------------------------------------" << std::endl;    
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

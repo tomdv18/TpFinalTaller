@@ -1,5 +1,5 @@
 personaje:
-  vida: 1
+  vida: 10
   velocidad_x: 5
   velocidad_y: 30 
   gravedad: 3
@@ -7,16 +7,20 @@ personaje:
   tiempo_intoxicacion: 5.0
   ancho: 50
   alto: 50
+  puntos: 100
 
 jazz:
+  danio_habilidad: 5
   enfriamiento_habilidad: 5.0
   velocidad_y_habilidad: 45 
 
 spaz:
+  danio_habilidad: 5
   enfriamiento_habilidad: 5.0
   velocidad_x_habilidad: 15
 
 lori:
+  danio_habilidad: 5
   enfriamiento_habilidad: 5.0
   velocidad_x_habilidad: 10
   velocidad_y_habilidad: 30
@@ -24,8 +28,8 @@ lori:
 tiempo_partida: 120
 
 pantalla:
-  lim_x: 1000
-  lim_y: 1000
+  lim_x: 2000
+  lim_y: 2000
 
 estado:
   tiempo_estado_muerto: 5
@@ -52,7 +56,7 @@ municion:
     tiempo_reaparicion: 10
   cohete_rapido:
     municion: 4
-    tiempo_entre_disparo: 8
+    tiempo_entre_disparo: 1.5
     velocidad_del_proyectil: 25
     danio: 2
     rango_explosion: 50
@@ -61,7 +65,7 @@ municion:
     tiempo_reaparicion: 20
   cohete_toxico:
     municion: 2
-    tiempo_entre_disparo: 10
+    tiempo_entre_disparo: 2
     velocidad_del_proyectil: 15
     danio: 2
     rango_explosion: 50
@@ -91,17 +95,51 @@ objeto:
 
 enemigo:
   tiempo_reaparicion_enemigo: 5
-  vida_default: 100
+  vida_default: 1
   velocidad_default: 3
   danio_default: 1
   ancho: 50
   alto: 50
   fencer:
-    vida: 120
+    danio: 3
+    puntos: 50
+    vida: 1
+    ancho: 70
+    alto: 50
+    probabilidad_drop_vida: [0,20]
+    probabilidad_drop_municion: [20,100]
+    tiempo_reaparicion: 5
+    velocidad_x: 5
   lizzard: 
-    vida: 100
+    danio: 2
+    puntos: 20
+    vida: 1
+    ancho: 50
+    alto: 50
+    probabilidad_drop_vida: [0,20]
+    probabilidad_drop_municion: [20,100]
+    tiempo_reaparicion: 5
+    velocidad_x: 5
   rat:
-    vida: 50
+    danio: 1
+    puntos: 10
+    vida: 1
+    ancho: 70
+    alto: 30
+    probabilidad_drop_vida: [0,20]
+    probabilidad_drop_municion: [20,100]
+    tiempo_reaparicion: 5
+    velocidad_x: 5
+  bruja:
+    danio: 2
+    puntos: 75
+    vida: 1
+    ancho: 50
+    alto: 50
+    probabilidad_drop_vida: [0,20]
+    probabilidad_drop_municion: [20,100]
+    tiempo_reaparicion: 5
+    velocidad_x: 5
 
 
 

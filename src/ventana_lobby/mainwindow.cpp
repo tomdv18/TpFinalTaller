@@ -28,8 +28,25 @@ MainWindow::MainWindow(Lobby *lobby, QWidget *parent)
     ui->cantidadJugadores->setVisible(false);
     ui->labelJugadores->setVisible(false);
     ui->botonEmpezar->setVisible(false);
+    ui->labelMapa->setVisible(false);
+    ui->seleccionMapas->setVisible(false);
 
     personaje_elegido = NINGUNO;
+
+    QDir directory("../src/mapas");
+    QStringList yamlFiles = directory.entryList(QStringList() << "*.yaml", QDir::Files);
+    ui->seleccionMapas->clear(); // Limpiar el ComboBox si hay elementos previos
+    for (const QString &archivo : yamlFiles) {
+        QString nombreSinExtension = archivo;
+        nombreSinExtension.chop(5); // Quitar los últimos 5 caracteres (.yaml)
+        ui->seleccionMapas->addItem(nombreSinExtension);
+    }
+    connect(ui->seleccionMapas, QOverload<const QString&>::of(&QComboBox::textActivated),
+        this, &MainWindow::on_ComboBoxMapas_activated);
+
+    mapa_seleccionado = ui->seleccionMapas->currentText();
+    qDebug() << "Mapa seleccionado: " << mapa_seleccionado;
+
 }
 
 
@@ -64,6 +81,8 @@ void MainWindow::on_botonCrear_clicked()
         ui->cantidadJugadores->setVisible(true);
         ui->labelJugadores->setVisible(true);
         ui->botonEmpezar->setVisible(true);
+        ui->labelMapa->setVisible(true);
+    ui->seleccionMapas->setVisible(true);
 
     }
 
@@ -90,6 +109,8 @@ void MainWindow::on_botonUnirse_clicked()
         ui->cantidadJugadores->setVisible(false);
         ui->labelJugadores->setVisible(false);
         ui->botonEmpezar->setVisible(false);
+        ui->labelMapa->setVisible(false);
+        ui->seleccionMapas->setVisible(false);
 
         std::vector<InfoPartida> info_partidas = lobby->obtener_partidas();
         ui->listaPartidas->setRowCount(info_partidas.size());
@@ -113,8 +134,6 @@ void MainWindow::on_botonUnirse_clicked()
 
             fila++;
         }
-
-        //ui->listaPartidas->resizeColumnsToContents();
     }
 
 }
@@ -193,6 +212,8 @@ void MainWindow::on_botonInicio_clicked()
     ui->labelJugadores->setVisible(false);
     ui->botonEmpezar->setVisible(false);
     ui->botonUnirseEmpezar->setVisible(false);
+    ui->labelMapa->setVisible(false);
+    ui->seleccionMapas->setVisible(false);
     ui->botonSpaz->setVisible(true);
     ui->botonJazz->setVisible(true);
     ui->botonLori->setVisible(true);
@@ -208,8 +229,8 @@ void MainWindow::on_botonEmpezar_clicked()
     
     uint8_t max_jugadores = (uint8_t)ui->cantidadJugadores->text().toInt();
     std::cout << "CREANDO PARTIDA PARA " << (int) max_jugadores<< std::endl; 
-
-    if(lobby->crear_partida(max_jugadores)){
+    if(lobby->crear_partida(max_jugadores, mapa_seleccionado.toStdString())){
+        lobby->definir_mapa(mapa_seleccionado.toStdString());
         lobby->elegir_personaje(personaje_elegido);
         close();
     }else{
@@ -234,8 +255,9 @@ void MainWindow::on_listaPartidas_itemSelectionChanged(){
 void MainWindow::on_botonUnirseEmpezar_clicked(){
     QList<QTableWidgetItem*> itemsSeleccionados = ui->listaPartidas->selectedItems();
     if (!itemsSeleccionados.isEmpty()) {
-        
-    if(lobby->unirse_partida(id_partida)){
+    std::string nombre_mapa; 
+    if(lobby->unirse_partida(id_partida, nombre_mapa)){
+        lobby->definir_mapa(nombre_mapa);
         lobby->elegir_personaje(personaje_elegido);
         close();
     }else{
@@ -246,3 +268,9 @@ void MainWindow::on_botonUnirseEmpezar_clicked(){
     }
 }
 
+void MainWindow::on_ComboBoxMapas_activated(const QString& text)
+{
+    
+    qDebug() << "Mapa seleccionado: " << text;
+    mapa_seleccionado = text;
+}

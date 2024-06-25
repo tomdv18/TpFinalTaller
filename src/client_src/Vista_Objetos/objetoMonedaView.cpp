@@ -1,13 +1,9 @@
 #include "objetoMonedaView.h"
 
-ObjetoMonedaView::ObjetoMonedaView() : ObjetoView() {
-    this->crear_animacion();
-}
-
-void ObjetoMonedaView::crear_animacion() {
-
-    this->animacion = std::unique_ptr<Animacion> (new Animacion_Moneda()); 
-
+ObjetoMonedaView::ObjetoMonedaView(SDL2pp::Renderer *render) : ObjetoView() {
+    this->sonido = std::make_unique<SDL2pp::Chunk>(PATH_SONIDO_AGARRAR_MONEDA);
+    this->factory.crear_animacion_objeto(MONEDA_OBJETO);
+    this->factory.crear_texturas(render);
 }
 
 ObjetoMonedaView::~ObjetoMonedaView() {}

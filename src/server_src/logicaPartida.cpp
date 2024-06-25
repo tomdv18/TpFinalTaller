@@ -1,69 +1,114 @@
 #include "logicaPartida.h"
 
+#include <iostream>
+#include <fstream>
+#include <yaml-cpp/yaml.h>
 
 #define CONFIG Configuracion::config()
 
-LogicaPartida::LogicaPartida(): fabrica_objetos() {
+LogicaPartida::LogicaPartida(std::string mapa) : fabrica_objetos(), fabrica_enemigos(){
+    id_objetos = 0;
+    std::string ruta = "../src/mapas/" + mapa + ".yaml";
+    YAML::Node mapNode = YAML::LoadFile(ruta);
+    //YAML::Node mapNode = YAML::LoadFile("../src/mapas/mapa_prueba.yaml");
+        int i = 0;
+        for (const auto& objNode : mapNode["solid"]) {
+            map_objetos_solidos[i] = new Solido(i,objNode["x"].as<uint32_t>(),objNode["y"].as<uint32_t>(),1,objNode["width"].as<uint32_t>(),objNode["height"].as<uint32_t>(), BLOQUE);
+            i++;
+        }
 
-    // map_objetos_solidos[1] = new Solido(1, 0, 550, 1, 5000, 100); //Limite del mapa abajo
+        for (const auto& objNode : mapNode["triangulo_derecho"]) {
+            map_objetos_solidos[i] = new Solido(i,objNode["x"].as<uint32_t>(),objNode["y"].as<uint32_t>(),1,objNode["width"].as<uint32_t>(),objNode["height"].as<uint32_t>(), TRIANGULO_DERECHO);
+            i++;
+        }
 
-    map_objetos_solidos[2] = new Solido(2, 100, 300, 1, 5000, 25);  // Piso grande
-
-    map_objetos_solidos[3] = new Solido(3, 75, 0, 1, 25, 5000);  // X pared izq
-
-    map_objetos_solidos[4] = new Solido(4, 280, 225, 1, 150, 25);  // Piso chiquito
-
-    map_objetos_solidos[5] = new Solido(5, 0, 0, 1, 5000, 50);  // Limite del mapa arriba
-
-    map_objetos_solidos[6] = new Solido(6, 590, 150, 1, 10, 5000);  // X pared derecha
-
-
-    /*
-
-        piso:
-      - x: 100
-        y: 150
-      - x: 260
-        y: 150
-      - x: 420
-        y: 150
-      - x: 280
-        y: 70
-    pared:
-      - x: 100
-        y: 150
-      - x: 596
-        y: 150
-    */
-
-    // Enemigo necesita
-    /*
-
-    posicion en X
-    posicion en Y
+        for (const auto& objNode : mapNode["triangulo_izquierdo"]) {
+            map_objetos_solidos[i] = new Solido(i,objNode["x"].as<uint32_t>(),objNode["y"].as<uint32_t>(),1,objNode["width"].as<uint32_t>(),objNode["height"].as<uint32_t>(), TRIANGULO_IZQUIERDO);
+            i++;
+        }
 
 
-    */
+        
+        for (const auto& monedaNode : mapNode["moneda"]) {
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(MONEDA,monedaNode["x"].as<uint32_t>(),monedaNode["y"].as<uint32_t>(),monedaNode["veneno"].as<bool>());
+            id_objetos++;
+        }
 
-    /*
 
-     LEER YAML DEL MAPA INICIALIZAR TODAS ESTAS COSAS
-     SETEAR ZONAS DE RESPAWN PARA JUGADOR
+        for (const auto& gemaNode : mapNode["gema"]) {
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(GEMA,gemaNode["x"].as<uint32_t>(),gemaNode["y"].as<uint32_t>(),gemaNode["veneno"].as<bool>());
+            id_objetos++;
+        }
 
-    */
 
-    map_enemigos[0] = new Rat(0);  // DESCOMENTAR ESTA LINEA PARA EL MUESTREO DE ENEMIGOS
+        for (const auto& zanahoriaNode : mapNode["zanahoria"]) {
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(ZANAHORIA,zanahoriaNode["x"].as<uint32_t>(), zanahoriaNode["y"].as<uint32_t>(),zanahoriaNode["veneno"].as<bool>());
+            id_objetos++;
+        }
 
-    map_objetos_comunes[0] = fabrica_objetos.crear_objeto(ZANAHORIA, 400, 275, true);
-    map_objetos_comunes[1] = fabrica_objetos.crear_objeto(GEMA, 475, 275, false);
-    map_objetos_comunes[2] = fabrica_objetos.crear_objeto(MONEDA, 475, 200, false);
-    map_objetos_comunes[3] = fabrica_objetos.crear_objeto(BALA_VELOZ, 525, 275, false);
+    
+        for (const auto& BalaVelozNode : mapNode["bala_veloz"]) {
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(BALA_VELOZ,BalaVelozNode["x"].as<uint32_t>(), BalaVelozNode["y"].as<uint32_t>(), false);
+            id_objetos++;
+        }
+
+        for (const auto& CoheteRapidoNode : mapNode["cohete_rapido"]) {
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(COHETE_RAPIDO,CoheteRapidoNode["x"].as<uint32_t>(), CoheteRapidoNode["y"].as<uint32_t>(), false);
+            id_objetos++;
+        }
+
+        for (const auto& CoheteToxicoNode : mapNode["cohete_toxico"]) {
+            map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(COHETE_TOXICO,CoheteToxicoNode["x"].as<uint32_t>(), CoheteToxicoNode["y"].as<uint32_t>(), false);
+            id_objetos++;
+        }
+        
+
+
+        // Carga de enemigos
+        i = 0;
+        if(mapNode["lizzard"]) {
+            for (const auto& lizzardNode : mapNode["lizzard"]) {
+            map_enemigos[i] = fabrica_enemigos.crear_enemigo(i,LIZZARD,lizzardNode["x"].as<uint32_t>(), lizzardNode["y"].as<uint32_t>());
+            i++;
+            }
+        }
+        
+        if(mapNode["rat"]) {
+            for (const auto& RatNode : mapNode["rat"]) {
+                map_enemigos[i] = fabrica_enemigos.crear_enemigo(i,RAT,RatNode["x"].as<uint32_t>(), RatNode["y"].as<uint32_t>());
+                i++;
+            } 
+        }
+
+        if(mapNode["fencer"]) {
+            for (const auto& FencerNode : mapNode["fencer"]) {
+                map_enemigos[i] = fabrica_enemigos.crear_enemigo(i,FENCER,FencerNode["x"].as<uint32_t>(), FencerNode["y"].as<uint32_t>());
+                i++;
+            }
+        }
+
+    
+        
+        if(mapNode["bruja"]) {
+            for (const auto& BrujaNode : mapNode["bruja"]) {
+                map_enemigos[i] = fabrica_enemigos.crear_enemigo(i,BRUJA,BrujaNode["x"].as<uint32_t>(), BrujaNode["y"].as<uint32_t>());
+                i++;
+            }
+        }
+        SpawnPoint spawn;
+        for (const auto& spawnNode : mapNode["spawn"]) {
+            spawn.x = spawnNode["x"].as<uint32_t>();
+            spawn.y = spawnNode["y"].as<uint32_t>();
+            spawns.emplace_back(spawn);
+        }
+    
 }
 
 
 void LogicaPartida::ejecutar(Accion accion,
                              std::chrono::time_point<std::chrono::high_resolution_clock> tiempo) {
 
+    
 
     switch (accion.codigo) {
         case DERECHA:
@@ -89,11 +134,11 @@ void LogicaPartida::ejecutar(Accion accion,
             break;
         case DISPARAR:
             disparar(accion.id_jugador, tiempo);
-            // std::cout << "DISPARANDO" << std::endl;
+            //std::cout << "DISPARANDO" << std::endl;
             break;
         case DEJAR_DISPARAR:
             dejar_disparar(accion.id_jugador);
-            // std::cout << "DEJO DE DISPARAR" << std::endl;
+            //std::cout << "DEJO DE DISPARAR" << std::endl;
             break;
         case ESPECIAL:
             usar_habilidad(accion.id_jugador, tiempo);
@@ -114,28 +159,24 @@ void LogicaPartida::ejecutar(Accion accion,
     }
 }
 
-void LogicaPartida::mover_derecha(
-        uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo) {
+void LogicaPartida::mover_derecha(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo) {
     std::chrono::time_point<std::chrono::high_resolution_clock> actual =
             std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        if (personaje->esta_muerto())
-            return;
+        if(personaje->esta_muerto()) return;
         personaje->mover_derecha(tiempo_transcurrido);
     }
 }
 
-void LogicaPartida::mover_izquierda(
-        uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo) {
-    std::chrono::time_point<std::chrono::high_resolution_clock> actual =
+void LogicaPartida::mover_izquierda(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo) {
+     std::chrono::time_point<std::chrono::high_resolution_clock> actual =
             std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        if (personaje->esta_muerto())
-            return;
+        if(personaje->esta_muerto()) return;
         personaje->mover_izquierda(tiempo_transcurrido);
     }
 }
@@ -148,8 +189,7 @@ void LogicaPartida::mover_arriba(
 
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        if (personaje->esta_muerto())
-            return;
+        if(personaje->esta_muerto()) return;
         personaje->mover_arriba(tiempo_transcurrido);
     }
 }
@@ -157,8 +197,7 @@ void LogicaPartida::mover_arriba(
 void LogicaPartida::mover_abajo(uint32_t id_jugador) {
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        if (personaje->esta_muerto())
-            return;
+        if(personaje->esta_muerto()) return;
         personaje->mover_abajo();
     }
 }
@@ -166,21 +205,18 @@ void LogicaPartida::mover_abajo(uint32_t id_jugador) {
 void LogicaPartida::mover_quieto(uint32_t id_jugador) {
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        if (personaje->esta_muerto())
-            return;
+        if(personaje->esta_muerto()) return;
         personaje->quedarse_quieto();
     }
 }
 
-void LogicaPartida::mover_correr_rapido(
-        uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo) {
+void LogicaPartida::mover_correr_rapido(uint32_t id_jugador, std::chrono::time_point<std::chrono::high_resolution_clock> tiempo) {
     std::chrono::time_point<std::chrono::high_resolution_clock> actual =
             std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        if (personaje->esta_muerto())
-            return;
+        if(personaje->esta_muerto()) return;
         personaje->correr_rapido(tiempo_transcurrido);
     }
 }
@@ -188,8 +224,7 @@ void LogicaPartida::mover_correr_rapido(
 void LogicaPartida::mover_correr(uint32_t id_jugador) {
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        if (personaje->esta_muerto())
-            return;
+        if(personaje->esta_muerto()) return;
         personaje->correr();
     }
 }
@@ -202,17 +237,14 @@ void LogicaPartida::disparar(uint32_t id_jugador,
 
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        if (personaje->esta_muerto())
-            return;
+        if(personaje->esta_muerto()) return;
         uint8_t codigo_bala = personaje->disparar(tiempo_transcurrido);
         if (codigo_bala != NINGUNO) {
             int velocidad = personaje->mirando_izquierda() ? -1 : 1;
-            uint32_t offset = personaje->mirando_izquierda() ?
-                                      -CONFIG.getAnchoPersonaje() / 2 :
-                                      velocidad * (CONFIG.getAnchoPersonaje());
-            controlador_balas.agregar_bala(
-                    codigo_bala, id_jugador, personaje->obtener_posicionX(), offset,
-                    personaje->obtener_posicionY() + CONFIG.getAnchoPersonaje() / 4, velocidad);
+            uint32_t offset = personaje->mirando_izquierda() ? -CONFIG.getAnchoPersonaje()/2 : velocidad * (CONFIG.getAnchoPersonaje());
+            controlador_balas.agregar_bala(codigo_bala, id_jugador, personaje->obtener_posicionX(), offset,
+                                           personaje->obtener_posicionY() + CONFIG.getAnchoPersonaje() / 4,
+                                           velocidad);
         }
     }
 }
@@ -220,8 +252,7 @@ void LogicaPartida::disparar(uint32_t id_jugador,
 void LogicaPartida::dejar_disparar(uint32_t id_jugador) {
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        if (personaje->esta_muerto())
-            return;
+        if(personaje->esta_muerto()) return;
         personaje->dejar_disparar();
     }
 }
@@ -233,17 +264,15 @@ void LogicaPartida::usar_habilidad(
     std::chrono::duration<double> tiempo_transcurrido = actual - tiempo;
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        if (personaje->esta_muerto())
-            return;
+        if(personaje->esta_muerto()) return;
         personaje->usar_habilidad(tiempo_transcurrido);
     }
 }
 
-void LogicaPartida::cambiar_bala(uint32_t id_jugador) {
+void LogicaPartida::cambiar_bala(uint32_t id_jugador){
     Personaje* personaje = map_personajes[id_jugador];
     if (personaje != nullptr) {
-        if (personaje->esta_muerto())
-            return;
+        if(personaje->esta_muerto()) return;
         personaje->cambiar_bala_siguiente();
     }
 }
@@ -267,7 +296,7 @@ void LogicaPartida::agregar_personaje(Accion accion) {
             std::cout << "CREAR PERSONAJE JAZZ" << std::endl;
             // personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if (map_personajes[accion.id_jugador] == nullptr) {
-                map_personajes[accion.id_jugador] = new Jazz(accion.id_jugador);
+                map_personajes[accion.id_jugador] = new Jazz(accion.id_jugador, spawns);
             }
             break;
         }
@@ -275,7 +304,7 @@ void LogicaPartida::agregar_personaje(Accion accion) {
             std::cout << "CREAR PERSONAJE SPAZ" << std::endl;
             // personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if (map_personajes[accion.id_jugador] == nullptr) {
-                map_personajes[accion.id_jugador] = new Spaz(accion.id_jugador);
+                map_personajes[accion.id_jugador] = new Spaz(accion.id_jugador, spawns);
             }
             break;
         }
@@ -283,7 +312,7 @@ void LogicaPartida::agregar_personaje(Accion accion) {
             std::cout << "CREAR PERSONAJE LORI" << std::endl;
             // personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if (map_personajes[accion.id_jugador] == nullptr) {
-                map_personajes[accion.id_jugador] = new Lori(accion.id_jugador);
+                map_personajes[accion.id_jugador] = new Lori(accion.id_jugador, spawns);
             }
             break;
         }
@@ -301,39 +330,56 @@ void LogicaPartida::actualizar_partida(
 
 
     for (const auto& par_personaje: map_personajes) {
-        par_personaje.second->actualizar_posicion(tiempo_transcurrido, map_objetos_solidos,
-                                                  map_objetos_comunes);
+        par_personaje.second->actualizar_posicion(tiempo_transcurrido, map_objetos_solidos, map_objetos_comunes);
+        Rectangulo rect_personaje = {par_personaje.second->obtener_posicionX(), par_personaje.second->obtener_posicionY(),
+                                    par_personaje.second->obtener_ancho(), par_personaje.second->obtener_alto()};
+ 
+    
+        for (const auto& par_otro: map_personajes) {
+            Rectangulo rect_otro = {par_otro.second->obtener_posicionX(), par_otro.second->obtener_posicionY(),
+                                    par_otro.second->obtener_ancho(), par_otro.second->obtener_alto()};
+            if(!par_otro.second->esta_muerto() && par_otro.first != par_personaje.first){
+                if(rect_personaje.hay_colision(rect_otro) && par_personaje.second->obtener_habilidad()){
+                   par_personaje.second->inflingir_danio_habilidad(par_otro.second, tiempo_transcurrido);
+                }
+            }                       
+        }
+        
     }
+    
+    
+    for (const auto& par: map_enemigos) {
+        par.second->actualizar_posicion(tiempo_transcurrido, map_objetos_solidos);
 
-    for (const auto& par_enemigo: map_enemigos) {
-        par_enemigo.second->actualizar_posicion(tiempo_transcurrido);
-
-        Rectangulo rect_enemigo = {
-                par_enemigo.second->obtener_posicionX(), par_enemigo.second->obtener_posicionY(),
-                par_enemigo.second->obtener_ancho(), par_enemigo.second->obtener_alto()};
-        if (par_enemigo.second->esta_vivo()) {
-            for (const auto& par_personaje: map_personajes) {
-                Rectangulo rect_personaje = {par_personaje.second->obtener_posicionX(),
-                                             par_personaje.second->obtener_posicionY(),
-                                             par_personaje.second->obtener_ancho(),
-                                             par_personaje.second->obtener_alto()};
-                if (rect_personaje.hay_colision(rect_enemigo)) {
-                    if (!par_personaje.second->esta_muerto()) {
-                        // Si esta muerto lo ignoro
-                        if (par_personaje.second->obtener_habilidad()) {
-                            // El personaje le hace daño al enemigo
-                        } else {
-                            par_personaje.second->recibir_golpe(1, tiempo_transcurrido);
+        Rectangulo rect_enemigo = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
+                    par.second->obtener_ancho(), par.second->obtener_alto()};
+        if(par.second->esta_vivo()){
+            for (const auto& par_pj: map_personajes) {
+                    Rectangulo rect_personaje = {par_pj.second->obtener_posicionX(), par_pj.second->obtener_posicionY(),
+                                    par_pj.second->obtener_ancho(), par_pj.second->obtener_alto()};
+                    if(rect_personaje.hay_colision(rect_enemigo)){
+                        if(!par_pj.second->esta_muerto()){
+                                // Si esta muerto lo ignoro
+                            if(par_pj.second->obtener_estado() == ESTADO_ESPECIAL){
+                                // El personaje le hace daño a el
+                                par.second->recibir_golpe(par_pj.second, tiempo_transcurrido);
+                                if(!par.second->esta_vivo()){
+                                    //Drop item
+                                }
+                            } else{
+                                // El personaje recibe danio
+                                par_pj.second->recibir_golpe(par.second.get(),tiempo_transcurrido); 
+                            } 
                         }
                     }
-                }
             }
-        }
+        }            
     }
 
     auto& balas = controlador_balas.obtener_balas();
     auto it = balas.begin();
 
+    
 
     while (it != balas.end()) {
         it->actualizar_posicion();
@@ -343,31 +389,38 @@ void LogicaPartida::actualizar_partida(
 
 
         for (const auto& par: map_enemigos) {
-            Rectangulo rect_enemigo = {par.second->obtener_posicionX(),
-                                       par.second->obtener_posicionY(), par.second->obtener_ancho(),
-                                       par.second->obtener_alto()};
-            if (rect_enemigo.hay_colision(rect_bala)) {
-                if (par.second->esta_vivo()) {
-                    par.second->recibir_golpe(
-                            200, tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+            Rectangulo rect_enemigo = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
+                    par.second->obtener_ancho(), par.second->obtener_alto()};
+            if(rect_enemigo.hay_colision(rect_bala)){
+                if(par.second->esta_vivo()){
+                    par.second->recibir_golpe(*it,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+                    if(!par.second->esta_vivo()){
+                        map_personajes[it->obtener_id_jugador()]->asignar_puntos(par.second->obtener_puntos());
+                        //Dropear item
+                        //map_objetos_comunes[id_objetos] = par.second->obtener_item();
+                        //map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(ZANAHORIA, par.second->obtener_posicionX(), par.second->obtener_posicionY(), false);
+                        //id_objetos++;
+                        //Hacer funcion CREAR DROP RANDOM(RECINBE UINT8_T)
+                        //HACER METODO NO_REAPARECER PARA ITEM, NO PUEDE REAPARECER
+                        crear_drop(par.second->obtener_item(), par.second->obtener_posicionX(), par.second->obtener_posicionY());
+                    }
                     it->impactar();
                     break;
                 }
             }
         }
+            
 
-
-        if (!it->obtener_impacto()) {
+        if(!it->obtener_impacto()){
             for (const auto& par: map_personajes) {
-                Rectangulo rect_personaje = {
-                        par.second->obtener_posicionX(), par.second->obtener_posicionY(),
-                        par.second->obtener_ancho(), par.second->obtener_alto()};
-                if (rect_personaje.hay_colision(rect_bala) &&
-                    it->obtener_id_jugador() != par.first) {  // No se puede hacer daño solo
-                    if (!par.second->esta_muerto()) {
-                        par.second->recibir_golpe(
-                                it->obtener_danio(),
-                                tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+                Rectangulo rect_personaje = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
+                                par.second->obtener_ancho(), par.second->obtener_alto()};
+                if(rect_personaje.hay_colision(rect_bala) && it->obtener_id_jugador() != par.first){  // No se puede hacer daño solo
+                    if(!par.second->esta_muerto()){
+                        par.second->recibir_golpe(*it,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
+                        if(par.second->esta_muerto()){
+                            map_personajes[it->obtener_id_jugador()]->asignar_puntos(par.second->obtener_puntos_muerte());
+                        }
                         it->impactar();
                         break;
                     }
@@ -376,11 +429,10 @@ void LogicaPartida::actualizar_partida(
         }
 
         // Colision con objetos SOLIDOS
-        if (!it->obtener_impacto()) {
+        if(!it->obtener_impacto()){
             for (const auto& par: map_objetos_solidos) {
-                Rectangulo rect_obj = {par.second->obtener_posicionX(),
-                                       par.second->obtener_posicionY(), par.second->obtener_ancho(),
-                                       par.second->obtener_alto()};
+                Rectangulo rect_obj = {par.second->obtener_posicionX(), par.second->obtener_posicionY(),
+                                par.second->obtener_ancho(), par.second->obtener_alto()};
                 if (rect_obj.hay_colision(rect_bala)) {
                     it->impactar();
                     break;
@@ -388,12 +440,13 @@ void LogicaPartida::actualizar_partida(
             }
         }
 
-        if (it->obtener_impacto() || it->obtener_posicionX() >= WIDTH) {
+        if (it->obtener_impacto() || it->obtener_posicionX() >= CONFIG.getAnchoPantalla()) {
             controlador_balas.remover_bala(it->obtener_id_bala());
         } else {
             ++it;
         }
     }
+    
 }
 
 Evento LogicaPartida::obtener_snapshot(
@@ -424,6 +477,9 @@ Evento LogicaPartida::obtener_snapshot(
         evento_personaje.puntos = par.second->obtener_puntos();
         evento_personaje.bala_actual = par.second->obtener_bala_actual();
         evento_personaje.municion = par.second->obtener_municion_actual();
+        evento_personaje.salto_horizontal = par.second->obtener_salto_horizontal();
+        evento_personaje.rotacion = par.second->obtener_rotacion();
+        evento_personaje.en_diagonal = par.second->obtener_diagonal();
 
         evento.eventos_personaje.emplace_back(evento_personaje);
     }
@@ -449,7 +505,6 @@ Evento LogicaPartida::obtener_snapshot(
         evento_bala.impacto = bala.obtener_impacto();
         evento_bala.tipo_bala = bala.obtener_codigo();
 
-        std::cout << "IMPACTO " << (int)evento_bala.impacto << std::endl;
 
         evento.eventos_bala.emplace_back(evento_bala);
     }
@@ -463,6 +518,9 @@ Evento LogicaPartida::obtener_snapshot(
         eventos_enem.vida = par.second->obtener_vida();
         eventos_enem.esta_vivo = par.second->esta_vivo();
         eventos_enem.mirando_izquierda = par.second->mirando_izquierda();
+        eventos_enem.esta_atacando = par.second->obtener_atacando();
+
+        //std::cout << "ENEMIGO ATACANDO: " << (int) eventos_enem.esta_atacando << std::endl;
 
         evento.eventos_enemigos.emplace_back(eventos_enem);
     }
@@ -471,6 +529,35 @@ Evento LogicaPartida::obtener_snapshot(
     return evento;
 }
 
+
+//Metodos Para Testing
+
+int LogicaPartida::getPersonajesSize() {
+    return map_personajes.size();
+}
+
+int LogicaPartida::getEnemigosSize() {
+    return map_enemigos.size();
+}
+
+int LogicaPartida::getObjetosSolidosSize() {
+    return map_objetos_solidos.size();
+}
+
+int LogicaPartida::getObjetosComunesSize() {
+    return map_objetos_comunes.size();
+}
+
+void LogicaPartida::crear_drop(uint8_t codigo_objeto, uint32_t x, uint32_t y){
+    if(codigo_objeto == ZANAHORIA){
+        map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(ZANAHORIA, x, y, false);      
+    }else{
+        map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(controlador_balas.obtener_bala_aleatoria(), x, y , false);
+    }
+
+    map_objetos_comunes[id_objetos]->no_reaparecer();
+    id_objetos++;
+}
 
 LogicaPartida::~LogicaPartida() {
     for (auto& par: map_personajes) {
@@ -481,12 +568,4 @@ LogicaPartida::~LogicaPartida() {
         delete par.second;
     }
 
-    /*
-    for (auto& par: map_objetos_comunes) {
-        delete par.second;
-    }
-    */
-    for (auto& par: map_enemigos) {
-        delete par.second;
-    }
 }

@@ -12,7 +12,7 @@
 #define WIDTH 640
 #define HEIGHT 480
 
-Cliente::Cliente(Socket& skt): skt(skt), estado(true), personajes(), renderizado(personajes) {
+Cliente::Cliente(Socket& skt, std::string mapa): skt(skt), estado(true), personajes(), renderizado(personajes), nombre_mapa(mapa){
     bool was_closed = false;
     skt.recvall(&id_jugador,sizeof(id_jugador), &was_closed);
     id_jugador = ntohl(id_jugador);
@@ -129,9 +129,97 @@ bool atrapar_eventos_entrada(Queue<CodigoAccion>& queue_accion) {
     return true;
 }
 
+MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
+    MapaCompleto mapaCompleto;
+
+    try {
+        // Carga el archivo YAML
+        YAML::Node data = YAML::LoadFile(filename);
+
+        YAML::Node miscelaneoNode = data["miscelaneo"];
+        std::vector<Position> miscelaneos;
+        for (const auto& miscelaneo : miscelaneoNode) {
+            Position position;
+            position.x = miscelaneo["x"].as<uint32_t>();
+            position.y = miscelaneo["y"].as<uint32_t>();
+            position.width = miscelaneo["width"].as<uint32_t>();
+            position.height = miscelaneo["height"].as<uint32_t>();
+            position.imagen = miscelaneo["imagen"].as<std::string>();
+            miscelaneos.push_back(position);
+        }
+        mapaCompleto.entidades["miscelaneo"] = miscelaneos;
+
+        std::cout << "MISCELANEOS CARGADOS" << std::endl;
+
+        // Lee la sección 'solids' del archivo YAML
+        YAML::Node solidsNode = data["solid"];
+        std::vector<Position> solids;
+
+        for (const auto& solid : solidsNode) {
+            Position position;
+            position.x = solid["x"].as<uint32_t>();
+            position.y = solid["y"].as<uint32_t>();
+            position.width = solid["width"].as<uint32_t>();
+            position.height = solid["height"].as<uint32_t>();
+            position.imagen = solid["imagen"].as<std::string>();
+            solids.push_back(position);
+        }
+
+        // Guarda el vector de solids en el mapa con la clave "solids"
+        mapaCompleto.entidades["solids"] = solids;
+
+        std::cout << "SOLIDOS CARGADO" << std::endl;
+
+        // Lee el fondo del archivo YAML
+        if (data["fondo"]) {
+            mapaCompleto.fondo = data["fondo"].as<std::string>();
+        } else {
+            std::cerr << "La clave 'fondo' no se encontró en el archivo YAML." << std::endl;
+        }
+
+        std::cout << "FONDO CARGADO" << std::endl;
+
+        // Superficies diagonales
+        YAML::Node trianguloNode = data["triangulo_derecho"];
+        std::vector<Position> triangulos;
+        for (const auto& triangulo : trianguloNode) {
+            Position position;
+            position.x = triangulo["x"].as<uint32_t>();
+            position.y = triangulo["y"].as<uint32_t>();
+            position.width = triangulo["width"].as<uint32_t>();
+            position.height = triangulo["height"].as<uint32_t>();
+            position.imagen = triangulo["imagen"].as<std::string>();
+            triangulos.push_back(position);
+        }
+        mapaCompleto.entidades["triangulo_derecho"] = triangulos;
+
+
+        YAML::Node trianguloIzqNode = data["triangulo_izquierdo"];
+        std::vector<Position> triangulos_izquierdo;
+        for (const auto& triangulo : trianguloIzqNode) {
+            Position position;
+            position.x = triangulo["x"].as<uint32_t>();
+            position.y = triangulo["y"].as<uint32_t>();
+            position.width = triangulo["width"].as<uint32_t>();
+            position.height = triangulo["height"].as<uint32_t>();
+            position.imagen = triangulo["imagen"].as<std::string>();
+            triangulos_izquierdo.push_back(position);
+        }
+        mapaCompleto.entidades["triangulo_izquierdo"] = triangulos_izquierdo;
+
+
+    } catch (const YAML::Exception& e) {
+        std::cerr << "Error al cargar el archivo YAML: " << e.what() << std::endl;
+    }
+
+    return mapaCompleto;
+}
+
 void Cliente::comunicarse_con_el_servidor() {
-    ProtocoloCliente protocolo_temporal(skt);
-    MapaEntidades mapa = protocolo_temporal.recibir_mapa();
+    std::string path = "../src/mapas/" + nombre_mapa + ".yaml";
+    MapaCompleto mapa = leerSolidsDesdeYAML(path);
+    //MapaCompleto mapa = leerSolidsDesdeYAML("../src/mapas/mapa_prueba.yaml");
+    
     Camara camara(0, 0, WIDTH, HEIGHT);
     
     Queue<Evento> queue_eventos(MAX_EVENTOS);
@@ -142,7 +230,7 @@ void Cliente::comunicarse_con_el_servidor() {
     this->renderizado.recibir_id(id_jugador);
     this->renderizado.inicializar_SDL2pp();
     this->renderizado.crear_ventana_y_render("JazzJack Rabbit 2", WIDTH, HEIGHT);
-
+    this->renderizado.crear_reproductor_audio();
     this->renderizado.iniciar_mapa(std::move(mapa));
     this->renderizado.iniciar_camara(std::move(camara));
     this->renderizado.iniciar_interfaz(WIDTH, HEIGHT);

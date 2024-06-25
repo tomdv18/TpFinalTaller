@@ -9,7 +9,8 @@ struct EnemigoFencerTest : testing::Test{
     Enemigo * enemigo;
 
     EnemigoFencerTest(){
-        enemigo = new Fencer(001);
+        Configuracion::loadConfig(false);
+        enemigo = new Fencer(001,00,00);
     }
 
     ~EnemigoFencerTest(){
@@ -56,7 +57,9 @@ TEST_F(EnemigoFencerTest, obtenerPersonaje){
 }
 
 int main(int argc, char*argv[]){
+    std::cout << "-----------------------------------------" << std::endl;
     std::cout << "\nTests Enemigo FENCER\n" << std::endl;
+    std::cout << "-----------------------------------------" << std::endl;
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

@@ -75,7 +75,7 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
     EventoPersonaje event_personaje;
     EventoBala event_bala;
     EventoObjeto event_objeto;
-        EventoEnemigo event_enemigo;
+    EventoEnemigo event_enemigo;
 
     uint8_t cant_personajes;
     skt.recvall(&cant_personajes,sizeof(cant_personajes),&was_closed);

@@ -7,7 +7,14 @@ struct PersonajeSpazTest : testing::Test{
     Personaje * personaje;
 
     PersonajeSpazTest(){
-        personaje = new Spaz(001);
+        
+        std::vector<SpawnPoint> spawns;
+        Configuracion::loadConfig(false);
+        SpawnPoint spawn;
+        spawn.x = 10;
+        spawn.y = 10;
+        spawns.push_back(spawn);
+        personaje = new Spaz(001, spawns);
     }
 
     ~PersonajeSpazTest(){
@@ -28,7 +35,9 @@ TEST_F(PersonajeSpazTest, obtenerPersonaje){
 
 
 int main(int argc, char*argv[]){
+    std::cout << "-----------------------------------------" << std::endl;
     std::cout << "\nTests Personaje SPAZ\n" << std::endl;
+    std::cout << "-----------------------------------------" << std::endl;
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

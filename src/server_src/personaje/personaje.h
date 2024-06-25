@@ -5,16 +5,21 @@
 #include <cmath>
 #include <iostream>
 #include <map>
-#include <memory>
-
-#include "../arma.h"
 #include "../common_src/accion.h"
-#include "../common_src/codigo_estado.h"
 #include "../common_src/evento.h"
-#include "../configuracion.h"
+#include "../common_src/codigo_estado.h"
+#include "../enemigo/enemigo.h"
 #include "../estado/estado.h"
 #include "../objeto/objeto.h"
 #include "../rectangulo.h"
+#include "../triangulo.h"
+#include "../configuracion.h"
+
+
+#include "../bala/bala.h"
+
+
+
 
 
 class Objeto;
@@ -25,7 +30,7 @@ protected:
     uint32_t id_jugador;
     uint32_t posicion_x;
     uint32_t posicion_y;
-    int8_t vida;  // DEBE SER INT PARA PODER SER NEGATIVO
+    int vida; //DEBE SER INT PARA PODER SER NEGATIVO
     bool esta_quieto;
     uint32_t ancho;
     uint32_t alto;
@@ -37,6 +42,10 @@ protected:
     bool corriendo;
 
     bool saltando;
+    bool salto_horizontal;
+    bool en_diagonal;
+    bool inclinar;
+    uint8_t rotacion;
     double tiempo_salto;
 
     bool usando_especial;
@@ -54,10 +63,7 @@ protected:
     bool intoxicado;
     double tiempo_intoxicado;
 
-
-    Arma arma;
-
-    Estado* estado;
+    Estado *estado;
 
     bool en_superficie;
 
@@ -65,13 +71,24 @@ protected:
 
     uint8_t bala_actual;
     double tiempo_disparo;
-    std::map<uint8_t, int> municiones;
+    std::map<uint8_t,int> municiones;
+    std::map<uint8_t,double> tiempos_recarga; 
+
+    uint8_t danio_habilidad;
+
+    std::vector<SpawnPoint> spawns;
 
 public:
-    explicit Personaje(uint32_t id_jugador);
+    explicit Personaje(uint32_t id_jugador, std::vector<SpawnPoint> spawns);
 
 
-    int obtener_velocidad() { return velocidad_x; }
+    int obtener_velocidad(){
+        return velocidad_x;
+    }
+
+    int obtener_velocidad_y(){
+        return velocidad_y;
+    }
     // Acciones
 
     virtual void mover_derecha(std::chrono::duration<double> tiempo_transcurrido);
@@ -88,7 +105,19 @@ public:
 
     virtual void correr();
 
+    virtual void recibir_golpe(Bala bala, std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void recibir_golpe(Enemigo *enemigo, std::chrono::duration<double> tiempo_transcurrido);
+
     virtual void recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void inflingir_danio_bala(Enemigo *enemigo, std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void inflingir_danio_bala(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void inflingir_danio_habilidad(Enemigo *enemigo, std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void inflingir_danio_habilidad(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido);
 
     virtual uint8_t disparar(std::chrono::duration<double> tiempo_transcurrido);
 
@@ -117,6 +146,8 @@ public:
     virtual void cambiar_bala_siguiente();
 
     virtual void agarrar_municion(uint8_t codigo_municion, int municion);
+
+    virtual uint8_t obtener_puntos_muerte();
 
     // Acciones
 
@@ -154,12 +185,19 @@ public:
     virtual uint8_t obtener_bala_actual();
 
     virtual uint32_t obtener_municion_actual();
+
+    virtual uint8_t obtener_danio_habilidad();
+    
+    virtual uint8_t obtener_salto_horizontal();
+
+    virtual uint8_t obtener_rotacion();
+
+    virtual uint8_t obtener_diagonal();
+
     // Getters Snapshot
 
-    virtual void actualizar_posicion(
-            std::chrono::duration<double> tiempo_transcurrido,
-            std::map<uint32_t, Objeto*>& map_objetos,
-            std::map<uint32_t, std::unique_ptr<Objeto>>& map_objetos_comunes);
+    virtual void actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,
+                                     std::map<uint32_t, Objeto*>& map_objetos, std::map<uint32_t, std::unique_ptr<Objeto>>& map_objetos_comunes);
 
     virtual ~Personaje();
 
@@ -169,9 +207,10 @@ public:
 
     virtual void usar_habilidad(std::chrono::duration<double> tiempo_transcurrido) = 0;
 
+
 public:
     // Logica de Estados
-    void cambiarEstado(Estado* estado);
+    void cambiarEstado(Estado *estado);
 
     void manejarEstado(uint8_t codigo_estado, std::chrono::duration<double> tiempo_transcurrido);
 

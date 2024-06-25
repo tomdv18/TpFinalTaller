@@ -7,7 +7,9 @@
 
 #include "../common_src/accion.h"
 #include "../common_src/codigo_objeto.h"
+
 #include "../personaje/personaje.h"
+
 
 
 class Personaje;
@@ -26,6 +28,8 @@ protected:
     double tiempo_reaparicion;
 
     double tiempo_interaccion;
+
+    bool puede_reaparecer;
 
     bool mostrar;
 
@@ -59,6 +63,8 @@ public:
 
     virtual void interactuar_personaje(Personaje* personaje,
                                        std::chrono::duration<double> tiempo_transcurrido);
+
+    virtual void no_reaparecer();
 };
 
 

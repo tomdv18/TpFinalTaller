@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>594</width>
-    <height>876</height>
+    <height>1011</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -236,32 +236,51 @@ font: 700 italic 15pt &quot;Z003&quot;;</string>
      </layout>
     </item>
     <item row="4" column="1">
-     <widget class="QPushButton" name="botonEmpezar">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+     <widget class="QLabel" name="labelMapa">
+      <property name="styleSheet">
+       <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 178, 102, 255), stop:0.55 rgba(235, 148, 61, 255), stop:0.98 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, 0));
+font: 700 italic 25pt &quot;Z003&quot;;
+border-color: rgb(0, 0, 0);</string>
       </property>
+      <property name="text">
+       <string>MAPAS</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QComboBox" name="seleccionMapas">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(245, 194, 17);
+border-color: rgb(0, 0, 0);
+font: 700 italic 25pt &quot;Z003&quot;;
+border-color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1">
+     <widget class="QPushButton" name="botonUnirseEmpezar">
       <property name="minimumSize">
        <size>
         <width>50</width>
         <height>100</height>
        </size>
       </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
       <property name="styleSheet">
        <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 178, 102, 255), stop:0.55 rgba(235, 148, 61, 255), stop:0.98 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, 0));
 font: 700 italic 25pt &quot;Z003&quot;;</string>
       </property>
       <property name="text">
-       <string>EMPEZAR PARTIDA</string>
+       <string>UNIRSE A LA PARTIDA</string>
       </property>
      </widget>
     </item>
-    <item row="6" column="1">
+    <item row="10" column="1">
      <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
       <property name="spacing">
        <number>10</number>
@@ -361,20 +380,29 @@ font: 700 italic 25pt &quot;Z003&quot;;</string>
       </item>
      </layout>
     </item>
-    <item row="5" column="1">
-     <widget class="QPushButton" name="botonUnirseEmpezar">
+    <item row="6" column="1">
+     <widget class="QPushButton" name="botonEmpezar">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="minimumSize">
        <size>
         <width>50</width>
         <height>100</height>
        </size>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="styleSheet">
        <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 178, 102, 255), stop:0.55 rgba(235, 148, 61, 255), stop:0.98 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, 0));
 font: 700 italic 25pt &quot;Z003&quot;;</string>
       </property>
       <property name="text">
-       <string>UNIRSE A LA PARTIDA</string>
+       <string>EMPEZAR PARTIDA</string>
       </property>
      </widget>
     </item>

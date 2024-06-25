@@ -5,9 +5,9 @@ MonitorPartidas::MonitorPartidas(): contador_partidas(0) {}
 
 
 Queue<Accion>* MonitorPartidas::crear_partida(uint32_t id_creador, uint8_t cant_jugadores,
-                                              Queue<Evento>* queue_jugador) {
+                                              Queue<Evento>* queue_jugador, std::string mapa) {
     Partida* nueva_partida =
-            new Partida(id_creador, cant_jugadores, contador_partidas, queue_jugador);
+            new Partida(id_creador, cant_jugadores, contador_partidas, queue_jugador, mapa);
     partidas.emplace(contador_partidas, nueva_partida);
     contador_partidas++;
     std::cout << "\nPARTIDA CREADA POR EL JUGADOR  " << id_creador << std::endl;
@@ -15,6 +15,19 @@ Queue<Accion>* MonitorPartidas::crear_partida(uint32_t id_creador, uint8_t cant_
     // Empiezo hilo partida
     nueva_partida->start();
     return nueva_partida->obtener_queue();
+}
+
+std::string MonitorPartidas::obtener_mapa_partida(uint32_t id_partida) {
+    auto it = partidas.find(id_partida);
+    // Buscar el mapa de la partida
+    if (it != partidas.end()) {
+        // Partida encontrada, uno al jugador y devuelvo la Queue si es posible
+        return it->second->obtener_mapa();
+    } else {
+        // Partida no encontrada, devuelvo nullptr
+        std::cout << "Error, partida no encontrada" << std::endl;
+        return nullptr;
+    }
 }
 
 void MonitorPartidas::listar_partidas() {

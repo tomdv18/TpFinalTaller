@@ -16,37 +16,6 @@ RecibidorJugador::RecibidorJugador(ProtocoloServidor* protocolo_servidor,
         id(id),
         en_partida(en_partida),
         conectado(conectado) {}
-// Leo un .yaml
-MapaEntidades importFromYAML(const std::string& filename) {
-    MapaEntidades entities;
-    YAML::Node config = YAML::LoadFile(filename);
-    // Verific0 si el nodo es válido
-    if (!config.IsMap()) {
-        // Manejo el caso en el que el nodo principal no sea un mapa
-        throw std::runtime_error("El archivo YAML no tiene un formato valido");
-    }
-
-    // Itero sobre cada entrada en el mapa
-    for (auto it = config.begin(); it != config.end(); ++it) {
-        std::string entity_name = it->first.as<std::string>();  // Obtener el nombre de la entidad
-
-        // Verifico si el valor asociado con la clave es una secuencia
-        if (!it->second.IsSequence()) {
-            // Manejar el caso en el que el valor asociado no sea una secuencia
-            throw std::runtime_error("Error: La entrada '" + entity_name +
-                                     "' no es una secuencia de posiciones válida.");
-        }
-
-        // Itero sobre las posiciones de la entidad
-        for (std::size_t i = 0; i < it->second.size(); ++i) {
-            YAML::Node posNode = it->second[i];
-            Position pos = {posNode["x"].as<uint32_t>(), posNode["y"].as<uint32_t>()};
-            entities[entity_name].push_back(pos);
-        }
-    }
-    return entities;
-}
-
 
 void RecibidorJugador::run() {
 
@@ -120,8 +89,12 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>& partida_encontrada, bool& w
             if (was_closed) {
                 throw std::runtime_error("Se perdió la conexion con el cliente");
             }
+            std::string mapa = protocolo_servidor->leer_mapa(was_closed);
+            if (was_closed) {
+                throw std::runtime_error("Se perdió la conexion con el cliente");
+            }
             this->queue_acciones =
-                    monitor_partidas->crear_partida(id, max_jugadores, queue_jugador);
+                    monitor_partidas->crear_partida(id, max_jugadores, queue_jugador, mapa);
             break;
         }
         case UNIRSE: {
@@ -131,6 +104,7 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>& partida_encontrada, bool& w
                 throw std::runtime_error("Se perdió la conexion con el cliente");
             }
             this->queue_acciones = monitor_partidas->unir_jugador(id, id_partida, queue_jugador);
+            protocolo_servidor->enviar_mapa(monitor_partidas->obtener_mapa_partida(id_partida), was_closed);
             break;
         }
         case LIST_P: {
@@ -158,8 +132,8 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>& partida_encontrada, bool& w
         protocolo_servidor->enviar_confirmacion(EXITO, was_closed);
         protocolo_servidor->enviar_id_jugador(this->id, was_closed);
         // Rompe aca, porque...
-        MapaEntidades mapa = importFromYAML("../src/mapas/mapa.yaml");
-        protocolo_servidor->enviar_mapa(mapa);
+        //MapaEntidades mapa = importFromYAML("../src/mapas/mapa.yaml");
+        //protocolo_servidor->enviar_mapa(mapa);
     } else {
         protocolo_servidor->enviar_confirmacion(FALLO, was_closed);
     }

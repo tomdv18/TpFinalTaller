@@ -5,14 +5,18 @@
 #include "estado.h"
 
 
-class EstadoEspecial: public Estado {
+class EstadoEspecial : public Estado {
 private:
+  
+
 public:
+
     EstadoEspecial();
 
     void manejarEstado(uint8_t codigo_estado, double tiempo) override;
 
     void actualizar(double tiempo) override;
+
 };
 
 

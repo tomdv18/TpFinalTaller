@@ -5,14 +5,15 @@
 
 
 // Aca van a ir los tipos de bala
-enum CodigoBala : uint8_t {
+enum CodigoBala : uint8_t{
     NORMAL,
     NINGUNA
 
 };
 
-class Bala {
+class Bala{
 private:
+
     uint8_t codigo_bala;
     uint32_t id_jugador;
     uint32_t id_bala;
@@ -26,9 +27,9 @@ private:
     int velocidad;
 
 
+
 public:
-    Bala(uint8_t codigo_bala, uint32_t pos_x, uint32_t pos_y, uint32_t id_jugador, uint32_t id_bala,
-         int velocidad);
+    Bala(uint8_t codigo_bala,uint32_t pos_x, uint32_t pos_y, uint32_t id_jugador, uint32_t id_bala, int velocidad);
 
     void actualizar_posicion();
 
@@ -54,7 +55,10 @@ public:
     uint8_t obtener_danio() const;
 
     bool obtener_impacto() const;
+
 };
 
 
+
 #endif
+

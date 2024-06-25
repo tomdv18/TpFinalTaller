@@ -1,12 +1,10 @@
 #include "objetoMunicionTipo_1View.h"
 
-ObjetoMunicionTipo_1View::ObjetoMunicionTipo_1View() : ObjetoView() {
-    this->crear_animacion();
+ObjetoMunicionTipo_1View::ObjetoMunicionTipo_1View(SDL2pp::Renderer *render) : ObjetoView() {
+    this->sonido = std::make_unique<SDL2pp::Chunk>(PATH_SONIDO_AGARRAR_MUNICION);
+    this->factory.crear_animacion_objeto(MUNICION_TIPO_1);
+    this->factory.crear_texturas(render);
 }
 
-void ObjetoMunicionTipo_1View::crear_animacion() {
-
-    this->animacion = std::unique_ptr<Animacion>(new Animacion_municion_tipo_1());
-}
 
 ObjetoMunicionTipo_1View::~ObjetoMunicionTipo_1View() {}
