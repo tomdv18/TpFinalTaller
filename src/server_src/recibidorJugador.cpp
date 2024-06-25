@@ -76,7 +76,6 @@ void RecibidorJugador::run() {
 
 void RecibidorJugador::leer_lobby(std::atomic<bool>& partida_encontrada, bool& was_closed) {
     uint8_t codigo = protocolo_servidor->obtener_accion(was_closed);
-    std::cout << "ACCION " << (int)codigo << std::endl;
 
     if (was_closed) {
         throw std::runtime_error("Se perdió la conexion con el cliente");
@@ -122,7 +121,6 @@ void RecibidorJugador::leer_lobby(std::atomic<bool>& partida_encontrada, bool& w
 
     if (this->queue_acciones != nullptr) {
         // Se creo la partida, o alguien se unio, debo enviar el mapa
-        std::cout << "PARTIDA EMPEZADA " << std::endl;
         Accion accion;
         accion.id_jugador = id;
         accion.codigo = codigo;
@@ -148,4 +146,4 @@ void RecibidorJugador::join_enviador() {
     }
 }
 
-RecibidorJugador::~RecibidorJugador() { std::cout << "RECIBIDOR JOINEADO " << std::endl; }
+RecibidorJugador::~RecibidorJugador() { }

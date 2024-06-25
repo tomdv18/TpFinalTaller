@@ -35,4 +35,4 @@ void EnviadorJugador::run() {
 }
 
 
-EnviadorJugador::~EnviadorJugador() { std::cout << "SENDER JOINEADO " << std::endl; }
+EnviadorJugador::~EnviadorJugador() {}

@@ -3,7 +3,6 @@
 #define CONFIG Configuracion::config()
 
 Fencer::Fencer(uint32_t id_enemigo, uint32_t x, uint32_t y): Enemigo(id_enemigo,x,y) {
-    std::cout << "FENCER CREADO" << std::endl;
     vida = CONFIG.obtenerVidaFencer();
     puntos = CONFIG.obtenerPuntosFencer();
     danio = CONFIG.obtenerDanioFencer();

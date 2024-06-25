@@ -15,7 +15,6 @@ void Zanahoria::interactuar_personaje(Personaje* personaje,
                                       std::chrono::duration<double> tiempo_transcurrido) {
     Objeto::interactuar_personaje(personaje,tiempo_transcurrido);
     personaje->curarse(vida_restaurada);
-    std::cout << "CURANDO AL PERSONAJE" << std::endl;
     tiempo_interaccion = tiempo_transcurrido.count();
     mostrar = false;
 }

@@ -73,7 +73,6 @@ void Partida::run() {
         auto inicio = std::chrono::high_resolution_clock::now();
         while (queue_acciones.try_pop(accion) && cantidad_eventos < 100) {
             logica_partida.ejecutar(accion, start);
-            //std::cout << "ACCION " << (int)accion.codigo << std::endl;
             cantidad_eventos++;
         }
 
@@ -106,11 +105,7 @@ void Partida::run() {
 
         if (snapshot.tiempo_restante <= 0) {
             _tiempo_corriendo = false;
-            std::cout << "Tiempo terminado" << std::endl;
         }
-
-
-        // std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 
     // Partida terminada, cierro la queue
@@ -118,4 +113,4 @@ void Partida::run() {
 }
 
 
-Partida::~Partida() { std::cout << "PARTIDA JOINEADA" << std::endl; }
+Partida::~Partida() { }

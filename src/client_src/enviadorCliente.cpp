@@ -22,5 +22,4 @@ void EnviadorCliente::run() {
 }
 
 EnviadorCliente::~EnviadorCliente() { 
-    std::cout << "Enviador joineado\n";
     this->join(); }

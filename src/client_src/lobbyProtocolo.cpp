@@ -97,10 +97,6 @@ std::vector<InfoPartida> LobbyProtocolo::obtener_partidas(){
         skt->recvall(&info_partida, sizeof(info_partida), &was_closed);
         info_partida.id_partida = ntohl(info_partida.id_partida);
         info_partida.id_creador = ntohl(info_partida.id_creador);
-        std::cout << "ID PARTIDA " << info_partida.id_partida << std::endl;
-        std::cout << "ID CREADOR " << info_partida.id_creador << std::endl;
-        std::cout << "JUGADORES " << (int) info_partida.jugadores << std::endl;
-        std::cout << "MAX JUGADORES " << (int) info_partida.max_jugadores << std::endl;
         info_partidas.emplace_back(info_partida);
     }
     

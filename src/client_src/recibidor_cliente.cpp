@@ -26,5 +26,4 @@ void RecibidorCliente::run() {
 }
 
 RecibidorCliente::~RecibidorCliente() { 
-    std::cout << "Recibidor joineado\n";
     this->join(); }

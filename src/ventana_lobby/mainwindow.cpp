@@ -45,7 +45,6 @@ MainWindow::MainWindow(Lobby *lobby, QWidget *parent)
         this, &MainWindow::on_ComboBoxMapas_activated);
 
     mapa_seleccionado = ui->seleccionMapas->currentText();
-    qDebug() << "Mapa seleccionado: " << mapa_seleccionado;
 
 }
 
@@ -57,7 +56,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_botonSalir_clicked()
 {
-    qDebug() << "SALIR DEL LOBBY";
     close();
 }
 
@@ -65,7 +63,6 @@ void MainWindow::on_botonSalir_clicked()
 void MainWindow::on_botonCrear_clicked()
 {
 
-    //qDebug() << "JUGADORES " << ui->max_jugadores->text().toInt();
     if(personaje_elegido == NINGUNO){
         QMessageBox::warning(this, "Crear partida", "Seleccione su personaje antes de crear la partida");
     }else{
@@ -93,7 +90,6 @@ void MainWindow::on_botonCrear_clicked()
 
 void MainWindow::on_botonUnirse_clicked()
 {
-    //qDebug() << "CODIGO PARTIDA " << ui->codigoPartida->text().toInt();
     if(personaje_elegido == NINGUNO){
         QMessageBox::warning(this, "Unirse a partida", "Seleccione su personaje antes de unirse a una partida");
     }else{
@@ -116,7 +112,6 @@ void MainWindow::on_botonUnirse_clicked()
         ui->listaPartidas->setRowCount(info_partidas.size());
         int fila = 0;
         for(InfoPartida p : info_partidas){
-            std::cout << "PARTIDA " << p.id_creador << std::endl;
             QTableWidgetItem *itemPartida = new QTableWidgetItem(QString::number(p.id_partida));
             QTableWidgetItem *itemCreador = new QTableWidgetItem(QString::number(p.id_creador));
             QTableWidgetItem *itemCantJugadores = new QTableWidgetItem(QString("%1/%2").arg(p.jugadores).arg(p.max_jugadores));
@@ -228,7 +223,6 @@ void MainWindow::on_botonEmpezar_clicked()
 {
     
     uint8_t max_jugadores = (uint8_t)ui->cantidadJugadores->text().toInt();
-    std::cout << "CREANDO PARTIDA PARA " << (int) max_jugadores<< std::endl; 
     if(lobby->crear_partida(max_jugadores, mapa_seleccionado.toStdString())){
         lobby->definir_mapa(mapa_seleccionado.toStdString());
         lobby->elegir_personaje(personaje_elegido);
@@ -246,7 +240,6 @@ void MainWindow::on_listaPartidas_itemSelectionChanged(){
         QTableWidgetItem *itemIDPartida = ui->listaPartidas->item(fila, 0); // Suponiendo que la columna 0 es la del ID de la partida
         if (itemIDPartida) {
             id_partida = (uint32_t)itemIDPartida->text().toInt();
-            qDebug() << "ID de partida seleccionada:" << id_partida;
         }
     }
 }
@@ -271,6 +264,5 @@ void MainWindow::on_botonUnirseEmpezar_clicked(){
 void MainWindow::on_ComboBoxMapas_activated(const QString& text)
 {
     
-    qDebug() << "Mapa seleccionado: " << text;
     mapa_seleccionado = text;
 }

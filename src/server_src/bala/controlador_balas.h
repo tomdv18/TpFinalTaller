@@ -31,7 +31,6 @@ public:
     void agregar_bala(uint8_t codigo_bala, uint32_t id_jugador, uint32_t pos_x, uint32_t offset,uint32_t pos_y,
                       int velocidad) {
         uint32_t id_bala = obtener_id();
-        std::cout << "ID BALA: " << id_bala << std::endl;
         const ConfigBala& config_bala = CONFIG.obtenerBala(codigo_bala);
         balas.push_back(Bala(codigo_bala,
                          pos_x + offset,

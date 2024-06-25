@@ -112,7 +112,6 @@ bool Renderizado::renderizar(Evento evento) {
                     break;
             }
             enemigosViews[evento.id_enemigo] = std::move(enemigo);
-            std::cout << "CREANDO ENEMIGO" << std::endl;
         } else {
             EnemigoView &enemigo = *(enemigosViews.at(evento.id_enemigo));
             enemigo.actualizar_vista_enemigo(evento, FRAME_RATE);
@@ -146,16 +145,12 @@ bool Renderizado::renderizar(Evento evento) {
                     break;
             }
             objetosViews[evento.id_objeto] = std::move(objeto);
-            std::cout << "Creando Objeto" << std::endl;
         } else {
             ObjetoView &objeto = *(objetosViews.at(evento.id_objeto));
             objeto.actualizar_vista_objeto(evento, FRAME_RATE);
         }
     }
-
-    //std::cout << "SALASDASDF" << std::endl;
     
-
     // Creacion del mapa de balas que tendra los jugadores
     for (const EventoBala &e : evento.eventos_bala) {
         mapa_balas_pj.agregarNuevoMapaBalas(e.id_jugador);
@@ -197,14 +192,9 @@ bool Renderizado::renderizar(Evento evento) {
         bala->crear_sonido(*reproductor_audio.get());
 
         if( (bool)e.impacto) {
-            // Nunca impacta...
-            std::cout << "-----------------------------------IMPACTO-------------------------------\n"; // Nunca impacta...
             mapa_balas_pj.eliminarBala(e.id_jugador, e.id_bala);
         }
     }
-
-    std::cout<<"ID: " << static_cast<int> (id_jugador)<< std::endl;
-
     
     // Renderizo enemigos
     for(auto &enemigo : this->enemigosViews) {
@@ -216,7 +206,6 @@ bool Renderizado::renderizar(Evento evento) {
 
             PersonajeView &p = *(personaje.second);
             if(p.obtener_id_jugador() == this->id_jugador){
-                std::cout << p.obtener_id_jugador() << " y " << id_jugador << std::endl;
                 e.crear_sonido(*this->reproductor_audio);
             }
         }
@@ -272,7 +261,5 @@ void Renderizado::mostrar_tablero_final() {
 }
 
 Renderizado::~Renderizado() { 
-    
-    std::cout << "Renderizador joineado\n";
 
 }

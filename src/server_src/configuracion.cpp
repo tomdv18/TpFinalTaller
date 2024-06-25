@@ -164,6 +164,4 @@ Configuracion::Configuracion(const YAML::Node& config) {
 
         tiempo_reaparicion_enemigo = config["enemigo"]["tiempo_reaparicion_enemigo"].as<double>();
     
-    std::cout << "asdasdasdsadasdasdsadsadasd" << std::endl;
-
 }

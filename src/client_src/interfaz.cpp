@@ -66,8 +66,6 @@ void Interfaz::mostrar_tabla_puntajes(SDL2pp::Renderer &render) {
     for (const auto &entry : puntajes) {
         uint32_t id = entry.first;
         uint32_t puntaje = entry.second;
-        std::cout << "ID: " << id << " - Puntaje: " << puntaje << std::endl;
-
         if (id == id_jugador) {
             color = (id == puntajes[0].first) ? COLOR_GREEN : COLOR_RED;
         }

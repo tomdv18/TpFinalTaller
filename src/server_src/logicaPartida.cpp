@@ -134,11 +134,9 @@ void LogicaPartida::ejecutar(Accion accion,
             break;
         case DISPARAR:
             disparar(accion.id_jugador, tiempo);
-            //std::cout << "DISPARANDO" << std::endl;
             break;
         case DEJAR_DISPARAR:
             dejar_disparar(accion.id_jugador);
-            //std::cout << "DEJO DE DISPARAR" << std::endl;
             break;
         case ESPECIAL:
             usar_habilidad(accion.id_jugador, tiempo);
@@ -290,27 +288,20 @@ void LogicaPartida::abandonar_partida(uint32_t id_jugador) {
 
 
 void LogicaPartida::agregar_personaje(Accion accion) {
-    // Personaje *personaje;
     switch (accion.codigo) {
         case JAZZ: {
-            std::cout << "CREAR PERSONAJE JAZZ" << std::endl;
-            // personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if (map_personajes[accion.id_jugador] == nullptr) {
                 map_personajes[accion.id_jugador] = new Jazz(accion.id_jugador, spawns);
             }
             break;
         }
         case SPAZ: {
-            std::cout << "CREAR PERSONAJE SPAZ" << std::endl;
-            // personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if (map_personajes[accion.id_jugador] == nullptr) {
                 map_personajes[accion.id_jugador] = new Spaz(accion.id_jugador, spawns);
             }
             break;
         }
         case LORI: {
-            std::cout << "CREAR PERSONAJE LORI" << std::endl;
-            // personaje = new Personaje(accion.id_jugador);    ///new Jazz();
             if (map_personajes[accion.id_jugador] == nullptr) {
                 map_personajes[accion.id_jugador] = new Lori(accion.id_jugador, spawns);
             }
@@ -399,12 +390,6 @@ void LogicaPartida::actualizar_partida(
                     par.second->recibir_golpe(*it,tiempo_transcurrido);  // Por ahora hardcodeado recibe 10 de daño
                     if(!par.second->esta_vivo()){
                         map_personajes[it->obtener_id_jugador()]->asignar_puntos(par.second->obtener_puntos());
-                        //Dropear item
-                        //map_objetos_comunes[id_objetos] = par.second->obtener_item();
-                        //map_objetos_comunes[id_objetos] = fabrica_objetos.crear_objeto(ZANAHORIA, par.second->obtener_posicionX(), par.second->obtener_posicionY(), false);
-                        //id_objetos++;
-                        //Hacer funcion CREAR DROP RANDOM(RECINBE UINT8_T)
-                        //HACER METODO NO_REAPARECER PARA ITEM, NO PUEDE REAPARECER
                         crear_drop(par.second->obtener_item(), par.second->obtener_posicionX(), par.second->obtener_posicionY());
                     }
                     it->impactar();
@@ -522,9 +507,6 @@ Evento LogicaPartida::obtener_snapshot(
         eventos_enem.esta_vivo = par.second->esta_vivo();
         eventos_enem.mirando_izquierda = par.second->mirando_izquierda();
         eventos_enem.esta_atacando = par.second->obtener_atacando();
-
-        //std::cout << "ENEMIGO ATACANDO: " << (int) eventos_enem.esta_atacando << std::endl;
-
         evento.eventos_enemigos.emplace_back(eventos_enem);
     }
 

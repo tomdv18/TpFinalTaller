@@ -33,27 +33,21 @@ void EstadoEspecial::manejarEstado(uint8_t codigo_estado, double tiempo){
     switch (codigo_estado)
     {
     case ESTADO_QUIETO:
-        std::cout << "ESTADO QUIETO" << std::endl;
         this->personaje->cambiarEstado(new EstadoQuieto());
         break;
     case ESTADO_CAMINANDO:
-        std::cout << "ESTADO CAMINANDO" << std::endl;
         this->personaje->cambiarEstado(new EstadoCaminando());
         break;
     case ESTADO_CORRIENDO:
-        std::cout << "ESTADO CORRIENDO" << std::endl;
         this->personaje->cambiarEstado(new EstadoCorriendo());
         break;
     case ESTADO_SALTANDO:
-        std::cout << "ESTADO SALTANDO" << std::endl;
         this->personaje->cambiarEstado(new EstadoSaltando());
         break;
     case ESTADO_CAYENDO:
-        std::cout << "ESTADO CAYENDO" << std::endl;
         this->personaje->cambiarEstado(new EstadoCayendo());
         break;
     case ESTADO_TAMBALEAR:
-        std::cout << "ESTADO TAMBALEAR" << std::endl;
         this->personaje->cambiarEstado(new EstadoTambalear());
         break;
     default:

@@ -15,7 +15,6 @@ uint8_t Gema::obtener_objeto() { return GEMA; }
 void Gema::interactuar_personaje(Personaje* personaje,
                                       std::chrono::duration<double> tiempo_transcurrido) {
     Objeto::interactuar_personaje(personaje,tiempo_transcurrido);
-    std::cout << "AGARRANDO GEMA" << std::endl;
     personaje->asignar_puntos(puntos_otorgados);
     tiempo_interaccion = tiempo_transcurrido.count();
     mostrar = false;
