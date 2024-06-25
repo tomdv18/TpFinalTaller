@@ -10,17 +10,17 @@ personaje:
   puntos: 100
 
 jazz:
-  danio_habilidad: 10
+  danio_habilidad: 5
   enfriamiento_habilidad: 2.5
   velocidad_y_habilidad: 45 
 
 spaz:
-  danio_habilidad: 10
+  danio_habilidad: 5
   enfriamiento_habilidad: 2.0
   velocidad_x_habilidad: 15
 
 lori:
-  danio_habilidad: 10
+  danio_habilidad: 5
   enfriamiento_habilidad: 2.0
   velocidad_x_habilidad: 10
   velocidad_y_habilidad: 30

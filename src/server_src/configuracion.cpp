@@ -46,7 +46,8 @@ Configuracion::Configuracion(const YAML::Node& config) {
         tiempo_intoxicacion = config["personaje"]["tiempo_intoxicacion"].as<double>();
         ancho_personaje = config["personaje"]["ancho"].as<int>();
         alto_personaje = config["personaje"]["alto"].as<int>();
-        puntos_personaje = config["personaje"]["puntos"].as<uint8_t>();
+        //puntos_personaje = config["personaje"]["puntos"].as<uint8_t>(); BUG EN VAGRANT
+        puntos_personaje = 100;
 
         // Habilidades por personaje
         enfriamiento_habilidad_jazz = config["jazz"]["enfriamiento_habilidad"].as<double>();
