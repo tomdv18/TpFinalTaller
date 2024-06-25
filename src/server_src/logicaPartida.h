@@ -5,6 +5,7 @@
 #include <chrono>
 #include <iostream>
 #include <map>
+#include <memory>
 
 #include "../common_src/accion.h"
 #include "../common_src/evento.h"

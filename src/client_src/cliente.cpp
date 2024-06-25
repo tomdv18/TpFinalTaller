@@ -136,6 +136,19 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
         // Carga el archivo YAML
         YAML::Node data = YAML::LoadFile(filename);
 
+        YAML::Node miscelaneoNode = data["miscelaneo"];
+        std::vector<Position> miscelaneos;
+        for (const auto& miscelaneo : miscelaneoNode) {
+            Position position;
+            position.x = miscelaneo["x"].as<uint32_t>();
+            position.y = miscelaneo["y"].as<uint32_t>();
+            position.width = miscelaneo["width"].as<uint32_t>();
+            position.height = miscelaneo["height"].as<uint32_t>();
+            position.imagen = miscelaneo["imagen"].as<std::string>();
+            miscelaneos.push_back(position);
+        }
+        mapaCompleto.entidades["miscelaneo"] = miscelaneos;
+
         // Lee la sección 'solids' del archivo YAML
         YAML::Node solidsNode = data["solid"];
         std::vector<Position> solids;
@@ -153,7 +166,6 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
         // Guarda el vector de solids en el mapa con la clave "solids"
         mapaCompleto.entidades["solids"] = solids;
 
-        std::cout << "SOLIDOS CARGADO" << std::endl;
 
         // Lee el fondo del archivo YAML
         if (data["fondo"]) {
@@ -161,8 +173,6 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
         } else {
             std::cerr << "La clave 'fondo' no se encontró en el archivo YAML." << std::endl;
         }
-
-        std::cout << "FONDO CARGADO" << std::endl;
 
         // Superficies diagonales
         YAML::Node trianguloNode = data["triangulo_derecho"];
@@ -192,7 +202,6 @@ MapaCompleto leerSolidsDesdeYAML(const std::string& filename) {
         }
         mapaCompleto.entidades["triangulo_izquierdo"] = triangulos_izquierdo;
 
-        std::cout << "TRIANGULOS CARGADOS" << std::endl;
 
     } catch (const YAML::Exception& e) {
         std::cerr << "Error al cargar el archivo YAML: " << e.what() << std::endl;

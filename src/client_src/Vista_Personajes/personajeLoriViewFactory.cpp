@@ -36,6 +36,8 @@ std::unique_ptr<Animacion> PersonajeLoriViewFactory::crear_animacion(std::string
         return std::move(std::make_unique<Animacion_Lori_Cayendo_Horizontal>());
     } else if(nombre_animacion == DISPARO_SALTANDO){
         return std::move(std::make_unique<Animacion_Lori_Disparo_Saltando>());
+    } else if(nombre_animacion == TAMBALEAR){
+        return std::move(std::make_unique<Animacion_Lori_Tambalear>());
     }
     
 

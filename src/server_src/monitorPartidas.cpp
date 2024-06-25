@@ -10,8 +10,6 @@ Queue<Accion>* MonitorPartidas::crear_partida(uint32_t id_creador, uint8_t cant_
             new Partida(id_creador, cant_jugadores, contador_partidas, queue_jugador, mapa);
     partidas.emplace(contador_partidas, nueva_partida);
     contador_partidas++;
-    std::cout << "\nPARTIDA CREADA POR EL JUGADOR  " << id_creador << std::endl;
-    std::cout << "CANTIDAD DE JUGADORES " << (int)cant_jugadores << std::endl;
     // Empiezo hilo partida
     nueva_partida->start();
     return nueva_partida->obtener_queue();

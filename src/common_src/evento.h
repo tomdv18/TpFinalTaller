@@ -2,14 +2,20 @@
 #define COMMON_EVENTO_H_
 
 #include <iostream>
+#include <string>
+#include <unordered_map>
 #include <vector>
 #include <unordered_map>
 #include <yaml-cpp/yaml.h>
 
-struct __attribute__((packed)) EventoPersonaje{
+#include <yaml-cpp/yaml.h>
 
+struct __attribute__((packed)) EventoPersonaje {
+    // cppcheck-suppress unusedStructMember
     uint32_t id_jugador;
+    // cppcheck-suppress unusedStructMember
     uint32_t posicion_x;
+    // cppcheck-suppress unusedStructMember
     uint32_t posicion_y;
     uint32_t puntos;
     uint32_t municion;

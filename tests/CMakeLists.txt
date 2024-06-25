@@ -20,6 +20,7 @@ set(ESTADO_SOURCES
     ${CMAKE_SOURCE_DIR}/src/server_src/estado/estado_caminando.cpp
     ${CMAKE_SOURCE_DIR}/src/server_src/estado/estado_saltando.cpp
     ${CMAKE_SOURCE_DIR}/src/server_src/estado/estado_cayendo.cpp
+    ${CMAKE_SOURCE_DIR}/src/server_src/estado/estado_tambalear.cpp
 )
 
 # Define una función para configurar las pruebas

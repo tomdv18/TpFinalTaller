@@ -138,7 +138,6 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
         event_objeto.id_objeto = ntohl(event_objeto.id_objeto);
         event_objeto.posicion_x = ntohl(event_objeto.posicion_x);
         event_objeto.posicion_y = ntohl(event_objeto.posicion_y);
-        //std::cout << "RECIBIENDO OBJETO" << std::endl;
         eventos_objeto.emplace_back(event_objeto);
     }
 
@@ -157,7 +156,6 @@ bool ProtocoloCliente::recibir_evento(Evento &evento) {
         event_enemigo.id_enemigo = ntohl(event_enemigo.id_enemigo);
         event_enemigo.posicion_x = ntohl(event_enemigo.posicion_x);
         event_enemigo.posicion_y = ntohl(event_enemigo.posicion_y);
-        //std::cout << "RECIBIENDO ENEMIGO "  << event_enemigo.id_enemigo << "-" << event_enemigo.posicion_x << "-"   << event_enemigo.esta_vivo << "-" << event_enemigo.vida << std::endl;
         eventos_enemigos.emplace_back(event_enemigo);
     
     }

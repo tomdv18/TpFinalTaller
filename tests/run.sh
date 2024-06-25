@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Ruta al directorio donde se encuentran los ejecutables de prueba
 TEST_DIR="./tests"

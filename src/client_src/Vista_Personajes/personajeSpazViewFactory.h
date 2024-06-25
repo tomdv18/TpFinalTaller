@@ -17,6 +17,8 @@
 #include "../src/client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_cayendo.h"
 #include "../src/client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_cayendo_horizontal.h"
 #include "../src/client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_saltando.h"
+#include "../src/client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_tambalear.h"
+
 
 class PersonajeSpazViewFactory : public PersonajeViewFactory {
 

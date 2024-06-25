@@ -432,18 +432,32 @@ triangulo_derecho:
     height: 50
     imagen: ../src/mapas/tiles/castle/triangulo_derecho.png
 zanahoria:
+  - x: 325
+    y: 825
+    veneno: true
   - x: 600
     y: 500
+    veneno: false
 gema:
+  - x: 425
+    y: 825
+    veneno: true
   - x: 500
     y: 500
+    veneno: false
 moneda:
   - x: 300
     y: 500
+    veneno: false
   - x: 350
     y: 500
+    veneno: false
   - x: 400
     y: 500
+    veneno: false
+  - x: 525
+    y: 825
+    veneno: true
 bala_veloz:
   - x: 700
     y: 500

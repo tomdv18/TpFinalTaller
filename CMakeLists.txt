@@ -20,7 +20,6 @@ add_subdirectory(src)
 
 
 if (TESTING)
-    include(cmakeupdate/UpdateSubmodules.cmake)
     add_subdirectory(tests)
     add_subdirectory(extern/googletest)
 endif()

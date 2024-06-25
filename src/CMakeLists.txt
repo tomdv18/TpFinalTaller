@@ -86,6 +86,8 @@ if(SERVER)
 		./server_src/estado/estado_especial.h
 		./server_src/estado/estado_cayendo.cpp
 		./server_src/estado/estado_cayendo.h
+		./server_src/estado/estado_tambalear.cpp
+		./server_src/estado/estado_tambalear.h
 
         ./server_src/mapa.h
 
@@ -259,6 +261,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_cayendo_horizontal.cpp
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_saltando.h
 		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_disparo_saltando.cpp
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_tambalear.h
+		./client_src/Animaciones/Animaciones_Jazz/animacion_Jazz_tambalear.cpp
 
 
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_caminando.h
@@ -291,6 +295,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_cayendo_horizontal.cpp
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_saltando.h
 		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_disparo_saltando.cpp
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_tambalear.h
+		./client_src/Animaciones/Animaciones_Lori/animacion_Lori_tambalear.cpp
 
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_caminando.cpp
@@ -322,6 +328,8 @@ if(CLIENT)
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_cayendo_horizontal.cpp
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_saltando.h
 		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_disparo_saltando.cpp
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_tambalear.h
+		./client_src/Animaciones/Animaciones_Spaz/animacion_Spaz_tambalear.cpp
 
         ./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.h
 		./client_src/Animaciones/Animaciones_Proyectiles/animacion_bala_pistola.cpp

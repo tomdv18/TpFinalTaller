@@ -44,7 +44,6 @@ void Enemigo::recibir_golpe(Personaje *personaje, std::chrono::duration<double> 
 
 void Enemigo::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_transcurrido) {
     vida -= golpe; 
-    std::cout << "VIDA ACTUAL"<< (int) vida << std::endl;
     if(vida <= 0){
         vivo = false;
         vida = 0;
@@ -54,11 +53,9 @@ void Enemigo::recibir_golpe(uint8_t golpe, std::chrono::duration<double> tiempo_
 
 void Enemigo::inflingir_danio(Personaje *personaje, std::chrono::duration<double> tiempo_transcurrido){
     if(!esta_atacando){
-        std::cout << "ATACANDO" << std::endl;
         esta_atacando = true;
         tiempo_ataque = tiempo_transcurrido.count();
     }
-     std::cout << "ATACANDO" << std::endl;
     personaje->recibir_golpe(this->danio,tiempo_transcurrido);
 }
 
@@ -109,7 +106,6 @@ void Enemigo::actualizar_posicion(std::chrono::duration<double> tiempo_transcurr
     }
 
     if(tiempo_transcurrido.count() - tiempo_ataque >= tiempo_entre_ataque){
-        //std::cout << "DEJAR DE ATACAR" << std::endl;
         esta_atacando = false;
     }
  

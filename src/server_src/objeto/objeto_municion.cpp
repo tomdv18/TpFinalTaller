@@ -16,7 +16,6 @@ uint8_t Municion::obtener_objeto() { return codigo_bala; }
 void Municion::interactuar_personaje(Personaje* personaje,
                                       std::chrono::duration<double> tiempo_transcurrido) {
     Objeto::interactuar_personaje(personaje,tiempo_transcurrido);
-    std::cout << "AGARRANDO MUNICION" << std::endl;
     personaje->agarrar_municion(codigo_bala,municion);
     tiempo_interaccion = tiempo_transcurrido.count();
     mostrar = false;

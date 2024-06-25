@@ -52,7 +52,7 @@ private:
 
     void paintEvent(QPaintEvent *event) override{
         QPainter painter(this);
-        QPixmap pixmap(":/res/images/imagen_fondo.jpg");
+        QPixmap pixmap(":/res/images/imagen_fondo.png");
         painter.drawPixmap(0,0,width(),height(),pixmap);
     }
 

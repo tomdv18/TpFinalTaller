@@ -3,7 +3,6 @@
 
 
 Rat::Rat(uint32_t id_enemigo, uint32_t x, uint32_t y): Enemigo(id_enemigo,x,y) {
-    std::cout << "RAT CREADO" << std::endl;
     vida = CONFIG.obtenerVidaRat();
     puntos = CONFIG.obtenerPuntosRat();
     danio = CONFIG.obtenerDanioRat();
@@ -24,7 +23,6 @@ void Rat::actualizar_posicion(std::chrono::duration<double> tiempo_transcurrido,
         vivo = true;
         posicion_x = pos_x_respawn;
         posicion_y = pos_y_respawn;
-        std::cout << "REVIVIR" << std::endl;
     }
     Enemigo::actualizar_posicion(tiempo_transcurrido, map_objetos_solidos);
 }

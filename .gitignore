@@ -6,5 +6,5 @@ src/CMakeCache.txt
 src/cmake_install.cmake
 src/Makefile
 src/tests
-src/extern/googletest
-.vagrant/
+src/extern
+.vagrant

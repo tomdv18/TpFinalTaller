@@ -39,7 +39,7 @@ municion:
   bala_normal:
     municion: 0
     tiempo_entre_disparo: 0.75
-    velocidad_del_proyectil: 10
+    velocidad_del_proyectil: 14
     danio: 2
     rango_explosion: 0
     ancho: 10
@@ -109,7 +109,7 @@ enemigo:
     probabilidad_drop_vida: [0,20]
     probabilidad_drop_municion: [20,100]
     tiempo_reaparicion: 5
-    velocidad_x: 5
+    velocidad_x: 4
   lizzard: 
     danio: 2
     puntos: 20
@@ -119,7 +119,7 @@ enemigo:
     probabilidad_drop_vida: [0,20]
     probabilidad_drop_municion: [20,100]
     tiempo_reaparicion: 5
-    velocidad_x: 5
+    velocidad_x: 4
   rat:
     danio: 1
     puntos: 10
@@ -129,7 +129,7 @@ enemigo:
     probabilidad_drop_vida: [0,20]
     probabilidad_drop_municion: [20,100]
     tiempo_reaparicion: 5
-    velocidad_x: 5
+    velocidad_x: 3
   bruja:
     danio: 2
     puntos: 75
@@ -139,7 +139,7 @@ enemigo:
     probabilidad_drop_vida: [0,20]
     probabilidad_drop_municion: [20,100]
     tiempo_reaparicion: 5
-    velocidad_x: 5
+    velocidad_x: 6
 
 
 

@@ -84,6 +84,9 @@ void PersonajeView::actualizar_vista_personaje(EventoPersonaje const &evento, fl
             this->animaciones.at(CAYENDO)->en_loop(true);
             this->animaciones.at(CAYENDO)->acualizar(dt);
         }
+    } else if( estado == ESTADO_TAMBALEAR && !isShooting){
+        this->animaciones.at(TAMBALEAR)->en_loop(true);
+        this->animaciones.at(TAMBALEAR)->acualizar(dt*0.4);
     }
 
     // Resetear las animaciones necesarias (No loop)
@@ -180,6 +183,11 @@ void PersonajeView::renderizar_personaje(std::unique_ptr<SDL2pp::Renderer> &rend
                 animaciones.at(CAYENDO)->animar(*render, personaje, flip);
             }
         }
+        break;
+    }
+    case ESTADO_TAMBALEAR:{
+        SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+        animaciones.at(TAMBALEAR)->animar(*render, personaje, flip);
         break;
     }
     default:

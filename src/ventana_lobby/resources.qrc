@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/res">
         <file>images/imagen_fondo.jpg</file>
+        <file>images/imagen_fondo.png</file>
         <file>images/Jazz.png</file>
         <file>images/Lori.png</file>
         <file>images/Spaz.png</file>

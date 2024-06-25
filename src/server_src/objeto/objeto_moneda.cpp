@@ -14,7 +14,6 @@ uint8_t Moneda::obtener_objeto() { return MONEDA; }
 void Moneda::interactuar_personaje(Personaje* personaje,
                                       std::chrono::duration<double> tiempo_transcurrido) {
     Objeto::interactuar_personaje(personaje,tiempo_transcurrido);
-    std::cout << "AGARRANDO MONEDA" << std::endl;
     personaje->asignar_puntos(puntos_otorgados);
     tiempo_interaccion = tiempo_transcurrido.count();
     mostrar = false;
