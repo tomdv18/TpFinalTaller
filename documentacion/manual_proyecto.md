@@ -29,7 +29,7 @@ https://github.com/google/googletest/tree/main/googletest/samples
 En cuanto al código, la mayor parte de problemas se dio al ponernos de acuerdo con el protocolo de comunicación del cliente-servidor. Fue una parte que tuvo constantes cambios debido a que cada agregado en cualquiera de las dos partes, ya sea un nuevo enemigo, un nuevo mapa, la posibilidad de elegir distintos personajes o partidas, incluía una modificación en el protocolo de comunicación.
 
 ### SDL 
-La libreria de sdl fue tan vital para el desarrollo del proyecto como problematica. Problemas de inclusión y de instalación de la misma sumado a la inexperiencia en su uso nos llevaron a conflictos que dificultaron el avance
+La libreria de sdl fue tan vital para el desarrollo del proyecto como problematica. Problemas de inclusión y de instalación de la misma sumado a la inexperiencia en su uso nos llevaron a conflictos que dificultaron el avance.
 
 ### Integración
 Surgieron algunos inconvenientes debidos a las diferencias de sistemas operativos de los integrantes. Esto llevó a conflictos como el no procesamiento de archivos de audio por su formato o la no visualización de imágenes si no eran de un formato específico; cuestión que, una vez solucionada, volvió a aparecer a la hora de crear el Vagrantfile.
@@ -38,6 +38,9 @@ Surgieron algunos inconvenientes debidos a las diferencias de sistemas operativo
 #### Vagrant
 Para correr el juego utilizando Vagrant, se recomienda fuertemente utilizar la branch de este repositorio llamada del mismo nombre.
 Existe un error en las dependencias del Vagrantfile que no permite hacer testing del proyecto, ni reproduce sonido al utilizar el juego, pero el resto de características del mismo funcionan con normalidad.
+
+#### Colisiones
+El sistema de colisiones si bien es funcional, a nuestro parecer toma mucha complejidad a la hora de calcularlas e incluso existe un pequeño error que no calcula bien las colisiones en las formas triangulares.
 
 ## ¿Qué cambiaríamos?
 En normas generales, sentimos que, pese a los inconvenientes normales surgidos de un trabajo grupal, pudimos lograr con nuestro objetivo, desarrollando todas las features propuestas e incluso llegando a agregar extras.
