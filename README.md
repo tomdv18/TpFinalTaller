@@ -6,7 +6,7 @@ Jazz JackRabbit 2 es un shooter de plataformas 2D de los años 90, originalmente
 
 ## Integrantes - Grupo 10
 
-- Toma’s Della Vecchia - 106368
+- Tomás Della Vecchia - 106368
 - Santiago Janon - 106079
 - Patricio Silva - 106422
 - Kevin Emir Carbajal Robles - 108304
@@ -14,12 +14,22 @@ Jazz JackRabbit 2 es un shooter de plataformas 2D de los años 90, originalmente
 ## Imagenes del juego
 
 ![partida_1](documentacion/imagenes_documentacion/partida_1.png) 
+
 ![partida_10](documentacion/imagenes_documentacion/partida_10.png) 
+
 ![partida_11](documentacion/imagenes_documentacion/partida_11.png) 
+
 ![partida_14](documentacion/imagenes_documentacion/partida_14.png) 
+
 ![partida_12](documentacion/imagenes_documentacion/partida_12.png) 
+
 ![partida_8](documentacion/imagenes_documentacion/partida_8.png) 
+
 ![partida_6](documentacion/imagenes_documentacion/partida_6.png) 
+
 ![partida_13](documentacion/imagenes_documentacion/partida_13.png)
+
+## Editor de mapas
 ![editor_1](documentacion/imagenes_documentacion/editor_1.png) 
+
 ![editor_2](documentacion/imagenes_documentacion/editor_2.png) 
